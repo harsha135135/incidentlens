@@ -1,0 +1,88 @@
+{
+ "arguments": {},
+ "collected_at": "2026-11-06T15:14:10.187Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "acquire_max_ms_per_scrape": 261.0,
+  "acquire_mean_ms": 8.443,
+  "acquisition_timeouts": 100,
+  "acquisitions": 3243,
+  "configured_connection_timeout_ms": 250,
+  "configured_maximum_at_window_end": 2,
+  "gauges": {
+   "active": {
+    "first": 0.0,
+    "first_above_zero_at": "2026-11-06T15:11:08.728Z",
+    "last": 0.0,
+    "last_above_zero_at": "2026-11-06T15:12:58.728Z",
+    "max": 2.0,
+    "mean": 0.639,
+    "min": 0.0,
+    "samples": 36,
+    "samples_above_zero": 15
+   },
+   "idle": {
+    "first": 10.0,
+    "first_above_zero_at": "2026-11-06T15:11:03.728Z",
+    "last": 2.0,
+    "last_above_zero_at": "2026-11-06T15:13:58.729Z",
+    "max": 10.0,
+    "mean": 3.139,
+    "min": 0.0,
+    "samples": 36,
+    "samples_above_zero": 28
+   },
+   "maximum": {
+    "first": 10.0,
+    "first_above_zero_at": "2026-11-06T15:11:03.728Z",
+    "last": 2.0,
+    "last_above_zero_at": "2026-11-06T15:13:58.729Z",
+    "max": 10.0,
+    "mean": 3.778,
+    "min": 2.0,
+    "samples": 36,
+    "samples_above_zero": 36
+   },
+   "pending": {
+    "first": 0.0,
+    "first_above_zero_at": "2026-11-06T15:11:43.734Z",
+    "last": 0.0,
+    "last_above_zero_at": "2026-11-06T15:12:58.728Z",
+    "max": 1.0,
+    "mean": 0.167,
+    "min": 0.0,
+    "samples": 36,
+    "samples_above_zero": 6
+   }
+  },
+  "scrapes": {
+   "expected_scrapes": 36,
+   "failed_scrapes": 0,
+   "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)",
+   "gaps": [],
+   "successful_scrapes": 36
+  }
+ },
+ "errors": [],
+ "evidence_id": "c935b506-f6c9-4010-9b2a-fe38efa7f1af",
+ "limitations": [
+  "Pending borrowers and active connections are gauges read at each 5 s scrape; brief saturation between scrapes may not appear in them (acquisition time and timeouts are counters)."
+ ],
+ "observed_window": {
+  "first": "2026-11-06T15:11:03.728Z",
+  "last": "2026-11-06T15:13:58.729Z"
+ },
+ "requested_window": {
+  "end": "2026-11-06T15:13:59.000Z",
+  "start": "2026-11-06T15:10:59.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "89df0782-6d6e-46ad-8534-d56a95069c27",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_pool_metrics",
+ "truncated": false
+}

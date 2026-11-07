@@ -1,0 +1,6 @@
+{"at": "2026-11-07T05:39:05.751Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-07T05:39:05.744Z"}
+{"at": "2026-11-07T05:39:05.791Z", "action": "workload_started", "rate_per_second": 2.8, "seed": 3907772054}
+{"at": "2026-11-07T05:39:17.010Z", "action": "consumer_mode", "mode": "slow", "handler_delay_ms": 1600, "requested_at": "2026-11-07T05:39:17.004Z"}
+{"at": "2026-11-07T05:40:17.009Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-07T05:40:17.003Z"}
+{"at": "2026-11-07T05:41:37.318Z", "action": "workload_stopped", "sent": 425, "statuses": {"201": 425}, "errors": {}, "started_at": "2026-11-07T05:39:05.791Z", "ended_at": "2026-11-07T05:41:37.318Z"}
+{"at": "2026-11-07T05:41:37.319Z", "action": "window", "start": "2026-11-07T05:39:07.000Z", "end": "2026-11-07T05:41:37.000Z", "template": "sc-h4"}

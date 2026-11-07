@@ -1,0 +1,101 @@
+{
+ "arguments": {},
+ "collected_at": "2026-11-07T03:20:46.121Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "attempts": 848,
+  "consumer_auth_ms": {
+   "count": 418,
+   "max": 78.925,
+   "mean": 70.579,
+   "min": 69.914,
+   "p50": 70.224,
+   "p95": 72.698
+  },
+  "consumer_handler_ms": {
+   "count": 418,
+   "max": 0.048,
+   "mean": 0.015,
+   "min": 0.006,
+   "p50": 0.013,
+   "p95": 0.029
+  },
+  "consumer_measured_by": "fixture consumer (test fixture)",
+  "consumer_target": "http://127.0.0.1:18090/events",
+  "correlated_attempts": 418,
+  "correlation": "same event ID, consumer receipt time inside the attempt's start and end (+/- 50 ms)",
+  "ingestion": {
+   "fixture_consumer": {
+    "caught_up_at": "2026-11-07T03:20:38.068Z",
+    "discontinuities": []
+   },
+   "ledgercore": {
+    "caught_up_at": "2026-11-07T03:20:38.068Z",
+    "discontinuities": []
+   }
+  },
+  "meaning": "total_ms is LedgerCore's measured attempt duration. consumer_auth_ms and consumer_handler_ms are measured sequentially inside the consumer. unattributed_ms is the remainder (network, connection setup, request parsing) and is not broken down further.",
+  "record_check": {
+   "attempt_records": 848,
+   "attempts_reported_by_poll_batches": 848
+  },
+  "total_ms": {
+   "count": 848,
+   "max": 79.916,
+   "mean": 35.468,
+   "min": 0.164,
+   "p50": 1.667,
+   "p95": 71.93
+  },
+  "total_ms_by_result": {
+   "CONNECTION_FAILED": {
+    "count": 430,
+    "max": 2.645,
+    "mean": 0.466,
+    "min": 0.164,
+    "p50": 0.366,
+    "p95": 1.009
+   },
+   "SUCCESS": {
+    "count": 418,
+    "max": 79.916,
+    "mean": 71.474,
+    "min": 70.609,
+    "p50": 71.071,
+    "p95": 74.587
+   }
+  },
+  "unattributed_ms": {
+   "count": 418,
+   "max": 2.516,
+   "mean": 0.879,
+   "min": 0.509,
+   "p50": 0.781,
+   "p95": 1.457
+  },
+  "uncorrelated_attempts": 430,
+  "unmatched_consumer_records": 8
+ },
+ "errors": [],
+ "evidence_id": "04c223b3-3bf1-46f9-8c84-ccb9f2e116dd",
+ "limitations": [
+  "430 attempt(s) had no matching consumer record (for example refused connections or timeouts before the consumer logged)."
+ ],
+ "observed_window": {
+  "first": "2026-11-07T03:18:05.831Z",
+  "last": "2026-11-07T03:20:34.115Z"
+ },
+ "requested_window": {
+  "end": "2026-11-07T03:20:35.000Z",
+  "start": "2026-11-07T03:18:05.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "structured_logs",
+  "target_instance_id": "01ff0b6b-a6ea-4699-9464-e68b2de808b7",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_delivery_timings",
+ "truncated": false
+}

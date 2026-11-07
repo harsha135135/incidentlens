@@ -1,0 +1,48 @@
+{
+  "availability": "execution: available\nget request metrics: available\nget outbox stats: available\nget pool metrics: available\nget database blockers: available\nget runtime config: available\nsearch delivery logs: available\nget delivery timings: available",
+  "job": "9e2eab87-b1f9-47b4-8b3c-a5ae966b8239",
+  "progress_seen": true,
+  "banner": "Diagnosis supported in the observed window",
+  "summary": "Notifications were late because outbox delivery to the consumer stalled for about 100 s. Delivery attempts were refused (CONNECTION_FAILED) while transfers kept committing normally.",
+  "citations_audited": [
+    {
+      "handle": "E2",
+      "coverage": "COMPLETE",
+      "first_line": "[E2] get_outbox_stats coverage COMPLETE"
+    },
+    {
+      "handle": "E3",
+      "coverage": "COMPLETE",
+      "first_line": "[E3] search_delivery_logs {\"limit\":100,\"outcome\":\"any\"} coverage COMPLETE"
+    },
+    {
+      "handle": "E4",
+      "coverage": "COMPLETE",
+      "first_line": "[E4] get_delivery_timings coverage COMPLETE"
+    },
+    {
+      "handle": "E1",
+      "coverage": "COMPLETE",
+      "first_line": "[E1] get_request_metrics {\"route_group\":\"transfers\"} coverage COMPLETE"
+    },
+    {
+      "handle": "E5",
+      "coverage": "COMPLETE",
+      "first_line": "[E5] get_pool_metrics coverage COMPLETE"
+    },
+    {
+      "handle": "E6",
+      "coverage": "COMPLETE",
+      "first_line": "[E6] get_database_blockers {\"mode\":\"historical\",\"limit\":50} coverage COMPLETE"
+    }
+  ],
+  "keyboard_citation": "E2",
+  "html_export_has_script_tag": false,
+  "html_export_external_references": [],
+  "json_export_report_outcome": "SUPPORTED",
+  "phone_horizontal_overflow": false,
+  "dialogs": [],
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+}

@@ -1,0 +1,650 @@
+{
+  "label": "FIXTURE RESULT",
+  "scenario": "healthy",
+  "window": {
+    "start": "2026-11-06T05:20:15.461Z",
+    "end": "2026-11-06T05:21:20.583Z"
+  },
+  "ground_truth": [
+    {
+      "at": "2026-11-06T05:20:10.449Z",
+      "action": "consumer_mode",
+      "mode": "normal",
+      "handler_delay_ms": 0,
+      "requested_at": "2026-11-06T05:20:10.443Z"
+    },
+    {
+      "at": "2026-11-06T05:20:10.461Z",
+      "action": "workload_started",
+      "rate_per_second": 3.2,
+      "seed": 20261116
+    },
+    {
+      "at": "2026-11-06T05:21:20.583Z",
+      "action": "workload_stopped",
+      "sent": 225,
+      "statuses": {
+        "201": 225
+      },
+      "errors": {},
+      "started_at": "2026-11-06T05:20:10.461Z",
+      "ended_at": "2026-11-06T05:21:20.583Z"
+    }
+  ],
+  "observations": {
+    "requests_transfers": {
+      "evidence_id": "4f264921-2219-48b7-9b9d-56c84adfebee",
+      "tool": "get_request_metrics",
+      "arguments": {
+        "route_group": "transfers"
+      },
+      "requested_window": {
+        "start": "2026-11-06T05:20:15.461Z",
+        "end": "2026-11-06T05:21:20.583Z"
+      },
+      "observed_window": {
+        "first": "2026-11-06T05:20:18.706Z",
+        "last": "2026-11-06T05:21:18.705Z"
+      },
+      "collected_at": "2026-11-06T05:21:36.614Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "prometheus",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.f75b45ec8819",
+        "target_instance_id": "58aee138-22ed-481a-92af-57b1c4c6064c"
+      },
+      "data": {
+        "route_group": "transfers",
+        "route_template": "/v1/transfers",
+        "requests": 208,
+        "requests_per_second": 3.194,
+        "server_error_ratio": 0.0,
+        "by_status": [
+          {
+            "status": "201",
+            "outcome": "SUCCESS",
+            "count": 208
+          }
+        ],
+        "latency_seconds": {
+          "p50": 0.1643,
+          "p95": 0.2414,
+          "p99": 0.2483,
+          "method": "interpolated within fixed histogram buckets summed across series"
+        },
+        "bucket_counts": [
+          {
+            "le": 0.005,
+            "count": 0
+          },
+          {
+            "le": 0.01,
+            "count": 0
+          },
+          {
+            "le": 0.025,
+            "count": 0
+          },
+          {
+            "le": 0.05,
+            "count": 0
+          },
+          {
+            "le": 0.1,
+            "count": 26
+          },
+          {
+            "le": 0.25,
+            "count": 208
+          },
+          {
+            "le": 0.5,
+            "count": 208
+          },
+          {
+            "le": 1.0,
+            "count": 208
+          },
+          {
+            "le": 2.5,
+            "count": 208
+          },
+          {
+            "le": 5.0,
+            "count": 208
+          },
+          {
+            "le": 10.0,
+            "count": 208
+          },
+          {
+            "le": "+Inf",
+            "count": 208
+          }
+        ],
+        "counter_resets": 0,
+        "scrapes": {
+          "expected_scrapes": 13,
+          "successful_scrapes": 13,
+          "failed_scrapes": 0,
+          "gaps": []
+        },
+        "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)"
+      },
+      "limitations": [],
+      "errors": []
+    },
+    "requests_consumer": {
+      "evidence_id": "fa4bfcd1-ffbc-4904-9bad-48a7bb1b1e6d",
+      "tool": "get_request_metrics",
+      "arguments": {
+        "route_group": "consumer"
+      },
+      "requested_window": {
+        "start": "2026-11-06T05:20:15.461Z",
+        "end": "2026-11-06T05:21:20.583Z"
+      },
+      "observed_window": {
+        "first": "2026-11-06T05:20:18.706Z",
+        "last": "2026-11-06T05:21:18.705Z"
+      },
+      "collected_at": "2026-11-06T05:21:36.632Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "prometheus",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.f75b45ec8819",
+        "target_instance_id": "58aee138-22ed-481a-92af-57b1c4c6064c"
+      },
+      "data": {
+        "route_group": "consumer",
+        "route_template": "/demo-consumer/events",
+        "requests": 0,
+        "requests_per_second": 0.0,
+        "server_error_ratio": null,
+        "by_status": [],
+        "latency_seconds": {
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "method": "interpolated within fixed histogram buckets summed across series"
+        },
+        "bucket_counts": [],
+        "counter_resets": 0,
+        "scrapes": {
+          "expected_scrapes": 13,
+          "successful_scrapes": 13,
+          "failed_scrapes": 0,
+          "gaps": []
+        },
+        "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)"
+      },
+      "limitations": [
+        "No requests to /demo-consumer/events were recorded in the window; percentiles are unavailable.",
+        "LedgerCore delivers to an external consumer in this window, so its in-process consumer route is not expected to receive requests. Use get_delivery_timings."
+      ],
+      "errors": []
+    },
+    "outbox": {
+      "evidence_id": "442f94bd-cf63-4d99-b6f3-968df25b8648",
+      "tool": "get_outbox_stats",
+      "arguments": {},
+      "requested_window": {
+        "start": "2026-11-06T05:20:15.461Z",
+        "end": "2026-11-06T05:21:20.583Z"
+      },
+      "observed_window": {
+        "first": "2026-11-06T05:20:18.706Z",
+        "last": "2026-11-06T05:21:18.705Z"
+      },
+      "collected_at": "2026-11-06T05:21:36.673Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "prometheus+postgres_aggregate",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.f75b45ec8819",
+        "target_instance_id": "58aee138-22ed-481a-92af-57b1c4c6064c"
+      },
+      "data": {
+        "gauges": {
+          "pending": {
+            "samples": 13,
+            "first": {
+              "at": "2026-11-06T05:20:18.706Z",
+              "value": 2.0
+            },
+            "last": {
+              "at": "2026-11-06T05:21:18.705Z",
+              "value": 3.0
+            },
+            "min": 2.0,
+            "max": 4.0,
+            "points": [
+              [
+                "2026-11-06T05:20:18.706Z",
+                2.0
+              ],
+              [
+                "2026-11-06T05:20:23.706Z",
+                4.0
+              ],
+              [
+                "2026-11-06T05:20:28.705Z",
+                4.0
+              ],
+              [
+                "2026-11-06T05:20:33.706Z",
+                3.0
+              ],
+              [
+                "2026-11-06T05:20:38.706Z",
+                2.0
+              ],
+              [
+                "2026-11-06T05:20:43.706Z",
+                2.0
+              ],
+              [
+                "2026-11-06T05:20:48.705Z",
+                4.0
+              ],
+              [
+                "2026-11-06T05:20:53.705Z",
+                4.0
+              ],
+              [
+                "2026-11-06T05:20:58.706Z",
+                3.0
+              ],
+              [
+                "2026-11-06T05:21:03.708Z",
+                2.0
+              ],
+              [
+                "2026-11-06T05:21:08.705Z",
+                3.0
+              ],
+              [
+                "2026-11-06T05:21:13.705Z",
+                4.0
+              ],
+              [
+                "2026-11-06T05:21:18.705Z",
+                3.0
+              ]
+            ]
+          },
+          "failed": {
+            "samples": 13,
+            "first": {
+              "at": "2026-11-06T05:20:18.706Z",
+              "value": 0.0
+            },
+            "last": {
+              "at": "2026-11-06T05:21:18.705Z",
+              "value": 0.0
+            },
+            "min": 0.0,
+            "max": 0.0,
+            "points": [
+              [
+                "2026-11-06T05:20:18.706Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:20:23.706Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:20:28.705Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:20:33.706Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:20:38.706Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:20:43.706Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:20:48.705Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:20:53.705Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:20:58.706Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:21:03.708Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:21:08.705Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:21:13.705Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:21:18.705Z",
+                0.0
+              ]
+            ]
+          },
+          "oldest_undelivered_age_seconds": {
+            "samples": 13,
+            "first": {
+              "at": "2026-11-06T05:20:18.706Z",
+              "value": 0.416627
+            },
+            "last": {
+              "at": "2026-11-06T05:21:18.705Z",
+              "value": 0.740133
+            },
+            "min": 0.415286,
+            "max": 1.052528,
+            "points": [
+              [
+                "2026-11-06T05:20:18.706Z",
+                0.416627
+              ],
+              [
+                "2026-11-06T05:20:23.706Z",
+                1.050151
+              ],
+              [
+                "2026-11-06T05:20:28.705Z",
+                1.042917
+              ],
+              [
+                "2026-11-06T05:20:33.706Z",
+                0.733001
+              ],
+              [
+                "2026-11-06T05:20:38.706Z",
+                0.423839
+              ],
+              [
+                "2026-11-06T05:20:43.706Z",
+                0.415286
+              ],
+              [
+                "2026-11-06T05:20:48.705Z",
+                1.052528
+              ],
+              [
+                "2026-11-06T05:20:53.705Z",
+                1.043535
+              ],
+              [
+                "2026-11-06T05:20:58.706Z",
+                0.72369
+              ],
+              [
+                "2026-11-06T05:21:03.708Z",
+                0.415537
+              ],
+              [
+                "2026-11-06T05:21:08.705Z",
+                0.729888
+              ],
+              [
+                "2026-11-06T05:21:13.705Z",
+                1.052299
+              ],
+              [
+                "2026-11-06T05:21:18.705Z",
+                0.740133
+              ]
+            ]
+          }
+        },
+        "scrapes": {
+          "expected_scrapes": 13,
+          "successful_scrapes": 13,
+          "failed_scrapes": 0,
+          "gaps": []
+        },
+        "durable_counts": {
+          "committed_arrivals": 209,
+          "recorded_publications": 207,
+          "window_seconds": 65.123,
+          "arrivals_per_second": 3.209,
+          "publications_per_second": 3.179,
+          "bucket_seconds": 10,
+          "buckets": [
+            {
+              "start": "2026-11-06T05:20:15.461Z",
+              "arrivals": 32,
+              "publications": 34
+            },
+            {
+              "start": "2026-11-06T05:20:25.461Z",
+              "arrivals": 32,
+              "publications": 29
+            },
+            {
+              "start": "2026-11-06T05:20:35.461Z",
+              "arrivals": 32,
+              "publications": 34
+            },
+            {
+              "start": "2026-11-06T05:20:45.461Z",
+              "arrivals": 32,
+              "publications": 30
+            },
+            {
+              "start": "2026-11-06T05:20:55.461Z",
+              "arrivals": 32,
+              "publications": 34
+            },
+            {
+              "start": "2026-11-06T05:21:05.461Z",
+              "arrivals": 32,
+              "publications": 31
+            },
+            {
+              "start": "2026-11-06T05:21:15.461Z",
+              "arrivals": 17,
+              "publications": 15
+            }
+          ],
+          "arrival_timestamp_meaning": "committed outbox records grouped by creation (transaction-start) timestamp",
+          "publication_timestamp_meaning": "recorded publications grouped by publication-transaction timestamp",
+          "settled": true
+        }
+      },
+      "limitations": [
+        "Pending is a gauge sampled at scrape times; arrivals and publications are durable counts by timestamp. Transitions to FAILED and the different sampling instants mean pending change need not equal arrivals minus publications."
+      ],
+      "errors": []
+    },
+    "delivery_logs": {
+      "evidence_id": "113ebf85-1d75-47fb-b93a-eb5bf11d370f",
+      "tool": "search_delivery_logs",
+      "arguments": {
+        "outcome": "any",
+        "limit": 100
+      },
+      "requested_window": {
+        "start": "2026-11-06T05:20:15.461Z",
+        "end": "2026-11-06T05:21:20.583Z"
+      },
+      "observed_window": {
+        "first": null,
+        "last": null
+      },
+      "collected_at": "2026-11-06T05:21:36.678Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "structured_logs",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.f75b45ec8819",
+        "target_instance_id": "58aee138-22ed-481a-92af-57b1c4c6064c"
+      },
+      "data": {
+        "outcome_filter": "any",
+        "matching_records": 0,
+        "returned_records": 0,
+        "counts_by_outcome": {
+          "success": 0,
+          "auth_error": 0,
+          "network_error": 0,
+          "server_error": 0,
+          "other": 0
+        },
+        "records": [],
+        "ingestion": {
+          "caught_up_at": "2026-11-06T05:21:24.364Z",
+          "discontinuities": []
+        },
+        "note": "Records are LedgerCore's own delivery-attempt log lines, earliest first."
+      },
+      "limitations": [],
+      "errors": []
+    },
+    "network_errors": {
+      "evidence_id": "630dfd7a-7abb-40f2-907a-74f9ff2ff3c4",
+      "tool": "search_delivery_logs",
+      "arguments": {
+        "outcome": "network_error",
+        "limit": 100
+      },
+      "requested_window": {
+        "start": "2026-11-06T05:20:15.461Z",
+        "end": "2026-11-06T05:21:20.583Z"
+      },
+      "observed_window": {
+        "first": null,
+        "last": null
+      },
+      "collected_at": "2026-11-06T05:21:36.682Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "structured_logs",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.f75b45ec8819",
+        "target_instance_id": "58aee138-22ed-481a-92af-57b1c4c6064c"
+      },
+      "data": {
+        "outcome_filter": "network_error",
+        "matching_records": 0,
+        "returned_records": 0,
+        "counts_by_outcome": {
+          "success": 0,
+          "auth_error": 0,
+          "network_error": 0,
+          "server_error": 0,
+          "other": 0
+        },
+        "records": [],
+        "ingestion": {
+          "caught_up_at": "2026-11-06T05:21:24.364Z",
+          "discontinuities": []
+        },
+        "note": "Records are LedgerCore's own delivery-attempt log lines, earliest first."
+      },
+      "limitations": [],
+      "errors": []
+    },
+    "timings": {
+      "evidence_id": "48ab06f1-b348-4b2e-a213-7cd67b23cf05",
+      "tool": "get_delivery_timings",
+      "arguments": {},
+      "requested_window": {
+        "start": "2026-11-06T05:20:15.461Z",
+        "end": "2026-11-06T05:21:20.583Z"
+      },
+      "observed_window": {
+        "first": null,
+        "last": null
+      },
+      "collected_at": "2026-11-06T05:21:36.690Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "structured_logs",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.f75b45ec8819",
+        "target_instance_id": "58aee138-22ed-481a-92af-57b1c4c6064c"
+      },
+      "data": {
+        "attempts": 0,
+        "correlated_attempts": 0,
+        "uncorrelated_attempts": 0,
+        "unmatched_consumer_records": 225,
+        "total_ms": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "max": null,
+          "mean": null
+        },
+        "total_ms_by_result": {},
+        "consumer_auth_ms": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "max": null,
+          "mean": null
+        },
+        "consumer_handler_ms": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "max": null,
+          "mean": null
+        },
+        "unattributed_ms": {
+          "count": 0,
+          "min": null,
+          "p50": null,
+          "p95": null,
+          "max": null,
+          "mean": null
+        },
+        "consumer_measured_by": "fixture consumer (test fixture)",
+        "consumer_target": "http://127.0.0.1:18090/events",
+        "meaning": "total_ms is LedgerCore's measured attempt duration. consumer_auth_ms and consumer_handler_ms are measured sequentially inside the consumer. unattributed_ms is the remainder (network, connection setup, request parsing) and is not broken down further.",
+        "correlation": "same event ID, consumer receipt time inside the attempt's start and end (+/- 50 ms)",
+        "ingestion": {
+          "ledgercore": {
+            "caught_up_at": "2026-11-06T05:21:24.364Z",
+            "discontinuities": []
+          },
+          "fixture_consumer": {
+            "caught_up_at": "2026-11-06T05:21:24.364Z",
+            "discontinuities": []
+          }
+        }
+      },
+      "limitations": [],
+      "errors": []
+    }
+  }
+}

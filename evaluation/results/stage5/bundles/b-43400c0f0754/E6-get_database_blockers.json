@@ -1,0 +1,79 @@
+{
+ "arguments": {
+  "limit": 50,
+  "mode": "historical"
+ },
+ "collected_at": "2026-11-06T17:41:58.166Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "blocked_sessions": 2,
+  "blocker_roles": {
+   "other": 2
+  },
+  "edges": [
+   {
+    "blocked_pid": 81906,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 81908,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-06T17:40:22.298Z",
+    "last_seen": "2026-11-06T17:41:26.300Z",
+    "max_blocked_wait_seconds": 1.993,
+    "max_blocker_transaction_seconds": 66.014,
+    "samples": 30
+   },
+   {
+    "blocked_pid": 81907,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 81908,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-06T17:40:22.298Z",
+    "last_seen": "2026-11-06T17:41:26.300Z",
+    "max_blocked_wait_seconds": 1.992,
+    "max_blocker_transaction_seconds": 66.014,
+    "samples": 28
+   }
+  ],
+  "first_blocking_at": "2026-11-06T17:40:22.298Z",
+  "last_blocking_at": "2026-11-06T17:41:26.300Z",
+  "max_blocked_wait_seconds": 1.993,
+  "meaning": "Each edge: a waiting ledger_app session (blocked_pid) and the session holding the lock (blocker_pid), labelled only ledger_app or other. No query text is collected.",
+  "mode": "historical",
+  "relationships": 2,
+  "samples": {
+   "expected": 105,
+   "failed": 0,
+   "gaps": [],
+   "successful": 105,
+   "with_blocking": 31
+  }
+ },
+ "errors": [],
+ "evidence_id": "876d0eeb-30aa-494e-8c41-36e4072eff35",
+ "limitations": [
+  "Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+ ],
+ "observed_window": {
+  "first": "2026-11-06T17:38:18.300Z",
+  "last": "2026-11-06T17:41:46.300Z"
+ },
+ "requested_window": {
+  "end": "2026-11-06T17:41:47.000Z",
+  "start": "2026-11-06T17:38:17.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "postgres_samples",
+  "target_instance_id": "b3312f99-3a51-4769-afc0-4a04247624ed",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_database_blockers",
+ "truncated": false
+}

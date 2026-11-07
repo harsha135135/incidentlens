@@ -1,0 +1,172 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cu-h1-r3",
+  "template": "cu-h1",
+  "split": "held_out",
+  "category": "consumer_unavailable",
+  "ground_truth": "consumer_unavailable",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 4103592327,
+      "controller_run": "stage5-cu-h1-r3-a1",
+      "bundle": "b-ffed148f9ce1",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T04:52:09.000Z",
+        "end": "2026-11-07T04:56:09.000Z"
+      },
+      "validity": "logs COMPLETE, network_error 1576 of 1576 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "e942e432-c1dc-474b-87b4-b3ddf4e6b19b",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4054,
+        "reported_output_tokens": 1165,
+        "tokens_counted_against_budget": 5219,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 11,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publications stopped for about 2 minutes while connection attempts to the consumer were refused, building a backlog that then drained. This matches late notifications. Why the consumer refused is not shown.",
+      "evidence": {
+        "E1": "9acb043a-cfdf-4306-af4f-918451683de0",
+        "E2": "e77aed5a-1aed-4bd5-873d-698d339d475e",
+        "E3": "93af9128-8a03-40ed-b83a-ea08bf1de91c",
+        "E4": "506fa872-b019-4e64-867b-a5b5ba9bb545",
+        "E5": "a074952e-3d0a-4ef0-9858-9f264c9c9904",
+        "E6": "c2214090-299c-4c37-bb53-1cdce07ceb50",
+        "E7": "368d058c-c3b3-4bb2-b008-48ad419db10e"
+      },
+      "findings": [
+        {
+          "claim": "Publications fell to 0 for about 12 consecutive 10 s buckets while arrivals continued at 22 per bucket; pending grew from 5 to 264 and then drained.",
+          "reason": "Per-bucket counts show the stall, and the pending gauge shows the backlog that built during it.",
+          "support": "observed",
+          "evidence_ids": [
+            "e77aed5a-1aed-4bd5-873d-698d339d475e"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "12"
+          ]
+        },
+        {
+          "claim": "1576 of 2090 delivery attempts failed with CONNECTION_FAILED in about 0.2 ms, so the consumer endpoint refused connections. All 514 successful attempts took about 71 ms.",
+          "reason": "Fast connection failures with no matching consumer record point to the endpoint being unreachable, not slow.",
+          "support": "observed",
+          "evidence_ids": [
+            "93af9128-8a03-40ed-b83a-ea08bf1de91c",
+            "506fa872-b019-4e64-867b-a5b5ba9bb545"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The transfer API, DB pool and DB locking were healthy, so the delay sits in outbox-to-consumer delivery and not in transfer processing.",
+          "reason": "Transfers returned 201 with p99 of 0.25 s, the pool had 0 pending and 0 timeouts, and no DB blocking was sampled.",
+          "support": "inferred",
+          "evidence_ids": [
+            "9acb043a-cfdf-4306-af4f-918451683de0",
+            "a074952e-3d0a-4ef0-9858-9f264c9c9904",
+            "c2214090-299c-4c37-bb53-1cdce07ceb50"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "No data on the consumer process (down, restarting or listening on a different port), so the reason for the refused connections is unconfirmed.",
+        "The 778 pre-existing FAILED rows are not explained and may mean some notifications were never delivered."
+      ],
+      "next_checks": [
+        "Check consumer logs, uptime and restarts for 04:53:30-04:55:50 and confirm it listens on 127.0.0.1:18090.",
+        "Check when and why the 778 rows were marked FAILED, and whether they need replay."
+      ],
+      "alternatives": [
+        {
+          "reason": "The failed count stays at 778 throughout the window, so it did not change as the stall began or ended.",
+          "assessment": "supported",
+          "hypothesis": "The 778 FAILED outbox rows (oldest undelivered age about 40,000 s) are a separate older problem and not the cause of this window's delay.",
+          "evidence_ids": [
+            "e77aed5a-1aed-4bd5-873d-698d339d475e"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        },
+        {
+          "reason": "The pool showed no pending borrowers or timeouts, and no blocking sessions were observed.",
+          "assessment": "weakened",
+          "hypothesis": "The slowdown comes from DB pool exhaustion or lock contention.",
+          "evidence_ids": [
+            "a074952e-3d0a-4ef0-9858-9f264c9c9904",
+            "c2214090-299c-4c37-bb53-1cdce07ceb50"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4054,
+    "output_tokens": 1165,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "consumer_unavailable",
+    "cost_usd": 0.01976,
+    "checks": {
+      "numbers_checked": 11,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_unavailable",
+    "rule": "1576 of 1576 failed deliveries were network_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

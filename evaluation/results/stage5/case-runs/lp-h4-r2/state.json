@@ -1,0 +1,173 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "lp-h4-r2",
+  "template": "lp-h4",
+  "split": "held_out",
+  "category": "lock_pool_exhaustion",
+  "ground_truth": "lock_contention+pool_saturation",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3956726152,
+      "controller_run": "stage5-lp-h4-r2-a1",
+      "bundle": "b-7cb30e369c60",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T05:23:21.000Z",
+        "end": "2026-11-07T05:25:51.000Z"
+      },
+      "validity": "blockers COMPLETE, other edges 1, pool timeouts 152"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "lock_contention",
+    "rule": "a non-ledger_app session blocked ledger_app sessions in 23 samples; 152 pool acquisition timeouts",
+    "evidence_ids": [
+      "E6",
+      "E5"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "831963f1-84a9-47fb-aee9-103b5d3d93f8",
+    "status": "COMPLETED",
+    "final_reason": "model report: SUPPORTED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4619,
+        "reported_output_tokens": 920,
+        "tokens_counted_against_budget": 5539,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 12,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "SUPPORTED",
+      "summary": "A restart at 05:23:34 shrank the DB pool to 1 connection with a 250 ms timeout. An idle-in-transaction session then blocked the only connection, causing acquisition timeouts and 5xx on transfers.",
+      "evidence": {
+        "E1": "129467c6-4f03-4be5-9d3b-190e03d513ca",
+        "E2": "a950b060-8570-4092-a6a9-06436086a7db",
+        "E3": "ca507419-1d33-4e17-94eb-c59a108f9937",
+        "E4": "5321683e-6fd2-4b7d-9c52-afb517e74655",
+        "E5": "cca7090d-3985-4715-a532-903aa021509a",
+        "E6": "c6346a30-1dbc-48cf-8437-c9f30baab5da",
+        "E7": "b90c2324-8002-4bd3-b002-f51ce0eec744"
+      },
+      "findings": [
+        {
+          "claim": "Config changed at the 05:23:34 restart: poolMaximumSize 10->1 and connection timeout 30000->250 ms.",
+          "reason": "Runtime config shows the new values in effect from 05:23:34, inside the window.",
+          "support": "observed",
+          "evidence_ids": [
+            "b90c2324-8002-4bd3-b002-f51ce0eec744"
+          ],
+          "evidence_handles": [
+            "E7"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The single-connection pool timed out on acquisition (152 timeouts) while borrowers queued, in the same period as the blocking.",
+          "reason": "Max 1, 152 timeouts, pending above zero 05:23:38-05:24:28, 250 ms timeout.",
+          "support": "observed",
+          "evidence_ids": [
+            "cca7090d-3985-4715-a532-903aa021509a"
+          ],
+          "evidence_handles": [
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "A session idle in transaction blocked another ledger_app session for up to 1.9 s (05:23:36-05:24:30), holding the sole connection and starving others.",
+          "reason": "The blocking interval matches the pool-pending interval.",
+          "support": "observed",
+          "evidence_ids": [
+            "c6346a30-1dbc-48cf-8437-c9f30baab5da",
+            "cca7090d-3985-4715-a532-903aa021509a"
+          ],
+          "evidence_handles": [
+            "E6",
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Transfers failed (22 HTTP 500, 97 HTTP 503; 29.5% server errors) with p99 2.2 s. These are likely the pool timeouts.",
+          "reason": "Error and latency symptoms are consistent with acquisition timeouts after the restart, though not directly linked per request.",
+          "support": "inferred",
+          "evidence_ids": [
+            "129467c6-4f03-4be5-9d3b-190e03d513ca",
+            "cca7090d-3985-4715-a532-903aa021509a"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Scrape gap of 10 s at 05:23:28-05:23:38 and one counter restart; 20 gauge samples were NaN.",
+        "No per-request link between 5xx and pool timeouts, and the idle-in-transaction session's origin is unknown.",
+        "E1 (get_request_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+        "E2 (get_outbox_stats) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+        "E5 (get_pool_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero."
+      ],
+      "next_checks": [
+        "Identify the application code or session holding the idle-in-transaction connection (pid 57020).",
+        "Restore poolMaximumSize and timeout to prior values and re-measure transfer errors."
+      ],
+      "alternatives": [
+        {
+          "reason": "All 294 deliveries succeeded at about 72 ms, with no server or network errors.",
+          "assessment": "weakened",
+          "hypothesis": "Outbox delivery or consumer slowness caused the failures",
+          "evidence_ids": [
+            "ca507419-1d33-4e17-94eb-c59a108f9937",
+            "5321683e-6fd2-4b7d-9c52-afb517e74655"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4619,
+    "output_tokens": 920,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.01844,
+    "checks": {
+      "numbers_checked": 12,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

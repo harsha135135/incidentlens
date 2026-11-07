@@ -1,0 +1,4 @@
+{"at": "2026-11-06T05:34:43.420Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T05:34:43.416Z"}
+{"at": "2026-11-06T05:34:46.689Z", "action": "ledgercore_restarted", "consumer": "in-process"}
+{"at": "2026-11-06T05:35:55.711Z", "action": "ledgercore_restarted", "consumer": "fixture"}
+{"at": "2026-11-06T05:35:55.717Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T05:35:55.712Z"}

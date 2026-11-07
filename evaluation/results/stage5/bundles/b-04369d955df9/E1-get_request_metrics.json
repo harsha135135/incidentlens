@@ -1,0 +1,32 @@
+{
+ "arguments": {
+  "route_group": "transfers"
+ },
+ "collected_at": "2026-11-06T17:50:16.013Z",
+ "coverage": "UNAVAILABLE",
+ "data": {},
+ "errors": [
+  "Prometheus unreachable"
+ ],
+ "evidence_id": "07a21544-3622-403e-abf4-8396837c3261",
+ "limitations": [
+  "Prometheus could not be queried, so request metrics are unknown."
+ ],
+ "observed_window": {
+  "first": null,
+  "last": null
+ },
+ "requested_window": {
+  "end": "2026-11-06T17:50:05.000Z",
+  "start": "2026-11-06T17:47:05.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "86d77d22-8ade-4de9-8796-06c268bac5c9",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_request_metrics",
+ "truncated": false
+}

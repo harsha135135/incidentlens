@@ -1,0 +1,174 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "me-h2-r1",
+  "template": "me-h2",
+  "split": "held_out",
+  "category": "missing_evidence",
+  "ground_truth": "insufficient_evidence",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 4019403239,
+      "controller_run": "stage5-me-h2-r1-a1",
+      "bundle": "b-28e1d420f659",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T19:24:31.000Z",
+        "end": "2026-11-06T19:27:31.000Z"
+      },
+      "validity": "deciding source logs PARTIAL; durable backlog peak 522"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "INCONCLUSIVE",
+    "primary_cause": "unclassified",
+    "rule": "no rule matched",
+    "evidence_ids": [],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "f46ae8f8-70cd-4bfc-b683-cf8dc33f0e48",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3289,
+        "reported_output_tokens": 968,
+        "tokens_counted_against_budget": 4257,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 7,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publications stalled to zero for about 140 s while arrivals continued at a steady 3.6/s, so notifications backed up. The cause of the stall is not shown by the evidence.",
+      "evidence": {
+        "E1": "0946d82d-a2c2-48d4-b9e3-e50712fdf219",
+        "E2": "328a35c1-dbcc-4cfc-b7b2-168a141982b4",
+        "E3": "acc9ec82-345f-4923-83f3-b023f0c8366e",
+        "E4": "f8a3b43d-926b-4425-9ecd-7646843e32de",
+        "E5": "578aeb1a-df7c-48fc-87c1-4a96c12f3445",
+        "E6": "740a9a40-9a79-4fed-bcd3-a1bfc6ba0666",
+        "E7": "8c91651a-2414-4e50-b9e3-b578ced532ce"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publication stalled: 0 publications in 14 consecutive 10 s buckets while arrivals held at 36 per bucket; 472 events were left unpublished.",
+          "reason": "Durable counts show arrivals 648 vs publications 176, with a zero-publication run mid-window.",
+          "support": "observed",
+          "evidence_ids": [
+            "328a35c1-dbcc-4cfc-b7b2-168a141982b4"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "14"
+          ]
+        },
+        {
+          "claim": "The stall matches the late-notification symptom: events committed during the stall waited for the later recovery (40 and 82 per bucket at the end of the window).",
+          "reason": "Publications resumed and exceeded the arrival rate at the end, consistent with a backlog draining, but delivery timing was not measured.",
+          "support": "inferred",
+          "evidence_ids": [
+            "328a35c1-dbcc-4cfc-b7b2-168a141982b4"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "No delivery attempt records or consumer timing exist for the window, so the delivery path cannot be inspected for errors or slowness.",
+          "reason": "Both show 0 attempts, and the log collector had not confirmed reading past the window end.",
+          "support": "observed",
+          "evidence_ids": [
+            "acc9ec82-345f-4923-83f3-b023f0c8366e",
+            "f8a3b43d-926b-4425-9ecd-7646843e32de"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Prometheus was unreachable, so request, pool and outbox gauge data are missing (E1, E5, E2).",
+        "Delivery logs and blocker samples are empty or partial, so the stall's cause cannot be identified.",
+        "E1 (get_request_metrics) is UNAVAILABLE: Prometheus could not be queried, so request metrics are unknown.",
+        "E2 (get_outbox_stats) is PARTIAL: Outbox gauge history is unavailable (Prometheus could not be queried).",
+        "E3 (search_delivery_logs) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+        "E4 (get_delivery_timings) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+        "E5 (get_pool_metrics) is UNAVAILABLE: Prometheus could not be queried, so the pool state is unknown.",
+        "E6 (get_database_blockers) is UNAVAILABLE: Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+      ],
+      "next_checks": [
+        "Re-query delivery logs once the collector has read past the window end, and check for failures and timeouts in the stall period.",
+        "Restore Prometheus and check pool saturation, DB blocking, and the consumer's own logs for 19:24:50-19:27:10."
+      ],
+      "alternatives": [
+        {
+          "reason": "No attempt or consumer timing data is available to confirm or rule this out.",
+          "assessment": "unassessed",
+          "hypothesis": "Consumer endpoint at 127.0.0.1:18090 was slow or failing, so delivery attempts timed out (3 s delivery timeout).",
+          "evidence_ids": [
+            "f8a3b43d-926b-4425-9ecd-7646843e32de",
+            "8c91651a-2414-4e50-b9e3-b578ced532ce"
+          ],
+          "evidence_handles": [
+            "E4",
+            "E7"
+          ]
+        },
+        {
+          "reason": "Pool metrics were unavailable and no blocker samples succeeded.",
+          "assessment": "unassessed",
+          "hypothesis": "DB pool exhaustion or lock blocking stalled the outbox poller.",
+          "evidence_ids": [
+            "578aeb1a-df7c-48fc-87c1-4a96c12f3445",
+            "740a9a40-9a79-4fed-bcd3-a1bfc6ba0666"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3289,
+    "output_tokens": 968,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "other",
+    "cost_usd": 0.01626,
+    "checks": {
+      "numbers_checked": 7,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

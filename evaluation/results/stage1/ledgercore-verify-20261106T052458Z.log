@@ -1,0 +1,689 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24384 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] -----------------< io.github.harsha135135:ledgercore >------------------
+[INFO] Building ledgercore 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Loaded 24384 auto-discovered prefixes for remote repository maven-central (prefixes-maven-central.txt)
+[WARNING] Could not transfer metadata /.meta/prefixes.txt from/to flyway-community-db-support (https://maven.pkg.github.com/flyway/flyway-community-db-support): HTTP Status: 401
+[WARNING] Could not transfer metadata /.meta/prefixes.txt from/to MavenFeed (https://red-gate.pkgs.visualstudio.com/MavenFeed/_packaging/MavenFeed/maven/v1/): HTTP Status: 401
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ ledgercore ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 6 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ ledgercore ---
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ ledgercore ---
+[INFO] skip non existing resourceDirectory /Users/harshamac/developer/two/ledgercore/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ ledgercore ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ ledgercore ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running io.github.harsha135135.ledgercore.outbox.OutboxTest
+10:55:01.796 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.outbox.OutboxTest]: OutboxTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:55:01.884 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.outbox.OutboxTest
+10:55:01.919 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.outbox.OutboxTest]: OutboxTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:55:01.922 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.outbox.OutboxTest
+10:55:01.922 [main] WARN org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- For test class [io.github.harsha135135.ledgercore.outbox.OutboxTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-06T10:55:02.125+05:30  INFO [] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxTest       : Starting OutboxTest using Java 25.0.2 with PID 43637 (started by harshamac in /Users/harshamac/developer/two/ledgercore)
+2026-11-06T10:55:02.125+05:30  INFO [] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxTest       : No active profile set, falling back to 1 default profile: "default"
+2026-11-06T10:55:02.372+05:30  INFO [] 43637 --- [ledgercore] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-06T10:55:02.373+05:30  INFO [] 43637 --- [ledgercore] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-06T10:55:02.377+05:30  INFO [] 43637 --- [ledgercore] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-06T10:55:02.490+05:30  INFO [] 43637 --- [ledgercore] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.UnixSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-06T10:55:02.700+05:30  INFO [] 43637 --- [ledgercore] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Unix socket (unix:///var/run/docker.sock)
+2026-11-06T10:55:02.701+05:30  INFO [] 43637 --- [ledgercore] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-06T10:55:02.716+05:30  INFO [] 43637 --- [ledgercore] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.6.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 7935 MB
+  Labels: 
+    com.docker.desktop.address=unix:///Users/harshamac/Library/Containers/com.docker.docker/Data/docker-cli.sock
+2026-11-06T10:55:02.775+05:30  INFO [] 43637 --- [ledgercore] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-06T10:55:02.868+05:30  INFO [] 43637 --- [ledgercore] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-06T10:55:02.938+05:30  INFO [] 43637 --- [ledgercore] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 3119736d4b89b262ecc2ed049daf07bb64220bd262a88f940887dae54fe502ae
+2026-11-06T10:55:03.145+05:30  INFO [] 43637 --- [ledgercore] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT0.370057S
+2026-11-06T10:55:03.149+05:30  INFO [] 43637 --- [ledgercore] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-06T10:55:03.149+05:30  INFO [] 43637 --- [ledgercore] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-06T10:55:03.149+05:30  INFO [] 43637 --- [ledgercore] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-06T10:55:03.150+05:30  INFO [] 43637 --- [ledgercore] [           main] tc.postgres:17.11                        : Creating container for image: postgres:17.11
+2026-11-06T10:55:03.188+05:30  INFO [] 43637 --- [ledgercore] [           main] tc.postgres:17.11                        : Container postgres:17.11 is starting: 0ab1bc05b89b2143fcf55cd415fd6eed8abd9c56acafdf2c3f3021b0fb57633c
+2026-11-06T10:55:03.921+05:30  INFO [] 43637 --- [ledgercore] [           main] tc.postgres:17.11                        : Container postgres:17.11 started in PT0.771033S
+2026-11-06T10:55:03.922+05:30  INFO [] 43637 --- [ledgercore] [           main] tc.postgres:17.11                        : Container is started (JDBC URL: jdbc:postgresql://localhost:55162/test?loggerLevel=OFF)
+2026-11-06T10:55:04.386+05:30  INFO [] 43637 --- [ledgercore] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-11-06T10:55:04.394+05:30  INFO [] 43637 --- [ledgercore] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-06T10:55:04.394+05:30  INFO [] 43637 --- [ledgercore] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-06T10:55:04.413+05:30  INFO [] 43637 --- [ledgercore] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2273 ms
+2026-11-06T10:55:04.662+05:30  INFO [] 43637 --- [ledgercore] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:55162/test?loggerLevel=OFF (PostgreSQL 17.11)
+2026-11-06T10:55:04.689+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-06T10:55:04.690+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 6 migrations (execution time 00:00.009s)
+2026-11-06T10:55:04.700+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-06T10:55:04.734+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-11-06T10:55:04.743+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - core ledger"
+2026-11-06T10:55:04.773+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - demo principals"
+2026-11-06T10:55:04.782+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - idempotency"
+2026-11-06T10:55:04.791+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - holds"
+2026-11-06T10:55:04.802+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - outbox"
+2026-11-06T10:55:04.816+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "6 - diagnostics"
+2026-11-06T10:55:04.828+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 6 migrations to schema "public", now at version v6 (execution time 00:00.043s)
+2026-11-06T10:55:04.989+05:30  INFO [] 43637 --- [ledgercore] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name ledgerUsers
+2026-11-06T10:55:05.241+05:30  INFO [] 43637 --- [ledgercore] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-06T10:55:05.269+05:30  INFO [] 43637 --- [ledgercore] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 55166 (http) with context path '/'
+2026-11-06T10:55:05.275+05:30  INFO [] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxTest       : Started OutboxTest in 3.324 seconds (process running for 4.058)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/Users/harshamac/.m2/repository/net/bytebuddy/byte-buddy-agent/1.18.15/byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-11-06T10:55:05.695+05:30  INFO [] 43637 --- [ledgercore] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-06T10:55:05.710+05:30  INFO [] 43637 --- [ledgercore] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@46aa5294
+2026-11-06T10:55:05.711+05:30  INFO [] 43637 --- [ledgercore] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-06T10:55:05.811+05:30  INFO [] 43637 --- [ledgercore] [1-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-06T10:55:05.811+05:30  INFO [] 43637 --- [ledgercore] [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-06T10:55:05.812+05:30  INFO [] 43637 --- [ledgercore] [1-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-06T10:55:06.406+05:30  WARN [f5ed9679-fc3e-4397-b409-38074e6e28dd] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 1 failed: HTTP_503
+2026-11-06T10:55:06.412+05:30  WARN [b8962ba7-ea08-4436-897d-ca34071017b8] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 1 failed: HTTP_503
+2026-11-06T10:55:06.417+05:30  WARN [e277ec68-3fb7-4160-8b20-1e685b54f758] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 1 failed: HTTP_503
+2026-11-06T10:55:06.422+05:30  WARN [5112b399-b577-4cc3-9d9d-678a3622bb15] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 1 failed: HTTP_503
+2026-11-06T10:55:06.435+05:30  WARN [f5ed9679-fc3e-4397-b409-38074e6e28dd] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 2 failed: HTTP_503
+2026-11-06T10:55:06.439+05:30  WARN [b8962ba7-ea08-4436-897d-ca34071017b8] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 2 failed: HTTP_503
+2026-11-06T10:55:06.444+05:30  WARN [e277ec68-3fb7-4160-8b20-1e685b54f758] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 2 failed: HTTP_503
+2026-11-06T10:55:06.448+05:30  WARN [5112b399-b577-4cc3-9d9d-678a3622bb15] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 2 failed: HTTP_503
+2026-11-06T10:55:06.461+05:30  WARN [f5ed9679-fc3e-4397-b409-38074e6e28dd] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 3 failed: HTTP_503
+2026-11-06T10:55:06.466+05:30  WARN [b8962ba7-ea08-4436-897d-ca34071017b8] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 3 failed: HTTP_503
+2026-11-06T10:55:06.470+05:30  WARN [e277ec68-3fb7-4160-8b20-1e685b54f758] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 3 failed: HTTP_503
+2026-11-06T10:55:06.474+05:30  WARN [5112b399-b577-4cc3-9d9d-678a3622bb15] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 3 failed: HTTP_503
+2026-11-06T10:55:06.487+05:30  WARN [f5ed9679-fc3e-4397-b409-38074e6e28dd] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 4 failed: HTTP_503
+2026-11-06T10:55:06.491+05:30  WARN [b8962ba7-ea08-4436-897d-ca34071017b8] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 4 failed: HTTP_503
+2026-11-06T10:55:06.495+05:30  WARN [e277ec68-3fb7-4160-8b20-1e685b54f758] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 4 failed: HTTP_503
+2026-11-06T10:55:06.499+05:30  WARN [5112b399-b577-4cc3-9d9d-678a3622bb15] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 4 failed: HTTP_503
+2026-11-06T10:55:06.512+05:30  WARN [f5ed9679-fc3e-4397-b409-38074e6e28dd] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 5 failed: HTTP_503
+2026-11-06T10:55:06.517+05:30  WARN [b8962ba7-ea08-4436-897d-ca34071017b8] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 5 failed: HTTP_503
+2026-11-06T10:55:06.521+05:30  WARN [e277ec68-3fb7-4160-8b20-1e685b54f758] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 5 failed: HTTP_503
+2026-11-06T10:55:06.525+05:30  WARN [5112b399-b577-4cc3-9d9d-678a3622bb15] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 5 failed: HTTP_503
+2026-11-06T10:55:06.538+05:30  WARN [f5ed9679-fc3e-4397-b409-38074e6e28dd] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 6 failed: HTTP_503
+2026-11-06T10:55:06.542+05:30  WARN [b8962ba7-ea08-4436-897d-ca34071017b8] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 6 failed: HTTP_503
+2026-11-06T10:55:06.546+05:30  WARN [e277ec68-3fb7-4160-8b20-1e685b54f758] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 6 failed: HTTP_503
+2026-11-06T10:55:06.550+05:30  WARN [5112b399-b577-4cc3-9d9d-678a3622bb15] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 6 failed: HTTP_503
+2026-11-06T10:55:06.563+05:30  WARN [f5ed9679-fc3e-4397-b409-38074e6e28dd] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 7 failed: HTTP_503
+2026-11-06T10:55:06.569+05:30  WARN [b8962ba7-ea08-4436-897d-ca34071017b8] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 7 failed: HTTP_503
+2026-11-06T10:55:06.576+05:30  WARN [e277ec68-3fb7-4160-8b20-1e685b54f758] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 7 failed: HTTP_503
+2026-11-06T10:55:06.584+05:30  WARN [5112b399-b577-4cc3-9d9d-678a3622bb15] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 7 failed: HTTP_503
+2026-11-06T10:55:06.600+05:30  WARN [f5ed9679-fc3e-4397-b409-38074e6e28dd] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 8 failed: HTTP_503
+2026-11-06T10:55:06.606+05:30  WARN [b8962ba7-ea08-4436-897d-ca34071017b8] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 8 failed: HTTP_503
+2026-11-06T10:55:06.616+05:30  WARN [e277ec68-3fb7-4160-8b20-1e685b54f758] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 8 failed: HTTP_503
+2026-11-06T10:55:06.621+05:30  WARN [5112b399-b577-4cc3-9d9d-678a3622bb15] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 8 failed: HTTP_503
+2026-11-06T10:55:06.710+05:30 ERROR [d4d3b413-97e0-4edc-91e1-1347475c13dd] 43637 --- [ledgercore] [1-auto-1-exec-3] i.g.h.ledgercore.api.ApiErrorHandler     : Unexpected failure
+
+io.github.harsha135135.ledgercore.support.TestCheckpoints$InjectedFailure: Injected failure at AFTER_COMMIT
+	at io.github.harsha135135.ledgercore.support.TestCheckpoints.reached(TestCheckpoints.java:41) ~[test-classes/:na]
+	at io.github.harsha135135.ledgercore.consumer.DemoConsumer.receive(DemoConsumer.java:60) ~[classes/:na]
+	at io.github.harsha135135.ledgercore.consumer.DemoConsumerController.receive(DemoConsumerController.java:57) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649) ~[tomcat-embed-core-11.0.27.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.27.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at io.github.harsha135135.ledgercore.api.RequestBodyLimitFilter.doFilterInternal(RequestBodyLimitFilter.java:58) ~[classes/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$2(FilterChainProxy.java:235) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:491) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:353) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:84) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:131) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:101) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilterInternal(BasicAuthenticationFilter.java:247) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:91) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:76) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:336) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317) ~[spring-security-config-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at io.github.harsha135135.ledgercore.api.RequestIdFilter.doFilterInternal(RequestIdFilter.java:34) ~[classes/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:164) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:411) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1308) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2202) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:947) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:481) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+
+2026-11-06T10:55:06.715+05:30  WARN [5cdbb6a5-ae82-43f0-9732-621b483d2d17] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 1 failed: HTTP_500
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.066 s -- in io.github.harsha135135.ledgercore.outbox.OutboxTest
+[INFO] Running io.github.harsha135135.ledgercore.database.DatabaseRoleTest
+2026-11-06T10:55:06.782+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.database.DatabaseRoleTest]: DatabaseRoleTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:06.788+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.database.DatabaseRoleTest
+2026-11-06T10:55:06.789+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.database.DatabaseRoleTest]: DatabaseRoleTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:06.791+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.database.DatabaseRoleTest
+2026-11-06T10:55:06.791+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.database.DatabaseRoleTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.073 s -- in io.github.harsha135135.ledgercore.database.DatabaseRoleTest
+[INFO] Running io.github.harsha135135.ledgercore.ledger.LedgerFlowTest
+2026-11-06T10:55:06.857+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.ledger.LedgerFlowTest]: LedgerFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:06.866+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.ledger.LedgerFlowTest
+2026-11-06T10:55:06.866+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.ledger.LedgerFlowTest]: LedgerFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:06.868+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.ledger.LedgerFlowTest
+2026-11-06T10:55:06.868+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.ledger.LedgerFlowTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.130 s -- in io.github.harsha135135.ledgercore.ledger.LedgerFlowTest
+[INFO] Running io.github.harsha135135.ledgercore.ledger.AccountLocksTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in io.github.harsha135135.ledgercore.ledger.AccountLocksTest
+[INFO] Running io.github.harsha135135.ledgercore.ledger.ConcurrencyTest
+2026-11-06T10:55:06.992+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.ledger.ConcurrencyTest]: ConcurrencyTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:06.994+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.ledger.ConcurrencyTest
+2026-11-06T10:55:06.994+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.ledger.ConcurrencyTest]: ConcurrencyTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:06.995+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.ledger.ConcurrencyTest
+2026-11-06T10:55:06.995+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.ledger.ConcurrencyTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+Observation: an unrelated balance read waited 164 ms while 20 same-key requests held or queued for a pool of 10 connections.
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.733 s -- in io.github.harsha135135.ledgercore.ledger.ConcurrencyTest
+[INFO] Running io.github.harsha135135.ledgercore.ledger.ReadinessTest
+2026-11-06T10:55:07.725+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.ledger.ReadinessTest]: ReadinessTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:07.727+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.ledger.ReadinessTest
+2026-11-06T10:55:07.728+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.ledger.ReadinessTest]: ReadinessTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:07.729+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.ledger.ReadinessTest
+2026-11-06T10:55:07.729+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.ledger.ReadinessTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 s -- in io.github.harsha135135.ledgercore.ledger.ReadinessTest
+[INFO] Running io.github.harsha135135.ledgercore.ledger.ReversalTest
+2026-11-06T10:55:07.757+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.ledger.ReversalTest]: ReversalTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:07.759+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.ledger.ReversalTest
+2026-11-06T10:55:07.759+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.ledger.ReversalTest]: ReversalTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:07.760+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.ledger.ReversalTest
+2026-11-06T10:55:07.761+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.ledger.ReversalTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.181 s -- in io.github.harsha135135.ledgercore.ledger.ReversalTest
+[INFO] Running io.github.harsha135135.ledgercore.ledger.MoneyTest
+[INFO] Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 s -- in io.github.harsha135135.ledgercore.ledger.MoneyTest
+[INFO] Running io.github.harsha135135.ledgercore.ledger.ReconciliationTest
+2026-11-06T10:55:07.968+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.ledger.ReconciliationTest]: ReconciliationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:07.970+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.ledger.ReconciliationTest
+2026-11-06T10:55:07.970+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.ledger.ReconciliationTest]: ReconciliationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:07.971+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.ledger.ReconciliationTest
+2026-11-06T10:55:07.971+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.ledger.ReconciliationTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.064 s -- in io.github.harsha135135.ledgercore.ledger.ReconciliationTest
+[INFO] Running io.github.harsha135135.ledgercore.idempotency.IdempotencyTest
+2026-11-06T10:55:08.033+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.idempotency.IdempotencyTest]: IdempotencyTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:08.038+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.idempotency.IdempotencyTest
+2026-11-06T10:55:08.039+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.idempotency.IdempotencyTest]: IdempotencyTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:08.041+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.idempotency.IdempotencyTest
+2026-11-06T10:55:08.041+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.idempotency.IdempotencyTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+2026-11-06T10:55:08.209+05:30 ERROR [fecc4785-8d80-4577-82f8-cd2c14ff03da] 43637 --- [ledgercore] [1-auto-1-exec-1] i.g.h.ledgercore.api.ApiErrorHandler     : Unexpected failure
+
+io.github.harsha135135.ledgercore.support.TestCheckpoints$InjectedFailure: Injected failure at AFTER_COMMIT
+	at io.github.harsha135135.ledgercore.support.TestCheckpoints.reached(TestCheckpoints.java:41) ~[test-classes/:na]
+	at io.github.harsha135135.ledgercore.ledger.LedgerService.transfer(LedgerService.java:107) ~[classes/:na]
+	at io.github.harsha135135.ledgercore.ledger.LedgerController.transfer(LedgerController.java:88) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649) ~[tomcat-embed-core-11.0.27.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.27.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at io.github.harsha135135.ledgercore.api.RequestBodyLimitFilter.doFilterInternal(RequestBodyLimitFilter.java:58) ~[classes/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$2(FilterChainProxy.java:235) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:491) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:353) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:84) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:131) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:101) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.authentication.www.BasicAuthenticationFilter.doFilterInternal(BasicAuthenticationFilter.java:247) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:91) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:76) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:230) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:243) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:336) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:140) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195) ~[spring-security-web-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317) ~[spring-security-config-7.1.2.jar:7.1.2]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at io.github.harsha135135.ledgercore.api.RequestIdFilter.doFilterInternal(RequestIdFilter.java:34) ~[classes/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:164) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:411) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1308) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2202) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:947) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:481) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.191 s -- in io.github.harsha135135.ledgercore.idempotency.IdempotencyTest
+[INFO] Running io.github.harsha135135.ledgercore.idempotency.IdempotencyUnitTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s -- in io.github.harsha135135.ledgercore.idempotency.IdempotencyUnitTest
+[INFO] Running io.github.harsha135135.ledgercore.diagnostics.DiagnosticRecordsTest
+2026-11-06T10:55:08.227+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.diagnostics.DiagnosticRecordsTest]: DiagnosticRecordsTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:08.232+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.diagnostics.DiagnosticRecordsTest
+2026-11-06T10:55:08.233+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.diagnostics.DiagnosticRecordsTest]: DiagnosticRecordsTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:08.234+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.diagnostics.DiagnosticRecordsTest
+2026-11-06T10:55:08.234+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.diagnostics.DiagnosticRecordsTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+2026-11-06T10:55:09.264+05:30  INFO [d8e35067-968e-403e-8ae2-25b8594128fb] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.273+05:30  INFO [bbac1921-59e0-4719-b225-a38145d5b7c4] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.278+05:30  INFO [8b5ad48e-0d13-4697-882c-e21862905bf9] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.284+05:30  INFO [c276e502-7c46-4300-8a00-97c544a4acda] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.289+05:30  INFO [0f7930ea-37c9-48de-adb3-1811222a37ee] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.289+05:30  INFO [] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox poll batch
+2026-11-06T10:55:09.299+05:30  INFO [f6ad3e0a-a378-4043-a232-e8a389ae275b] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.300+05:30  INFO [] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox poll batch
+2026-11-06T10:55:09.307+05:30  INFO [] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : LedgerCore configuration at startup
+2026-11-06T10:55:09.326+05:30  INFO [d69db020-82fb-414b-9333-ed0e9aa112f9] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.331+05:30  INFO [2e7f40dd-fdd4-406d-9f1b-6f0810139f41] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.335+05:30  INFO [12706617-7c93-4203-b296-16d119218fc7] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.335+05:30  INFO [] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox poll batch
+2026-11-06T10:55:09.343+05:30  WARN [ab2e1985-ec6c-421d-b17d-ffec49894602] 43637 --- [ledgercore] [           main] i.g.h.ledgercore.outbox.OutboxPoller     : Outbox delivery attempt 1 failed: HTTP_503
+2026-11-06T10:55:09.343+05:30  INFO [ab2e1985-ec6c-421d-b17d-ffec49894602] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.343+05:30  INFO [] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox poll batch
+2026-11-06T10:55:09.365+05:30  INFO [98a46b67-e99c-49a4-8413-370d5eaecdac] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.369+05:30  INFO [1a5c0788-7599-4dfb-82fa-dcb63b8e416e] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.373+05:30  INFO [6fca9d78-e18c-4f0d-bcd1-74e3a7c0927f] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.373+05:30  INFO [] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox poll batch
+2026-11-06T10:55:09.382+05:30  INFO [eec75bca-32c9-4f1d-afe7-4205d00f7129] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox delivery attempt
+2026-11-06T10:55:09.382+05:30  INFO [] 43637 --- [ledgercore] [           main] ledgercore.diagnostics                   : Outbox poll batch
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.157 s -- in io.github.harsha135135.ledgercore.diagnostics.DiagnosticRecordsTest
+[INFO] Running io.github.harsha135135.ledgercore.diagnostics.DiagnosticDatabaseAccessTest
+2026-11-06T10:55:09.385+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.diagnostics.DiagnosticDatabaseAccessTest]: DiagnosticDatabaseAccessTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:09.387+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.diagnostics.DiagnosticDatabaseAccessTest
+2026-11-06T10:55:09.387+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.diagnostics.DiagnosticDatabaseAccessTest]: DiagnosticDatabaseAccessTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:09.388+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.diagnostics.DiagnosticDatabaseAccessTest
+2026-11-06T10:55:09.388+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.diagnostics.DiagnosticDatabaseAccessTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+2026-11-06T10:55:09.449+05:30  INFO [] 43637 --- [ledgercore] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:55162/upgrade_a79adf55513b?loggerLevel=OFF (PostgreSQL 17.11)
+2026-11-06T10:55:09.457+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-06T10:55:09.457+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 6 migrations (execution time 00:00.002s)
+2026-11-06T10:55:09.461+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-06T10:55:09.474+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-11-06T10:55:09.477+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - core ledger"
+2026-11-06T10:55:09.498+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - demo principals"
+2026-11-06T10:55:09.504+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - idempotency"
+2026-11-06T10:55:09.511+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - holds"
+2026-11-06T10:55:09.520+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - outbox"
+2026-11-06T10:55:09.528+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema "public", now at version v5 (execution time 00:00.025s)
+2026-11-06T10:55:09.545+05:30  INFO [] 43637 --- [ledgercore] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:55162/upgrade_a79adf55513b?loggerLevel=OFF (PostgreSQL 17.11)
+2026-11-06T10:55:09.553+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 6 migrations (execution time 00:00.003s)
+2026-11-06T10:55:09.561+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 5
+2026-11-06T10:55:09.564+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "6 - diagnostics"
+2026-11-06T10:55:09.567+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: role "ledger_diag_owner" has already been granted membership in role "pg_read_all_stats" by role "test"
+2026-11-06T10:55:09.576+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v6 (execution time 00:00.009s)
+2026-11-06T10:55:27.981+05:30  WARN [] 43637 --- [ledgercore] [           main] com.zaxxer.hikari.pool.ProxyConnection   : HikariPool-1 - Connection org.postgresql.jdbc.PgConnection@46aa5294 marked as broken because of SQLSTATE(08006), ErrorCode(0)
+
+org.postgresql.util.PSQLException: An I/O error occurred while sending to the backend.
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:474) ~[postgresql-42.7.14.jar:42.7.14]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:533) ~[postgresql-42.7.14.jar:42.7.14]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:449) ~[postgresql-42.7.14.jar:42.7.14]
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:371) ~[postgresql-42.7.14.jar:42.7.14]
+	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:356) ~[postgresql-42.7.14.jar:42.7.14]
+	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:332) ~[postgresql-42.7.14.jar:42.7.14]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:327) ~[postgresql-42.7.14.jar:42.7.14]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at io.github.harsha135135.ledgercore.diagnostics.DiagnosticDatabaseAccessTest.lambda$applicationTransactionsEndAtTheTenSecondTransactionTimeout$0(DiagnosticDatabaseAccessTest.java:186) ~[test-classes/:na]
+	at org.assertj.core.api.ThrowableAssert.catchThrowable(ThrowableAssert.java:66) ~[assertj-core-3.27.7.jar:na]
+	at org.assertj.core.api.AssertionsForClassTypes.catchThrowable(AssertionsForClassTypes.java:908) ~[assertj-core-3.27.7.jar:na]
+	at org.assertj.core.api.Assertions.catchThrowable(Assertions.java:1476) ~[assertj-core-3.27.7.jar:na]
+	at org.assertj.core.api.Assertions.assertThatThrownBy(Assertions.java:1319) ~[assertj-core-3.27.7.jar:na]
+	at io.github.harsha135135.ledgercore.diagnostics.DiagnosticDatabaseAccessTest.applicationTransactionsEndAtTheTenSecondTransactionTimeout(DiagnosticDatabaseAccessTest.java:184) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:701) ~[junit-platform-commons-6.0.3.jar:6.0.3]
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:502) ~[junit-platform-commons-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.support.MethodReflectionUtils.invoke(MethodReflectionUtils.java:45) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:61) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:124) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:163) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:148) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:123) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:105) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:99) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:66) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:47) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:39) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:104) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:98) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invokeVoid(InterceptingExecutableInvoker.java:71) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$0(TestMethodTestDescriptor.java:219) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:215) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:157) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:70) ~[junit-jupiter-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:176) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58) ~[junit-platform-engine-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:58) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$2(InterceptingLauncher.java:57) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:56) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:58) ~[junit-platform-launcher-6.0.3.jar:6.0.3]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.apache.maven.surefire.api.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:125) ~[surefire-api-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithCancellationToken(LauncherAdapter.java:68) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:54) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.6.jar:3.5.6]
+Caused by: java.io.EOFException
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:482) ~[postgresql-42.7.14.jar:42.7.14]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2383) ~[postgresql-42.7.14.jar:42.7.14]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:446) ~[postgresql-42.7.14.jar:42.7.14]
+	... 95 common frames omitted
+
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.67 s -- in io.github.harsha135135.ledgercore.diagnostics.DiagnosticDatabaseAccessTest
+[INFO] Running io.github.harsha135135.ledgercore.diagnostics.PrometheusExportTest
+2026-11-06T10:55:30.057+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.diagnostics.PrometheusExportTest]: PrometheusExportTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:30.067+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.diagnostics.PrometheusExportTest
+2026-11-06T10:55:30.068+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.diagnostics.PrometheusExportTest]: PrometheusExportTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:30.073+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.diagnostics.PrometheusExportTest
+2026-11-06T10:55:30.074+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.diagnostics.PrometheusExportTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-06T10:55:30.095+05:30  INFO [] 43637 --- [ledgercore] [           main] i.g.h.l.d.PrometheusExportTest           : Starting PrometheusExportTest using Java 25.0.2 with PID 43637 (started by harshamac in /Users/harshamac/developer/two/ledgercore)
+2026-11-06T10:55:30.095+05:30  INFO [] 43637 --- [ledgercore] [           main] i.g.h.l.d.PrometheusExportTest           : No active profile set, falling back to 1 default profile: "default"
+2026-11-06T10:55:30.237+05:30  INFO [] 43637 --- [ledgercore] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-11-06T10:55:30.240+05:30  INFO [] 43637 --- [ledgercore] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-06T10:55:30.241+05:30  INFO [] 43637 --- [ledgercore] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-06T10:55:30.260+05:30  INFO [] 43637 --- [ledgercore] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 164 ms
+2026-11-06T10:55:30.328+05:30  INFO [] 43637 --- [ledgercore] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:55162/test?loggerLevel=OFF (PostgreSQL 17.11)
+2026-11-06T10:55:30.342+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 6 migrations (execution time 00:00.005s)
+2026-11-06T10:55:30.352+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 6
+2026-11-06T10:55:30.353+05:30  INFO [] 43637 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2026-11-06T10:55:30.377+05:30  INFO [] 43637 --- [ledgercore] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name ledgerUsers
+2026-11-06T10:55:30.430+05:30  INFO [] 43637 --- [ledgercore] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2026-11-06T10:55:30.438+05:30  INFO [] 43637 --- [ledgercore] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 55270 (http) with context path '/'
+2026-11-06T10:55:30.441+05:30  INFO [] 43637 --- [ledgercore] [           main] i.g.h.l.d.PrometheusExportTest           : Started PrometheusExportTest in 0.361 seconds (process running for 29.224)
+2026-11-06T10:55:30.444+05:30  INFO [] 43637 --- [ledgercore] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-11-06T10:55:30.452+05:30  INFO [] 43637 --- [ledgercore] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@1cb3de26
+2026-11-06T10:55:30.452+05:30  INFO [] 43637 --- [ledgercore] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-11-06T10:55:30.483+05:30  INFO [] 43637 --- [ledgercore] [1-auto-2-exec-1] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-06T10:55:30.483+05:30  INFO [] 43637 --- [ledgercore] [1-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-06T10:55:30.484+05:30  INFO [] 43637 --- [ledgercore] [1-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.699 s -- in io.github.harsha135135.ledgercore.diagnostics.PrometheusExportTest
+[INFO] Running io.github.harsha135135.ledgercore.api.MetricsTest
+2026-11-06T10:55:30.755+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.api.MetricsTest]: MetricsTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:30.760+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.api.MetricsTest
+2026-11-06T10:55:30.760+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.api.MetricsTest]: MetricsTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:30.762+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.api.MetricsTest
+2026-11-06T10:55:30.762+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.api.MetricsTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.065 s -- in io.github.harsha135135.ledgercore.api.MetricsTest
+[INFO] Running io.github.harsha135135.ledgercore.api.HttpSecurityTest
+2026-11-06T10:55:30.820+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.api.HttpSecurityTest]: HttpSecurityTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:30.821+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.api.HttpSecurityTest
+2026-11-06T10:55:30.822+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.api.HttpSecurityTest]: HttpSecurityTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:30.823+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.api.HttpSecurityTest
+2026-11-06T10:55:30.823+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.api.HttpSecurityTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.197 s -- in io.github.harsha135135.ledgercore.api.HttpSecurityTest
+[INFO] Running io.github.harsha135135.ledgercore.hold.HoldTest
+2026-11-06T10:55:31.017+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.hold.HoldTest]: HoldTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:31.022+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.hold.HoldTest
+2026-11-06T10:55:31.023+05:30  INFO [] 43637 --- [ledgercore] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [io.github.harsha135135.ledgercore.hold.HoldTest]: HoldTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-06T10:55:31.024+05:30  INFO [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration io.github.harsha135135.ledgercore.LedgercoreApplication for test class io.github.harsha135135.ledgercore.hold.HoldTest
+2026-11-06T10:55:31.025+05:30  WARN [] 43637 --- [ledgercore] [           main] .b.t.c.SpringBootTestContextBootstrapper : For test class [io.github.harsha135135.ledgercore.hold.HoldTest], the following 'default' context configuration classes were detected but are currently ignored: io.github.harsha135135.ledgercore.support.IntegrationTest$TestSupport. In Spring Framework 7.1, these classes will no longer be ignored. Please update your test configuration accordingly. For details, see: https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/default-config.html
+Observation: capture won 106 and release won 94 of 200 rounds.
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.720 s -- in io.github.harsha135135.ledgercore.hold.HoldTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 111, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.5.1:jar (default-jar) @ ledgercore ---
+[INFO] Building jar: /Users/harshamac/developer/two/ledgercore/target/ledgercore-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:4.1.2:repackage (repackage) @ ledgercore ---
+[INFO] Loaded 50 auto-discovered prefixes for remote repository ow2-snapshot (prefixes-ow2-snapshot.txt)
+[INFO] Replacing main artifact /Users/harshamac/developer/two/ledgercore/target/ledgercore-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /Users/harshamac/developer/two/ledgercore/target/ledgercore-0.0.1-SNAPSHOT.jar.original
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  34.363 s
+[INFO] Finished at: 2026-11-06T10:55:33+05:30
+[INFO] ------------------------------------------------------------------------

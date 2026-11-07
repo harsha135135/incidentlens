@@ -1,0 +1,257 @@
+{
+  "label": "FIXTURE RESULT: Stage 3 pilot (live recorded window), not the evaluation",
+  "run": 2,
+  "scenario": "unavailable_consumer",
+  "ground_truth_cause": "consumer_unavailable",
+  "window": {
+    "start": "2026-11-06T09:43:02.772Z",
+    "end": "2026-11-06T09:45:33.201Z"
+  },
+  "system_order": [
+    "C",
+    "B",
+    "A"
+  ],
+  "controller_run": "pilot-02-094302",
+  "bundle": [
+    {
+      "handle": "E1",
+      "tool": "get_request_metrics",
+      "arguments": {
+        "route_group": "transfers"
+      },
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E2",
+      "tool": "get_outbox_stats",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E3",
+      "tool": "search_delivery_logs",
+      "arguments": {
+        "outcome": "any",
+        "limit": 100
+      },
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E4",
+      "tool": "get_delivery_timings",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    }
+  ],
+  "results": {
+    "C": {
+      "job_id": "86944d19-c7f7-4322-9b75-4f48008b31ba",
+      "status": "COMPLETED",
+      "final_reason": "model report: SUPPORTED",
+      "elapsed_seconds": 30.2,
+      "report": {
+        "usage": {
+          "tool_actions": 6,
+          "model_actions": 5,
+          "reported_input_tokens": 18176,
+          "reported_output_tokens": 1334,
+          "tokens_counted_against_budget": 19510,
+          "model_calls_with_unknown_usage": 0
+        },
+        "outcome": "SUPPORTED",
+        "summary": "Outbox delivery stalled for about 90 s because the external consumer refused connections. Transfers kept committing, so a backlog built and notifications were delayed, then drained in a burst.",
+        "evidence": {
+          "E1": "382aa311-6c5d-47a1-843d-2e71884a4b09",
+          "E2": "61205fa7-54a1-4059-892e-01f87f4a6ade",
+          "E3": "2d4e30d8-d711-4531-b4f2-29ae2b319094",
+          "E4": "81440324-ec80-4e1a-9df8-539e43a96238",
+          "E5": "8a04d11b-57f8-4d97-aaa7-f23bea856a3c",
+          "E6": "d5d5dbf6-2def-4265-a278-89aec44a5663"
+        },
+        "findings": [
+          {
+            "claim": "Transfer intake was healthy: 468 requests, all 201, p95 0.24 s. The delay is not in the API path.",
+            "reason": "No server errors and normal latency on /v1/transfers.",
+            "support": "observed",
+            "evidence_ids": [
+              "382aa311-6c5d-47a1-843d-2e71884a4b09"
+            ],
+            "evidence_handles": [
+              "E1"
+            ]
+          },
+          {
+            "claim": "Publications dropped to 0 for about 90 s while arrivals continued at 32 per 10 s. Pending grew to 287 and oldest age reached 116 s.",
+            "reason": "Per-bucket counts show the publication gap, and the pending and age gauges rose in step; publications resumed at 80 per bucket.",
+            "support": "observed",
+            "evidence_ids": [
+              "61205fa7-54a1-4059-892e-01f87f4a6ade"
+            ],
+            "evidence_handles": [
+              "E2"
+            ]
+          },
+          {
+            "claim": "The stall coincided with 1532 CONNECTION_FAILED attempts (~0.3 ms each) from the outbox to the consumer. There were no auth or server errors.",
+            "reason": "All failures are network errors that fail instantly with no consumer record. Successful attempts took ~72 ms and the consumer handler ~0.02 ms.",
+            "support": "observed",
+            "evidence_ids": [
+              "2d4e30d8-d711-4531-b4f2-29ae2b319094",
+              "81440324-ec80-4e1a-9df8-539e43a96238",
+              "d5d5dbf6-2def-4265-a278-89aec44a5663"
+            ],
+            "evidence_handles": [
+              "E3",
+              "E4",
+              "E6"
+            ]
+          }
+        ],
+        "limitations": [
+          "The reason the consumer refused connections (down, restarting, network) is not visible from these tools.",
+          "Only the earliest log rows are listed, so the exact start and end of the failure period come from the bucket counts."
+        ],
+        "next_checks": [
+          "Check the external consumer's availability, restarts and listener logs around 09:43:33 to 09:44:50.",
+          "Review the outbox retry/backoff settings, since attempts failed every ~1 s and the drain was a burst."
+        ],
+        "alternatives": [
+          {
+            "reason": "Successful deliveries were fast (p95 74 ms; handler 0.03 ms), and the failures were instant connection refusals.",
+            "assessment": "weakened",
+            "hypothesis": "Slow consumer processing or auth caused the delay",
+            "evidence_ids": [
+              "d5d5dbf6-2def-4265-a278-89aec44a5663"
+            ],
+            "evidence_handles": [
+              "E6"
+            ]
+          },
+          {
+            "reason": "Requests were all 201 with low latency, and arrivals were steady.",
+            "assessment": "weakened",
+            "hypothesis": "Transfer API slowness or errors delayed event creation",
+            "evidence_ids": [
+              "382aa311-6c5d-47a1-843d-2e71884a4b09",
+              "61205fa7-54a1-4059-892e-01f87f4a6ade"
+            ],
+            "evidence_handles": [
+              "E1",
+              "E2"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 5,
+      "tool_calls": 6,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "search_delivery_logs",
+        "search_delivery_logs",
+        "get_request_metrics",
+        "get_delivery_timings"
+      ],
+      "recoveries": 0,
+      "input_tokens": 18176,
+      "output_tokens": 1334,
+      "unknown_usage_calls": 0,
+      "classified": "consumer_unavailable",
+      "cost_usd": 0.04969
+    },
+    "B": {
+      "report": {
+        "outcome": "SUPPORTED",
+        "summary": "Transfers are accepted fast, but outbox publication stalled for about 90 s because delivery attempts failed with connection errors. The backlog and undelivered age grew, which fits late notifications.",
+        "findings": [
+          {
+            "claim": "The transfer API is healthy; the delay is downstream of the request path.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "All 468 requests returned 201, p99 was 0.248 s and the server error ratio was 0."
+          },
+          {
+            "claim": "Outbox publication stopped for about 90 s while arrivals continued, building a backlog; the oldest undelivered age reached 116 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E2"
+            ],
+            "reason": "Publications were 0 in buckets 4-12 and 80 per bucket later, while arrivals stayed at 32. Pending peaked at 287."
+          },
+          {
+            "claim": "The stall coincides with connection failures to the delivery endpoint: 1532 of 1867 attempts were CONNECTION_FAILED.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3",
+              "E4"
+            ],
+            "reason": "Failed attempts had no consumer record and took about 0.3 ms, which fits refused connections. Successful attempts took about 72 ms with status 200."
+          },
+          {
+            "claim": "The consumer was unreachable or refusing connections for part of the window. This was likely the cause, and publication recovered with catch-up bursts.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E2",
+              "E3",
+              "E4"
+            ],
+            "reason": "Failures were network-level, with no server or auth errors, and success resumed at 80 per bucket. The tools do not show why the connections failed."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Slow or erroring consumer processing caused the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E4",
+              "E3"
+            ],
+            "reason": "Successful attempts were fast (about 72 ms) and there were no server or auth errors."
+          },
+          {
+            "hypothesis": "A LedgerCore-side outbox poller or network problem, not the consumer, caused the connection failures.",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E3"
+            ],
+            "reason": "The failures are client-side connection errors, and the evidence cannot tell which side caused them."
+          }
+        ],
+        "limitations": [
+          "Only the earliest 100 of 1867 delivery log rows are listed, so the exact end of the failure period comes from the bucket counts rather than from logs.",
+          "No data on the consumer's availability or on network or DNS state, so the root cause of the connection failures is unknown."
+        ],
+        "next_checks": [
+          "Check consumer endpoint availability, restarts and listener state from about 09:43:30 to 09:44:55.",
+          "Review the outbox retry/backoff configuration and any network or DNS changes in that period."
+        ]
+      },
+      "malformed": null,
+      "unknown_citations": [],
+      "stop_reason": "tool_use",
+      "input_tokens": 3222,
+      "output_tokens": 1055,
+      "model_calls": 1,
+      "tool_calls": 4,
+      "latency_seconds": 10.04,
+      "classified": "consumer_unavailable",
+      "cost_usd": 0.01699
+    },
+    "A": {
+      "outcome": "SUPPORTED",
+      "primary_cause": "consumer_unavailable",
+      "rule": "1532 of 1532 failed deliveries were network_error",
+      "evidence_ids": [
+        "E3"
+      ],
+      "model_calls": 0,
+      "tool_calls": 4,
+      "classified": "consumer_unavailable"
+    }
+  }
+}

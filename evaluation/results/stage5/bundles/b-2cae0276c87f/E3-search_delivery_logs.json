@@ -1,0 +1,52 @@
+{
+ "arguments": {
+  "limit": 100,
+  "outcome": "any"
+ },
+ "collected_at": "2026-11-06T19:38:14.033Z",
+ "coverage": "PARTIAL",
+ "data": {
+  "counts_by_outcome": {
+   "auth_error": 0,
+   "network_error": 0,
+   "other": 0,
+   "server_error": 0,
+   "success": 0
+  },
+  "ingestion": {
+   "caught_up_at": null,
+   "discontinuities": []
+  },
+  "matching_records": 0,
+  "note": "Records are LedgerCore's own delivery-attempt log lines, earliest first.",
+  "outcome_filter": "any",
+  "record_check": {
+   "attempt_records": 0,
+   "attempts_reported_by_poll_batches": 0
+  },
+  "records": [],
+  "returned_records": 0
+ },
+ "errors": [],
+ "evidence_id": "cffe9d25-6667-43ad-a286-fcc0b41f7211",
+ "limitations": [
+  "The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing."
+ ],
+ "observed_window": {
+  "first": null,
+  "last": null
+ },
+ "requested_window": {
+  "end": "2026-11-06T19:38:03.000Z",
+  "start": "2026-11-06T19:35:33.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "structured_logs",
+  "target_instance_id": "bfbab21a-90b8-4082-b0e2-fd50ef6a2c29",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "search_delivery_logs",
+ "truncated": false
+}

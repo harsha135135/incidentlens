@@ -1,0 +1,12 @@
+{"check": "gateway_valid_capability", "expect": "HTTP 200 from 8089", "pass": true, "detail": "status=200 {\"listener\": \"internal\", \"outcome\": \"ok\"}"}
+{"check": "gateway_invalid_capability", "expect": "HTTP 401 from 8089", "pass": true, "detail": "status=401 {\"listener\": \"internal\", \"outcome\": \"invalid_capability\"}"}
+{"check": "public_port_8088_denied", "expect": "no response from the 8088 listener", "pass": true, "detail": "status=None URLError: <urlopen error [Errno 13] Permission denied>"}
+{"check": "internet_denied", "expect": "example.com unreachable", "pass": true, "detail": "status=None URLError: <urlopen error [Errno 13] Permission denied>"}
+{"check": "tcp_5432_denied", "expect": "TCP connect refused or blocked", "pass": true, "detail": "PermissionError: [Errno 13] Permission denied"}
+{"check": "tcp_55432_denied", "expect": "TCP connect refused or blocked", "pass": true, "detail": "PermissionError: [Errno 13] Permission denied"}
+{"check": "tcp_55433_denied", "expect": "TCP connect refused or blocked", "pass": true, "detail": "PermissionError: [Errno 13] Permission denied"}
+{"check": "tcp_17670_denied", "expect": "TCP connect refused or blocked", "pass": true, "detail": "PermissionError: [Errno 13] Permission denied"}
+{"observation": "child_of_allowed_binary_inherits_access", "value": true}
+{"check": "host_paths_absent", "expect": "no host home, Docker socket or SSH keys", "pass": true, "detail": "present=[]"}
+{"check": "no_secret_env", "expect": "no credential-like environment variables", "pass": true, "detail": "names=[]"}
+{"check": "other_binary_denied", "expect": "bash cannot reach 8089", "pass": true, "detail": "not connected"}

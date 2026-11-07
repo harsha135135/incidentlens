@@ -1,0 +1,363 @@
+{
+  "label": "FIXTURE RESULT",
+  "results": [
+    {
+      "fault": "pool_exhaustion_by_lock_waits",
+      "window": {
+        "start": "2026-11-06T10:40:56.292Z",
+        "end": "2026-11-06T10:42:04.537Z"
+      },
+      "signal_present": true,
+      "detail": "pending above zero in 3 scrapes (max 1.0), acquisition timeouts 68, acquire mean 17.838 ms",
+      "workload": {
+        "sent": 220,
+        "statuses": {
+          "201": 140,
+          "503": 44,
+          "500": 27
+        },
+        "errors": {
+          "ConnectError": 9
+        },
+        "started_at": "2026-11-06T10:40:56.292Z",
+        "ended_at": "2026-11-06T10:42:04.853Z"
+      },
+      "workload_rate": 3.2,
+      "controller_run": "validate-pool_exhaustion_by_lock_waits-104056",
+      "parameters": {
+        "pool_size": "2",
+        "pool_timeout_ms": "250"
+      },
+      "observations": {
+        "get_pool_metrics": {
+          "evidence_id": "1fbb7951-2221-440c-b4ac-cbbcb1babc5d",
+          "tool": "get_pool_metrics",
+          "arguments": {},
+          "requested_window": {
+            "start": "2026-11-06T10:40:56.292Z",
+            "end": "2026-11-06T10:42:04.537Z"
+          },
+          "observed_window": {
+            "first": "2026-11-06T10:40:58.730Z",
+            "last": "2026-11-06T10:42:03.725Z"
+          },
+          "collected_at": "2026-11-06T10:42:24.212Z",
+          "coverage": "PARTIAL",
+          "truncated": false,
+          "source": {
+            "kind": "prometheus",
+            "instance": "ledgercore-local",
+            "adapter_version": "1.0",
+            "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+            "target_instance_id": "00a55970-4d5c-4e49-9f0f-457804af39fa"
+          },
+          "data": {
+            "gauges": {
+              "active": {
+                "samples": 13,
+                "first": 0.0,
+                "last": 0.0,
+                "min": 0.0,
+                "max": 2.0,
+                "mean": 1.077,
+                "samples_above_zero": 8,
+                "first_above_zero_at": "2026-11-06T10:41:18.726Z",
+                "last_above_zero_at": "2026-11-06T10:41:53.726Z"
+              },
+              "idle": {
+                "samples": 13,
+                "first": 10.0,
+                "last": 2.0,
+                "min": 0.0,
+                "max": 10.0,
+                "mean": 2.769,
+                "samples_above_zero": 7,
+                "first_above_zero_at": "2026-11-06T10:40:58.730Z",
+                "last_above_zero_at": "2026-11-06T10:42:03.725Z"
+              },
+              "maximum": {
+                "samples": 13,
+                "first": 10.0,
+                "last": 2.0,
+                "min": 2.0,
+                "max": 10.0,
+                "mean": 3.846,
+                "samples_above_zero": 13,
+                "first_above_zero_at": "2026-11-06T10:40:58.730Z",
+                "last_above_zero_at": "2026-11-06T10:42:03.725Z"
+              },
+              "pending": {
+                "samples": 13,
+                "first": 0.0,
+                "last": 0.0,
+                "min": 0.0,
+                "max": 1.0,
+                "mean": 0.231,
+                "samples_above_zero": 3,
+                "first_above_zero_at": "2026-11-06T10:41:23.726Z",
+                "last_above_zero_at": "2026-11-06T10:41:43.725Z"
+              }
+            },
+            "acquisition_timeouts": 68,
+            "acquisitions": 1178,
+            "acquire_mean_ms": 17.838,
+            "acquire_max_ms_per_scrape": 256.0,
+            "configured_maximum_at_window_end": 2,
+            "configured_connection_timeout_ms": 250,
+            "scrapes": {
+              "expected_scrapes": 14,
+              "successful_scrapes": 13,
+              "failed_scrapes": 1,
+              "gaps": [
+                {
+                  "start": "2026-11-06T10:41:08.727Z",
+                  "end": "2026-11-06T10:41:18.726Z",
+                  "seconds": 10.0
+                }
+              ],
+              "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)"
+            }
+          },
+          "limitations": [
+            "Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+            "Pending borrowers and active connections are gauges read at each 5 s scrape; brief saturation between scrapes may not appear in them (acquisition time and timeouts are counters)."
+          ],
+          "errors": []
+        },
+        "get_database_blockers": {
+          "evidence_id": "bf9cdb38-8422-4df3-b610-8ca287c2f59a",
+          "tool": "get_database_blockers",
+          "arguments": {
+            "mode": "historical",
+            "limit": 10
+          },
+          "requested_window": {
+            "start": "2026-11-06T10:40:56.292Z",
+            "end": "2026-11-06T10:42:04.537Z"
+          },
+          "observed_window": {
+            "first": "2026-11-06T10:40:57.499Z",
+            "last": "2026-11-06T10:42:03.499Z"
+          },
+          "collected_at": "2026-11-06T10:42:24.215Z",
+          "coverage": "COMPLETE",
+          "truncated": false,
+          "source": {
+            "kind": "postgres_samples",
+            "instance": "ledgercore-local",
+            "adapter_version": "1.0",
+            "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+            "target_instance_id": "00a55970-4d5c-4e49-9f0f-457804af39fa"
+          },
+          "data": {
+            "mode": "historical",
+            "samples": {
+              "expected": 34,
+              "successful": 34,
+              "failed": 0,
+              "with_blocking": 18,
+              "gaps": []
+            },
+            "relationships": 4,
+            "blocked_sessions": 2,
+            "blocker_roles": {
+              "other": 2,
+              "ledger_app": 2
+            },
+            "max_blocked_wait_seconds": 1.787,
+            "first_blocking_at": "2026-11-06T10:41:17.499Z",
+            "last_blocking_at": "2026-11-06T10:41:53.499Z",
+            "edges": [
+              {
+                "blocked_pid": 81498,
+                "blocker_pid": 81500,
+                "blocker_role": "other",
+                "first_seen": "2026-11-06T10:41:17.499Z",
+                "last_seen": "2026-11-06T10:41:53.499Z",
+                "samples": 15,
+                "max_blocked_wait_seconds": 1.666,
+                "blocker_states": [
+                  "idle in transaction"
+                ],
+                "blocked_wait_event": "transactionid",
+                "max_blocker_transaction_seconds": 38.974
+              },
+              {
+                "blocked_pid": 81499,
+                "blocker_pid": 81500,
+                "blocker_role": "other",
+                "first_seen": "2026-11-06T10:41:17.499Z",
+                "last_seen": "2026-11-06T10:41:51.499Z",
+                "samples": 13,
+                "max_blocked_wait_seconds": 1.787,
+                "blocker_states": [
+                  "idle in transaction"
+                ],
+                "blocked_wait_event": "transactionid",
+                "max_blocker_transaction_seconds": 36.974
+              },
+              {
+                "blocked_pid": 81498,
+                "blocker_pid": 81499,
+                "blocker_role": "ledger_app",
+                "first_seen": "2026-11-06T10:41:41.499Z",
+                "last_seen": "2026-11-06T10:41:41.499Z",
+                "samples": 1,
+                "max_blocked_wait_seconds": 0.729,
+                "blocker_states": [
+                  "active"
+                ],
+                "blocked_wait_event": "tuple",
+                "max_blocker_transaction_seconds": 1.669
+              },
+              {
+                "blocked_pid": 81499,
+                "blocker_pid": 81498,
+                "blocker_role": "ledger_app",
+                "first_seen": "2026-11-06T10:41:45.499Z",
+                "last_seen": "2026-11-06T10:41:45.499Z",
+                "samples": 1,
+                "max_blocked_wait_seconds": 0.225,
+                "blocker_states": [
+                  "active"
+                ],
+                "blocked_wait_event": "transactionid",
+                "max_blocker_transaction_seconds": 1.653
+              }
+            ],
+            "meaning": "Each edge: a waiting ledger_app session (blocked_pid) and the session holding the lock (blocker_pid), labelled only ledger_app or other. No query text is collected."
+          },
+          "limitations": [
+            "Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+          ],
+          "errors": []
+        },
+        "get_request_metrics": {
+          "evidence_id": "22ddea3b-622e-4664-b5d5-7af286a80076",
+          "tool": "get_request_metrics",
+          "arguments": {
+            "route_group": "transfers"
+          },
+          "requested_window": {
+            "start": "2026-11-06T10:40:56.292Z",
+            "end": "2026-11-06T10:42:04.537Z"
+          },
+          "observed_window": {
+            "first": "2026-11-06T10:40:58.730Z",
+            "last": "2026-11-06T10:42:03.725Z"
+          },
+          "collected_at": "2026-11-06T10:42:24.240Z",
+          "coverage": "PARTIAL",
+          "truncated": false,
+          "source": {
+            "kind": "prometheus",
+            "instance": "ledgercore-local",
+            "adapter_version": "1.0",
+            "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+            "target_instance_id": "00a55970-4d5c-4e49-9f0f-457804af39fa"
+          },
+          "data": {
+            "route_group": "transfers",
+            "route_template": "/v1/transfers",
+            "requests": 190,
+            "requests_per_second": 2.784,
+            "server_error_ratio": 0.3737,
+            "by_status": [
+              {
+                "status": "201",
+                "outcome": "SUCCESS",
+                "count": 119
+              },
+              {
+                "status": "500",
+                "outcome": "SERVER_ERROR",
+                "count": 27
+              },
+              {
+                "status": "503",
+                "outcome": "SERVER_ERROR",
+                "count": 44
+              }
+            ],
+            "latency_seconds": {
+              "p50": 0.2235,
+              "p95": 2.0833,
+              "p99": 2.625,
+              "method": "interpolated within fixed histogram buckets summed across series"
+            },
+            "bucket_counts": [
+              {
+                "le": 0.005,
+                "count": 0
+              },
+              {
+                "le": 0.01,
+                "count": 0
+              },
+              {
+                "le": 0.025,
+                "count": 0
+              },
+              {
+                "le": 0.05,
+                "count": 0
+              },
+              {
+                "le": 0.1,
+                "count": 2
+              },
+              {
+                "le": 0.25,
+                "count": 115
+              },
+              {
+                "le": 0.5,
+                "count": 161
+              },
+              {
+                "le": 1.0,
+                "count": 161
+              },
+              {
+                "le": 2.5,
+                "count": 188
+              },
+              {
+                "le": 5.0,
+                "count": 190
+              },
+              {
+                "le": 10.0,
+                "count": 190
+              },
+              {
+                "le": "+Inf",
+                "count": 190
+              }
+            ],
+            "counter_resets": 1,
+            "scrapes": {
+              "expected_scrapes": 14,
+              "successful_scrapes": 13,
+              "failed_scrapes": 1,
+              "gaps": [
+                {
+                  "start": "2026-11-06T10:41:08.727Z",
+                  "end": "2026-11-06T10:41:18.726Z",
+                  "seconds": 10.0
+                }
+              ],
+              "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)"
+            },
+            "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)"
+          },
+          "limitations": [
+            "Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+            "Counters restarted 1 time(s) in the window (application restart); counts include requests on both sides of each restart."
+          ],
+          "errors": []
+        }
+      }
+    }
+  ]
+}

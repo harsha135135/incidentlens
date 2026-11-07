@@ -1,0 +1,8 @@
+{"at": "2026-11-06T18:39:03.502Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T18:39:03.497Z"}
+{"at": "2026-11-06T18:39:03.535Z", "action": "workload_started", "rate_per_second": 3.0, "seed": 2933522104}
+{"at": "2026-11-06T18:39:35.049Z", "action": "consumer_mode", "mode": "unavailable", "handler_delay_ms": 0, "requested_at": "2026-11-06T18:39:35.003Z"}
+{"at": "2026-11-06T18:40:45.009Z", "action": "distractor_started", "kind": "overspend_and_replays"}
+{"at": "2026-11-06T18:42:05.018Z", "action": "distractor_stopped", "kind": "overspend_and_replays", "request_errors": 0}
+{"at": "2026-11-06T18:42:40.016Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T18:42:40.004Z"}
+{"at": "2026-11-06T18:43:05.304Z", "action": "workload_stopped", "sent": 726, "statuses": {"201": 726}, "errors": {}, "started_at": "2026-11-06T18:39:03.534Z", "ended_at": "2026-11-06T18:43:05.303Z"}
+{"at": "2026-11-06T18:43:05.304Z", "action": "window", "start": "2026-11-06T18:39:05.000Z", "end": "2026-11-06T18:43:05.000Z", "template": "cu-h5"}

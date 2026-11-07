@@ -1,0 +1,8 @@
+{"at": "2026-11-06T19:11:14.489Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T19:11:14.484Z"}
+{"at": "2026-11-06T19:11:14.523Z", "action": "workload_started", "rate_per_second": 3.0, "seed": 1142449753}
+{"at": "2026-11-06T19:11:56.007Z", "action": "distractor_started", "kind": "load_bump"}
+{"at": "2026-11-06T19:12:36.014Z", "action": "distractor_stopped", "kind": "load_bump", "request_errors": 0}
+{"at": "2026-11-06T19:13:26.009Z", "action": "account_locks_held", "accounts": 12}
+{"at": "2026-11-06T19:14:21.016Z", "action": "account_locks_released"}
+{"at": "2026-11-06T19:14:46.303Z", "action": "workload_stopped", "sent": 636, "statuses": {"201": 537, "500": 99}, "errors": {}, "started_at": "2026-11-06T19:11:14.523Z", "ended_at": "2026-11-06T19:14:46.303Z"}
+{"at": "2026-11-06T19:14:46.304Z", "action": "window", "start": "2026-11-06T19:11:16.000Z", "end": "2026-11-06T19:14:46.000Z", "template": "lc-h3"}

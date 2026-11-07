@@ -1,0 +1,248 @@
+{
+  "label": "FIXTURE RESULT: Stage 3 pilot (live recorded window), not the evaluation",
+  "run": 1,
+  "scenario": "healthy",
+  "ground_truth_cause": "none",
+  "window": {
+    "start": "2026-11-06T09:50:36.254Z",
+    "end": "2026-11-06T09:53:06.265Z"
+  },
+  "system_order": [
+    "C",
+    "B",
+    "A"
+  ],
+  "controller_run": "pilot-01-095036",
+  "bundle": [
+    {
+      "handle": "E1",
+      "tool": "get_request_metrics",
+      "arguments": {
+        "route_group": "transfers"
+      },
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E2",
+      "tool": "get_outbox_stats",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E3",
+      "tool": "search_delivery_logs",
+      "arguments": {
+        "outcome": "any",
+        "limit": 100
+      },
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E4",
+      "tool": "get_delivery_timings",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    }
+  ],
+  "results": {
+    "C": {
+      "job_id": "f48a7699-bb0e-4d37-91ea-51270e2ce185",
+      "status": "COMPLETED",
+      "final_reason": "model report: NO_FAULT_OBSERVED",
+      "elapsed_seconds": 24.2,
+      "report": {
+        "usage": {
+          "tool_actions": 5,
+          "model_actions": 4,
+          "reported_input_tokens": 13496,
+          "reported_output_tokens": 1159,
+          "tokens_counted_against_budget": 14655,
+          "model_calls_with_unknown_usage": 0
+        },
+        "outcome": "NO_FAULT_OBSERVED",
+        "summary": "No evidence of delayed notifications in the window: the outbox keeps up with arrivals, all deliveries succeed on the first attempt, and per-attempt latency is about 72 ms.",
+        "evidence": {
+          "E1": "006a7749-f736-457e-b7ae-f96d8461f3cd",
+          "E2": "030187e9-e63b-4f05-ae92-7e64f39e7838",
+          "E3": "eae0ec77-a3aa-4591-85b6-5d9e75a5c85c",
+          "E4": "eb405e8e-46b8-43e8-9fc4-5645c3d3199f",
+          "E5": "e4722a15-b414-420a-acd5-fde9a2ddd125"
+        },
+        "findings": [
+          {
+            "claim": "Outbox publication keeps pace with arrivals: 480 arrived, 478 published; pending stays at 1-4 and the oldest undelivered age is at most 1.25 s.",
+            "reason": "The 2-item gap is consistent with in-flight items, and failed stays at 0.",
+            "support": "observed",
+            "evidence_ids": [
+              "030187e9-e63b-4f05-ae92-7e64f39e7838"
+            ],
+            "evidence_handles": [
+              "E2"
+            ]
+          },
+          {
+            "claim": "All 478 delivery attempts succeeded on attempt 1, with no auth, server or network errors. Total latency p95 is 77 ms and consumer handler time is negligible.",
+            "reason": "The delivery logs and timings agree, and there are no retries that could add delay.",
+            "support": "observed",
+            "evidence_ids": [
+              "eb405e8e-46b8-43e8-9fc4-5645c3d3199f",
+              "e4722a15-b414-420a-acd5-fde9a2ddd125"
+            ],
+            "evidence_handles": [
+              "E4",
+              "E5"
+            ]
+          },
+          {
+            "claim": "The transfers API is healthy: 472 requests, all 201, p99 0.248 s.",
+            "reason": "No server errors or latency problems on the ingest side.",
+            "support": "observed",
+            "evidence_ids": [
+              "006a7749-f736-457e-b7ae-f96d8461f3cd"
+            ],
+            "evidence_handles": [
+              "E1"
+            ]
+          }
+        ],
+        "limitations": [
+          "The window is only 150 s and shows steady load; bursts or transient incidents may be missed.",
+          "The pending gauge is sampled only 5 times, and publication timestamps do not measure end-customer notification time."
+        ],
+        "next_checks": [
+          "Measure the downstream notification pipeline from the consumer to the customer channel.",
+          "Re-run the checks over the window in which customers actually saw delays, ideally under peak load."
+        ],
+        "alternatives": [
+          {
+            "reason": "Only delivery to the consumer endpoint is measured, not later hops to customers.",
+            "assessment": "unassessed",
+            "hypothesis": "Lateness arises downstream of LedgerCore (external consumer or notification channel to customers).",
+            "evidence_ids": [
+              "eb405e8e-46b8-43e8-9fc4-5645c3d3199f"
+            ],
+            "evidence_handles": [
+              "E4"
+            ]
+          },
+          {
+            "reason": "The data covers only this window, so earlier incidents are not visible.",
+            "assessment": "unassessed",
+            "hypothesis": "The delay happened outside this 150 s window.",
+            "evidence_ids": [
+              "030187e9-e63b-4f05-ae92-7e64f39e7838"
+            ],
+            "evidence_handles": [
+              "E2"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 4,
+      "tool_calls": 5,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "get_request_metrics",
+        "get_delivery_timings",
+        "search_delivery_logs"
+      ],
+      "recoveries": 0,
+      "input_tokens": 13496,
+      "output_tokens": 1159,
+      "unknown_usage_calls": 0,
+      "classified": "none",
+      "cost_usd": 0.03858
+    },
+    "B": {
+      "report": {
+        "outcome": "NO_FAULT_OBSERVED",
+        "summary": "No delivery lag in the window. Outbox publications track arrivals, pending stays at 1-4, oldest undelivered age is at most 1.25 s, and all 478 deliveries succeeded in about 72 ms.",
+        "findings": [
+          {
+            "claim": "Outbox keeps up: 480 arrivals vs 478 publications, pending 1-4, oldest undelivered age max 1.25 s, no failures.",
+            "support": "observed",
+            "evidence_ids": [
+              "E2"
+            ],
+            "reason": "Counts and gauge samples show no backlog or growing age; the 2-item gap is consistent with in-flight items."
+          },
+          {
+            "claim": "All 478 delivery attempts succeeded on attempt 1, with no auth, network or server errors.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3"
+            ],
+            "reason": "Outcome counts show success 478 and zero of every error type, with no retries."
+          },
+          {
+            "claim": "Delivery latency is low (p50 72 ms, p95 77 ms, max 86 ms), dominated by consumer auth time; the handler takes about 0.02 ms.",
+            "support": "observed",
+            "evidence_ids": [
+              "E4"
+            ],
+            "reason": "Timings are correlated for all 478 attempts and show no slow tail."
+          },
+          {
+            "claim": "The transfer API is healthy: 472 requests, all 201, p99 0.25 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "There are no server errors or latency spikes at the source of notifications."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Lateness occurs downstream of the webhook consumer (e.g. end-customer push/SMS/email delivery).",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E4"
+            ],
+            "reason": "Our data ends at the consumer's 200 response; later stages are not observed."
+          },
+          {
+            "hypothesis": "Lateness happened outside this 150 s window and has since cleared.",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E2"
+            ],
+            "reason": "Only this window was examined, and it shows a healthy pipeline."
+          }
+        ],
+        "limitations": [
+          "Only a 150 s window was examined; intermittent or earlier lateness may not be captured.",
+          "Delivery log listing covered only the earliest 100 of 478 records, though outcome counts cover all."
+        ],
+        "next_checks": [
+          "Check downstream notification provider/queue latency from consumer receipt to customer device.",
+          "Re-run this diagnosis over the window when customers reported the delay, with sample affected transfer IDs."
+        ]
+      },
+      "malformed": null,
+      "unknown_citations": [],
+      "stop_reason": "tool_use",
+      "input_tokens": 3124,
+      "output_tokens": 992,
+      "model_calls": 1,
+      "tool_calls": 4,
+      "latency_seconds": 8.29,
+      "classified": "none",
+      "cost_usd": 0.01617
+    },
+    "A": {
+      "outcome": "NO_FAULT_OBSERVED",
+      "primary_cause": "none",
+      "rule": "no failed deliveries and pending stayed low",
+      "evidence_ids": [
+        "E3",
+        "E2"
+      ],
+      "model_calls": 0,
+      "tool_calls": 4,
+      "classified": "none"
+    }
+  }
+}

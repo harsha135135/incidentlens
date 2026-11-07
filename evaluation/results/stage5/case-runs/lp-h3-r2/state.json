@@ -1,0 +1,172 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "lp-h3-r2",
+  "template": "lp-h3",
+  "split": "held_out",
+  "category": "lock_pool_exhaustion",
+  "ground_truth": "lock_contention+pool_saturation",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 586774480,
+      "controller_run": "stage5-lp-h3-r2-a1",
+      "bundle": "b-353937a111b3",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T03:09:35.000Z",
+        "end": "2026-11-07T03:13:05.000Z"
+      },
+      "validity": "blockers COMPLETE, other edges 2, pool timeouts 163"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "4552433b-c2d2-4ccd-bcec-9f9cffcd6f18",
+    "status": "COMPLETED",
+    "final_reason": "model report: SUPPORTED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4705,
+        "reported_output_tokens": 1054,
+        "tokens_counted_against_budget": 5759,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 15,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "SUPPORTED",
+      "summary": "At 03:11:38 a restart shrank the DB pool to 2 connections with a 250 ms timeout. An idle-in-transaction session then held a lock, exhausting the pool and causing 500/503 errors and slow transfers.",
+      "evidence": {
+        "E1": "6092543d-bfb3-497e-a1f6-e9288a296de7",
+        "E2": "5f564846-d2a6-4b03-85e9-79dd9a77aeb8",
+        "E3": "bd71ec71-1328-47ed-a444-d9dbc5333eda",
+        "E4": "30ae361a-f3b2-472c-871b-08a17286ee31",
+        "E5": "1eb66e40-2f53-49d7-adee-5c035bf898f5",
+        "E6": "498355d1-bb4a-4adc-9a96-d274a51cce9b",
+        "E7": "e4a954f2-ec11-4fd8-982a-91a8afa68b2e"
+      },
+      "findings": [
+        {
+          "claim": "A restart at 03:11:38 cut poolMaximumSize from 10 to 2 and connection timeout from 30000 ms to 250 ms.",
+          "reason": "Runtime config shows the changed pool settings starting at the in-window restart.",
+          "support": "observed",
+          "evidence_ids": [
+            "e4a954f2-ec11-4fd8-982a-91a8afa68b2e"
+          ],
+          "evidence_handles": [
+            "E7"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "An 'idle in transaction' session (25306) blocked two ledger_app sessions for up to ~2 s between 03:11:39 and 03:12:43.",
+          "reason": "Blocker samples show sessions 25304 and 25305 waiting on 25306 across 26-29 samples.",
+          "support": "observed",
+          "evidence_ids": [
+            "498355d1-bb4a-4adc-9a96-d274a51cce9b"
+          ],
+          "evidence_handles": [
+            "E6"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The tiny pool and lock waits exhausted the pool: 163 acquisition timeouts, matching 55 HTTP 500s and 106 HTTP 503s (25.6% server errors) and a p95 of 1.7 s. Outbox throughput also dropped to under 10 per 10 s.",
+          "reason": "Pool saturation (03:11:40-03:12:40) coincides with the error spike and outbox dip. Blocked sessions hold the 2 connections, so waiters hit the 250 ms timeout.",
+          "support": "inferred",
+          "evidence_ids": [
+            "1eb66e40-2f53-49d7-adee-5c035bf898f5",
+            "6092543d-bfb3-497e-a1f6-e9288a296de7",
+            "5f564846-d2a6-4b03-85e9-79dd9a77aeb8"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E1",
+            "E2"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "A 10 s scrape gap at 03:11:30-03:11:40 and 2 counter restarts limit exact counts; NaN gauges were treated as missing.",
+        "The origin of idle-in-transaction session 25306 and the reason for the config change are not shown.",
+        "E1 (get_request_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+        "E2 (get_outbox_stats) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+        "E5 (get_pool_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero."
+      ],
+      "next_checks": [
+        "Identify the application or user behind session 25306 and why its transaction stayed open.",
+        "Find out why the restart applied poolMaximumSize=2 and a 250 ms timeout, and restore the intended values."
+      ],
+      "alternatives": [
+        {
+          "reason": "All 491 deliveries succeeded in about 71 ms, with no server or network errors.",
+          "assessment": "weakened",
+          "hypothesis": "Slow outbox delivery to the consumer caused the failures.",
+          "evidence_ids": [
+            "bd71ec71-1328-47ed-a444-d9dbc5333eda",
+            "30ae361a-f3b2-472c-871b-08a17286ee31"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ]
+        },
+        {
+          "reason": "The failed count was flat at 296 and the oldest age grew steadily, so this predates the window and did not change with the symptom.",
+          "assessment": "weakened",
+          "hypothesis": "The 296 failed outbox events and the 34000 s old undelivered event are the cause.",
+          "evidence_ids": [
+            "5f564846-d2a6-4b03-85e9-79dd9a77aeb8"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4705,
+    "output_tokens": 1054,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.01995,
+    "checks": {
+      "numbers_checked": 15,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "lock_contention",
+    "rule": "a non-ledger_app session blocked ledger_app sessions in 31 samples; 163 pool acquisition timeouts",
+    "evidence_ids": [
+      "E6",
+      "E5"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

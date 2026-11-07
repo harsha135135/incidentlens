@@ -1,0 +1,417 @@
+{
+ "arguments": {},
+ "collected_at": "2026-11-07T04:08:09.084Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "durable_counts": {
+   "arrival_timestamp_meaning": "committed outbox records grouped by creation (transaction-start) timestamp",
+   "arrivals_per_second": 3.606,
+   "bucket_seconds": 10,
+   "buckets": [
+    {
+     "arrivals": 36,
+     "publications": 37,
+     "start": "2026-11-07T04:04:58.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 27,
+     "start": "2026-11-07T04:05:08.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 24,
+     "start": "2026-11-07T04:05:18.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 27,
+     "start": "2026-11-07T04:05:28.000Z"
+    },
+    {
+     "arrivals": 37,
+     "publications": 27,
+     "start": "2026-11-07T04:05:38.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 24,
+     "start": "2026-11-07T04:05:48.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 27,
+     "start": "2026-11-07T04:05:58.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 27,
+     "start": "2026-11-07T04:06:08.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 24,
+     "start": "2026-11-07T04:06:18.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 27,
+     "start": "2026-11-07T04:06:28.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 27,
+     "start": "2026-11-07T04:06:38.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 25,
+     "start": "2026-11-07T04:06:48.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 26,
+     "start": "2026-11-07T04:06:58.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 27,
+     "start": "2026-11-07T04:07:08.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 27,
+     "start": "2026-11-07T04:07:18.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 25,
+     "start": "2026-11-07T04:07:28.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 55,
+     "start": "2026-11-07T04:07:38.000Z"
+    },
+    {
+     "arrivals": 36,
+     "publications": 80,
+     "start": "2026-11-07T04:07:48.000Z"
+    }
+   ],
+   "committed_arrivals": 649,
+   "publication_timestamp_meaning": "recorded publications grouped by publication-transaction timestamp",
+   "publications_per_second": 3.128,
+   "recorded_publications": 563,
+   "settled": true,
+   "window_seconds": 180.0
+  },
+  "gauges": {
+   "failed": {
+    "first": {
+     "at": "2026-11-07T04:04:58.713Z",
+     "value": 571.0
+    },
+    "last": {
+     "at": "2026-11-07T04:07:53.707Z",
+     "value": 571.0
+    },
+    "max": 571.0,
+    "min": 571.0,
+    "points": [
+     [
+      "2026-11-07T04:04:58.713Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:05:08.716Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:05:18.707Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:05:28.716Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:05:38.712Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:05:48.713Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:05:58.707Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:06:08.707Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:06:18.710Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:06:28.717Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:06:38.716Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:06:48.707Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:06:58.707Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:07:08.710Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:07:18.715Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:07:28.707Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:07:38.707Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:07:48.712Z",
+      571.0
+     ],
+     [
+      "2026-11-07T04:07:53.707Z",
+      571.0
+     ]
+    ],
+    "samples": 36,
+    "unreadable_samples": 0
+   },
+   "oldest_undelivered_age_seconds": {
+    "first": {
+     "at": "2026-11-07T04:04:58.713Z",
+     "value": 37330.254263
+    },
+    "last": {
+     "at": "2026-11-07T04:07:53.707Z",
+     "value": 37505.249516
+    },
+    "max": 37505.249516,
+    "min": 37330.254263,
+    "points": [
+     [
+      "2026-11-07T04:04:58.713Z",
+      37330.254263
+     ],
+     [
+      "2026-11-07T04:05:08.716Z",
+      37340.258531
+     ],
+     [
+      "2026-11-07T04:05:18.707Z",
+      37350.246598
+     ],
+     [
+      "2026-11-07T04:05:28.716Z",
+      37360.257035
+     ],
+     [
+      "2026-11-07T04:05:38.712Z",
+      37370.254503
+     ],
+     [
+      "2026-11-07T04:05:48.713Z",
+      37380.254999
+     ],
+     [
+      "2026-11-07T04:05:58.707Z",
+      37390.24708
+     ],
+     [
+      "2026-11-07T04:06:08.707Z",
+      37400.246448
+     ],
+     [
+      "2026-11-07T04:06:18.710Z",
+      37410.249642
+     ],
+     [
+      "2026-11-07T04:06:28.717Z",
+      37420.256397
+     ],
+     [
+      "2026-11-07T04:06:38.716Z",
+      37430.257386
+     ],
+     [
+      "2026-11-07T04:06:48.707Z",
+      37440.24815
+     ],
+     [
+      "2026-11-07T04:06:58.707Z",
+      37450.247789
+     ],
+     [
+      "2026-11-07T04:07:08.710Z",
+      37460.249368
+     ],
+     [
+      "2026-11-07T04:07:18.715Z",
+      37470.256887
+     ],
+     [
+      "2026-11-07T04:07:28.707Z",
+      37480.247097
+     ],
+     [
+      "2026-11-07T04:07:38.707Z",
+      37490.246369
+     ],
+     [
+      "2026-11-07T04:07:48.712Z",
+      37500.258775
+     ],
+     [
+      "2026-11-07T04:07:53.707Z",
+      37505.249516
+     ]
+    ],
+    "samples": 36,
+    "unreadable_samples": 0
+   },
+   "pending": {
+    "first": {
+     "at": "2026-11-07T04:04:58.713Z",
+     "value": 2.0
+    },
+    "last": {
+     "at": "2026-11-07T04:07:53.707Z",
+     "value": 114.0
+    },
+    "max": 158.0,
+    "min": 2.0,
+    "points": [
+     [
+      "2026-11-07T04:04:58.713Z",
+      2.0
+     ],
+     [
+      "2026-11-07T04:05:08.716Z",
+      4.0
+     ],
+     [
+      "2026-11-07T04:05:18.707Z",
+      12.0
+     ],
+     [
+      "2026-11-07T04:05:28.716Z",
+      24.0
+     ],
+     [
+      "2026-11-07T04:05:38.712Z",
+      34.0
+     ],
+     [
+      "2026-11-07T04:05:48.713Z",
+      44.0
+     ],
+     [
+      "2026-11-07T04:05:58.707Z",
+      55.0
+     ],
+     [
+      "2026-11-07T04:06:08.707Z",
+      64.0
+     ],
+     [
+      "2026-11-07T04:06:18.710Z",
+      72.0
+     ],
+     [
+      "2026-11-07T04:06:28.717Z",
+      84.0
+     ],
+     [
+      "2026-11-07T04:06:38.716Z",
+      93.0
+     ],
+     [
+      "2026-11-07T04:06:48.707Z",
+      102.0
+     ],
+     [
+      "2026-11-07T04:06:58.707Z",
+      114.0
+     ],
+     [
+      "2026-11-07T04:07:08.710Z",
+      123.0
+     ],
+     [
+      "2026-11-07T04:07:18.715Z",
+      132.0
+     ],
+     [
+      "2026-11-07T04:07:28.707Z",
+      144.0
+     ],
+     [
+      "2026-11-07T04:07:38.707Z",
+      153.0
+     ],
+     [
+      "2026-11-07T04:07:48.712Z",
+      136.0
+     ],
+     [
+      "2026-11-07T04:07:53.707Z",
+      114.0
+     ]
+    ],
+    "samples": 36,
+    "unreadable_samples": 0
+   }
+  },
+  "scrapes": {
+   "expected_scrapes": 36,
+   "failed_scrapes": 0,
+   "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)",
+   "gaps": [],
+   "successful_scrapes": 36
+  }
+ },
+ "errors": [],
+ "evidence_id": "e5656aa6-1b91-46fc-ba33-5fdb0962e64b",
+ "limitations": [
+  "Pending is a gauge sampled at scrape times; arrivals and publications are durable counts by timestamp. Transitions to FAILED and the different sampling instants mean pending change need not equal arrivals minus publications."
+ ],
+ "observed_window": {
+  "first": "2026-11-07T04:04:58.713Z",
+  "last": "2026-11-07T04:07:53.707Z"
+ },
+ "requested_window": {
+  "end": "2026-11-07T04:07:58.000Z",
+  "start": "2026-11-07T04:04:58.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus+postgres_aggregate",
+  "target_instance_id": "0f455471-024c-4d27-9421-48a029a7719d",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_outbox_stats",
+ "truncated": false
+}

@@ -1,0 +1,1 @@
+{"availableTags":[],"description":"Outbox events that exhausted automatic retries and need operator action","measurements":[{"statistic":"VALUE","value":0.0}],"name":"ledgercore.outbox.failed.events"}

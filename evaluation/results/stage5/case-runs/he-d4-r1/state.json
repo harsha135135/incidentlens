@@ -1,0 +1,306 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-d4-r1",
+  "template": "he-d4",
+  "split": "development",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3650299926,
+      "controller_run": "stage5-he-d4-r1-a1",
+      "bundle": "b-b6a0494d9e43",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T15:07:10.000Z",
+        "end": "2026-11-06T15:10:30.000Z"
+      },
+      "validity": "all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "5048ee86-72e3-4c4b-8d3e-6592014e7620",
+    "status": "COMPLETED",
+    "final_reason": "model report: NO_FAULT_OBSERVED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3774,
+        "reported_output_tokens": 927,
+        "tokens_counted_against_budget": 4701,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 9,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "NO_FAULT_OBSERVED",
+      "summary": "No failures or multi-second latency in the window. Transfers returned 201 with p99 ~0.25 s, and outbox deliveries all succeeded in ~71 ms. The customer complaints are not reproduced here.",
+      "evidence": {
+        "E1": "dd26cfb4-cef9-4cb3-a93f-4cf1ffe923cf",
+        "E2": "c811337b-07fb-46da-baf6-dfcec93403e3",
+        "E3": "8f7199f8-7ae5-485c-887a-455d25fed7f9",
+        "E4": "c46dc591-4172-46ef-a6d7-371fe6a05a64",
+        "E5": "63934301-de3b-4ee3-b9db-684f693a34fc",
+        "E6": "8e5ee4eb-cc22-47cc-83f7-7e5294396c98",
+        "E7": "ec2cb7a3-b069-4bf7-9eb7-1d80c6050a5e"
+      },
+      "findings": [
+        {
+          "claim": "Transfers API was healthy: 560 requests, all 201, no 500s, p99 0.248 s.",
+          "reason": "Complete coverage shows zero server errors and sub-300 ms tail latency.",
+          "support": "observed",
+          "evidence_ids": [
+            "dd26cfb4-cef9-4cb3-a93f-4cf1ffe923cf"
+          ],
+          "evidence_handles": [
+            "E1"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Outbox kept pace with arrivals; no failures and backlog was small (pending max 4, oldest age max ~1.15 s).",
+          "reason": "560 arrivals vs 561 publications, failed always 0, pending 1-4.",
+          "support": "observed",
+          "evidence_ids": [
+            "c811337b-07fb-46da-baf6-dfcec93403e3"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "All 562 delivery attempts succeeded on attempt 1 in about 71 ms, almost all of it consumer auth time. No DB pool or lock contention was seen.",
+          "reason": "The logs show 562 successes and no retries. Timings p95 is 76 ms. The pool had 0 timeouts and 0 pending, and no blocking was sampled.",
+          "support": "observed",
+          "evidence_ids": [
+            "8f7199f8-7ae5-485c-887a-455d25fed7f9",
+            "c46dc591-4172-46ef-a6d7-371fe6a05a64",
+            "63934301-de3b-4ee3-b9db-684f693a34fc",
+            "8e5ee4eb-cc22-47cc-83f7-7e5294396c98"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Window is only about 200 s, and the load was steady at 2.8/s, so intermittent or peak-time issues may not have occurred.",
+        "The consumer is a test fixture, so real downstream consumer behavior is not represented."
+      ],
+      "next_checks": [
+        "Re-run the investigation over the time the customers reported failures or slow transfers.",
+        "Check client-side or gateway latency and errors for affected customers, and other route groups."
+      ],
+      "alternatives": [
+        {
+          "reason": "Only the transfers route group was examined, over a short window.",
+          "assessment": "unassessed",
+          "hypothesis": "Failures or slowness occurred outside this 200 s window or on other routes.",
+          "evidence_ids": [
+            "dd26cfb4-cef9-4cb3-a93f-4cf1ffe923cf"
+          ],
+          "evidence_handles": [
+            "E1"
+          ]
+        },
+        {
+          "reason": "Acquire max was 17 ms and there were 0 timeouts. Samples are coarse (5 s pool, 2 s locks), so short events could be missed.",
+          "assessment": "weakened",
+          "hypothesis": "Brief pool saturation or short lock waits between samples.",
+          "evidence_ids": [
+            "63934301-de3b-4ee3-b9db-684f693a34fc",
+            "8e5ee4eb-cc22-47cc-83f7-7e5294396c98"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3774,
+    "output_tokens": 927,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.2,
+    "classified_dev_aid": "none",
+    "cost_usd": 0.01682,
+    "checks": {
+      "numbers_checked": 9,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.1"
+  },
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P_replays": {
+    "2026-11-06.2": {
+      "job_id": "b9cfff15-3034-4865-9054-972e82b407f0",
+      "status": "COMPLETED",
+      "final_reason": "model report: NO_FAULT_OBSERVED",
+      "report": {
+        "usage": {
+          "tool_actions": 7,
+          "model_actions": 1,
+          "reported_input_tokens": 3978,
+          "reported_output_tokens": 910,
+          "tokens_counted_against_budget": 4888,
+          "model_calls_with_unknown_usage": 0
+        },
+        "checks": {
+          "numbers_checked": 10,
+          "numbers_not_found_in_cited_evidence": 0
+        },
+        "outcome": "NO_FAULT_OBSERVED",
+        "summary": "In this window, transfers returned no errors, latency stayed low, outbox deliveries all succeeded, and no pool or DB blocking appeared. The customer complaints are not reproduced here.",
+        "evidence": {
+          "E1": "b1856127-3635-49a5-834d-10a10f906483",
+          "E2": "147f7812-904e-4a81-92ba-24322f6d28f6",
+          "E3": "685f7c3d-00f3-45e4-b39d-b93e629e4a8f",
+          "E4": "e20621d2-1dc2-4364-8d28-b74abdde586d",
+          "E5": "3f564436-f84a-475c-98c2-d98e5819e46f",
+          "E6": "4e28c5d0-4828-41fe-a900-e66af0ea92e2",
+          "E7": "15ddf787-f230-4b27-9beb-a5a99e055104"
+        },
+        "findings": [
+          {
+            "claim": "Transfers were healthy: 560 requests all returned 201, p99 latency was 0.248 s.",
+            "reason": "The error ratio was 0.0 and latency stayed far below the several-second symptom.",
+            "support": "observed",
+            "evidence_ids": [
+              "b1856127-3635-49a5-834d-10a10f906483"
+            ],
+            "evidence_handles": [
+              "E1"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "Outbox kept pace and delivered everything: 560 arrivals vs 561 publications, 0 failed, oldest undelivered age at most 1.15 s.",
+            "reason": "All 562 delivery attempts succeeded on attempt 1, and pending stayed between 1 and 4.",
+            "support": "observed",
+            "evidence_ids": [
+              "147f7812-904e-4a81-92ba-24322f6d28f6",
+              "685f7c3d-00f3-45e4-b39d-b93e629e4a8f"
+            ],
+            "evidence_handles": [
+              "E2",
+              "E3"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "No resource contention: the pool had 0 timeouts and 0 pending, there was no DB blocking, and consumer delivery took about 71 ms.",
+            "reason": "Pool acquisition averaged 0.18 ms, no blocked sessions appeared in 100 samples, and the consumer time was almost all auth.",
+            "support": "observed",
+            "evidence_ids": [
+              "e20621d2-1dc2-4364-8d28-b74abdde586d",
+              "3f564436-f84a-475c-98c2-d98e5819e46f",
+              "4e28c5d0-4828-41fe-a900-e66af0ea92e2"
+            ],
+            "evidence_handles": [
+              "E4",
+              "E5",
+              "E6"
+            ],
+            "unverified_numbers": []
+          }
+        ],
+        "limitations": [
+          "The window is only about 200 s, and the complaint timing is unknown.",
+          "Blocking is sampled every 2 s and pool gauges every 5 s, so short events can be missed."
+        ],
+        "next_checks": [
+          "Get the affected customers' failure timestamps and re-check that specific window.",
+          "Check other routes and client-side or upstream latency for the reported transfers."
+        ],
+        "alternatives": [
+          {
+            "reason": "Only the /v1/transfers route in this window was examined.",
+            "assessment": "unassessed",
+            "hypothesis": "Intermittent slow or failed transfers occur outside this 200 s window or on other routes.",
+            "evidence_ids": [
+              "b1856127-3635-49a5-834d-10a10f906483"
+            ],
+            "evidence_handles": [
+              "E1"
+            ]
+          },
+          {
+            "reason": "Gauges are sampled coarsely, but acquire max was 17 ms and there were no timeouts.",
+            "assessment": "weakened",
+            "hypothesis": "Sub-scrape-interval DB blocking or pool saturation occurred.",
+            "evidence_ids": [
+              "3f564436-f84a-475c-98c2-d98e5819e46f",
+              "4e28c5d0-4828-41fe-a900-e66af0ea92e2"
+            ],
+            "evidence_handles": [
+              "E5",
+              "E6"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 1,
+      "tool_calls": 7,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "search_delivery_logs",
+        "get_delivery_timings",
+        "get_pool_metrics",
+        "get_database_blockers",
+        "get_runtime_config"
+      ],
+      "recoveries": 0,
+      "input_tokens": 3978,
+      "output_tokens": 910,
+      "unknown_usage_calls": 0,
+      "replay_elapsed_seconds": 20.2,
+      "classified_dev_aid": "none",
+      "cost_usd": 0.01706,
+      "checks": {
+        "numbers_checked": 10,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "prompt_version": "2026-11-06.2"
+    }
+  }
+}

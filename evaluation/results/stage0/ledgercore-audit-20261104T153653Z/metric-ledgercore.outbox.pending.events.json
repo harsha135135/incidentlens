@@ -1,0 +1,1 @@
+{"availableTags":[],"description":"Outbox events waiting for delivery","measurements":[{"statistic":"VALUE","value":0.0}],"name":"ledgercore.outbox.pending.events"}

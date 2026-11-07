@@ -1,0 +1,130 @@
+{
+ "arguments": {
+  "route_group": "transfers"
+ },
+ "collected_at": "2026-11-06T18:13:19.049Z",
+ "coverage": "PARTIAL",
+ "data": {
+  "bucket_counts": [
+   {
+    "count": 0,
+    "le": 0.005
+   },
+   {
+    "count": 0,
+    "le": 0.01
+   },
+   {
+    "count": 0,
+    "le": 0.025
+   },
+   {
+    "count": 0,
+    "le": 0.05
+   },
+   {
+    "count": 41,
+    "le": 0.1
+   },
+   {
+    "count": 263,
+    "le": 0.25
+   },
+   {
+    "count": 369,
+    "le": 0.5
+   },
+   {
+    "count": 369,
+    "le": 1.0
+   },
+   {
+    "count": 391,
+    "le": 2.5
+   },
+   {
+    "count": 391,
+    "le": 5.0
+   },
+   {
+    "count": 391,
+    "le": 10.0
+   },
+   {
+    "count": 391,
+    "le": "+Inf"
+   }
+  ],
+  "by_status": [
+   {
+    "count": 276,
+    "outcome": "SUCCESS",
+    "status": "201"
+   },
+   {
+    "count": 0,
+    "outcome": "CLIENT_ERROR",
+    "status": "422"
+   },
+   {
+    "count": 22,
+    "outcome": "SERVER_ERROR",
+    "status": "500"
+   },
+   {
+    "count": 93,
+    "outcome": "SERVER_ERROR",
+    "status": "503"
+   }
+  ],
+  "counter_resets": 1,
+  "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)",
+  "latency_seconds": {
+   "method": "interpolated within fixed histogram buckets summed across series",
+   "p50": 0.2044,
+   "p95": 1.167,
+   "p99": 2.2334
+  },
+  "requests": 391,
+  "requests_per_second": 2.607,
+  "route_group": "transfers",
+  "route_template": "/v1/transfers",
+  "scrapes": {
+   "expected_scrapes": 30,
+   "failed_scrapes": 1,
+   "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)",
+   "gaps": [
+    {
+     "end": "2026-11-06T18:10:53.718Z",
+     "seconds": 10.0,
+     "start": "2026-11-06T18:10:43.718Z"
+    }
+   ],
+   "successful_scrapes": 29
+  },
+  "server_error_ratio": 0.2941
+ },
+ "errors": [],
+ "evidence_id": "6d287e74-8cb3-44f8-bd78-dec4244e379a",
+ "limitations": [
+  "Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+  "Counters restarted 1 time(s) in the window (application restart); counts include requests on both sides of each restart."
+ ],
+ "observed_window": {
+  "first": "2026-11-06T18:10:38.720Z",
+  "last": "2026-11-06T18:13:03.719Z"
+ },
+ "requested_window": {
+  "end": "2026-11-06T18:13:08.000Z",
+  "start": "2026-11-06T18:10:38.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "c4e5957f-18f1-4649-8526-eb01f3f122c9",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_request_metrics",
+ "truncated": false
+}

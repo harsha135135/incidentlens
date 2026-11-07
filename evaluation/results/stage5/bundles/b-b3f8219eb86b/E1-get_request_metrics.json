@@ -1,0 +1,111 @@
+{
+ "arguments": {
+  "route_group": "transfers"
+ },
+ "collected_at": "2026-11-06T15:06:52.047Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "bucket_counts": [
+   {
+    "count": 0,
+    "le": 0.005
+   },
+   {
+    "count": 0,
+    "le": 0.01
+   },
+   {
+    "count": 0,
+    "le": 0.025
+   },
+   {
+    "count": 0,
+    "le": 0.05
+   },
+   {
+    "count": 86,
+    "le": 0.1
+   },
+   {
+    "count": 598,
+    "le": 0.25
+   },
+   {
+    "count": 598,
+    "le": 0.5
+   },
+   {
+    "count": 598,
+    "le": 1.0
+   },
+   {
+    "count": 659,
+    "le": 2.5
+   },
+   {
+    "count": 677,
+    "le": 5.0
+   },
+   {
+    "count": 677,
+    "le": 10.0
+   },
+   {
+    "count": 677,
+    "le": "+Inf"
+   }
+  ],
+  "by_status": [
+   {
+    "count": 598,
+    "outcome": "SUCCESS",
+    "status": "201"
+   },
+   {
+    "count": 79,
+    "outcome": "SERVER_ERROR",
+    "status": "500"
+   }
+  ],
+  "counter_resets": 0,
+  "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)",
+  "latency_seconds": {
+   "method": "interpolated within fixed histogram buckets summed across series",
+   "p50": 0.174,
+   "p95": 2.1102,
+   "p99": 4.0597
+  },
+  "requests": 677,
+  "requests_per_second": 3.385,
+  "route_group": "transfers",
+  "route_template": "/v1/transfers",
+  "scrapes": {
+   "expected_scrapes": 40,
+   "failed_scrapes": 0,
+   "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)",
+   "gaps": [],
+   "successful_scrapes": 40
+  },
+  "server_error_ratio": 0.1167
+ },
+ "errors": [],
+ "evidence_id": "abdc88ff-97b0-417f-b08a-09e20a458727",
+ "limitations": [],
+ "observed_window": {
+  "first": "2026-11-06T15:03:23.722Z",
+  "last": "2026-11-06T15:06:38.732Z"
+ },
+ "requested_window": {
+  "end": "2026-11-06T15:06:41.000Z",
+  "start": "2026-11-06T15:03:21.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "c8f8f108-311d-420f-a42d-cf3496e6d074",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_request_metrics",
+ "truncated": false
+}

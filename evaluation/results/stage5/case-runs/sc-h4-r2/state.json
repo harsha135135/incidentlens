@@ -1,0 +1,182 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "sc-h4-r2",
+  "template": "sc-h4",
+  "split": "held_out",
+  "category": "slow_consumer",
+  "ground_truth": "slow_consumer_handler",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 2541743372,
+      "controller_run": "stage5-sc-h4-r2-a1",
+      "bundle": "b-8d2dafbd18c4",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T04:01:59.000Z",
+        "end": "2026-11-07T04:04:29.000Z"
+      },
+      "validity": "logs COMPLETE, timings COMPLETE, handler max 1610.06 ms, failures 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "INCONCLUSIVE",
+    "primary_cause": "unclassified",
+    "rule": "no rule matched",
+    "evidence_ids": [],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "dbbfb240-bd0f-4bfa-a749-7b8e231b595c",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3926,
+        "reported_output_tokens": 1146,
+        "tokens_counted_against_budget": 5072,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 11,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Notification publication fell to ~1/5 of the arrival rate for about 70 s, then caught up. The consumer handler was slow (p95 ~1.6 s) while LedgerCore, the DB and the pool were healthy. The cause of the slow handler is unconfirmed.",
+      "evidence": {
+        "E1": "1ed93411-36ce-43db-a161-be8d78e4e936",
+        "E2": "a6b07ab2-154c-4a2a-9d09-0d3cf2772b3b",
+        "E3": "5a8c945f-ff58-4c60-8d26-c28242ecc1c9",
+        "E4": "7319e159-41dd-43c8-bfe4-48deea188e2e",
+        "E5": "6952a947-6a2a-4d32-a2b2-eb87b3091b00",
+        "E6": "89222a18-f35c-4c10-ad6f-edaa35380348",
+        "E7": "3841135a-e76f-4461-a4a5-bd1aef02832e"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publications lagged arrivals for ~70 s (about 6 per 10 s vs 28 arriving), then a burst of 70-81 per 10 s drained the backlog.",
+          "reason": "Per-bucket counts show the dip and catch-up; pending peaked at 136 and returned to 2.",
+          "support": "observed",
+          "evidence_ids": [
+            "a6b07ab2-154c-4a2a-9d09-0d3cf2772b3b"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Delivery latency comes from the consumer handler, not auth or LedgerCore overhead: handler p95 1605 ms vs p50 0.012 ms, while auth p95 is 74 ms.",
+          "reason": "Total p95 1677 ms is almost entirely consumer handler time; unattributed time is about 1 ms.",
+          "support": "observed",
+          "evidence_ids": [
+            "7319e159-41dd-43c8-bfe4-48deea188e2e"
+          ],
+          "evidence_handles": [
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The slow handler probably throttled the outbox poller (batch 20, 1 s poll), delaying notifications. This would fit the dip, but timing was not correlated per attempt.",
+          "reason": "Attempts that take ~1.6 s each would reduce delivery throughput; the 3 s delivery timeout was not hit and all 418 attempts succeeded.",
+          "support": "inferred",
+          "evidence_ids": [
+            "a6b07ab2-154c-4a2a-9d09-0d3cf2772b3b",
+            "7319e159-41dd-43c8-bfe4-48deea188e2e",
+            "3841135a-e76f-4461-a4a5-bd1aef02832e"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E4",
+            "E7"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Transfer API, DB pool and DB locks are healthy and do not explain the delay.",
+          "reason": "No 5xx, p99 0.25 s, no pool pending or timeouts, and no blocking in any sample.",
+          "support": "observed",
+          "evidence_ids": [
+            "1ed93411-36ce-43db-a161-be8d78e4e936",
+            "6952a947-6a2a-4d32-a2b2-eb87b3091b00",
+            "89222a18-f35c-4c10-ad6f-edaa35380348"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "The consumer is a test fixture, and there is no evidence on why its handler was slow for some requests.",
+        "Per-attempt timestamps were not aligned to the dip buckets, and only 100 of 418 log rows were listed."
+      ],
+      "next_checks": [
+        "Correlate per-attempt handler time with the 04:02-04:03:10 dip window to confirm that slow attempts coincide with it.",
+        "Inspect the consumer for the cause of ~1.6 s handler stalls, and check the 571 old FAILED rows separately."
+      ],
+      "alternatives": [
+        {
+          "reason": "Failed stayed constant at 571 and the age grows linearly, so it predates the window; it does not explain the dip within it.",
+          "assessment": "weakened",
+          "hypothesis": "A stuck FAILED outbox row (oldest undelivered age ~37,000 s, failed=571) is the cause of the late notifications.",
+          "evidence_ids": [
+            "a6b07ab2-154c-4a2a-9d09-0d3cf2772b3b"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        },
+        {
+          "reason": "The pool had no pending borrowers or timeouts, and no blocking was sampled.",
+          "assessment": "weakened",
+          "hypothesis": "Database or pool contention slowed the poller.",
+          "evidence_ids": [
+            "6952a947-6a2a-4d32-a2b2-eb87b3091b00",
+            "89222a18-f35c-4c10-ad6f-edaa35380348"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3926,
+    "output_tokens": 1146,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "slow_consumer_handler",
+    "cost_usd": 0.01931,
+    "checks": {
+      "numbers_checked": 11,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

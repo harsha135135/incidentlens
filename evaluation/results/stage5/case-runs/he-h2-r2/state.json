@@ -1,0 +1,181 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-h2-r2",
+  "template": "he-h2",
+  "split": "held_out",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 625130731,
+      "controller_run": "stage5-he-h2-r2-a1",
+      "bundle": "b-f8e10a8be3e9",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T19:07:47.000Z",
+        "end": "2026-11-06T19:10:47.000Z"
+      },
+      "validity": "all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "2bd207b5-c9d4-4105-a036-7a44dfdf1fc9",
+    "status": "COMPLETED",
+    "final_reason": "model report: NO_FAULT_OBSERVED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3940,
+        "reported_output_tokens": 1017,
+        "tokens_counted_against_budget": 4957,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 6,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "NO_FAULT_OBSERVED",
+      "summary": "In the window, transfers were healthy: no 5xx, p99 0.25 s, outbox deliveries matched arrivals, pool and DB were unsaturated. A static pre-existing set of 296 failed outbox rows is unrelated to the window.",
+      "evidence": {
+        "E1": "7353644a-5af3-4fd2-b9d2-0c333e9b24ad",
+        "E2": "dee5cc81-e404-40a0-b3c3-fc99174df3b9",
+        "E3": "4bd9b6a4-2670-4f31-b52b-3a74fbed34df",
+        "E4": "2b35c302-ff86-4666-bccb-53c1c9ce1e76",
+        "E5": "ae38a9aa-3a41-4f31-8f36-edd67043e8ae",
+        "E6": "2ebfa9ec-2b52-4050-b18e-3bf0d9047a65",
+        "E7": "9f1ab999-683a-4d52-81bb-a3be490c4c41"
+      },
+      "findings": [
+        {
+          "claim": "Transfers API showed no failures or multi-second latency in the window; 422s are client errors.",
+          "reason": "server_error_ratio 0.0, p95 0.24 s, p99 0.25 s, 578 201s and 41 422s.",
+          "support": "observed",
+          "evidence_ids": [
+            "7353644a-5af3-4fd2-b9d2-0c333e9b24ad"
+          ],
+          "evidence_handles": [
+            "E1"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Outbox delivery kept pace: 541 arrivals, 541 publications, all attempts succeeded in ~71 ms.",
+          "reason": "Arrivals minus publications 0; delivery logs show 541 successes and no errors; timings p95 75.6 ms.",
+          "support": "observed",
+          "evidence_ids": [
+            "dee5cc81-e404-40a0-b3c3-fc99174df3b9",
+            "4bd9b6a4-2670-4f31-b52b-3a74fbed34df",
+            "2b35c302-ff86-4666-bccb-53c1c9ce1e76"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "No pool or DB contention was observed.",
+          "reason": "0 acquisition timeouts, 0 pending borrowers, 0 blocked sessions in 90 samples.",
+          "support": "observed",
+          "evidence_ids": [
+            "ae38a9aa-3a41-4f31-8f36-edd67043e8ae",
+            "2ebfa9ec-2b52-4050-b18e-3bf0d9047a65"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "296 outbox rows are FAILED and the oldest undelivered row is ~5100 s old; both are static, so they predate the window and show no activity in it.",
+          "reason": "failed stayed at 296 throughout; oldest age grows 1 s per second, so it is one stuck old row.",
+          "support": "observed",
+          "evidence_ids": [
+            "dee5cc81-e404-40a0-b3c3-fc99174df3b9"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Window is only 3 minutes; intermittent issues outside it would not be seen.",
+        "Pool and blocker data are sampled (5 s / 2 s), so brief spikes could be missed."
+      ],
+      "next_checks": [
+        "Re-run over the time the customers reported failures or slowness.",
+        "Inspect the 296 FAILED outbox rows and the oldest pending row for when and why they failed."
+      ],
+      "alternatives": [
+        {
+          "reason": "The failures predate the window and no logs cover their time.",
+          "assessment": "unassessed",
+          "hypothesis": "Customer complaints stem from an earlier incident that produced the 296 failed outbox rows.",
+          "evidence_ids": [
+            "dee5cc81-e404-40a0-b3c3-fc99174df3b9"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        },
+        {
+          "reason": "Only /v1/transfers within this window was observed.",
+          "assessment": "unassessed",
+          "hypothesis": "Slow or failing transfers occurred outside this 3-minute window or on other routes.",
+          "evidence_ids": [
+            "7353644a-5af3-4fd2-b9d2-0c333e9b24ad"
+          ],
+          "evidence_handles": [
+            "E1"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3940,
+    "output_tokens": 1017,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "none",
+    "cost_usd": 0.01805,
+    "checks": {
+      "numbers_checked": 6,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

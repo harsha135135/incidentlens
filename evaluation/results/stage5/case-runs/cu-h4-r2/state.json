@@ -1,0 +1,188 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cu-h4-r2",
+  "template": "cu-h4",
+  "split": "held_out",
+  "category": "consumer_unavailable",
+  "ground_truth": "consumer_unavailable",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 1694100451,
+      "controller_run": "stage5-cu-h4-r2-a1",
+      "bundle": "b-634ff42ff377",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T19:28:32.000Z",
+        "end": "2026-11-06T19:31:02.000Z"
+      },
+      "validity": "logs COMPLETE, network_error 428 of 428 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_unavailable",
+    "rule": "428 of 428 failed deliveries were network_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "2b5c2d1a-df20-413f-9425-249fd78ff2e1",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4022,
+        "reported_output_tokens": 1112,
+        "tokens_counted_against_budget": 5134,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 6,
+        "numbers_not_found_in_cited_evidence": 2
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Publications stalled for ~30 s while arrivals continued, then caught up in a burst. The stall coincided with refused connections to the consumer; DB, pool and API were healthy. A permanently FAILED backlog also exists.",
+      "evidence": {
+        "E1": "fdc9afe0-f1a4-41e2-b8ee-1b3f3079c98d",
+        "E2": "6e04e44a-5e01-4a7d-bcc8-d6f810f8993a",
+        "E3": "f65f72af-4a9f-407b-99de-a2d6ba6bf470",
+        "E4": "d2f41196-da9b-4d4b-b4cc-1c6b8b734789",
+        "E5": "10a13c24-21ee-4d58-8dbf-848d2901ca8e",
+        "E6": "261a5816-77fe-44de-b707-40e5cf03e937",
+        "E7": "924d9fa0-bc0e-476d-b27e-8142d09e4337"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publications stopped for about 20-30 s while arrivals stayed steady, then a catch-up burst followed; pending peaked at 92.",
+          "reason": "Per-bucket publications went 28,0,0,0,37,82 against constant 28 arrivals; pending was 78 at 19:29:08 and 2 by 19:30:18.",
+          "support": "observed",
+          "evidence_ids": [
+            "6e04e44a-5e01-4a7d-bcc8-d6f810f8993a"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "20"
+          ]
+        },
+        {
+          "claim": "Delivery attempts hit CONNECTION_FAILED (428, sub-ms, no consumer record) alongside 421 successes, so the consumer endpoint was refusing connections during the stall.",
+          "reason": "Failures return in ~0.3 ms with no consumer record, which fits refused connections. The failure timestamps were not lined up against the stall buckets.",
+          "support": "inferred",
+          "evidence_ids": [
+            "f65f72af-4a9f-407b-99de-a2d6ba6bf470",
+            "d2f41196-da9b-4d4b-b4cc-1c6b8b734789"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Transfer API, DB pool and DB locks were healthy, so the lateness is in the outbox-to-consumer hop, not transfer handling.",
+          "reason": "No 5xx, p99 0.25 s, 0 pool timeouts or pending borrowers, and 0 blocked sessions.",
+          "support": "observed",
+          "evidence_ids": [
+            "fdc9afe0-f1a4-41e2-b8ee-1b3f3079c98d",
+            "10a13c24-21ee-4d58-8dbf-848d2901ca8e",
+            "261a5816-77fe-44de-b707-40e5cf03e937"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "296 outbox rows are permanently FAILED, with the oldest undelivered at about 6400 s. This is a separate, older backlog.",
+          "reason": "The failed count stayed at 296 and the oldest age grew linearly all window, so these rows are not being retried.",
+          "support": "observed",
+          "evidence_ids": [
+            "6e04e44a-5e01-4a7d-bcc8-d6f810f8993a"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "6400"
+          ]
+        }
+      ],
+      "limitations": [
+        "Only the earliest 100 of 849 attempt records are listed, so the failures are not time-aligned to the 0-publication buckets.",
+        "There is no consumer-side availability or process log explaining why connections were refused."
+      ],
+      "next_checks": [
+        "List the CONNECTION_FAILED attempts by timestamp and compare them with the 19:28:40-19:29:10 stall.",
+        "Check the consumer at 127.0.0.1:18090 for restarts or listener downtime, and find why 296 rows are FAILED."
+      ],
+      "alternatives": [
+        {
+          "reason": "No poller-side logs cover the gap, though the retry attempts (attempt 3) suggest the poller kept running.",
+          "assessment": "unassessed",
+          "hypothesis": "Poller or publisher stall, not a consumer outage, caused the gap.",
+          "evidence_ids": [
+            "6e04e44a-5e01-4a7d-bcc8-d6f810f8993a",
+            "924d9fa0-bc0e-476d-b27e-8142d09e4337"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E7"
+          ]
+        },
+        {
+          "reason": "The pool never queued and no blocking was sampled.",
+          "assessment": "weakened",
+          "hypothesis": "DB or pool contention delayed publication.",
+          "evidence_ids": [
+            "10a13c24-21ee-4d58-8dbf-848d2901ca8e",
+            "261a5816-77fe-44de-b707-40e5cf03e937"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4022,
+    "output_tokens": 1112,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 18.2,
+    "classified_dev_aid": "consumer_unavailable",
+    "cost_usd": 0.01916,
+    "checks": {
+      "numbers_checked": 6,
+      "numbers_not_found_in_cited_evidence": 2
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

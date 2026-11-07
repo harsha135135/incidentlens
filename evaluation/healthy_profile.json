@@ -1,0 +1,9 @@
+{
+  "label": "FIXTURE RESULT (fixture consumer at baseline BCrypt cost 10)",
+  "rate_per_second": 3.2,
+  "seed": 20261106,
+  "account_pairs": 20,
+  "measured_capacity_per_second": 8.033,
+  "calibrated_at": "2026-11-06T05:18:10.561Z",
+  "calibration_file": "evaluation/results/stage1/calibration-20261106T051810Z.json"
+}

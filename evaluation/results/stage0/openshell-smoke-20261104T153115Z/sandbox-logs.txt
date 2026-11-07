@@ -1,0 +1,40 @@
+[1793806276.907] [gateway] [INFO ] [openshell_server::grpc::sandbox] CreateSandbox request completed successfully
+[1793806277.192] [gateway] [INFO ] [openshell_driver_docker] Selected Docker supervisor networking
+[1793806277.375] [sandbox] [INFO ] [openshell_supervisor] Starting sandbox supervision command=[]
+[1793806277.375] [sandbox] [INFO ] [openshell_sandbox_backend::runtime_initiated] Runtime-initiated Sandbox Protocol listener ready
+[1793806277.560] [gateway] [INFO ] [openshell_server::grpc::policy] UpdateConfig: new policy version persisted
+[1793806277.566] [gateway] [INFO ] [openshell_server::grpc::policy] GetSandboxProviderEnvironment request completed successfully
+[1793806277.593] [gateway] [INFO ] [openshell_server::grpc::policy] sandbox reported policy load result
+[1793806277.594] [gateway] [INFO ] [openshell_server::supervisor_session] supervisor session: accepted
+[1793806277.670] [gateway] [INFO ] [openshell_server::supervisor_session] supervisor session: relay opened successfully
+[1793806277.670] [gateway] [INFO ] [openshell_server::supervisor_session] relay stream: claimed pending relay, bridging
+[1793806277.777] [gateway] [INFO ] [openshell_server::supervisor_session] supervisor session: relay opened successfully
+[1793806277.777] [gateway] [INFO ] [openshell_server::supervisor_session] relay stream: claimed pending relay, bridging
+[1793806277.842] [gateway] [INFO ] [openshell_server::supervisor_session] supervisor session: relay opened successfully
+[1793806277.842] [gateway] [INFO ] [openshell_server::supervisor_session] relay stream: claimed pending relay, bridging
+[1793806277.842] [gateway] [INFO ] [openshell_server::grpc::sandbox] ExecSandbox (relay): command started
+[1793806277.542] [sandbox] [INFO ] [openshell_supervisor] Fetching sandbox policy via gRPC endpoint=https://host.docker.internal:17670 sandbox=il-stage0-153115 sandbox_id=10554f7d-028f-4c04-a7e1-ec2fc1092858
+[1793806277.554] [sandbox] [OCSF ] [ocsf] CONFIG:ENRICHED [INFO] Enriched policy with baseline filesystem paths for proxy mode
+[1793806277.566] [sandbox] [INFO ] [openshell_supervisor_network::opa] Configured OPA runtime binary identity mode require_binary_identity=true source=proto
+[1793806277.566] [sandbox] [OCSF ] [ocsf] CONFIG:CONFIGURED [INFO] OPA runtime binary identity mode configured [source:proto require_binary_identity:true] [source:proto]
+[1793806277.572] [sandbox] [OCSF ] [ocsf] CONFIG:DISABLED [INFO] OTLP agent trace relay inactive: not enabled by the gateway
+[1793806277.573] [sandbox] [INFO ] [openshell_supervisor] Isolation boundary attached backend=openshell-sandbox
+[1793806277.574] [sandbox] [INFO ] [openshell_supervisor] Isolation boundary enforcement confirmed backend=openshell-sandbox
+[1793806277.576] [sandbox] [OCSF ] [ocsf] CONFIG:ENABLED [INFO] TLS termination enabled: ephemeral CA generated
+[1793806277.576] [sandbox] [OCSF ] [ocsf] CONFIG:READY [INFO] Policy DNS connected to isolation boundary
+[1793806277.576] [sandbox] [OCSF ] [ocsf] NET:LISTEN [INFO] 127.0.0.1:3128
+[1793806277.576] [sandbox] [WARN ] [openshell_supervisor_network::proxy] host.openshell.internal maps to a non-link-local IP; trusted-gateway SSRF exemption disabled ip=192.168.65.254
+[1793806277.585] [sandbox] [INFO ] [openshell_supervisor] Isolation boundary agent started backend=openshell-sandbox
+[1793806277.586] [sandbox] [OCSF ] [ocsf] SSH:LISTEN [INFO]
+[1793806277.586] [sandbox] [INFO ] [openshell_supervisor] Control-mode access plane started backend=openshell-sandbox
+[1793806277.593] [sandbox] [OCSF ] [ocsf] CONFIG:LOADED [INFO] Acknowledged initial policy revision as loaded [version:2] [hash:2f4d648f97175b360b2368a06557c0d73bba4066b79b491ed74337cd33814149]
+[1793806277.593] [sandbox] [OCSF ] [ocsf] NET:OPEN [INFO] host.docker.internal:17670
+[1793806277.668] [sandbox] [OCSF ] [ocsf] EVENT [INFO] ssh relay open (channel_id=31e972a3-7f1b-43a6-bfc2-1ee8474fbb31, target=unix:/run/openshell/ssh.sock)
+[1793806277.668] [sandbox] [OCSF ] [ocsf] SSH:OPEN [INFO] ALLOWED
+[1793806277.684] [sandbox] [OCSF ] [ocsf] EVENT [INFO] ssh relay closed (channel_id=31e972a3-7f1b-43a6-bfc2-1ee8474fbb31, target=unix:/run/openshell/ssh.sock)
+[1793806277.775] [sandbox] [OCSF ] [ocsf] EVENT [INFO] ssh relay open (channel_id=fc635585-56bd-402a-9713-596deb5a7718, target=unix:/run/openshell/ssh.sock)
+[1793806277.776] [sandbox] [OCSF ] [ocsf] SSH:OPEN [INFO] ALLOWED
+[1793806277.795] [sandbox] [OCSF ] [ocsf] EVENT [INFO] ssh relay closed (channel_id=fc635585-56bd-402a-9713-596deb5a7718, target=unix:/run/openshell/ssh.sock)
+[1793806277.840] [sandbox] [OCSF ] [ocsf] EVENT [INFO] ssh relay open (channel_id=56f951de-cc70-4c08-bb85-f4c4d8319ddb, target=unix:/run/openshell/ssh.sock)
+[1793806277.840] [sandbox] [OCSF ] [ocsf] SSH:OPEN [INFO] ALLOWED
+[1793806277.907] [sandbox] [OCSF ] [ocsf] CONFIG:PUBLISHED [INFO] Policy DNS mapped host.openshell.internal resolved=192.168.65.254 synthetic=198.18.0.2 ports=8089 mapping_id=138fd9b9-bfc3-44b2-aa4b-61cdcbb5012a

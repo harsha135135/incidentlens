@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.13, pytest-9.2.0, pluggy-1.7.0 -- /Users/harshamac/developer/two/incidentlens/.venv/bin/python
+rootdir: /Users/harshamac/developer/two/incidentlens
+configfile: pyproject.toml
+plugins: langsmith-0.14.17, anyio-4.16.0
+collecting ... collected 5 items
+
+tests/stack/test_stage1_scenarios.py::test_healthy_load_is_observed_as_healthy FAILED [ 20%]
+tests/stack/test_stage1_scenarios.py::test_an_unavailable_consumer_shows_refused_connections_and_stalled_publications FAILED [ 40%]
+tests/stack/test_stage1_scenarios.py::test_a_slow_consumer_shows_long_handler_time_without_errors 

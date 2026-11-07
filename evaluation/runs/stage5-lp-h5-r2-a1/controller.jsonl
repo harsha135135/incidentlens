@@ -1,0 +1,10 @@
+{"at": "2026-11-06T17:33:44.438Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T17:33:44.433Z"}
+{"at": "2026-11-06T17:33:44.465Z", "action": "workload_started", "rate_per_second": 3.0, "seed": 1556449700}
+{"at": "2026-11-06T17:34:19.511Z", "action": "ledgercore_restarted", "pool_size": 3, "connection_timeout_ms": 250, "requested_at": "2026-11-06T17:34:16.005Z"}
+{"at": "2026-11-06T17:34:19.521Z", "action": "account_locks_held", "accounts": 3}
+{"at": "2026-11-06T17:35:26.004Z", "action": "distractor_started", "kind": "overspend_and_replays"}
+{"at": "2026-11-06T17:36:46.004Z", "action": "distractor_stopped", "kind": "overspend_and_replays", "request_errors": 0}
+{"at": "2026-11-06T17:37:26.014Z", "action": "account_locks_released"}
+{"at": "2026-11-06T17:37:46.239Z", "action": "workload_stopped", "sent": 726, "statuses": {"201": 624, "500": 66, "503": 27}, "errors": {"ConnectError": 9}, "started_at": "2026-11-06T17:33:44.464Z", "ended_at": "2026-11-06T17:37:46.239Z"}
+{"at": "2026-11-06T17:37:49.567Z", "action": "ledgercore_restarted", "pool_size": null, "connection_timeout_ms": null, "requested_at": "2026-11-06T17:37:46.239Z"}
+{"at": "2026-11-06T17:37:49.568Z", "action": "window", "start": "2026-11-06T17:33:46.000Z", "end": "2026-11-06T17:37:46.000Z", "template": "lp-h5"}

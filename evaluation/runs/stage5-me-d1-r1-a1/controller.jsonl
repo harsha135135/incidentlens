@@ -1,0 +1,8 @@
+{"at": "2026-11-06T14:52:57.512Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T14:52:57.507Z"}
+{"at": "2026-11-06T14:52:59.237Z", "action": "component_stopped", "component": "collector"}
+{"at": "2026-11-06T14:52:59.238Z", "action": "workload_started", "rate_per_second": 3.2, "seed": 1949422272}
+{"at": "2026-11-06T14:53:31.089Z", "action": "consumer_mode", "mode": "unavailable", "handler_delay_ms": 0, "requested_at": "2026-11-06T14:53:31.009Z"}
+{"at": "2026-11-06T14:55:01.009Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T14:55:01.000Z"}
+{"at": "2026-11-06T14:55:31.244Z", "action": "workload_stopped", "sent": 487, "statuses": {"201": 487}, "errors": {}, "started_at": "2026-11-06T14:52:59.238Z", "ended_at": "2026-11-06T14:55:31.244Z"}
+{"at": "2026-11-06T14:55:31.245Z", "action": "window", "start": "2026-11-06T14:53:01.000Z", "end": "2026-11-06T14:55:31.000Z", "template": "me-d1"}
+{"at": "2026-11-06T14:55:42.311Z", "action": "component_restarted", "component": "collector"}

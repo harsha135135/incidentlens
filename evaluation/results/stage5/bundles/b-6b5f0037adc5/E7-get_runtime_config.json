@@ -1,0 +1,79 @@
+{
+ "arguments": {},
+ "collected_at": "2026-11-06T17:12:53.163Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "meaning": "Allowlisted, non-secret settings from LedgerCore's startup records; one version per start.",
+  "restarts_in_window": [
+   "2026-11-06T17:10:00.222Z"
+  ],
+  "versions": [
+   {
+    "effective_at": "2026-11-06T17:00:44.478Z",
+    "settings": {
+     "consumerAuthentication": "HTTP Basic",
+     "consumerTarget": "http://127.0.0.1:18090/events",
+     "databaseSessionOptions": "-c lock_timeout=2s -c statement_timeout=5s -c transaction_timeout=10s",
+     "inProcessConsumerBcryptCost": "10",
+     "instanceId": "2fece3a7-c3b9-4e3f-aca9-581c299338a0",
+     "outboxBackoffBaseMs": 1000,
+     "outboxBackoffMaxMs": 60000,
+     "outboxBatchSize": 20,
+     "outboxDeliveryTimeoutMs": 3000,
+     "outboxMaxAttempts": 8,
+     "outboxPollIntervalMs": 1000,
+     "outboxPollerEnabled": true,
+     "outboxWorkers": 1,
+     "poolConnectionTimeoutMs": 30000,
+     "poolMaximumSize": 10,
+     "poolMinimumIdle": 10,
+     "revision": "86e4bf1c38fb+dirty.ed5247a36278"
+    }
+   },
+   {
+    "effective_at": "2026-11-06T17:10:00.222Z",
+    "settings": {
+     "consumerAuthentication": "HTTP Basic",
+     "consumerTarget": "http://127.0.0.1:18090/events",
+     "databaseSessionOptions": "-c lock_timeout=2s -c statement_timeout=5s -c transaction_timeout=10s",
+     "inProcessConsumerBcryptCost": "10",
+     "instanceId": "88eb844c-e823-4b63-9267-a5bef9f30dee",
+     "outboxBackoffBaseMs": 1000,
+     "outboxBackoffMaxMs": 60000,
+     "outboxBatchSize": 20,
+     "outboxDeliveryTimeoutMs": 3000,
+     "outboxMaxAttempts": 8,
+     "outboxPollIntervalMs": 1000,
+     "outboxPollerEnabled": true,
+     "outboxWorkers": 1,
+     "poolConnectionTimeoutMs": 250,
+     "poolMaximumSize": 3,
+     "poolMinimumIdle": 3,
+     "revision": "86e4bf1c38fb+dirty.ed5247a36278"
+    }
+   }
+  ]
+ },
+ "errors": [],
+ "evidence_id": "513a97f0-8dff-49b9-931b-3741516b698f",
+ "limitations": [
+  "LedgerCore restarted 1 time(s) inside the window; settings that changed: poolConnectionTimeoutMs, poolMaximumSize, poolMinimumIdle."
+ ],
+ "observed_window": {
+  "first": "2026-11-06T17:00:44.478Z",
+  "last": "2026-11-06T17:10:00.222Z"
+ },
+ "requested_window": {
+  "end": "2026-11-06T17:12:42.000Z",
+  "start": "2026-11-06T17:09:42.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "config_history",
+  "target_instance_id": "88eb844c-e823-4b63-9267-a5bef9f30dee",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_runtime_config",
+ "truncated": false
+}

@@ -1,0 +1,176 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-h3-r1",
+  "template": "he-h3",
+  "split": "held_out",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3302140818,
+      "controller_run": "stage5-he-h3-r1-a1",
+      "bundle": "b-5ea6e0c9d690",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T03:53:17.000Z",
+        "end": "2026-11-07T03:56:47.000Z"
+      },
+      "validity": "all complete True, pending max 5.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "12ab9ac4-9145-453b-a497-954d4fff07a9",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3972,
+        "reported_output_tokens": 1027,
+        "tokens_counted_against_budget": 4999,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 7,
+        "numbers_not_found_in_cited_evidence": 2
+      },
+      "outcome": "TENTATIVE",
+      "summary": "New transfers are published promptly. One old outbox entry has been stuck for about 10 hours, and the failed count is constant at 433. The cause of the original failures is not shown.",
+      "evidence": {
+        "E1": "12c48479-207e-4407-88c8-a1e3de57878c",
+        "E2": "15489d7b-6f68-420c-9f31-e0c38855e97c",
+        "E3": "0b2c081f-b779-4082-9a4a-4e909e342151",
+        "E4": "d242b629-0514-4206-bcae-04711555d92a",
+        "E5": "3e053708-bb12-44fd-8a86-5e8220fa700e",
+        "E6": "718d71e9-dff9-41a9-9aaa-9d9592c3f7eb",
+        "E7": "442c2e5f-8cfd-4daf-aa7f-fc5e89abfdad"
+      },
+      "findings": [
+        {
+          "claim": "Current outbox delivery keeps up: 732 committed arrivals vs 731 publications, a gap of 1, with no backlog growth.",
+          "reason": "Arrivals and publications are about 3.48/s each, the stats are settled, and pending stays at 1-5.",
+          "support": "observed",
+          "evidence_ids": [
+            "15489d7b-6f68-420c-9f31-e0c38855e97c"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The oldest undelivered outbox entry is about 36,600-36,800 s old (~10 h) and the failed count is fixed at 433, so old rows are stuck in FAILED and not being retried.",
+          "reason": "The age grows in step with wall-clock time while the failed count never changes across the window.",
+          "support": "observed",
+          "evidence_ids": [
+            "15489d7b-6f68-420c-9f31-e0c38855e97c"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "36600",
+            "800"
+          ]
+        },
+        {
+          "claim": "In-window deliveries are healthy and fast, so the consumer, the DB pool and DB locks are not slowing current notifications.",
+          "reason": "All 730 attempts succeeded in ~71 ms, mostly consumer auth time. Pool pending is 0 with no timeouts, and no blocking was sampled.",
+          "support": "observed",
+          "evidence_ids": [
+            "0b2c081f-b779-4082-9a4a-4e909e342151",
+            "d242b629-0514-4206-bcae-04711555d92a",
+            "3e053708-bb12-44fd-8a86-5e8220fa700e",
+            "718d71e9-dff9-41a9-9aaa-9d9592c3f7eb"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Delivery logs list only the first 100 of 730 attempts, and nothing covers the period when the 433 rows failed.",
+        "Which transfers the stuck row(s) belong to, and whether they match the customers' complaints, is not shown."
+      ],
+      "next_checks": [
+        "Inspect the FAILED outbox rows (created time, attempt count, last error) and compare them with the affected customers' transfers.",
+        "Review delivery logs and consumer availability from roughly 10 hours before the window to find why attempts failed and whether FAILED rows should be requeued."
+      ],
+      "alternatives": [
+        {
+          "reason": "The stuck age and failed count are consistent with this, but there are no logs or timings from before the window.",
+          "assessment": "unassessed",
+          "hypothesis": "Late notifications come from a pre-window outage that exhausted retries (max 8 attempts) and left the 433 rows FAILED.",
+          "evidence_ids": [
+            "15489d7b-6f68-420c-9f31-e0c38855e97c",
+            "442c2e5f-8cfd-4daf-aa7f-fc5e89abfdad"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E7"
+          ]
+        },
+        {
+          "reason": "Transfer p99 is 0.248 s and delivery latency is ~71 ms, so nothing slow shows in the window.",
+          "assessment": "weakened",
+          "hypothesis": "Slow request handling or publication delays at the API cause the lateness.",
+          "evidence_ids": [
+            "12c48479-207e-4407-88c8-a1e3de57878c",
+            "d242b629-0514-4206-bcae-04711555d92a"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E4"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3972,
+    "output_tokens": 1027,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "other",
+    "cost_usd": 0.01821,
+    "checks": {
+      "numbers_checked": 7,
+      "numbers_not_found_in_cited_evidence": 2
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

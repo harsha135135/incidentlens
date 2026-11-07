@@ -1,0 +1,2 @@
+{"at": "2026-11-06T17:00:31.972Z", "action": "ledgercore_restarted", "pool_size": 1, "connection_timeout_ms": 250, "requested_at": "2026-11-06T17:00:28.717Z"}
+{"at": "2026-11-06T17:00:44.873Z", "action": "ledgercore_restarted", "pool_size": null, "connection_timeout_ms": null, "requested_at": "2026-11-06T17:00:41.633Z"}

@@ -1,0 +1,5 @@
+{"at": "2026-11-06T10:31:32.594Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T10:31:32.587Z"}
+{"at": "2026-11-06T10:31:32.594Z", "action": "workload_started", "rate_per_second": 3.2, "seed": 20261183}
+{"at": "2026-11-06T10:31:47.611Z", "action": "consumer_mode", "mode": "reject", "handler_delay_ms": 0, "requested_at": "2026-11-06T10:31:47.598Z"}
+{"at": "2026-11-06T10:32:27.620Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T10:32:27.614Z"}
+{"at": "2026-11-06T10:32:38.005Z", "action": "workload_stopped", "sent": 210, "statuses": {"201": 210}, "errors": {}, "started_at": "2026-11-06T10:31:32.594Z", "ended_at": "2026-11-06T10:32:38.005Z"}

@@ -1,0 +1,52 @@
+<div class="banner banner-{{ banner_class }}" role="status">
+  <strong>{{ banner_text }}</strong>
+  {% if source == "fallback" %}<span>{{ report.summary }}</span>{% endif %}
+</div>
+{% if missing %}
+<div class="banner banner-missing" role="note">
+  <strong>{{ missing|length }} source{{ "s" if missing|length != 1 }} unavailable:</strong>
+  {{ missing|map(attribute="handle")|join(", ") }}. What they would have shown is unknown, not zero.
+</div>
+{% endif %}
+{% if source != "fallback" %}<p class="summary">{{ report.summary }}</p>{% endif %}
+
+<h2>Findings</h2>
+{% if report.findings %}
+<ol class="findings">
+  {% for finding in report.findings %}
+  <li><p class="claim"><span class="support support-{{ finding.support }}">{{ finding.support }}</span> {{ finding.claim }}</p>
+    <p class="reason">{{ finding.reason }}</p>
+    {% if finding.unverified_numbers %}<p class="unverified">Not found in the cited evidence: {{ finding.unverified_numbers|join(", ") }}</p>{% endif %}
+    <p class="cites">Evidence: {% for handle in finding.evidence_handles %}<a class="cite" href="#{{ handle }}" data-handle="{{ handle }}">{{ handle }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p></li>
+  {% endfor %}
+</ol>
+{% else %}<p class="muted">No findings: no cause is claimed.</p>{% endif %}
+
+{% if report.alternatives %}
+<h2>Alternatives considered</h2>
+<ul class="alternatives">
+  {% for alt in report.alternatives %}
+  <li><span class="assessment">{{ alt.assessment }}</span> {{ alt.hypothesis }} <span class="muted">{{ alt.reason }}</span>
+    {% for handle in alt.evidence_handles %}<a class="cite" href="#{{ handle }}" data-handle="{{ handle }}">{{ handle }}</a> {% endfor %}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<h2>Limitations</h2>
+<ul>{% for note in report.limitations %}<li>{{ note }}</li>{% else %}<li class="muted">None stated.</li>{% endfor %}</ul>
+<h2>Next checks</h2>
+<ul>{% for check in report.next_checks %}<li>{{ check }}</li>{% else %}<li class="muted">None.</li>{% endfor %}</ul>
+
+<h2>Evidence</h2>
+<ol class="evidence">
+  {% for item in evidence %}
+  <li id="{{ item.handle }}" tabindex="-1"><details>
+    <summary><strong>{{ item.handle }}</strong> {{ item.tool }}
+      <span class="coverage coverage-{{ item.coverage|lower }}">{{ item.coverage }}</span>{% if item.truncated %} <span class="coverage coverage-partial">TRUNCATED</span>{% endif %}</summary>
+    <p class="muted">Source {{ item.source }} · observed {{ (item.observed.first or "–")[:19] }} to {{ (item.observed.last or "–")[:19] }} · collected {{ (item.collected_at or "")[:19] }} UTC</p>
+    <pre>{{ item.text }}</pre>
+  </details></li>
+  {% endfor %}
+</ol>
+<p class="muted">Usage: {{ report.usage.model_actions }} model and {{ report.usage.tool_actions }} data calls;
+  {{ report.usage.reported_input_tokens }} input and {{ report.usage.reported_output_tokens }} output tokens reported.</p>

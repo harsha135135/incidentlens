@@ -1,0 +1,65 @@
+{
+ "arguments": {
+  "limit": 50,
+  "mode": "historical"
+ },
+ "collected_at": "2026-11-07T03:29:16.159Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "blocked_sessions": 1,
+  "blocker_roles": {
+   "other": 1
+  },
+  "edges": [
+   {
+    "blocked_pid": 28883,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 28884,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-07T03:26:29.464Z",
+    "last_seen": "2026-11-07T03:28:29.462Z",
+    "max_blocked_wait_seconds": 1.906,
+    "max_blocker_transaction_seconds": 121.165,
+    "samples": 48
+   }
+  ],
+  "first_blocking_at": "2026-11-07T03:26:29.464Z",
+  "last_blocking_at": "2026-11-07T03:28:29.462Z",
+  "max_blocked_wait_seconds": 1.906,
+  "meaning": "Each edge: a waiting ledger_app session (blocked_pid) and the session holding the lock (blocker_pid), labelled only ledger_app or other. No query text is collected.",
+  "mode": "historical",
+  "relationships": 1,
+  "samples": {
+   "expected": 120,
+   "failed": 0,
+   "gaps": [],
+   "successful": 120,
+   "with_blocking": 48
+  }
+ },
+ "errors": [],
+ "evidence_id": "b95e5df0-b695-45fe-89ae-791d03f5867c",
+ "limitations": [
+  "Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+ ],
+ "observed_window": {
+  "first": "2026-11-07T03:25:05.464Z",
+  "last": "2026-11-07T03:29:03.466Z"
+ },
+ "requested_window": {
+  "end": "2026-11-07T03:29:05.000Z",
+  "start": "2026-11-07T03:25:05.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "postgres_samples",
+  "target_instance_id": "73f6fd98-5952-4c7b-b573-063918d62840",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_database_blockers",
+ "truncated": false
+}

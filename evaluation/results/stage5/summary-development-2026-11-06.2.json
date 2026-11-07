@@ -1,0 +1,247 @@
+{
+  "label": "FIXTURE RESULTS: Stage 5 development",
+  "split": "development",
+  "primary_cause_source_for_P": "development: automatic keyword aid, not a reading (the author's reading is in TODO.md)",
+  "case_runs": 35,
+  "valid": 35,
+  "no_valid_attempt": 0,
+  "invalid_attempts": 0,
+  "interrupted_attempts": 0,
+  "P": {
+    "primary_cause": {
+      "k": 22,
+      "n": 25,
+      "rate": 0.88,
+      "cases": 25,
+      "ci95": [
+        0.76,
+        1.0
+      ]
+    },
+    "primary_cause_lenient_secondary": {
+      "k": 24,
+      "n": 25,
+      "rate": 0.96,
+      "cases": 25,
+      "ci95": [
+        0.88,
+        1.0
+      ]
+    },
+    "causal_depth_lock_pool": "assessed only from blind picks (held-out, pick 5)",
+    "appropriate_abstention": {
+      "k": 5,
+      "n": 5,
+      "rate": 1.0,
+      "cases": 5,
+      "ci95": [
+        1.0,
+        1.0
+      ]
+    },
+    "false_alarms": {
+      "k": 0,
+      "n": 5,
+      "rate": 0.0,
+      "cases": 5,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "healthy_inconclusive": {
+      "k": 0,
+      "n": 5,
+      "rate": 0.0,
+      "cases": 5,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "fallback_reports": {
+      "k": 0,
+      "n": 35,
+      "rate": 0.0,
+      "cases": 35,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "findings": 114,
+    "findings_with_citations": 114,
+    "numbers_checked": 304,
+    "numbers_not_found_in_cited_evidence": 18,
+    "model_calls": 36,
+    "tool_calls": 245,
+    "cost_usd": 0.6785,
+    "replay_elapsed_seconds_median": 22.1
+  },
+  "A": {
+    "primary_cause": {
+      "k": 20,
+      "n": 25,
+      "rate": 0.8,
+      "cases": 25,
+      "ci95": [
+        0.64,
+        0.96
+      ]
+    },
+    "primary_cause_lenient_secondary": {
+      "k": 20,
+      "n": 25,
+      "rate": 0.8,
+      "cases": 25,
+      "ci95": [
+        0.64,
+        0.96
+      ]
+    },
+    "appropriate_abstention": {
+      "k": 3,
+      "n": 5,
+      "rate": 0.6,
+      "cases": 5,
+      "ci95": [
+        0.2,
+        1.0
+      ]
+    },
+    "false_alarms": {
+      "k": 0,
+      "n": 5,
+      "rate": 0.0,
+      "cases": 5,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "tool_calls": 245
+  },
+  "per_class": {
+    "consumer_unavailable": {
+      "runs": 5,
+      "A": [
+        "SUPPORTED:consumer_unavailable",
+        "SUPPORTED:consumer_unavailable",
+        "SUPPORTED:consumer_unavailable",
+        "SUPPORTED:consumer_unavailable",
+        "SUPPORTED:consumer_unavailable"
+      ],
+      "P": [
+        "TENTATIVE:consumer_unavailable",
+        "TENTATIVE:consumer_unavailable",
+        "TENTATIVE:consumer_unavailable",
+        "TENTATIVE:consumer_unavailable",
+        "TENTATIVE:consumer_unavailable"
+      ]
+    },
+    "slow_consumer": {
+      "runs": 5,
+      "A": [
+        "INCONCLUSIVE:unclassified",
+        "INCONCLUSIVE:unclassified",
+        "INCONCLUSIVE:unclassified",
+        "TENTATIVE:publisher_throughput",
+        "INCONCLUSIVE:unclassified"
+      ],
+      "P": [
+        "TENTATIVE:slow_consumer_handler",
+        "TENTATIVE:slow_consumer_handler",
+        "TENTATIVE:slow_consumer_handler",
+        "TENTATIVE:lock_contention",
+        "TENTATIVE:slow_consumer_handler"
+      ]
+    },
+    "credential_rejection": {
+      "runs": 5,
+      "A": [
+        "SUPPORTED:consumer_credential_rejected",
+        "SUPPORTED:consumer_credential_rejected",
+        "SUPPORTED:consumer_credential_rejected",
+        "SUPPORTED:consumer_credential_rejected",
+        "SUPPORTED:consumer_credential_rejected"
+      ],
+      "P": [
+        "TENTATIVE:consumer_credential_rejected",
+        "TENTATIVE:consumer_credential_rejected",
+        "TENTATIVE:consumer_credential_rejected",
+        "TENTATIVE:consumer_credential_rejected",
+        "TENTATIVE:consumer_credential_rejected"
+      ]
+    },
+    "lock_contention": {
+      "runs": 5,
+      "A": [
+        "SUPPORTED:lock_contention",
+        "SUPPORTED:lock_contention",
+        "SUPPORTED:lock_contention",
+        "SUPPORTED:lock_contention",
+        "SUPPORTED:lock_contention"
+      ],
+      "P": [
+        "TENTATIVE:lock_contention",
+        "TENTATIVE:lock_contention",
+        "TENTATIVE:lock_contention",
+        "TENTATIVE:lock_contention",
+        "TENTATIVE:lock_contention"
+      ]
+    },
+    "lock_pool_exhaustion": {
+      "runs": 5,
+      "A": [
+        "SUPPORTED:lock_contention",
+        "SUPPORTED:lock_contention",
+        "SUPPORTED:lock_contention",
+        "SUPPORTED:lock_contention",
+        "SUPPORTED:lock_contention"
+      ],
+      "P": [
+        "TENTATIVE:lock_contention",
+        "SUPPORTED:pool_saturation",
+        "TENTATIVE:lock_contention",
+        "SUPPORTED:lock_contention",
+        "SUPPORTED:pool_saturation"
+      ]
+    },
+    "healthy": {
+      "runs": 5,
+      "A": [
+        "NO_FAULT_OBSERVED:none",
+        "NO_FAULT_OBSERVED:none",
+        "NO_FAULT_OBSERVED:none",
+        "NO_FAULT_OBSERVED:none",
+        "NO_FAULT_OBSERVED:none"
+      ],
+      "P": [
+        "NO_FAULT_OBSERVED:none",
+        "NO_FAULT_OBSERVED:none",
+        "NO_FAULT_OBSERVED:none",
+        "NO_FAULT_OBSERVED:none",
+        "NO_FAULT_OBSERVED:none"
+      ]
+    },
+    "missing_evidence": {
+      "runs": 5,
+      "A": [
+        "TENTATIVE:publisher_throughput",
+        "INCONCLUSIVE:unclassified",
+        "TENTATIVE:publisher_throughput",
+        "INCONCLUSIVE:unclassified",
+        "INCONCLUSIVE:unclassified"
+      ],
+      "P": [
+        "INCONCLUSIVE:lock_contention",
+        "INCONCLUSIVE:lock_contention",
+        "INCONCLUSIVE:lock_contention",
+        "INCONCLUSIVE:lock_contention",
+        "INCONCLUSIVE:other"
+      ]
+    }
+  },
+  "invalid_reasons": [],
+  "P_prompt_version": "2026-11-06.2"
+}

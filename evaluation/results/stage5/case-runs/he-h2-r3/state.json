@@ -1,0 +1,183 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-h2-r3",
+  "template": "he-h2",
+  "split": "held_out",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 26200925,
+      "controller_run": "stage5-he-h2-r3-a1",
+      "bundle": "b-13f19e1bd3bb",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T06:47:12.000Z",
+        "end": "2026-11-07T06:50:12.000Z"
+      },
+      "validity": "all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "c42619f3-e2d7-4c0c-971c-8ad9542732e3",
+    "status": "COMPLETED",
+    "final_reason": "model report: NO_FAULT_OBSERVED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3953,
+        "reported_output_tokens": 1040,
+        "tokens_counted_against_budget": 4993,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 13,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "NO_FAULT_OBSERVED",
+      "summary": "In the window, transfers were healthy: no 5xx, p99 0.25 s, and the outbox delivered everything. A stale backlog of 1034 FAILED outbox rows predates the window and did not change.",
+      "evidence": {
+        "E1": "ab2070da-16ed-44dd-b082-7211518ab965",
+        "E2": "379e756e-2c79-432c-8db9-1bd65660de7f",
+        "E3": "bcf5444d-ddd6-4710-a7e1-b6fd2ef4203d",
+        "E4": "96ae9ab8-0990-4bc0-9fd1-6270d65d5968",
+        "E5": "d97dfb9f-50f4-4c11-bc59-5a0e1600573b",
+        "E6": "2d18d7c1-f8ba-4bce-8874-9092b3002634",
+        "E7": "7969776b-bde7-4138-b55c-bccd3b8aa741"
+      },
+      "findings": [
+        {
+          "claim": "Transfer API shows no failures or multi-second latency: 0 server errors, p95 0.238 s, p99 0.248 s. The 422s are client errors.",
+          "reason": "Complete coverage of 617 requests shows 500\u00d70 and p99 under 0.25 s.",
+          "support": "observed",
+          "evidence_ids": [
+            "ab2070da-16ed-44dd-b082-7211518ab965"
+          ],
+          "evidence_handles": [
+            "E1"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The outbox kept up: 541 arrivals and 541 publications, all delivered on attempt 1 at about 71 ms, with no errors.",
+          "reason": "Arrivals minus publications is 0, and all 541 attempts were SUCCESS with max 80 ms.",
+          "support": "observed",
+          "evidence_ids": [
+            "379e756e-2c79-432c-8db9-1bd65660de7f",
+            "bcf5444d-ddd6-4710-a7e1-b6fd2ef4203d",
+            "96ae9ab8-0990-4bc0-9fd1-6270d65d5968"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The DB pool and locks were not stressed: 0 acquisition timeouts, 0 pending borrowers, and 0 blocked sessions.",
+          "reason": "Pool pending and active max were 0, and none of the 90 blocker samples showed blocking.",
+          "support": "observed",
+          "evidence_ids": [
+            "d97dfb9f-50f4-4c11-bc59-5a0e1600573b",
+            "2d18d7c1-f8ba-4bce-8874-9092b3002634"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "A pre-existing backlog of 1034 FAILED outbox rows, oldest about 13 hours old, is constant through the window and unrelated to current traffic.",
+          "reason": "Failed stayed at 1034 and oldest_undelivered_age rose only at wall-clock rate.",
+          "support": "observed",
+          "evidence_ids": [
+            "379e756e-2c79-432c-8db9-1bd65660de7f"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "13"
+          ]
+        }
+      ],
+      "limitations": [
+        "Window is only 3 minutes, and the customer complaints may refer to another time.",
+        "Pool and blocker data are sampled (5 s and 2 s), so brief spikes could be missed."
+      ],
+      "next_checks": [
+        "Re-run the same checks over the time the customers reported the failures.",
+        "Find out when and why the 1034 outbox rows reached FAILED, and whether they affect transfers."
+      ],
+      "alternatives": [
+        {
+          "reason": "The failed rows predate the window, and no data covers when they failed.",
+          "assessment": "unassessed",
+          "hypothesis": "Customer-reported failures or slowness happened outside this 3-minute window, e.g. when the 1034 rows failed.",
+          "evidence_ids": [
+            "379e756e-2c79-432c-8db9-1bd65660de7f"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        },
+        {
+          "reason": "Server-side latency is low, but client-observed latency is not measured.",
+          "assessment": "unassessed",
+          "hypothesis": "Downstream or client-side delays that the service metrics cannot see (network, customer apps).",
+          "evidence_ids": [
+            "ab2070da-16ed-44dd-b082-7211518ab965"
+          ],
+          "evidence_handles": [
+            "E1"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3953,
+    "output_tokens": 1040,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "none",
+    "cost_usd": 0.01831,
+    "checks": {
+      "numbers_checked": 13,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

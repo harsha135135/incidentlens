@@ -1,0 +1,72 @@
+{
+  "recorded_at": "2026-11-04",
+  "note": "Pinned versions tested in Stage 0. Changing any of these requires rerunning the relevant contract checks.",
+  "machine": {
+    "hardware": "Apple M4 Pro (arm64)",
+    "macos": "26.5.2",
+    "docker_desktop_engine": "29.6.2"
+  },
+  "openshell": {
+    "cli": "0.1.7",
+    "gateway": "0.1.7",
+    "install": "Homebrew formula from release v0.1.7 (installer reviewed before running)",
+    "gateway_config": "/opt/homebrew/var/openshell/gateway.toml with [openshell.drivers.docker] supervisor_network_mode = \"bridge\"",
+    "supervisor_image": "ghcr.io/nvidia/openshell/supervisor@sha256:a07864bd0c546716039c2000a919f50ce8f7f1f67ba37dda350cf64d3a7cfb06",
+    "sandbox_runtime_image": "ghcr.io/nvidia/openshell/sandbox@sha256:89819c03f291d9b909c3fc2962360e24af4516627422d18f3e681829f003f347"
+  },
+  "runner_image": {
+    "dockerfile": "deploy/openshell/runner.Dockerfile",
+    "base": "nvcr.io/nvidia/base/ubuntu@sha256:d9461f428eea54e553add3a5158a0f245c6e1ea73efc59fff8e98e3d4a38e378",
+    "built_tag": "incidentlens-runner:stage0",
+    "built_image_id": "sha256:84f245c15d7e87161eaadbda70d20a19995c1447ce6c53383319aa492981cb6a",
+    "python": "/usr/bin/python3.12 (3.12.3)"
+  },
+  "python": {
+    "interpreter": "3.12.13 (uv-managed)",
+    "lockfile": "uv.lock",
+    "packages": {
+      "anthropic": "2.4.0",
+      "fastapi": "0.162.0",
+      "httpx": "0.28.1",
+      "jinja2": "3.1.6",
+      "langchain-anthropic": "1.7.9",
+      "langchain-core": "1.7.4",
+      "psycopg": "3.3.8",
+      "psycopg-pool": "3.3.3",
+      "pydantic": "2.14.2",
+      "pytest": "9.2.0",
+      "uvicorn": "0.54.0",
+      "bcrypt": "5.0.0"
+    }
+  },
+  "ledgercore": {
+    "revision": "86e4bf1c38fb874f04aad1447ca6e726fe2803e6",
+    "jdk": "OpenJDK 25.0.2 (builds with --release 21)",
+    "postgres_image": "postgres@sha256:3b0cda93be7c8dba2ed484d19393d93845dc3dafb88973e248ba8e6d99d784e1 (tag 17.11)",
+    "stage1_working_tree": {
+      "revision_reported": "86e4bf1c38fb+dirty.ed5247a36278",
+      "meaning": "commit 86e4bf1 plus uncommitted Stage 1 telemetry and diagnostic-access changes; the suffix is a SHA-256 prefix over `git diff HEAD --binary` and untracked files (scripts/stack.py ledgercore_revision)",
+      "new_dependency": "io.micrometer:micrometer-registry-prometheus (version managed by Spring Boot 4.1.2)",
+      "verify": "111 tests, 0 failures (91 existing + 20 new)"
+    }
+  },
+  "model": {
+    "provider": "Anthropic",
+    "requested_id": "claude-sonnet-5-5",
+    "verified_for_account": true,
+    "display_name": "Claude Sonnet 5.5",
+    "response_model_field": "claude-sonnet-5-5",
+    "created_at": "2026-09-28T00:00:00+00:00",
+    "max_input_tokens": 1000000,
+    "max_tokens": 128000,
+    "checked_at": "2026-11-06T04:37:23Z",
+    "status": "verified in Stage 0 (evaluation/results/stage0/model-check-20261106T043728Z.json)",
+    "strict_tools_recheck": "evaluation/results/stage0/model-check-20261106T053603Z.json (strict set on each tool definition; D17 correction)"
+  },
+  "pricing_file": "evaluation/pricing/anthropic-2026-11-04.json",
+  "infrastructure": {
+    "incidentlens_postgres_image": "postgres@sha256:3b0cda93be7c8dba2ed484d19393d93845dc3dafb88973e248ba8e6d99d784e1 (17.11)",
+    "prometheus_image": "prom/prometheus@sha256:fa3302279710be2f21a8301ec17a8b4f2301fd829bd113839b3b6b02b6f191a2 (v3.15.1, revision bae3eced0a5369e050e83ea73bc381d7c4b1a719)",
+    "compose_file": "deploy/compose.yaml"
+  }
+}

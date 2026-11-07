@@ -1,0 +1,188 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cu-h5-r3",
+  "template": "cu-h5",
+  "split": "held_out",
+  "category": "consumer_unavailable",
+  "ground_truth": "consumer_unavailable",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 1388118089,
+      "controller_run": "stage5-cu-h5-r3-a1",
+      "bundle": "b-ba22522779fc",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T04:42:34.000Z",
+        "end": "2026-11-07T04:46:34.000Z"
+      },
+      "validity": "logs COMPLETE, network_error 3332 of 3332 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_unavailable",
+    "rule": "3332 of 3332 failed deliveries were network_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "15de39dd-97b6-4065-b665-f16ec20e32fd",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4092,
+        "reported_output_tokens": 1209,
+        "tokens_counted_against_budget": 5301,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 12,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publication stopped from about 04:43:05 to about 04:46:00 because delivery attempts to the consumer failed with connection errors. Transfers kept committing, so notifications backed up. The reason the consumer was unreachable is not shown.",
+      "evidence": {
+        "E1": "11b42cf3-eecd-45f4-a2bc-32206c4bfda4",
+        "E2": "11f57428-398e-4af8-a0c0-9ab7e343f00d",
+        "E3": "c0be9835-3d3c-422a-b7ae-fc1de419229b",
+        "E4": "d6edc96d-1be4-46de-bb6c-03bd0dc46b51",
+        "E5": "8dab9b7e-e1f8-4547-bbe6-16ede3336696",
+        "E6": "42351e0d-1997-445c-91eb-7ea39668feba",
+        "E7": "d89208d2-236e-4a88-97cf-84e92729d7c5"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publications fell to zero for about 3 minutes while commits continued at about 30 per 10 s, leaving 432 events unpublished.",
+          "reason": "Per-bucket publications are 0 from the 4th bucket until the 21st, while arrivals stay at about 30 per bucket.",
+          "support": "observed",
+          "evidence_ids": [
+            "11f57428-398e-4af8-a0c0-9ab7e343f00d"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The delivery attempts failed with CONNECTION_FAILED in sub-millisecond time, which fits refused connections. 3332 of 3621 attempts failed this way, and only 289 succeeded.",
+          "reason": "Failed attempts have a p50 of 0.238 ms and no consumer record. Successful attempts take about 71 ms and are matched to consumer records.",
+          "support": "observed",
+          "evidence_ids": [
+            "c0be9835-3d3c-422a-b7ae-fc1de419229b",
+            "d6edc96d-1be4-46de-bb6c-03bd0dc46b51"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The transfer API and database pool were healthy, so the delay sits in the outbox-to-consumer hop and not in request handling or the database.",
+          "reason": "The server error ratio is 0, p99 latency is 0.25 s, pool timeouts are 0 and pending is 0, and there is no DB blocking.",
+          "support": "observed",
+          "evidence_ids": [
+            "11b42cf3-eecd-45f4-a2bc-32206c4bfda4",
+            "8dab9b7e-e1f8-4547-bbe6-16ede3336696",
+            "42351e0d-1997-445c-91eb-7ea39668feba"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Failed rows pile up and pending grows, so notifications are delayed. The failed count rises from 619 to 778 while pending peaks at 399. An oldest undelivered age of about 39,600 s (more than 10 hours) points to a backlog that predates the window.",
+          "reason": "The 8-attempt cap and 3 s timeout in the config fit rows moving to FAILED. Publications resume at the end of the window, so the consumer may be recovering.",
+          "support": "inferred",
+          "evidence_ids": [
+            "11f57428-398e-4af8-a0c0-9ab7e343f00d",
+            "d89208d2-236e-4a88-97cf-84e92729d7c5"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E7"
+          ],
+          "unverified_numbers": [
+            "39600"
+          ]
+        }
+      ],
+      "limitations": [
+        "There is no consumer-side availability or log data, so why connections failed is unknown.",
+        "The window starts with an old backlog (oldest age about 11 h) and the same failed rows, so the pre-window history is not covered."
+      ],
+      "next_checks": [
+        "Check the consumer process and listener on port 18090 for a crash, restart or bind failure around 04:43.",
+        "Find out what the backlog of roughly 619 FAILED rows is and when it started, then decide whether to requeue them."
+      ],
+      "alternatives": [
+        {
+          "reason": "The consumer's own availability and logs are not in the evidence.",
+          "assessment": "unassessed",
+          "hypothesis": "The consumer process or listener was down or restarting at 127.0.0.1:18090, which would fit the refused connections.",
+          "evidence_ids": [
+            "c0be9835-3d3c-422a-b7ae-fc1de419229b",
+            "d6edc96d-1be4-46de-bb6c-03bd0dc46b51"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ]
+        },
+        {
+          "reason": "Attempts were made and recorded, and they failed fast at the connection level. The pool shows no contention.",
+          "assessment": "weakened",
+          "hypothesis": "A LedgerCore-side fault in the delivery worker or poller caused the stall.",
+          "evidence_ids": [
+            "d6edc96d-1be4-46de-bb6c-03bd0dc46b51",
+            "8dab9b7e-e1f8-4547-bbe6-16ede3336696"
+          ],
+          "evidence_handles": [
+            "E4",
+            "E5"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4092,
+    "output_tokens": 1209,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 18.1,
+    "classified_dev_aid": "consumer_unavailable",
+    "cost_usd": 0.02027,
+    "checks": {
+      "numbers_checked": 12,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

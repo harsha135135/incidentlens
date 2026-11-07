@@ -1,0 +1,197 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cr-h3-r2",
+  "template": "cr-h3",
+  "split": "held_out",
+  "category": "credential_rejection",
+  "ground_truth": "consumer_credential_rejected",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3228216117,
+      "controller_run": "stage5-cr-h3-r2-a1",
+      "bundle": "b-182b2868ce21",
+      "status": "interrupted"
+    },
+    {
+      "attempt": 2,
+      "seed": 3119231174,
+      "controller_run": "stage5-cr-h3-r2-a2",
+      "bundle": "b-d5cae0915a6b",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T02:53:38.000Z",
+        "end": "2026-11-07T02:57:08.000Z"
+      },
+      "validity": "logs COMPLETE, auth_error 426 of 426 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_credential_rejected",
+    "rule": "426 of 426 failed deliveries were auth_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "7011c1f7-2ff2-418f-833d-9248e5387385",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3979,
+        "reported_output_tokens": 1163,
+        "tokens_counted_against_budget": 5142,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 8,
+        "numbers_not_found_in_cited_evidence": 3
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox delivery stalled for ~50 s and then drained; 426 attempts got HTTP 401 (auth_error) and 296 rows are permanently FAILED. The 401 cause itself is not shown.",
+      "evidence": {
+        "E1": "14fe652c-9087-4e53-b3b7-4a7f7c7e0665",
+        "E2": "50104377-a7f9-4c5d-a58c-3632114dc373",
+        "E3": "01b5a9b9-9216-4a4c-82a5-0e39779c6c06",
+        "E4": "1d929748-f61e-4ab6-94cd-ac6d4dc3514c",
+        "E5": "b65795dc-23b5-48d8-82b4-40b13d21a208",
+        "E6": "54234d45-75fc-4932-aea0-2fa8f184cae8",
+        "E7": "3ba94f85-4737-44ce-bb6b-48466fc95dd5"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publications dropped to zero for about 50 s (five 10 s buckets) while arrivals continued at ~30 per bucket, then drained in a burst.",
+          "reason": "Publication buckets read 0 0 0 0 0, then 39, 82, 80. Pending peaked at 160, which fits notifications arriving late.",
+          "support": "observed",
+          "evidence_ids": [
+            "50104377-a7f9-4c5d-a58c-3632114dc373"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "50"
+          ]
+        },
+        {
+          "claim": "The consumer rejected 426 of 1048 delivery attempts with HTTP 401, so the failures are auth errors and not server or network errors.",
+          "reason": "Outcomes were auth_error 426, success 622, server_error 0, network_error 0. Consumer auth took about 70 ms on every attempt.",
+          "support": "observed",
+          "evidence_ids": [
+            "01b5a9b9-9216-4a4c-82a5-0e39779c6c06",
+            "1d929748-f61e-4ab6-94cd-ac6d4dc3514c"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": [
+            "401"
+          ]
+        },
+        {
+          "claim": "296 outbox rows are stuck in FAILED, and the oldest undelivered row is about 33,000 s old. This is a standing backlog that predates the window and does not shrink.",
+          "reason": "Failed stayed at 296 from the first sample to the last. Oldest age grew from 33052 to 33257 s in step with elapsed time.",
+          "support": "observed",
+          "evidence_ids": [
+            "50104377-a7f9-4c5d-a58c-3632114dc373"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "33000"
+          ]
+        },
+        {
+          "claim": "Transfer writes, the DB pool and DB locking are not the cause. The delay sits in outbox delivery, downstream of a healthy API.",
+          "reason": "Transfers returned 201 with p99 of 0.25 s and no 5xx. The pool had no waits or timeouts, and no blocking was sampled.",
+          "support": "inferred",
+          "evidence_ids": [
+            "14fe652c-9087-4e53-b3b7-4a7f7c7e0665",
+            "b65795dc-23b5-48d8-82b4-40b13d21a208",
+            "54234d45-75fc-4932-aea0-2fa8f184cae8"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Delivery logs list only the earliest 100 of 1048 attempts, so the 401 timing within the stall window is not directly shown.",
+        "The tools do not show why the consumer returned 401 (credential or config change), nor the poller's behaviour during the zero-publication period."
+      ],
+      "next_checks": [
+        "Correlate 401 attempt timestamps with the 02:55:00\u201302:55:50 zero-publication buckets, and check the consumer's auth credential or config.",
+        "Inspect the 296 FAILED rows (attempt count against the max of 8) and decide whether to replay them after the auth fix."
+      ],
+      "alternatives": [
+        {
+          "reason": "Attempts took about 71 ms against a 3000 ms delivery timeout, and there were no timeouts or network errors.",
+          "assessment": "weakened",
+          "hypothesis": "Consumer slowness or timeouts caused the stall rather than auth failures.",
+          "evidence_ids": [
+            "1d929748-f61e-4ab6-94cd-ac6d4dc3514c",
+            "3ba94f85-4737-44ce-bb6b-48466fc95dd5"
+          ],
+          "evidence_handles": [
+            "E4",
+            "E7"
+          ]
+        },
+        {
+          "reason": "Pool pending and active were 0, there were no acquisition timeouts, and no blocking was sampled.",
+          "assessment": "weakened",
+          "hypothesis": "DB contention or pool exhaustion paused the poller.",
+          "evidence_ids": [
+            "b65795dc-23b5-48d8-82b4-40b13d21a208",
+            "54234d45-75fc-4932-aea0-2fa8f184cae8"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3979,
+    "output_tokens": 1163,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 18.1,
+    "classified_dev_aid": "consumer_credential_rejected",
+    "cost_usd": 0.01959,
+    "checks": {
+      "numbers_checked": 8,
+      "numbers_not_found_in_cited_evidence": 3
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

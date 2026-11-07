@@ -1,0 +1,50 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.13, pytest-9.2.0, pluggy-1.7.0 -- /Users/harshamac/developer/two/incidentlens/.venv/bin/python
+rootdir: /Users/harshamac/developer/two/incidentlens
+configfile: pyproject.toml
+plugins: langsmith-0.14.17, anyio-4.16.0
+collecting ... collected 5 items
+
+tests/stack/test_stage1_scenarios.py::test_healthy_load_is_observed_as_healthy PASSED [ 20%]
+tests/stack/test_stage1_scenarios.py::test_an_unavailable_consumer_shows_refused_connections_and_stalled_publications PASSED [ 40%]
+tests/stack/test_stage1_scenarios.py::test_a_slow_consumer_shows_long_handler_time_without_errors PASSED [ 60%]
+tests/stack/test_stage1_scenarios.py::test_an_induced_scrape_gap_is_reported_with_accurate_bounds FAILED [ 80%]
+tests/stack/test_stage1_scenarios.py::test_smoke_with_ledgercores_original_in_process_consumer PASSED [100%]
+
+=================================== FAILURES ===================================
+_________ test_an_induced_scrape_gap_is_reported_with_accurate_bounds __________
+
+settings = Settings(prometheus_url='http://127.0.0.1:19090', ledgercore_url='http://127.0.0.1:18080', ledgercore_log_file=PosixPa...harshamac/developer/two/incidentlens/logs/fixture-consumer/consumer.jsonl'), stub_control_url='http://127.0.0.1:18091')
+store = <psycopg.Connection [IDLE] (host=127.0.0.1 port=55433 database=incidentlens) at 0x10b2903b0>
+profile = {'label': 'FIXTURE RESULT (fixture consumer at baseline BCrypt cost 10)', 'rate_per_second': 3.2, 'seed': 20261106, 'account_pairs': 20, ...}
+accounts = [('5eeacd97-9c39-4491-b873-b4032ecf115e', '2365f74f-217f-4248-afb0-5d37cdcb78cd'), ('43c719d3-3d56-4991-89d9-99c53aa82...2-e5fe-486e-a442-30b785d3b147'), ('281c75a4-bf7f-490d-ae60-c8733d747aa6', '98aae2a8-e14d-4cc9-92b5-265be56ff729'), ...]
+controller = <evaluation.controller.Controller object at 0x10b290200>
+results_dir = PosixPath('/Users/harshamac/developer/two/incidentlens/evaluation/results/stage1/scenarios-20261106T052908Z')
+
+    def test_an_induced_scrape_gap_is_reported_with_accurate_bounds(
+            settings, store, profile, accounts, controller, results_dir):
+        stop, thread, holder = controller.workload_in_background(accounts, profile["rate_per_second"],
+                                                                 profile["seed"] + 40)
+        time.sleep(15)
+        paused, resumed = controller.pause_ledgercore(20)
+        time.sleep(20)
+        controller.stop_workload(stop, thread, holder)
+        window = Window(plus(paused, -15), plus(resumed, 20))
+        seen = observe(settings, store, window, controller, results_dir, "induced_gap")
+    
+        requests = seen["requests_transfers"]
+        assert requests["coverage"] == "PARTIAL"
+        gaps = requests["data"]["scrapes"]["gaps"]
+        assert len(gaps) == 1, gaps
+        gap_start, gap_end = at(gaps[0]["start"]), at(gaps[0]["end"])
+        # The gap starts at the last good scrape before the pause and ends at the first good one after.
+        assert -6 <= seconds_between(paused, gap_start) <= 1, (paused, gap_start)
+>       assert -1 <= seconds_between(resumed, gap_end) <= 10, (resumed, gap_end)
+E       AssertionError: (datetime.datetime(2026, 11, 6, 5, 34, 7, 208000, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 11, 6, 5, 34, 3, 720000, tzinfo=datetime.timezone.utc))
+E       assert -1 <= -3.488
+E        +  where -3.488 = seconds_between(datetime.datetime(2026, 11, 6, 5, 34, 7, 208000, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 11, 6, 5, 34, 3, 720000, tzinfo=datetime.timezone.utc))
+
+tests/stack/test_stage1_scenarios.py:146: AssertionError
+=========================== short test summary info ============================
+FAILED tests/stack/test_stage1_scenarios.py::test_an_induced_scrape_gap_is_reported_with_accurate_bounds
+=================== 1 failed, 4 passed in 413.46s (0:06:53) ====================

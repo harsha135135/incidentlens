@@ -1,0 +1,6 @@
+{"at": "2026-11-06T17:16:38.537Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T17:16:38.532Z"}
+{"at": "2026-11-06T17:17:12.094Z", "action": "workload_started", "rate_per_second": 2.8, "seed": 102631587}
+{"at": "2026-11-06T17:17:24.010Z", "action": "account_locks_held", "accounts": 7}
+{"at": "2026-11-06T17:17:54.014Z", "action": "account_locks_released"}
+{"at": "2026-11-06T17:19:44.345Z", "action": "workload_stopped", "sent": 427, "statuses": {"201": 401, "500": 26}, "errors": {}, "started_at": "2026-11-06T17:17:12.094Z", "ended_at": "2026-11-06T17:19:44.345Z"}
+{"at": "2026-11-06T17:19:44.346Z", "action": "window", "start": "2026-11-06T17:17:14.000Z", "end": "2026-11-06T17:19:44.000Z", "template": "lc-h4"}

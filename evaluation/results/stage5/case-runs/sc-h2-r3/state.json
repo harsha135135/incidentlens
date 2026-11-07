@@ -1,0 +1,174 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "sc-h2-r3",
+  "template": "sc-h2",
+  "split": "held_out",
+  "category": "slow_consumer",
+  "ground_truth": "slow_consumer_handler",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3775466074,
+      "controller_run": "stage5-sc-h2-r3-a1",
+      "bundle": "b-bed2eeecd514",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T05:00:43.000Z",
+        "end": "2026-11-07T05:03:43.000Z"
+      },
+      "validity": "logs COMPLETE, timings COMPLETE, handler max 255.097 ms, failures 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "INCONCLUSIVE",
+    "primary_cause": "unclassified",
+    "rule": "no rule matched",
+    "evidence_ids": [],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "df25abd6-0ae0-4972-9435-e3c5f570bef7",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3937,
+        "reported_output_tokens": 1318,
+        "tokens_counted_against_budget": 5255,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 9,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publications (3.13/s) trail committed arrivals (3.61/s) because each delivery takes ~326 ms in the consumer, so a backlog builds and notifications are delayed. Serial delivery is inferred, not observed.",
+      "evidence": {
+        "E1": "012b7efd-1fb4-4df5-96eb-200729c89a00",
+        "E2": "e9db4321-3baf-4342-b780-925503e5998d",
+        "E3": "3ff2189a-0a27-4887-bcec-6ae00c604740",
+        "E4": "f98591d6-601f-424a-abd0-be44a6e2371a",
+        "E5": "a2fde709-7568-4e71-a7a3-b982f4d67574",
+        "E6": "24402808-0071-44fa-8361-1f1e0b355230",
+        "E7": "861278ea-41e6-49c3-bdf4-088b9b5fd36e"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publishes slower than events arrive; pending climbed from 3 to as much as 148 during the window.",
+          "reason": "Arrivals 3.606/s vs publications 3.133/s (85 behind); pending grew 3\u219232\u219270\u2192111 before the final catch-up buckets.",
+          "support": "observed",
+          "evidence_ids": [
+            "e9db4321-3baf-4342-b780-925503e5998d"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Each delivery takes ~326 ms, almost all of it in the consumer (auth ~70 ms, handler ~255 ms); LedgerCore adds ~1 ms.",
+          "reason": "Timings are uniform (p50 326 ms, p95 328 ms); all 565 attempts succeeded with status 200.",
+          "support": "observed",
+          "evidence_ids": [
+            "f98591d6-601f-424a-abd0-be44a6e2371a",
+            "3ff2189a-0a27-4887-bcec-6ae00c604740"
+          ],
+          "evidence_handles": [
+            "E4",
+            "E3"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The slow per-delivery time probably caps throughput near 3/s (~1/0.326 s), below the arrival rate, which would explain the growing backlog.",
+          "reason": "If batches of 20 are delivered serially, ~3.07/s matches the observed 3.13/s publication rate.",
+          "support": "inferred",
+          "evidence_ids": [
+            "e9db4321-3baf-4342-b780-925503e5998d",
+            "f98591d6-601f-424a-abd0-be44a6e2371a",
+            "861278ea-41e6-49c3-bdf4-088b9b5fd36e"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E4",
+            "E7"
+          ],
+          "unverified_numbers": [
+            "0.326"
+          ]
+        }
+      ],
+      "limitations": [
+        "Serial delivery inside a batch was not directly observed; the poller's concurrency was not inspected.",
+        "The consumer is a test fixture, so its ~326 ms latency may not reflect production; the 778 old failed rows were not investigated."
+      ],
+      "next_checks": [
+        "Inspect the outbox poller code and a thread dump to confirm whether deliveries within a batch run sequentially.",
+        "Re-run with a faster consumer or parallel delivery and check whether publications keep up with arrivals."
+      ],
+      "alternatives": [
+        {
+          "reason": "Zero pool waits or timeouts, no blocking sampled, and the transfers route was fast with no server errors.",
+          "assessment": "weakened",
+          "hypothesis": "DB pool exhaustion or lock blocking delayed the outbox or the API",
+          "evidence_ids": [
+            "a2fde709-7568-4e71-a7a3-b982f4d67574",
+            "24402808-0071-44fa-8361-1f1e0b355230",
+            "012b7efd-1fb4-4df5-96eb-200729c89a00"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6",
+            "E1"
+          ]
+        },
+        {
+          "reason": "All attempts succeeded; the failed count was flat at 778, and the very old undelivered age points to a stale pre-existing row.",
+          "assessment": "weakened",
+          "hypothesis": "Delivery failures and retries are causing the delay",
+          "evidence_ids": [
+            "3ff2189a-0a27-4887-bcec-6ae00c604740",
+            "e9db4321-3baf-4342-b780-925503e5998d"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E2"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3937,
+    "output_tokens": 1318,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 18.1,
+    "classified_dev_aid": "slow_consumer_handler",
+    "cost_usd": 0.02105,
+    "checks": {
+      "numbers_checked": 9,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

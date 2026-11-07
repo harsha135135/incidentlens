@@ -1,0 +1,120 @@
+{
+ "arguments": {},
+ "collected_at": "2026-11-06T15:39:56.032Z",
+ "coverage": "PARTIAL",
+ "data": {
+  "durable_counts": {
+   "arrival_timestamp_meaning": "committed outbox records grouped by creation (transaction-start) timestamp",
+   "arrivals_per_second": 3.2,
+   "bucket_seconds": 10,
+   "buckets": [
+    {
+     "arrivals": 32,
+     "publications": 30,
+     "start": "2026-11-06T15:37:15.000Z"
+    },
+    {
+     "arrivals": 32,
+     "publications": 34,
+     "start": "2026-11-06T15:37:25.000Z"
+    },
+    {
+     "arrivals": 31,
+     "publications": 29,
+     "start": "2026-11-06T15:37:35.000Z"
+    },
+    {
+     "arrivals": 32,
+     "publications": 0,
+     "start": "2026-11-06T15:37:45.000Z"
+    },
+    {
+     "arrivals": 33,
+     "publications": 0,
+     "start": "2026-11-06T15:37:55.000Z"
+    },
+    {
+     "arrivals": 31,
+     "publications": 0,
+     "start": "2026-11-06T15:38:05.000Z"
+    },
+    {
+     "arrivals": 32,
+     "publications": 0,
+     "start": "2026-11-06T15:38:15.000Z"
+    },
+    {
+     "arrivals": 32,
+     "publications": 0,
+     "start": "2026-11-06T15:38:25.000Z"
+    },
+    {
+     "arrivals": 33,
+     "publications": 0,
+     "start": "2026-11-06T15:38:35.000Z"
+    },
+    {
+     "arrivals": 31,
+     "publications": 0,
+     "start": "2026-11-06T15:38:45.000Z"
+    },
+    {
+     "arrivals": 32,
+     "publications": 0,
+     "start": "2026-11-06T15:38:55.000Z"
+    },
+    {
+     "arrivals": 32,
+     "publications": 80,
+     "start": "2026-11-06T15:39:05.000Z"
+    },
+    {
+     "arrivals": 32,
+     "publications": 80,
+     "start": "2026-11-06T15:39:15.000Z"
+    },
+    {
+     "arrivals": 32,
+     "publications": 80,
+     "start": "2026-11-06T15:39:25.000Z"
+    },
+    {
+     "arrivals": 33,
+     "publications": 80,
+     "start": "2026-11-06T15:39:35.000Z"
+    }
+   ],
+   "committed_arrivals": 480,
+   "publication_timestamp_meaning": "recorded publications grouped by publication-transaction timestamp",
+   "publications_per_second": 2.753,
+   "recorded_publications": 413,
+   "settled": true,
+   "window_seconds": 150.0
+  }
+ },
+ "errors": [
+  "Prometheus unreachable"
+ ],
+ "evidence_id": "62ef308f-70b7-4c9c-b6f5-7f8b6e8089a0",
+ "limitations": [
+  "Outbox gauge history is unavailable (Prometheus could not be queried).",
+  "Pending is a gauge sampled at scrape times; arrivals and publications are durable counts by timestamp. Transitions to FAILED and the different sampling instants mean pending change need not equal arrivals minus publications."
+ ],
+ "observed_window": {
+  "first": null,
+  "last": null
+ },
+ "requested_window": {
+  "end": "2026-11-06T15:39:45.000Z",
+  "start": "2026-11-06T15:37:15.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus+postgres_aggregate",
+  "target_instance_id": "d7e9e5fa-3af1-4383-9558-e11fcd0b207d",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_outbox_stats",
+ "truncated": false
+}

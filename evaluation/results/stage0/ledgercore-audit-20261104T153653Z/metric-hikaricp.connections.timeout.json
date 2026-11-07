@@ -1,0 +1,1 @@
+{"availableTags":[{"tag":"pool","values":["HikariPool-1"]}],"description":"Connection timeout total count","measurements":[{"statistic":"COUNT","value":0.0}],"name":"hikaricp.connections.timeout"}

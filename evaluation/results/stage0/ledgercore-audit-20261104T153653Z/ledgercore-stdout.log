@@ -1,0 +1,41 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-04T21:06:56.446+05:30  INFO [] 43287 --- [ledgercore] [           main] i.g.h.ledgercore.LedgercoreApplication   : Starting LedgercoreApplication v0.0.1-SNAPSHOT using Java 25.0.2 with PID 43287 (/Users/harshamac/developer/two/ledgercore/target/ledgercore-0.0.1-SNAPSHOT.jar started by harshamac in /Users/harshamac/developer/two/ledgercore)
+2026-11-04T21:06:56.447+05:30  INFO [] 43287 --- [ledgercore] [           main] i.g.h.ledgercore.LedgercoreApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-11-04T21:06:57.204+05:30  INFO [] 43287 --- [ledgercore] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 18080 (http)
+2026-11-04T21:06:57.213+05:30  INFO [] 43287 --- [ledgercore] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-04T21:06:57.213+05:30  INFO [] 43287 --- [ledgercore] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-04T21:06:57.232+05:30  INFO [] 43287 --- [ledgercore] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 748 ms
+2026-11-04T21:06:57.576+05:30  INFO [] 43287 --- [ledgercore] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:55432/ledgercore (PostgreSQL 17.11)
+2026-11-04T21:06:57.611+05:30  INFO [] 43287 --- [ledgercore] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-04T21:06:57.612+05:30  INFO [] 43287 --- [ledgercore] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.009s)
+2026-11-04T21:06:57.620+05:30  INFO [] 43287 --- [ledgercore] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-04T21:06:57.649+05:30  INFO [] 43287 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-11-04T21:06:57.659+05:30  INFO [] 43287 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - core ledger"
+2026-11-04T21:06:57.692+05:30  INFO [] 43287 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - demo principals"
+2026-11-04T21:06:57.702+05:30  INFO [] 43287 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - idempotency"
+2026-11-04T21:06:57.713+05:30  INFO [] 43287 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - holds"
+2026-11-04T21:06:57.727+05:30  INFO [] 43287 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - outbox"
+2026-11-04T21:06:57.742+05:30  INFO [] 43287 --- [ledgercore] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema "public", now at version v5 (execution time 00:00.042s)
+2026-11-04T21:06:57.930+05:30  INFO [] 43287 --- [ledgercore] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name ledgerUsers
+2026-11-04T21:06:58.177+05:30  INFO [] 43287 --- [ledgercore] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-04T21:06:58.201+05:30  INFO [] 43287 --- [ledgercore] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 18080 (http) with context path '/'
+2026-11-04T21:06:58.210+05:30  INFO [] 43287 --- [ledgercore] [           main] i.g.h.ledgercore.LedgercoreApplication   : Started LedgercoreApplication in 2.012 seconds (process running for 2.283)
+2026-11-04T21:06:58.216+05:30  INFO [] 43287 --- [ledgercore] [   scheduling-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-04T21:06:58.230+05:30  INFO [] 43287 --- [ledgercore] [   scheduling-1] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@37bac432
+2026-11-04T21:06:58.232+05:30  INFO [] 43287 --- [ledgercore] [   scheduling-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-04T21:06:59.009+05:30  INFO [] 43287 --- [ledgercore] [.1-18080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-04T21:06:59.009+05:30  INFO [] 43287 --- [ledgercore] [.1-18080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-04T21:06:59.010+05:30  INFO [] 43287 --- [ledgercore] [.1-18080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-04T21:07:08.127+05:30  INFO [] 43287 --- [ledgercore] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-04T21:07:08.129+05:30  INFO [] 43287 --- [ledgercore] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-11-04T21:07:08.133+05:30  INFO [] 43287 --- [ledgercore] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-04T21:07:08.133+05:30  INFO [] 43287 --- [ledgercore] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

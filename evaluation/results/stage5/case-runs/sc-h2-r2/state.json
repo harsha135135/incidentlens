@@ -1,0 +1,54 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "sc-h2-r2",
+  "template": "sc-h2",
+  "split": "held_out",
+  "category": "slow_consumer",
+  "ground_truth": "slow_consumer_handler",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3067616599,
+      "controller_run": "stage5-sc-h2-r2-a1",
+      "bundle": "b-565ce13bc737",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T19:38:30.000Z",
+        "end": "2026-11-06T19:41:30.000Z"
+      },
+      "validity": "logs COMPLETE, timings COMPLETE, handler max 260.064 ms, failures 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "3b12ebbd-cbef-4828-af8e-19af8dbb9302",
+    "status": "FAILED",
+    "final_reason": "the runner exited before the job finished; no recovery left after 2",
+    "report": null,
+    "report_source": null,
+    "model_calls": 0,
+    "tool_calls": 0,
+    "tools": [],
+    "recoveries": 2,
+    "input_tokens": null,
+    "output_tokens": null,
+    "unknown_usage_calls": null,
+    "replay_elapsed_seconds": 8.1,
+    "classified_dev_aid": "no_report",
+    "cost_usd": null,
+    "checks": null,
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "INCONCLUSIVE",
+    "primary_cause": "unclassified",
+    "rule": "no rule matched",
+    "evidence_ids": [],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<title>IncidentLens report 9e2eab87-b1f9-47b4-8b3c-a5ae966b8239</title>
+<style>
+body { font: 15px/1.5 system-ui, sans-serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; color: #1b1f24; }
+pre { white-space: pre-wrap; background: #f4f5f7; padding: .75rem; border-radius: 6px; font-size: 13px; }
+.banner { padding: .75rem 1rem; border-radius: 6px; margin: 1rem 0; background: #eef3fb; }
+.banner-stopped, .banner-missing { background: #fdf3e2; } .muted { color: #59626d; }
+.coverage, .support, .assessment { font-size: 12px; padding: 0 .4rem; border-radius: 4px; background: #e9ecef; }
+</style>
+</head>
+<body>
+<h1>IncidentLens report</h1>
+<p>“Customers say that transfer notifications are arriving late.” · service ledgercore-local · window 2026-11-06T11:28:33 to 2026-11-06T11:31:03 UTC</p>
+<div class="banner banner-supported" role="status">
+  <strong>Diagnosis supported in the observed window</strong>
+  
+</div>
+
+<p class="summary">Notifications were late because outbox delivery to the consumer stalled for about 100 s. Delivery attempts were refused (CONNECTION_FAILED) while transfers kept committing normally.</p>
+
+<h2>Findings</h2>
+
+<ol class="findings">
+  
+  <li><p class="claim"><span class="support support-observed">observed</span> Outbox publications stopped for about 100 s (buckets ~1, 0, 0...), then resumed at 80 per 10 s, while arrivals stayed at 32 per 10 s. Pending and oldest age grew to 292 and 116 s.</p>
+    <p class="reason">Per-bucket counts and the pending and age gauges show the backlog growing during the stall.</p>
+    <p class="cites">Evidence: <a class="cite" href="#E2" data-handle="E2">E2</a></p></li>
+  
+  <li><p class="claim"><span class="support support-observed">observed</span> During the stall, 1546 delivery attempts failed with CONNECTION_FAILED (network_error). Only 333 succeeded and no HTTP errors occurred.</p>
+    <p class="reason">Failures took about 0.26 ms with no consumer record, which fits refused connections to the consumer target.</p>
+    <p class="cites">Evidence: <a class="cite" href="#E3" data-handle="E3">E3</a>, <a class="cite" href="#E4" data-handle="E4">E4</a></p></li>
+  
+  <li><p class="claim"><span class="support support-observed">observed</span> The transfer API and the database were healthy, so the delay sits in the outbox-to-consumer hop.</p>
+    <p class="reason">Transfers returned 201 with p95 0.24 s and no 500s. The pool had no timeouts or pending borrowers, and no DB blocking was sampled.</p>
+    <p class="cites">Evidence: <a class="cite" href="#E1" data-handle="E1">E1</a>, <a class="cite" href="#E5" data-handle="E5">E5</a>, <a class="cite" href="#E6" data-handle="E6">E6</a></p></li>
+  
+</ol>
+
+
+
+<h2>Alternatives considered</h2>
+<ul class="alternatives">
+  
+  <li><span class="assessment">weakened</span> Database lock or connection pool contention slowed the outbox poller. <span class="muted">No pool timeouts or pending borrowers, and no blocking was seen in 75 samples.</span>
+    <a class="cite" href="#E5" data-handle="E5">E5</a> <a class="cite" href="#E6" data-handle="E6">E6</a> </li>
+  
+  <li><span class="assessment">weakened</span> Slow consumer responses caused the delay. <span class="muted">Successful calls took about 71 ms, and failures were immediate connection refusals.</span>
+    <a class="cite" href="#E4" data-handle="E4">E4</a> </li>
+  
+</ul>
+
+
+<h2>Limitations</h2>
+<ul><li>The tools do not show why the consumer at 127.0.0.1:18090 refused connections, for example whether it was down or restarting.</li><li>Only the first 100 of 1879 attempt records are listed, so the exact time delivery resumed comes from bucket counts.</li></ul>
+<h2>Next checks</h2>
+<ul><li>Check consumer process logs and availability on port 18090 between about 11:29:04 and 11:30:40.</li><li>Check whether the retry or backoff settings (maxAttempts=8) risk marking events FAILED during a longer outage.</li></ul>
+
+<h2>Evidence</h2>
+<ol class="evidence">
+  
+  <li id="E1" tabindex="-1"><details>
+    <summary><strong>E1</strong> get_request_metrics
+      <span class="coverage coverage-complete">COMPLETE</span></summary>
+    <p class="muted">Source prometheus · observed 2026-11-06T11:28:33 to 2026-11-06T11:30:58 · collected 2026-11-06T11:33:44 UTC</p>
+    <pre>[E1] get_request_metrics {&#34;route_group&#34;:&#34;transfers&#34;} coverage COMPLETE
+  route /v1/transfers: 465 requests (3.1/s); status 201×465, 500×0; server_error_ratio 0.0
+  latency p50 0.1668 s, p95 0.2417 s, p99 0.2483 s; counter restarts 0
+  scrapes 30/30 ok
+  (full observation saved as E1)</pre>
+  </details></li>
+  
+  <li id="E2" tabindex="-1"><details>
+    <summary><strong>E2</strong> get_outbox_stats
+      <span class="coverage coverage-complete">COMPLETE</span></summary>
+    <p class="muted">Source prometheus+postgres_aggregate · observed 2026-11-06T11:28:33 to 2026-11-06T11:30:58 · collected 2026-11-06T11:33:44 UTC</p>
+    <pre>[E2] get_outbox_stats coverage COMPLETE
+  committed arrivals 478 (3.187/s); recorded publications 333 (2.22/s); arrivals minus publications 145; over 150.0 s; settled True
+  per 10 s bucket, arrivals: 30 32 32 32 32 32 32 32 32 32 32 32 32 32 32
+  per 10 s bucket, publications: 28 30 34 1 0 0 0 0 0 0 0 0 80 80 80
+  failed: first 0 at 11:28:33, last 0 at 11:30:58, min 0, max 0; samples: 11:28:33=0 11:29:08=0 11:29:43=0 11:30:18=0 11:30:58=0
+  pending: first 1 at 11:28:33, last 172 at 11:30:58, min 1, max 292; samples: 11:28:33=1 11:29:08=20 11:29:43=132 11:30:18=244 11:30:58=172
+  oldest_undelivered_age_seconds: first 0.171363 at 11:28:33, last 116.108 at 11:30:58, min 0.171363, max 116.108; samples: 11:28:33=0.171363 11:29:08=6.10784 11:29:43=41.1084 11:30:18=76.1095 11:30:58=116.108
+  scrapes 30/30 ok
+  limitation: Pending is a gauge sampled at scrape times; arrivals and publications are durable counts by timestamp. Transitions to FAILED and the different sampling instant…
+  (full observation saved as E2)</pre>
+  </details></li>
+  
+  <li id="E3" tabindex="-1"><details>
+    <summary><strong>E3</strong> search_delivery_logs
+      <span class="coverage coverage-complete">COMPLETE</span></summary>
+    <p class="muted">Source structured_logs · observed 2026-11-06T11:28:34 to 2026-11-06T11:31:02 · collected 2026-11-06T11:33:45 UTC</p>
+    <pre>[E3] search_delivery_logs {&#34;limit&#34;:100,&#34;outcome&#34;:&#34;any&#34;} coverage COMPLETE
+  filter any: 1879 matching records; by outcome: other 0, success 333, auth_error 0, server_error 0, network_error 1546
+  first 11:28:34.514, last listed 11:29:04.651
+    11:28:34.514 attempt 1 SUCCESS status 200 75.965 ms
+    11:28:34.592 attempt 1 SUCCESS status 200 71.409 ms
+    11:29:04.649 attempt 1 CONNECTION_FAILED status None 0.401 ms
+    11:29:04.651 attempt 1 CONNECTION_FAILED status None 0.389 ms
+    (96 more listed rows omitted here)
+  record check: 1879 attempt records vs 1879 attempts reported by poll batches
+  limitation: Only the earliest 100 of 1879 matching records are listed; counts_by_outcome covers all of them.
+  (full observation saved as E3)</pre>
+  </details></li>
+  
+  <li id="E4" tabindex="-1"><details>
+    <summary><strong>E4</strong> get_delivery_timings
+      <span class="coverage coverage-complete">COMPLETE</span></summary>
+    <p class="muted">Source structured_logs · observed 2026-11-06T11:28:34 to 2026-11-06T11:31:02 · collected 2026-11-06T11:33:46 UTC</p>
+    <pre>[E4] get_delivery_timings coverage COMPLETE
+  attempts 1879, correlated with consumer records 333
+  total (LedgerCore-measured) n=1879 p50=0.284ms p95=71.649ms max=82.733ms
+    SUCCESS: n=333 p50=71.284ms p95=73.142ms max=82.733ms
+    CONNECTION_FAILED: n=1546 p50=0.259ms p95=0.746ms max=3.491ms
+  consumer auth n=333 p50=70.403ms p95=71.901ms max=80.879ms; consumer handler n=333 p50=0.019ms p95=0.035ms max=0.063ms; unattributed n=333 p50=0.846ms p95=1.295ms max=2.532ms (measured by fixture consumer (test fixture))
+  limitation: 1546 attempt(s) had no matching consumer record (for example refused connections or timeouts before the consumer logged).
+  (full observation saved as E4)</pre>
+  </details></li>
+  
+  <li id="E5" tabindex="-1"><details>
+    <summary><strong>E5</strong> get_pool_metrics
+      <span class="coverage coverage-complete">COMPLETE</span></summary>
+    <p class="muted">Source prometheus · observed 2026-11-06T11:28:33 to 2026-11-06T11:30:58 · collected 2026-11-06T11:33:46 UTC</p>
+    <pre>[E5] get_pool_metrics coverage COMPLETE
+  acquisition timeouts 0; acquisitions 4717; acquire mean 0.048 ms, max per scrape 3.0 ms; configured maximum 10, connection timeout 30000 ms
+  pending: max 0, mean 0, last 0; active: max 1, mean 0.033, last 0, above zero in 1 of 30 scrapes (11:29:48–11:29:48); maximum: max 10, mean 10, last 10, above zero in 30 of 30 scrapes (11:28:33–11:30:58)
+  scrapes 30/30 ok
+  limitation: Pending borrowers and active connections are gauges read at each 5 s scrape; brief saturation between scrapes may not appear in them (acquisition time and time…
+  (full observation saved as E5)</pre>
+  </details></li>
+  
+  <li id="E6" tabindex="-1"><details>
+    <summary><strong>E6</strong> get_database_blockers
+      <span class="coverage coverage-complete">COMPLETE</span></summary>
+    <p class="muted">Source postgres_samples · observed 2026-11-06T11:28:33 to 2026-11-06T11:31:01 · collected 2026-11-06T11:33:47 UTC</p>
+    <pre>[E6] get_database_blockers {&#34;mode&#34;:&#34;historical&#34;,&#34;limit&#34;:50} coverage COMPLETE
+  historical samples: 75/75 ok, 0 failed, 0 with blocking
+  0 relationships, 0 blocked ledger_app sessions, blocker roles {}, max wait None s
+  limitation: Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited.
+  (full observation saved as E6)</pre>
+  </details></li>
+  
+  <li id="E7" tabindex="-1"><details>
+    <summary><strong>E7</strong> get_runtime_config
+      <span class="coverage coverage-complete">COMPLETE</span></summary>
+    <p class="muted">Source config_history · observed 2026-11-06T10:57:07 to 2026-11-06T10:57:07 · collected 2026-11-06T11:33:47 UTC</p>
+    <pre>[E7] get_runtime_config coverage COMPLETE
+  from 10:57:07: poolMaximumSize=10, poolConnectionTimeoutMs=30000, outboxPollIntervalMs=1000, outboxBatchSize=20, outboxDeliveryTimeoutMs=3000, outboxMaxAttempts=8, consumerTarget=http://127.0.0.1:18090/events, revision=86e4bf1c38fb+dirty.ed5247a36278
+  (full observation saved as E7)</pre>
+  </details></li>
+  
+</ol>
+<p class="muted">Usage: 1 model and 7 data calls;
+  3849 input and 984 output tokens reported.</p>
+<p class="muted">Exported 2026-11-06T11:34:00 UTC. This file contains no scripts and loads nothing from the network.</p>
+</body>
+</html>

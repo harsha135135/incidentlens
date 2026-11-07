@@ -1,0 +1,630 @@
+{
+  "model": "claude-sonnet-5-5",
+  "thinking": {
+    "type": "between_tools"
+  },
+  "max_output_tokens": 1500,
+  "calls": [
+    {
+      "validation_errors": null,
+      "preamble_characters": 901,
+      "raw_arguments": {
+        "outcome": "TENTATIVE",
+        "summary": "Outbox backlog grew by 900 because arrivals (3.2/s) exceeded the delivery rate (2.2/s). The delivery rate matches serial delivery at ~452 ms each via one poller. Serial delivery is inferred, not observed.",
+        "findings": [
+          {
+            "claim": "Notifications are late because the outbox drains slower than it fills: 2880 arrivals vs 1980 publications in 900 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "Pending grew 12 to 912 (the 900 gap) and the oldest undelivered age grew 0.8 s to 410 s, matching minutes-late reports."
+          },
+          {
+            "claim": "Delivery throughput of ~2.2/s matches one poller delivering serially at ~452 ms per attempt.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E1",
+              "E4",
+              "E5"
+            ],
+            "reason": "1/0.452 s is about 2.2/s, equal to 1980/900. Config shows one poller; batch 20 per 1 s poll would allow far more if deliveries were parallel."
+          },
+          {
+            "claim": "No errors or request-path problem; per-delivery time is dominated by the consumer handler (~401 ms of ~452 ms).",
+            "support": "observed",
+            "evidence_ids": [
+              "E2",
+              "E3",
+              "E4"
+            ],
+            "reason": "All 201s at p95 0.24 s, 1980 SUCCESS records with no errors, failed 0, handler_ms p50 401, auth 51, unattributed 1.2."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Slow consumer handler (~400 ms) is the root cause rather than poller design.",
+            "assessment": "supported",
+            "evidence_ids": [
+              "E4"
+            ],
+            "reason": "Handler time dominates attempt time, but the consumer is a fixture, so this may not reflect production."
+          },
+          {
+            "hypothesis": "Delivery failures or retries are causing the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E1",
+              "E3"
+            ],
+            "reason": "Failed count is 0 and all 1980 delivery records are SUCCESS with no network or server errors."
+          }
+        ],
+        "limitations": [
+          "Whether the poller delivers a batch serially is not directly observed; it is inferred from the rate match.",
+          "The consumer is a fixture, so handler latency may not match production; only a single 15-minute window is covered."
+        ],
+        "next_checks": [
+          "Inspect the poller code or logs to confirm whether batch items are delivered serially, and test concurrent delivery or more pollers.",
+          "Measure real consumer handler latency outside the fixture and compare against the 3.2/s arrival rate."
+        ]
+      },
+      "latency_seconds": 11.855,
+      "response_id": "msg_011Cgm8ryQyGdN4xC8a9Hwxr",
+      "stop_reason": "tool_use",
+      "input_tokens": 2136,
+      "output_tokens": 1318,
+      "action_type": "SubmitReport",
+      "action_problem": null,
+      "findings": 3,
+      "alternatives": 2,
+      "report_characters": 2223,
+      "report": {
+        "outcome": "TENTATIVE",
+        "summary": "Outbox backlog grew by 900 because arrivals (3.2/s) exceeded the delivery rate (2.2/s). The delivery rate matches serial delivery at ~452 ms each via one poller. Serial delivery is inferred, not observed.",
+        "findings": [
+          {
+            "claim": "Notifications are late because the outbox drains slower than it fills: 2880 arrivals vs 1980 publications in 900 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "Pending grew 12 to 912 (the 900 gap) and the oldest undelivered age grew 0.8 s to 410 s, matching minutes-late reports."
+          },
+          {
+            "claim": "Delivery throughput of ~2.2/s matches one poller delivering serially at ~452 ms per attempt.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E1",
+              "E4",
+              "E5"
+            ],
+            "reason": "1/0.452 s is about 2.2/s, equal to 1980/900. Config shows one poller; batch 20 per 1 s poll would allow far more if deliveries were parallel."
+          },
+          {
+            "claim": "No errors or request-path problem; per-delivery time is dominated by the consumer handler (~401 ms of ~452 ms).",
+            "support": "observed",
+            "evidence_ids": [
+              "E2",
+              "E3",
+              "E4"
+            ],
+            "reason": "All 201s at p95 0.24 s, 1980 SUCCESS records with no errors, failed 0, handler_ms p50 401, auth 51, unattributed 1.2."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Slow consumer handler (~400 ms) is the root cause rather than poller design.",
+            "assessment": "supported",
+            "evidence_ids": [
+              "E4"
+            ],
+            "reason": "Handler time dominates attempt time, but the consumer is a fixture, so this may not reflect production."
+          },
+          {
+            "hypothesis": "Delivery failures or retries are causing the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E1",
+              "E3"
+            ],
+            "reason": "Failed count is 0 and all 1980 delivery records are SUCCESS with no network or server errors."
+          }
+        ],
+        "limitations": [
+          "Whether the poller delivers a batch serially is not directly observed; it is inferred from the rate match.",
+          "The consumer is a fixture, so handler latency may not match production; only a single 15-minute window is covered."
+        ],
+        "next_checks": [
+          "Inspect the poller code or logs to confirm whether batch items are delivered serially, and test concurrent delivery or more pollers.",
+          "Measure real consumer handler latency outside the fixture and compare against the 3.2/s arrival rate."
+        ]
+      }
+    },
+    {
+      "validation_errors": [
+        {
+          "field": "next_checks",
+          "problem": "Field required"
+        }
+      ],
+      "preamble_characters": 1449,
+      "raw_arguments": {
+        "outcome": "SUPPORTED",
+        "summary": "The outbox backlog grew because arrivals (3.2/s) exceeded the delivery rate (2.2/s). Each delivery takes ~452 ms, mostly consumer handler time, and one poller appears to deliver them serially. Nothing failed.",
+        "findings": [
+          {
+            "claim": "Outbox arrivals outpaced publications, so the backlog grew from 12 to 912 and the oldest undelivered age from 0.8 s to 410 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "2880 arrivals vs 1980 publications over 900 s (3.2/s vs 2.2/s); the 900 difference equals the pending gauge growth."
+          },
+          {
+            "claim": "Delivery is healthy but slow per attempt (~452 ms total), mostly consumer handler time (~401 ms), which caps throughput near 2.2/s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3",
+              "E4"
+            ],
+            "reason": "All 1980 deliveries succeeded with no errors, and total_ms p50 452 (handler 401, auth 51) implies about 2.2 deliveries/s if serial, matching E1."
+          },
+          {
+            "claim": "A single poller delivering serially is the likely throughput limit; request handling and failures are not the cause.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E5",
+              "E2",
+              "E1",
+              "E4"
+            ],
+            "reason": "Config shows one poller; 1/0.452 s matches the observed 2.2/s drain rate. Requests were fast and all 201, and failed=0."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Delivery failures or retries caused the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E1",
+              "E3"
+            ],
+            "reason": "failed=0 and all 1980 delivery records were SUCCESS with no network or server errors."
+          },
+          {
+            "hypothesis": "Slow transfer request handling or service restarts delayed enqueueing.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E2"
+            ],
+            "reason": "Request p95 was 0.24 s, all responses were 201, and there were no restarts."
+          }
+        ],
+        "limitations": [
+          "The consumer is a fixture, so the 401 ms handler time may not match production consumers.",
+          "The evidence does not directly show that the poller delivers serially; this is inferred from the rate match."
+        ]
+      },
+      "latency_seconds": 13.028,
+      "response_id": "msg_011Cgm8sr1zkYH6rvgGGhriq",
+      "stop_reason": "max_tokens",
+      "input_tokens": 2136,
+      "output_tokens": 1500,
+      "action_type": "MalformedAction",
+      "action_problem": "invalid arguments for submit_report: 1 validation error(s)",
+      "findings": null,
+      "alternatives": null,
+      "report_characters": null,
+      "report": null
+    },
+    {
+      "validation_errors": null,
+      "preamble_characters": 1362,
+      "raw_arguments": {
+        "outcome": "TENTATIVE",
+        "summary": "Outbox drain rate (~2.2/s) is below arrival rate (3.2/s), so a backlog grew to 912 and oldest age to 410 s. Per-delivery time (~452 ms) matches a serial single-poller ceiling; serial execution is inferred.",
+        "findings": [
+          {
+            "claim": "Outbox publication throughput lagged arrivals, building a backlog and delaying notifications.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "2880 arrivals vs 1980 publications in 900 s; pending 12->912 (diff 900); oldest undelivered age 0.8->410 s."
+          },
+          {
+            "claim": "No failures, retries, or request-path slowness explain the delay.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "reason": "Failed 0, all deliveries SUCCESS, transfers all 201 with p95 0.24 s, no restarts."
+          },
+          {
+            "claim": "Drain rate matches a single poller delivering serially at ~452 ms each (~2.2/s), below the 3.2/s arrival rate.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E1",
+              "E4",
+              "E5"
+            ],
+            "reason": "1/0.452 s = 2.21/s equals 1980/900 = 2.2/s; config has one poller, though batch size 20 would allow more if parallel."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Delivery failures or retries delayed notifications",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E1",
+              "E3"
+            ],
+            "reason": "Zero failures and all 1980 attempts succeeded."
+          },
+          {
+            "hypothesis": "Slow transfer API or request path caused lateness",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E2"
+            ],
+            "reason": "p95 0.24 s, all 201, no restarts; arrivals were committed normally."
+          }
+        ],
+        "limitations": [
+          "Serial delivery within a batch is inferred from throughput arithmetic; the poller code path was not observed.",
+          "Consumer is a fixture, so the ~401 ms handler time may not reflect production consumer latency."
+        ],
+        "next_checks": [
+          "Confirm whether the poller delivers a batch serially or concurrently by inspecting poller code or concurrency metrics.",
+          "Test with a parallel or multi-poller setting and compare drain rate against the 3.2/s arrival rate."
+        ]
+      },
+      "latency_seconds": 11.669,
+      "response_id": "msg_011Cgm8tohdoTqLLUT38ewKX",
+      "stop_reason": "tool_use",
+      "input_tokens": 2136,
+      "output_tokens": 1430,
+      "action_type": "SubmitReport",
+      "action_problem": null,
+      "findings": 3,
+      "alternatives": 2,
+      "report_characters": 1958,
+      "report": {
+        "outcome": "TENTATIVE",
+        "summary": "Outbox drain rate (~2.2/s) is below arrival rate (3.2/s), so a backlog grew to 912 and oldest age to 410 s. Per-delivery time (~452 ms) matches a serial single-poller ceiling; serial execution is inferred.",
+        "findings": [
+          {
+            "claim": "Outbox publication throughput lagged arrivals, building a backlog and delaying notifications.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "2880 arrivals vs 1980 publications in 900 s; pending 12->912 (diff 900); oldest undelivered age 0.8->410 s."
+          },
+          {
+            "claim": "No failures, retries, or request-path slowness explain the delay.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "reason": "Failed 0, all deliveries SUCCESS, transfers all 201 with p95 0.24 s, no restarts."
+          },
+          {
+            "claim": "Drain rate matches a single poller delivering serially at ~452 ms each (~2.2/s), below the 3.2/s arrival rate.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E1",
+              "E4",
+              "E5"
+            ],
+            "reason": "1/0.452 s = 2.21/s equals 1980/900 = 2.2/s; config has one poller, though batch size 20 would allow more if parallel."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Delivery failures or retries delayed notifications",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E1",
+              "E3"
+            ],
+            "reason": "Zero failures and all 1980 attempts succeeded."
+          },
+          {
+            "hypothesis": "Slow transfer API or request path caused lateness",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E2"
+            ],
+            "reason": "p95 0.24 s, all 201, no restarts; arrivals were committed normally."
+          }
+        ],
+        "limitations": [
+          "Serial delivery within a batch is inferred from throughput arithmetic; the poller code path was not observed.",
+          "Consumer is a fixture, so the ~401 ms handler time may not reflect production consumer latency."
+        ],
+        "next_checks": [
+          "Confirm whether the poller delivers a batch serially or concurrently by inspecting poller code or concurrency metrics.",
+          "Test with a parallel or multi-poller setting and compare drain rate against the 3.2/s arrival rate."
+        ]
+      }
+    },
+    {
+      "validation_errors": null,
+      "preamble_characters": 977,
+      "raw_arguments": {
+        "outcome": "TENTATIVE",
+        "summary": "The outbox backlog grew by 900 because the single poller published about 2.2/s against about 3.2/s arrivals. Oldest undelivered age reached 410 s. Deliveries are healthy but slow enough to cap throughput.",
+        "findings": [
+          {
+            "claim": "Publication throughput (~2.2/s) is below arrival rate (~3.2/s), so the outbox backlog grew by 900 and oldest age reached 410 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "2880 arrivals minus 1980 publications equals 900, matching the pending gauge rise 12->912; oldest undelivered age rose 0.8->410 s."
+          },
+          {
+            "claim": "Delivery is not failing: all 1980 attempts succeeded with total_ms p95 470 and no errors; the request path is also healthy.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3",
+              "E4",
+              "E2"
+            ],
+            "reason": "All SUCCESS, no network/server errors, tight latency; transfers requests all 201 with p95 0.24 s and no restarts."
+          },
+          {
+            "claim": "The throughput cap likely comes from one poller with batch 20 and 1 s interval delivering serially at ~450 ms each (~2/s), matching the observed rate.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E5",
+              "E4",
+              "E1"
+            ],
+            "reason": "20 deliveries x ~452 ms is ~9 s plus a 1 s poll interval, giving about 2/s, close to 2.2/s. Serial delivery is not directly observed."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Consumer handler slowness (~401 ms) is the real bottleneck rather than poller configuration.",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E4"
+            ],
+            "reason": "Handler time dominates per-attempt latency, but the fixture consumer may not reflect production, and the two causes interact."
+          },
+          {
+            "hypothesis": "Transfer request failures or slow request handling delayed enqueueing.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E2",
+              "E1"
+            ],
+            "reason": "Requests were all 201 with a low p95, and arrivals were committed (2880) in the window, so the delay is after commit."
+          }
+        ],
+        "limitations": [
+          "Whether the poller delivers serially or concurrently is not directly observed; the capacity explanation is inferred from arithmetic.",
+          "Only a 15-minute window and a fixture consumer were observed; no pre-window baseline shows when the backlog began."
+        ],
+        "next_checks": [
+          "Inspect poller code or traces to confirm serial versus concurrent delivery within a batch.",
+          "Test a larger batch, shorter interval, or concurrent delivery in staging and watch whether the pending gauge drains."
+        ]
+      },
+      "latency_seconds": 11.733,
+      "response_id": "msg_011Cgm8ufYH5HUNuTYkKC84w",
+      "stop_reason": "tool_use",
+      "input_tokens": 2136,
+      "output_tokens": 1417,
+      "action_type": "SubmitReport",
+      "action_problem": null,
+      "findings": 3,
+      "alternatives": 2,
+      "report_characters": 2385,
+      "report": {
+        "outcome": "TENTATIVE",
+        "summary": "The outbox backlog grew by 900 because the single poller published about 2.2/s against about 3.2/s arrivals. Oldest undelivered age reached 410 s. Deliveries are healthy but slow enough to cap throughput.",
+        "findings": [
+          {
+            "claim": "Publication throughput (~2.2/s) is below arrival rate (~3.2/s), so the outbox backlog grew by 900 and oldest age reached 410 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "2880 arrivals minus 1980 publications equals 900, matching the pending gauge rise 12->912; oldest undelivered age rose 0.8->410 s."
+          },
+          {
+            "claim": "Delivery is not failing: all 1980 attempts succeeded with total_ms p95 470 and no errors; the request path is also healthy.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3",
+              "E4",
+              "E2"
+            ],
+            "reason": "All SUCCESS, no network/server errors, tight latency; transfers requests all 201 with p95 0.24 s and no restarts."
+          },
+          {
+            "claim": "The throughput cap likely comes from one poller with batch 20 and 1 s interval delivering serially at ~450 ms each (~2/s), matching the observed rate.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E5",
+              "E4",
+              "E1"
+            ],
+            "reason": "20 deliveries x ~452 ms is ~9 s plus a 1 s poll interval, giving about 2/s, close to 2.2/s. Serial delivery is not directly observed."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Consumer handler slowness (~401 ms) is the real bottleneck rather than poller configuration.",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E4"
+            ],
+            "reason": "Handler time dominates per-attempt latency, but the fixture consumer may not reflect production, and the two causes interact."
+          },
+          {
+            "hypothesis": "Transfer request failures or slow request handling delayed enqueueing.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E2",
+              "E1"
+            ],
+            "reason": "Requests were all 201 with a low p95, and arrivals were committed (2880) in the window, so the delay is after commit."
+          }
+        ],
+        "limitations": [
+          "Whether the poller delivers serially or concurrently is not directly observed; the capacity explanation is inferred from arithmetic.",
+          "Only a 15-minute window and a fixture consumer were observed; no pre-window baseline shows when the backlog began."
+        ],
+        "next_checks": [
+          "Inspect poller code or traces to confirm serial versus concurrent delivery within a batch.",
+          "Test a larger batch, shorter interval, or concurrent delivery in staging and watch whether the pending gauge drains."
+        ]
+      }
+    },
+    {
+      "validation_errors": null,
+      "preamble_characters": 936,
+      "raw_arguments": {
+        "outcome": "TENTATIVE",
+        "summary": "Outbox delivery throughput (~2.2/s) is below arrival rate (3.2/s), so the backlog grew by 900 and the oldest undelivered age reached 410 s. Likely cause is a single sequential poller bound by ~450 ms per delivery.",
+        "findings": [
+          {
+            "claim": "Outbox drain rate is below arrival rate; the backlog grew by about 900 and the oldest undelivered age rose to 410 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "2880 arrivals vs 1980 publications in 900 s; pending 12->912 matches the 900 gap; oldest age 0.8->410 s."
+          },
+          {
+            "claim": "Delay is queueing in the outbox, not failures or slow request handling.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "reason": "Failed 0, all deliveries SUCCESS with no errors, transfers requests all 201 with p95 0.24 s and no restarts."
+          },
+          {
+            "claim": "The ~2.2/s ceiling is consistent with one poller delivering sequentially at ~452 ms each (20 x 0.452 = ~9 s per batch).",
+            "support": "inferred",
+            "evidence_ids": [
+              "E4",
+              "E5",
+              "E1"
+            ],
+            "reason": "Per-delivery total_ms p50 452 with one poller and batch 20 gives ~2.2/s, matching observed 1980/900 s; sequential delivery is not directly confirmed."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Consumer handler latency (~401 ms) is the real bottleneck rather than poller design.",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E4"
+            ],
+            "reason": "Handler_ms dominates total time, but the consumer is a fixture so production latency is unknown."
+          },
+          {
+            "hypothesis": "Delivery failures or retries cause the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E1",
+              "E3"
+            ],
+            "reason": "Zero failed and all 1980 attempts succeeded; no errors found."
+          }
+        ],
+        "limitations": [
+          "Consumer is a fixture, so the ~450 ms per-delivery latency may not match production.",
+          "Poller concurrency within a batch and the claim/lock behaviour were not observed; only config values were."
+        ],
+        "next_checks": [
+          "Confirm in code whether the poller delivers a batch sequentially or in parallel.",
+          "Measure the drain rate with a higher batch size or more pollers, or against a real consumer's latency."
+        ]
+      },
+      "latency_seconds": 10.379,
+      "response_id": "msg_011Cgm8vXwQVsXzKmYdKsQw3",
+      "stop_reason": "tool_use",
+      "input_tokens": 2136,
+      "output_tokens": 1306,
+      "action_type": "SubmitReport",
+      "action_problem": null,
+      "findings": 3,
+      "alternatives": 2,
+      "report_characters": 2087,
+      "report": {
+        "outcome": "TENTATIVE",
+        "summary": "Outbox delivery throughput (~2.2/s) is below arrival rate (3.2/s), so the backlog grew by 900 and the oldest undelivered age reached 410 s. Likely cause is a single sequential poller bound by ~450 ms per delivery.",
+        "findings": [
+          {
+            "claim": "Outbox drain rate is below arrival rate; the backlog grew by about 900 and the oldest undelivered age rose to 410 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "2880 arrivals vs 1980 publications in 900 s; pending 12->912 matches the 900 gap; oldest age 0.8->410 s."
+          },
+          {
+            "claim": "Delay is queueing in the outbox, not failures or slow request handling.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "reason": "Failed 0, all deliveries SUCCESS with no errors, transfers requests all 201 with p95 0.24 s and no restarts."
+          },
+          {
+            "claim": "The ~2.2/s ceiling is consistent with one poller delivering sequentially at ~452 ms each (20 x 0.452 = ~9 s per batch).",
+            "support": "inferred",
+            "evidence_ids": [
+              "E4",
+              "E5",
+              "E1"
+            ],
+            "reason": "Per-delivery total_ms p50 452 with one poller and batch 20 gives ~2.2/s, matching observed 1980/900 s; sequential delivery is not directly confirmed."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Consumer handler latency (~401 ms) is the real bottleneck rather than poller design.",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E4"
+            ],
+            "reason": "Handler_ms dominates total time, but the consumer is a fixture so production latency is unknown."
+          },
+          {
+            "hypothesis": "Delivery failures or retries cause the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E1",
+              "E3"
+            ],
+            "reason": "Zero failed and all 1980 attempts succeeded; no errors found."
+          }
+        ],
+        "limitations": [
+          "Consumer is a fixture, so the ~450 ms per-delivery latency may not match production.",
+          "Poller concurrency within a batch and the claim/lock behaviour were not observed; only config values were."
+        ],
+        "next_checks": [
+          "Confirm in code whether the poller delivers a batch sequentially or in parallel.",
+          "Measure the drain rate with a higher batch size or more pollers, or against a real consumer's latency."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cr-h2-r2",
+  "template": "cr-h2",
+  "split": "held_out",
+  "category": "credential_rejection",
+  "ground_truth": "consumer_credential_rejected",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 4091403827,
+      "controller_run": "stage5-cr-h2-r2-a1",
+      "bundle": "b-ceaa28af70b4",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T18:58:41.000Z",
+        "end": "2026-11-06T19:01:41.000Z"
+      },
+      "validity": "logs COMPLETE, auth_error 1204 of 1204 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_credential_rejected",
+    "rule": "1204 of 1204 failed deliveries were auth_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "e3a18eab-501d-4421-9130-4145d181ede5",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3986,
+        "reported_output_tokens": 957,
+        "tokens_counted_against_budget": 4943,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 8,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publications stalled because the consumer returned HTTP 401 on 1204 delivery attempts. Pending notifications backed up while transfers kept committing. The reason for the 401s is not shown.",
+      "evidence": {
+        "E1": "df227823-a358-4227-8e9c-bca58fe7353d",
+        "E2": "0ea0667b-a713-4ddc-9d40-e0cc9413400f",
+        "E3": "c3e6faa4-0bf4-4a1d-823b-51b7e5c8820f",
+        "E4": "0f95afcf-0bb1-45bd-92ce-6c55f80e695b",
+        "E5": "539279c8-f3b9-46d5-afc5-b6c4022adb02",
+        "E6": "73635be7-2c1b-4fc6-a5e6-80d35efae951",
+        "E7": "d086bd00-6e3d-4e53-8bfa-7e3c272ea74e"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publications stopped from about 19:59:03 onward while arrivals continued at ~36 per 10 s, so a backlog built up.",
+          "reason": "Publications were 0 per bucket for most of the window while pending rose from 5 to 492.",
+          "support": "observed",
+          "evidence_ids": [
+            "0ea0667b-a713-4ddc-9d40-e0cc9413400f"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The delivery stall coincides with auth rejections: 1204 of 1377 attempts got HTTP 401 and only 173 succeeded.",
+          "reason": "The 401s came from the consumer auth check (~70 ms); 173 successes match the 173 recorded publications.",
+          "support": "observed",
+          "evidence_ids": [
+            "c3e6faa4-0bf4-4a1d-823b-51b7e5c8820f",
+            "0f95afcf-0bb1-45bd-92ce-6c55f80e695b"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The transfer API, DB pool and DB locks are not the cause. Transfers return 201 with p99 ~0.25 s, the pool never saturates and there is no blocking.",
+          "reason": "There are no server errors, no pool acquisition timeouts or pending borrowers, and 0 blocked sessions.",
+          "support": "observed",
+          "evidence_ids": [
+            "df227823-a358-4227-8e9c-bca58fe7353d",
+            "539279c8-f3b9-46d5-afc5-b6c4022adb02",
+            "73635be7-2c1b-4fc6-a5e6-80d35efae951"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Delivery logs list only the earliest 100 of 1377 records; the rest are known only from counts.",
+        "No credential or token configuration, and no consumer-side auth rules, were observable."
+      ],
+      "next_checks": [
+        "Compare the credential or token LedgerCore sends with what the consumer expects, and check recent changes in the dirty revision.",
+        "Check whether the 296 FAILED outbox rows, which hit max attempts, need to be requeued once auth is fixed."
+      ],
+      "alternatives": [
+        {
+          "reason": "Attempts took ~71 ms and there were no server or network errors, so the failures were rejections, not slowness.",
+          "assessment": "weakened",
+          "hypothesis": "Consumer slowness or timeouts caused the delay.",
+          "evidence_ids": [
+            "0f95afcf-0bb1-45bd-92ce-6c55f80e695b"
+          ],
+          "evidence_handles": [
+            "E4"
+          ]
+        },
+        {
+          "reason": "The config shows a dirty revision, but no credential data or change history was available to confirm this.",
+          "assessment": "unassessed",
+          "hypothesis": "A LedgerCore credential or config change caused the 401s (the build is marked dirty).",
+          "evidence_ids": [
+            "d086bd00-6e3d-4e53-8bfa-7e3c272ea74e"
+          ],
+          "evidence_handles": [
+            "E7"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3986,
+    "output_tokens": 957,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "consumer_credential_rejected",
+    "cost_usd": 0.01754,
+    "checks": {
+      "numbers_checked": 8,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

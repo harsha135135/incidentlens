@@ -1,0 +1,48 @@
+{
+  "model": "claude-sonnet-5-5",
+  "thinking": {
+    "type": "between_tools"
+  },
+  "max_output_tokens": 1500,
+  "calls": [
+    {
+      "latency_seconds": 13.234,
+      "response_id": "msg_011Cgm8E7c4LHtMwpPUqK3aY",
+      "stop_reason": "max_tokens",
+      "input_tokens": 1816,
+      "output_tokens": 1500,
+      "action_type": "MalformedAction",
+      "action_problem": "invalid arguments for submit_report: 4 validation error(s)",
+      "findings": null,
+      "alternatives": null,
+      "report_characters": null,
+      "report": null
+    },
+    {
+      "latency_seconds": 15.019,
+      "response_id": "msg_011Cgm8F5KRn5XqWt4G2hMAQ",
+      "stop_reason": "max_tokens",
+      "input_tokens": 1816,
+      "output_tokens": 1500,
+      "action_type": "MalformedAction",
+      "action_problem": "invalid arguments for submit_report: 4 validation error(s)",
+      "findings": null,
+      "alternatives": null,
+      "report_characters": null,
+      "report": null
+    },
+    {
+      "latency_seconds": 13.264,
+      "response_id": "msg_011Cgm8GBcDQhP7iZPUqqtx4",
+      "stop_reason": "max_tokens",
+      "input_tokens": 1816,
+      "output_tokens": 1500,
+      "action_type": "MalformedAction",
+      "action_problem": "invalid arguments for submit_report: 4 validation error(s)",
+      "findings": null,
+      "alternatives": null,
+      "report_characters": null,
+      "report": null
+    }
+  ]
+}

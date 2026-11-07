@@ -1,0 +1,190 @@
+me-d3-r1 attempt 1: valid (deciding source logs PARTIAL; durable backlog peak 260)
+{"case_run": "me-d3-r1", "status": "valid", "truth": "insufficient_evidence", "A": "publisher_throughput", "A_outcome": "TENTATIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "other", "P_status": "COMPLETED", "P_cost": 0.01729, "P_seconds": 16.1}
+me-d4-r1 attempt 1: valid (deciding source blockers UNAVAILABLE; requests COMPLETE, server-error ratio 0.1167)
+{"case_run": "me-d4-r1", "status": "valid", "truth": "insufficient_evidence", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "pool_saturation", "P_status": "COMPLETED", "P_cost": 0.01751, "P_seconds": 16.1}
+he-d4-r1 attempt 1: valid (all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-d4-r1", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "NO_FAULT_OBSERVED", "P_dev_aid": "none", "P_status": "COMPLETED", "P_cost": 0.01682, "P_seconds": 16.2}
+Exception in thread Thread-9 (overspend):
+Traceback (most recent call last):
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 61] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/harshamac/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "/Users/harshamac/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/harshamac/developer/two/incidentlens/evaluation/controller.py", line 242, in overspend
+    http.post("/v1/transfers", auth=self.customer, headers={"Idempotency-Key": key},
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1144, in post
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 61] Connection refused
+lp-d2-r1 attempt 1: valid (blockers COMPLETE, other edges 2, pool timeouts 100)
+{"case_run": "lp-d2-r1", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01933, "P_seconds": 16.1}
+cu-d5-r1 attempt 1: valid (logs COMPLETE, network_error 684 of 684 failures)
+{"case_run": "cu-d5-r1", "status": "valid", "truth": "consumer_unavailable", "A": "consumer_unavailable", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "consumer_unavailable", "P_status": "COMPLETED", "P_cost": 0.01782, "P_seconds": 14.1}
+sc-d2-r1 attempt 1: valid (logs COMPLETE, timings COMPLETE, handler max 310.12 ms, failures 0)
+{"case_run": "sc-d2-r1", "status": "valid", "truth": "slow_consumer_handler", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01946, "P_seconds": 18.1}
+{"case_run": "sc-d1-r1", "status": "valid", "truth": "slow_consumer_handler", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "slow_consumer_handler", "P_status": "COMPLETED", "P_cost": 0.01944, "P_seconds": 18.2}
+me-d2-r1 attempt 1: valid (deciding source logs PARTIAL; durable backlog peak 145)
+{"case_run": "me-d2-r1", "status": "valid", "truth": "insufficient_evidence", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "other", "P_status": "COMPLETED", "P_cost": 0.01772, "P_seconds": 16.1}
+sc-d5-r1 attempt 1: valid (logs COMPLETE, timings COMPLETE, handler max 460.063 ms, failures 0)
+{"case_run": "sc-d5-r1", "status": "valid", "truth": "slow_consumer_handler", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "SUPPORTED", "P_dev_aid": "slow_consumer_handler", "P_status": "COMPLETED", "P_cost": 0.01777, "P_seconds": 16.1}
+lp-d4-r1 attempt 1: valid (blockers COMPLETE, other edges 2, pool timeouts 155)
+{"case_run": "lp-d4-r1", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.02068, "P_seconds": 18.1}
+cr-d5-r1 attempt 1: valid (logs COMPLETE, auth_error 392 of 392 failures)
+{"case_run": "cr-d5-r1", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.01865, "P_seconds": 16.1}
+lp-d5-r1 attempt 1: valid (blockers COMPLETE, other edges 2, pool timeouts 101)
+{"case_run": "lp-d5-r1", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01857, "P_seconds": 16.1}
+me-d5-r1 attempt 1: valid (deciding source logs PARTIAL; durable backlog peak 258)
+{"case_run": "me-d5-r1", "status": "valid", "truth": "insufficient_evidence", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_unavailable", "P_status": "COMPLETED", "P_cost": 0.01604, "P_seconds": 16.1}
+sc-d4-r1 attempt 1: valid (logs COMPLETE, timings COMPLETE, handler max 605.148 ms, failures 0)
+{"case_run": "sc-d4-r1", "status": "valid", "truth": "slow_consumer_handler", "A": "publisher_throughput", "A_outcome": "TENTATIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "slow_consumer_handler", "P_status": "COMPLETED", "P_cost": 0.02023, "P_seconds": 18.1}
+Exception in thread Thread-47 (replays):
+Traceback (most recent call last):
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 231, in _receive_event
+    raise RemoteProtocolError(msg)
+httpcore.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/harshamac/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "/Users/harshamac/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/harshamac/developer/two/incidentlens/evaluation/controller.py", line 255, in replays
+    http.post("/v1/transfers", auth=self.customer, headers={"Idempotency-Key": key}, json=body)
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1144, in post
+    return self.request(
+           ^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/harshamac/developer/two/incidentlens/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.RemoteProtocolError: Server disconnected without sending a response.
+lp-d3-r1 attempt 1: valid (blockers COMPLETE, other edges 3, pool timeouts 49)
+{"case_run": "lp-d3-r1", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01984, "P_seconds": 16.1}
+{"case_run": "me-d1-r1", "status": "valid", "truth": "insufficient_evidence", "A": "publisher_throughput", "A_outcome": "TENTATIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01752, "P_seconds": 16.1}
+{"case_run": "lp-d1-r1", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.02128, "P_seconds": 18.2}
+lc-d2-r1 attempt 1: valid (blockers COMPLETE, other edges 7, samples with blocking 26)
+{"case_run": "lc-d2-r1", "status": "valid", "truth": "lock_contention", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01766, "P_seconds": 16.1}
+he-d5-r1 attempt 1: valid (all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-d5-r1", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "NO_FAULT_OBSERVED", "P_dev_aid": "none", "P_status": "COMPLETED", "P_cost": 0.01699, "P_seconds": 16.1}
+he-d3-r1 attempt 1: valid (all complete True, pending max 5.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-d3-r1", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "NO_FAULT_OBSERVED", "P_dev_aid": "none", "P_status": "COMPLETED", "P_cost": 0.01681, "P_seconds": 14.1}
+{"case_run": "cu-d1-r1", "status": "valid", "truth": "consumer_unavailable", "A": "consumer_unavailable", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "consumer_unavailable", "P_status": "COMPLETED", "P_cost": 0.01819, "P_seconds": 16.1}
+sc-d3-r1 attempt 1: valid (logs COMPLETE, timings COMPLETE, handler max 510.103 ms, failures 0)
+{"case_run": "sc-d3-r1", "status": "valid", "truth": "slow_consumer_handler", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "SUPPORTED", "P_dev_aid": "slow_consumer_handler", "P_status": "COMPLETED", "P_cost": 0.01823, "P_seconds": 16.1}
+lc-d3-r1 attempt 1: valid (blockers COMPLETE, other edges 8, samples with blocking 49)
+{"case_run": "lc-d3-r1", "status": "valid", "truth": "lock_contention", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01908, "P_seconds": 16.2}
+cu-d2-r1 attempt 1: valid (logs COMPLETE, network_error 912 of 912 failures)
+{"case_run": "cu-d2-r1", "status": "valid", "truth": "consumer_unavailable", "A": "consumer_unavailable", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "consumer_unavailable", "P_status": "COMPLETED", "P_cost": 0.01914, "P_seconds": 16.1}
+cr-d3-r1 attempt 1: valid (logs COMPLETE, auth_error 784 of 784 failures)
+{"case_run": "cr-d3-r1", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.01789, "P_seconds": 16.2}
+he-d2-r1 attempt 1: valid (all complete True, pending max 2.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-d2-r1", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "NO_FAULT_OBSERVED", "P_dev_aid": "none", "P_status": "COMPLETED", "P_cost": 0.01639, "P_seconds": 14.1}
+{"case_run": "cr-d1-r1", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.01897, "P_seconds": 16.1}
+lc-d4-r1 attempt 1: valid (blockers COMPLETE, other edges 7, samples with blocking 39)
+{"case_run": "lc-d4-r1", "status": "valid", "truth": "lock_contention", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01804, "P_seconds": 16.1}
+cu-d3-r1 attempt 1: valid (logs COMPLETE, network_error 1508 of 1508 failures)
+{"case_run": "cu-d3-r1", "status": "valid", "truth": "consumer_unavailable", "A": "consumer_unavailable", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "consumer_unavailable", "P_status": "COMPLETED", "P_cost": 0.01902, "P_seconds": 16.1}
+lc-d5-r1 attempt 1: valid (blockers COMPLETE, other edges 5, samples with blocking 23)
+{"case_run": "lc-d5-r1", "status": "valid", "truth": "lock_contention", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01776, "P_seconds": 14.1}
+{"case_run": "lc-d1-r1", "status": "valid", "truth": "lock_contention", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01813, "P_seconds": 16.1}
+{"case_run": "he-d1-r1", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "NO_FAULT_OBSERVED", "P_dev_aid": "none", "P_status": "COMPLETED", "P_cost": 0.01722, "P_seconds": 16.1}
+cu-d4-r1 attempt 1: valid (logs COMPLETE, network_error 1392 of 1392 failures)
+{"case_run": "cu-d4-r1", "status": "valid", "truth": "consumer_unavailable", "A": "consumer_unavailable", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "consumer_unavailable", "P_status": "COMPLETED", "P_cost": 0.01819, "P_seconds": 18.1}
+cr-d2-r1 attempt 1: valid (logs COMPLETE, auth_error 544 of 544 failures)
+{"case_run": "cr-d2-r1", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.01784, "P_seconds": 16.1}
+cr-d4-r1 attempt 1: valid (logs COMPLETE, auth_error 706 of 706 failures)
+{"case_run": "cr-d4-r1", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.01866, "P_seconds": 16.1}
+exit=0

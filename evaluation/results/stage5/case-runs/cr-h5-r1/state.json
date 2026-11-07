@@ -1,0 +1,172 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cr-h5-r1",
+  "template": "cr-h5",
+  "split": "held_out",
+  "category": "credential_rejection",
+  "ground_truth": "consumer_credential_rejected",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 2098548055,
+      "controller_run": "stage5-cr-h5-r1-a1",
+      "bundle": "b-8db29204f9fe",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T04:37:17.000Z",
+        "end": "2026-11-07T04:41:17.000Z"
+      },
+      "validity": "logs COMPLETE, auth_error 1511 of 1511 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_credential_rejected",
+    "rule": "1511 of 1511 failed deliveries were auth_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "91d5b9b7-4feb-4d80-bc63-953625df791a",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4009,
+        "reported_output_tokens": 941,
+        "tokens_counted_against_budget": 4950,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 10,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publications nearly stopped ~30 s into the window while arrivals continued, so pending grew. Delivery logs show the consumer returning HTTP 401 on 1511 of 1762 attempts, which points to an auth failure on delivery.",
+      "evidence": {
+        "E1": "22eb8081-eb39-4193-b2e8-b789f0f7cb28",
+        "E2": "47a5e608-d480-48ee-bb7e-b3b5edb09b6b",
+        "E3": "805087fb-8d76-4049-8068-1e1187b1111a",
+        "E4": "4079bfa0-d9df-4fa8-8290-b0976e0c9d69",
+        "E5": "b1d3c651-aee7-4499-9dcc-7b8b8980b779",
+        "E6": "70ff48bc-46dc-48ac-a5b7-d4d3123bae3a",
+        "E7": "b8af6716-9001-4bab-b771-d884e452d8b6"
+      },
+      "findings": [
+        {
+          "claim": "Outbox backlog grew: 722 arrivals vs 252 publications; publications dropped to ~0 after the first ~30 s, then resumed at 80 per bucket at the end.",
+          "reason": "Per-bucket counts and pending rising from 2 to 485 show notifications were delayed.",
+          "support": "observed",
+          "evidence_ids": [
+            "47a5e608-d480-48ee-bb7e-b3b5edb09b6b"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Most delivery attempts were rejected with HTTP 401 (1511 auth_error vs 251 success); no server or network errors.",
+          "reason": "Outcome counts and timings show fast 401 responses from the consumer, so the failures are not timeouts.",
+          "support": "observed",
+          "evidence_ids": [
+            "805087fb-8d76-4049-8068-1e1187b1111a",
+            "4079bfa0-d9df-4fa8-8290-b0976e0c9d69"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The 401 rejections are the likely reason publications stalled and the backlog grew. The cause of the 401s (credential or config) is not shown.",
+          "reason": "The stall in publications coincides with the onset of 401s. Config shows only the consumer target, with no auth detail, and the revision is dirty.",
+          "support": "inferred",
+          "evidence_ids": [
+            "47a5e608-d480-48ee-bb7e-b3b5edb09b6b",
+            "805087fb-8d76-4049-8068-1e1187b1111a",
+            "b8af6716-9001-4bab-b771-d884e452d8b6"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3",
+            "E7"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "The consumer is a test fixture, and its auth configuration and the credentials LedgerCore sends were not observed.",
+        "The 401 timing relative to the stall is only partly visible, because only the earliest 100 log rows were listed."
+      ],
+      "next_checks": [
+        "Inspect the consumer's expected credential against what the outbox publisher sends, and check what changed in the dirty revision.",
+        "Check why 619 rows are stuck in FAILED and why the stall began about 30 s into the window."
+      ],
+      "alternatives": [
+        {
+          "reason": "There were no pool timeouts or pending borrowers and no DB blocking in the samples.",
+          "assessment": "weakened",
+          "hypothesis": "Database or connection pool contention slowed the outbox poller.",
+          "evidence_ids": [
+            "b1d3c651-aee7-4499-9dcc-7b8b8980b779",
+            "70ff48bc-46dc-48ac-a5b7-d4d3123bae3a"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        },
+        {
+          "reason": "Attempts took about 71 ms and there were no server or network errors.",
+          "assessment": "weakened",
+          "hypothesis": "Slow consumer or network timeouts delayed delivery.",
+          "evidence_ids": [
+            "4079bfa0-d9df-4fa8-8290-b0976e0c9d69",
+            "805087fb-8d76-4049-8068-1e1187b1111a"
+          ],
+          "evidence_handles": [
+            "E4",
+            "E3"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4009,
+    "output_tokens": 941,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "consumer_credential_rejected",
+    "cost_usd": 0.01743,
+    "checks": {
+      "numbers_checked": 10,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

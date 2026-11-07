@@ -1,0 +1,111 @@
+{
+ "arguments": {
+  "route_group": "transfers"
+ },
+ "collected_at": "2026-11-07T04:51:49.090Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "bucket_counts": [
+   {
+    "count": 0,
+    "le": 0.005
+   },
+   {
+    "count": 0,
+    "le": 0.01
+   },
+   {
+    "count": 0,
+    "le": 0.025
+   },
+   {
+    "count": 0,
+    "le": 0.05
+   },
+   {
+    "count": 79,
+    "le": 0.1
+   },
+   {
+    "count": 588,
+    "le": 0.25
+   },
+   {
+    "count": 588,
+    "le": 0.5
+   },
+   {
+    "count": 588,
+    "le": 1.0
+   },
+   {
+    "count": 588,
+    "le": 2.5
+   },
+   {
+    "count": 588,
+    "le": 5.0
+   },
+   {
+    "count": 588,
+    "le": 10.0
+   },
+   {
+    "count": 588,
+    "le": "+Inf"
+   }
+  ],
+  "by_status": [
+   {
+    "count": 588,
+    "outcome": "SUCCESS",
+    "status": "201"
+   },
+   {
+    "count": 0,
+    "outcome": "CLIENT_ERROR",
+    "status": "422"
+   }
+  ],
+  "counter_resets": 0,
+  "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)",
+  "latency_seconds": {
+   "method": "interpolated within fixed histogram buckets summed across series",
+   "p50": 0.1634,
+   "p95": 0.2413,
+   "p99": 0.2483
+  },
+  "requests": 588,
+  "requests_per_second": 2.45,
+  "route_group": "transfers",
+  "route_template": "/v1/transfers",
+  "scrapes": {
+   "expected_scrapes": 48,
+   "failed_scrapes": 0,
+   "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)",
+   "gaps": [],
+   "successful_scrapes": 48
+  },
+  "server_error_ratio": 0.0
+ },
+ "errors": [],
+ "evidence_id": "8305239e-44ca-48a1-878d-bc6eee1dc051",
+ "limitations": [],
+ "observed_window": {
+  "first": "2026-11-07T04:47:33.705Z",
+  "last": "2026-11-07T04:51:28.706Z"
+ },
+ "requested_window": {
+  "end": "2026-11-07T04:51:32.000Z",
+  "start": "2026-11-07T04:47:32.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "44a23474-4045-4fc1-99ac-049bcbb50350",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_request_metrics",
+ "truncated": false
+}

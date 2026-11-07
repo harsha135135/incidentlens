@@ -1,0 +1,10 @@
+{"at": "2026-11-06T15:37:11.436Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T15:37:11.431Z"}
+{"at": "2026-11-06T15:37:12.643Z", "action": "component_stopped", "component": "collector"}
+{"at": "2026-11-06T15:37:13.016Z", "action": "component_stopped", "component": "prometheus"}
+{"at": "2026-11-06T15:37:13.017Z", "action": "workload_started", "rate_per_second": 3.2, "seed": 3456534567}
+{"at": "2026-11-06T15:37:45.046Z", "action": "consumer_mode", "mode": "unavailable", "handler_delay_ms": 0, "requested_at": "2026-11-06T15:37:45.010Z"}
+{"at": "2026-11-06T15:39:05.022Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T15:39:05.011Z"}
+{"at": "2026-11-06T15:39:45.316Z", "action": "workload_stopped", "sent": 488, "statuses": {"201": 488}, "errors": {}, "started_at": "2026-11-06T15:37:13.017Z", "ended_at": "2026-11-06T15:39:45.316Z"}
+{"at": "2026-11-06T15:39:45.316Z", "action": "window", "start": "2026-11-06T15:37:15.000Z", "end": "2026-11-06T15:39:45.000Z", "template": "me-d5"}
+{"at": "2026-11-06T15:39:56.232Z", "action": "component_restarted", "component": "collector"}
+{"at": "2026-11-06T15:39:56.498Z", "action": "component_restarted", "component": "prometheus"}

@@ -1,0 +1,183 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "lp-h2-r3",
+  "template": "lp-h2",
+  "split": "held_out",
+  "category": "lock_pool_exhaustion",
+  "ground_truth": "lock_contention+pool_saturation",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 2297447337,
+      "controller_run": "stage5-lp-h2-r3-a1",
+      "bundle": "b-413cf47572d5",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T07:10:40.000Z",
+        "end": "2026-11-07T07:13:40.000Z"
+      },
+      "validity": "blockers COMPLETE, other edges 3, pool timeouts 127"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "lock_contention",
+    "rule": "a non-ledger_app session blocked ledger_app sessions in 66 samples; 127 pool acquisition timeouts",
+    "evidence_ids": [
+      "E6",
+      "E5"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "3005cedc-b136-4f37-aeac-24d6ebd95f75",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4483,
+        "reported_output_tokens": 1127,
+        "tokens_counted_against_budget": 5610,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 16,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Transfer 500/503s and multi-second latency coincide with a restart that shrank the DB pool to 3 connections with a 250 ms timeout, while an idle-in-transaction session blocked writers. The blocker's origin is not shown.",
+      "evidence": {
+        "E1": "8323cc88-00c7-498f-8ec9-398fc0b1fb08",
+        "E2": "40d03410-d6ae-460f-a77e-d2fb82512aff",
+        "E3": "9490f0f4-f104-4c71-a53a-657715a7d715",
+        "E4": "1638c47a-cd5e-460e-84a1-657db0b873b8",
+        "E5": "93fb1934-cc3d-4cb5-8cd6-dc114a831e1c",
+        "E6": "c67575f2-3c40-4cb8-a210-bf43c719d32c",
+        "E7": "f92b5db5-269b-4329-b0ef-e37ac6de2c27"
+      },
+      "findings": [
+        {
+          "claim": "Restart at 07:10:57 cut poolMaximumSize 10->3 and connection timeout 30000->250 ms.",
+          "reason": "Runtime config shows the changed pool settings taking effect inside the window.",
+          "support": "observed",
+          "evidence_ids": [
+            "f92b5db5-269b-4329-b0ef-e37ac6de2c27"
+          ],
+          "evidence_handles": [
+            "E7"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Pool acquisition timeouts (127) occurred with 3 max connections; transfers had 117\u00d7500 and 92\u00d7503 (31% server errors), p95 2.4 s.",
+          "reason": "Timeouts at the 250 ms limit match the error volume and tail latency; this link is by count and timing, not per-request.",
+          "support": "inferred",
+          "evidence_ids": [
+            "93fb1934-cc3d-4cb5-8cd6-dc114a831e1c",
+            "8323cc88-00c7-498f-8ec9-398fc0b1fb08"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E1"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "An idle-in-transaction session (82841) blocked three ledger_app sessions for up to ~2 s from 07:11:00, holding the small pool's connections and worsening exhaustion.",
+          "reason": "Blocking samples start at 07:11:00; pool pending and active rise from 07:11:03 and 07:11:43.",
+          "support": "observed",
+          "evidence_ids": [
+            "c67575f2-3c40-4cb8-a210-bf43c719d32c",
+            "93fb1934-cc3d-4cb5-8cd6-dc114a831e1c"
+          ],
+          "evidence_handles": [
+            "E6",
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Outbox delivery is healthy and not the cause: arrivals equal publications and all 458 attempts succeed in about 71 ms.",
+          "reason": "No gap between arrivals and publications, and no delivery errors or slow attempts.",
+          "support": "observed",
+          "evidence_ids": [
+            "40d03410-d6ae-460f-a77e-d2fb82512aff",
+            "9490f0f4-f104-4c71-a53a-657715a7d715",
+            "1638c47a-cd5e-460e-84a1-657db0b873b8"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "No per-request correlation between pool timeouts and the 500/503 responses; the error status split is not tied to a cause.",
+        "Nothing shows who owns session 82841 or why it stayed idle in a transaction; blocker sampling is only every 2 s."
+      ],
+      "next_checks": [
+        "Identify the application and query behind session 82841 (idle in transaction) and fix its transaction handling.",
+        "Revert the pool to max 10 / 30 s timeout (or test sizes in between) and re-measure transfer errors."
+      ],
+      "alternatives": [
+        {
+          "reason": "Max wait is about 2 s, so it explains slow requests, but the 250 ms timeout with 3 connections is what turns waits into 500/503s.",
+          "assessment": "unassessed",
+          "hypothesis": "The idle-in-transaction blocker alone causes the failures, independent of pool size.",
+          "evidence_ids": [
+            "c67575f2-3c40-4cb8-a210-bf43c719d32c"
+          ],
+          "evidence_handles": [
+            "E6"
+          ]
+        },
+        {
+          "reason": "The backlog is static across the window, and new outbox traffic flows normally.",
+          "assessment": "weakened",
+          "hypothesis": "The old outbox backlog (failed=1034, oldest age ~48,500 s) causes the transfer errors.",
+          "evidence_ids": [
+            "40d03410-d6ae-460f-a77e-d2fb82512aff"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4483,
+    "output_tokens": 1127,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.02024,
+    "checks": {
+      "numbers_checked": 16,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

@@ -1,0 +1,512 @@
+{
+ "seed": 20261106,
+ "reports": {
+  "R001": "cr-h4-r2",
+  "R002": "cr-h3-r2",
+  "R003": "lc-h5-r1",
+  "R004": "cu-h4-r1",
+  "R005": "lc-h2-r3",
+  "R006": "he-h2-r1",
+  "R007": "he-h5-r1",
+  "R008": "sc-h2-r1",
+  "R009": "me-h3-r1",
+  "R010": "me-h3-r2",
+  "R011": "cr-h2-r2",
+  "R012": "he-h4-r2",
+  "R013": "lp-h1-r3",
+  "R014": "sc-h3-r1",
+  "R015": "lp-h3-r3",
+  "R016": "lp-h4-r3",
+  "R017": "sc-h3-r2",
+  "R018": "cu-h1-r2",
+  "R019": "cu-h3-r2",
+  "R020": "cu-h4-r3",
+  "R021": "lp-h2-r3",
+  "R022": "he-h1-r3",
+  "R023": "cu-h1-r1",
+  "R024": "he-h3-r3",
+  "R025": "me-h1-r1",
+  "R026": "he-h3-r2",
+  "R027": "me-h1-r3",
+  "R028": "cu-h2-r2",
+  "R029": "me-h5-r1",
+  "R030": "lc-h5-r2",
+  "R031": "he-h1-r2",
+  "R032": "lc-h1-r3",
+  "R033": "lc-h4-r3",
+  "R034": "sc-h1-r3",
+  "R035": "lc-h3-r2",
+  "R036": "lp-h1-r1",
+  "R037": "sc-h3-r3",
+  "R038": "sc-h5-r2",
+  "R039": "lp-h5-r1",
+  "R040": "cu-h3-r3",
+  "R041": "cr-h5-r1",
+  "R042": "cr-h3-r3",
+  "R043": "lc-h2-r2",
+  "R044": "me-h4-r1",
+  "R045": "sc-h2-r3",
+  "R046": "lc-h1-r1",
+  "R047": "lp-h2-r1",
+  "R048": "cr-h1-r3",
+  "R049": "lc-h4-r1",
+  "R050": "sc-h1-r1",
+  "R051": "lc-h5-r3",
+  "R052": "sc-h1-r2",
+  "R053": "me-h5-r3",
+  "R054": "cu-h5-r2",
+  "R055": "cr-h5-r2",
+  "R056": "me-h5-r2",
+  "R057": "lp-h4-r2",
+  "R058": "he-h5-r3",
+  "R059": "sc-h5-r1",
+  "R060": "lc-h2-r1",
+  "R061": "cu-h2-r1",
+  "R062": "he-h3-r1",
+  "R063": "cr-h2-r3",
+  "R064": "lp-h3-r2",
+  "R065": "cu-h2-r3",
+  "R066": "lp-h4-r1",
+  "R067": "lc-h4-r2",
+  "R068": "lc-h3-r3",
+  "R069": "lc-h1-r2",
+  "R070": "me-h1-r2",
+  "R071": "cu-h4-r2",
+  "R072": "cu-h5-r3",
+  "R073": "lp-h3-r1",
+  "R074": "lp-h1-r2",
+  "R075": "me-h2-r1",
+  "R076": "lp-h5-r2",
+  "R077": "cr-h4-r1",
+  "R078": "me-h2-r3",
+  "R079": "lp-h2-r2",
+  "R080": "sc-h4-r2",
+  "R081": "sc-h4-r1",
+  "R082": "he-h5-r2",
+  "R083": "me-h4-r3",
+  "R084": "lp-h5-r3",
+  "R085": "he-h4-r1",
+  "R086": "cu-h3-r1",
+  "R087": "sc-h4-r3",
+  "R088": "he-h2-r2",
+  "R089": "cu-h5-r1",
+  "R090": "cr-h5-r3",
+  "R091": "cr-h2-r1",
+  "R092": "sc-h5-r3",
+  "R093": "cr-h1-r2",
+  "R094": "me-h4-r2",
+  "R095": "he-h2-r3",
+  "R096": "lc-h3-r1",
+  "R097": "he-h4-r3",
+  "R098": "me-h2-r2",
+  "R099": "cr-h1-r1",
+  "R100": "he-h1-r1",
+  "R101": "cu-h1-r3",
+  "R102": "cr-h4-r3",
+  "R103": "cr-h3-r1",
+  "R104": "me-h3-r3"
+ },
+ "findings": {
+  "F001": {
+   "case_run": "me-h4-r3",
+   "finding": 3
+  },
+  "F002": {
+   "case_run": "me-h2-r2",
+   "finding": 2
+  },
+  "F003": {
+   "case_run": "lp-h4-r2",
+   "finding": 2
+  },
+  "F004": {
+   "case_run": "lp-h4-r1",
+   "finding": 5
+  },
+  "F005": {
+   "case_run": "he-h2-r1",
+   "finding": 2
+  },
+  "F006": {
+   "case_run": "cu-h1-r1",
+   "finding": 1
+  },
+  "F007": {
+   "case_run": "cr-h5-r3",
+   "finding": 1
+  },
+  "F008": {
+   "case_run": "lp-h2-r1",
+   "finding": 2
+  },
+  "F009": {
+   "case_run": "lp-h1-r1",
+   "finding": 4
+  },
+  "F010": {
+   "case_run": "lc-h4-r3",
+   "finding": 2
+  },
+  "F011": {
+   "case_run": "cr-h2-r2",
+   "finding": 3
+  },
+  "F012": {
+   "case_run": "he-h5-r2",
+   "finding": 2
+  },
+  "F013": {
+   "case_run": "cu-h1-r3",
+   "finding": 2
+  },
+  "F014": {
+   "case_run": "me-h3-r2",
+   "finding": 4
+  },
+  "F015": {
+   "case_run": "cu-h1-r1",
+   "finding": 2
+  },
+  "F016": {
+   "case_run": "lc-h1-r3",
+   "finding": 4
+  },
+  "F017": {
+   "case_run": "lc-h2-r1",
+   "finding": 3
+  },
+  "F018": {
+   "case_run": "he-h4-r2",
+   "finding": 2
+  },
+  "F019": {
+   "case_run": "cr-h3-r3",
+   "finding": 2
+  },
+  "F020": {
+   "case_run": "cu-h2-r2",
+   "finding": 3
+  },
+  "F021": {
+   "case_run": "lc-h4-r1",
+   "finding": 3
+  },
+  "F022": {
+   "case_run": "me-h1-r1",
+   "finding": 3
+  },
+  "F023": {
+   "case_run": "sc-h4-r1",
+   "finding": 1
+  },
+  "F024": {
+   "case_run": "lc-h3-r2",
+   "finding": 4
+  },
+  "F025": {
+   "case_run": "lc-h2-r2",
+   "finding": 1
+  },
+  "F026": {
+   "case_run": "he-h3-r2",
+   "finding": 3
+  },
+  "F027": {
+   "case_run": "lp-h3-r2",
+   "finding": 3
+  },
+  "F028": {
+   "case_run": "cr-h1-r2",
+   "finding": 3
+  },
+  "F029": {
+   "case_run": "cu-h5-r1",
+   "finding": 2
+  },
+  "F030": {
+   "case_run": "lc-h2-r3",
+   "finding": 1
+  },
+  "F031": {
+   "case_run": "me-h2-r2",
+   "finding": 1
+  },
+  "F032": {
+   "case_run": "lp-h5-r2",
+   "finding": 2
+  },
+  "F033": {
+   "case_run": "cr-h1-r2",
+   "finding": 1
+  },
+  "F034": {
+   "case_run": "lp-h5-r2",
+   "finding": 4
+  },
+  "F035": {
+   "case_run": "lc-h3-r2",
+   "finding": 2
+  },
+  "F036": {
+   "case_run": "lp-h1-r1",
+   "finding": 1
+  },
+  "F037": {
+   "case_run": "me-h3-r2",
+   "finding": 2
+  },
+  "F038": {
+   "case_run": "he-h2-r3",
+   "finding": 2
+  },
+  "F039": {
+   "case_run": "cr-h1-r2",
+   "finding": 2
+  },
+  "F040": {
+   "case_run": "sc-h2-r1",
+   "finding": 2
+  },
+  "F041": {
+   "case_run": "lc-h4-r2",
+   "finding": 2
+  },
+  "F042": {
+   "case_run": "lp-h5-r2",
+   "finding": 3
+  },
+  "F043": {
+   "case_run": "cu-h1-r1",
+   "finding": 3
+  },
+  "F044": {
+   "case_run": "lp-h2-r3",
+   "finding": 1
+  },
+  "F045": {
+   "case_run": "cu-h4-r3",
+   "finding": 1
+  },
+  "F046": {
+   "case_run": "cr-h5-r3",
+   "finding": 3
+  },
+  "F047": {
+   "case_run": "he-h4-r2",
+   "finding": 1
+  },
+  "F048": {
+   "case_run": "lc-h1-r2",
+   "finding": 2
+  },
+  "F049": {
+   "case_run": "he-h3-r1",
+   "finding": 1
+  },
+  "F050": {
+   "case_run": "me-h2-r3",
+   "finding": 2
+  },
+  "F051": {
+   "case_run": "lp-h4-r3",
+   "finding": 1
+  },
+  "F052": {
+   "case_run": "lc-h1-r2",
+   "finding": 3
+  },
+  "F053": {
+   "case_run": "cu-h2-r3",
+   "finding": 2
+  },
+  "F054": {
+   "case_run": "he-h1-r2",
+   "finding": 3
+  },
+  "F055": {
+   "case_run": "cu-h4-r3",
+   "finding": 3
+  },
+  "F056": {
+   "case_run": "cr-h1-r1",
+   "finding": 2
+  },
+  "F057": {
+   "case_run": "cu-h5-r3",
+   "finding": 2
+  },
+  "F058": {
+   "case_run": "sc-h1-r3",
+   "finding": 1
+  },
+  "F059": {
+   "case_run": "lp-h4-r3",
+   "finding": 4
+  },
+  "F060": {
+   "case_run": "cr-h3-r2",
+   "finding": 3
+  },
+  "F061": {
+   "case_run": "lp-h5-r1",
+   "finding": 3
+  },
+  "F062": {
+   "case_run": "sc-h1-r2",
+   "finding": 1
+  },
+  "F063": {
+   "case_run": "lp-h2-r1",
+   "finding": 5
+  },
+  "F064": {
+   "case_run": "cu-h5-r2",
+   "finding": 1
+  },
+  "F065": {
+   "case_run": "me-h1-r2",
+   "finding": 1
+  },
+  "F066": {
+   "case_run": "cu-h4-r1",
+   "finding": 2
+  },
+  "F067": {
+   "case_run": "lc-h2-r2",
+   "finding": 3
+  },
+  "F068": {
+   "case_run": "me-h5-r2",
+   "finding": 2
+  },
+  "F069": {
+   "case_run": "cr-h3-r3",
+   "finding": 3
+  },
+  "F070": {
+   "case_run": "cr-h3-r2",
+   "finding": 2
+  },
+  "F071": {
+   "case_run": "cr-h4-r2",
+   "finding": 3
+  },
+  "F072": {
+   "case_run": "sc-h3-r3",
+   "finding": 3
+  },
+  "F073": {
+   "case_run": "me-h5-r1",
+   "finding": 2
+  },
+  "F074": {
+   "case_run": "he-h2-r3",
+   "finding": 1
+  },
+  "F075": {
+   "case_run": "he-h3-r3",
+   "finding": 4
+  },
+  "F076": {
+   "case_run": "lc-h3-r3",
+   "finding": 2
+  },
+  "F077": {
+   "case_run": "lp-h3-r2",
+   "finding": 1
+  },
+  "F078": {
+   "case_run": "cu-h5-r1",
+   "finding": 4
+  },
+  "F079": {
+   "case_run": "lp-h5-r1",
+   "finding": 1
+  },
+  "F080": {
+   "case_run": "sc-h1-r3",
+   "finding": 4
+  },
+  "F081": {
+   "case_run": "cr-h2-r1",
+   "finding": 1
+  },
+  "F082": {
+   "case_run": "cr-h4-r2",
+   "finding": 2
+  },
+  "F083": {
+   "case_run": "he-h2-r2",
+   "finding": 2
+  },
+  "F084": {
+   "case_run": "he-h1-r1",
+   "finding": 1
+  },
+  "F085": {
+   "case_run": "lc-h1-r1",
+   "finding": 1
+  },
+  "F086": {
+   "case_run": "sc-h1-r1",
+   "finding": 1
+  },
+  "F087": {
+   "case_run": "lp-h5-r1",
+   "finding": 4
+  },
+  "F088": {
+   "case_run": "me-h3-r2",
+   "finding": 3
+  },
+  "F089": {
+   "case_run": "sc-h4-r2",
+   "finding": 2
+  },
+  "F090": {
+   "case_run": "lp-h4-r1",
+   "finding": 4
+  },
+  "F091": {
+   "case_run": "he-h4-r1",
+   "finding": 1
+  },
+  "F092": {
+   "case_run": "he-h1-r2",
+   "finding": 2
+  },
+  "F093": {
+   "case_run": "lp-h1-r3",
+   "finding": 2
+  },
+  "F094": {
+   "case_run": "me-h2-r3",
+   "finding": 3
+  },
+  "F095": {
+   "case_run": "me-h2-r2",
+   "finding": 3
+  },
+  "F096": {
+   "case_run": "sc-h4-r3",
+   "finding": 3
+  },
+  "F097": {
+   "case_run": "lp-h2-r1",
+   "finding": 4
+  },
+  "F098": {
+   "case_run": "cu-h1-r2",
+   "finding": 2
+  },
+  "F099": {
+   "case_run": "lc-h1-r1",
+   "finding": 3
+  },
+  "F100": {
+   "case_run": "cr-h3-r2",
+   "finding": 4
+  }
+ },
+ "findings_population": 355
+}

@@ -1,0 +1,649 @@
+{
+  "label": "FIXTURE RESULT",
+  "results": [
+    {
+      "fault": "credential_rejection",
+      "window": {
+        "start": "2026-11-06T10:31:32.594Z",
+        "end": "2026-11-06T10:32:37.625Z"
+      },
+      "signal_present": true,
+      "detail": "auth_error 303 of 303 failures",
+      "workload": {
+        "sent": 210,
+        "statuses": {
+          "201": 210
+        },
+        "errors": {},
+        "started_at": "2026-11-06T10:31:32.594Z",
+        "ended_at": "2026-11-06T10:32:38.005Z"
+      },
+      "workload_rate": 3.2,
+      "controller_run": "validate-credential_rejection-103132",
+      "parameters": {},
+      "observations": {
+        "search_delivery_logs": {
+          "evidence_id": "61933084-a634-4bae-8db5-7dfb5161d3e7",
+          "tool": "search_delivery_logs",
+          "arguments": {
+            "outcome": "any",
+            "limit": 20
+          },
+          "requested_window": {
+            "start": "2026-11-06T10:31:32.594Z",
+            "end": "2026-11-06T10:32:37.625Z"
+          },
+          "observed_window": {
+            "first": "2026-11-06T10:31:32.709Z",
+            "last": "2026-11-06T10:32:37.569Z"
+          },
+          "collected_at": "2026-11-06T10:32:54.031Z",
+          "coverage": "COMPLETE",
+          "truncated": false,
+          "source": {
+            "kind": "structured_logs",
+            "instance": "ledgercore-local",
+            "adapter_version": "1.0",
+            "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+            "target_instance_id": "09afff1c-3772-474c-a4c2-95e928e5acfc"
+          },
+          "data": {
+            "outcome_filter": "any",
+            "matching_records": 429,
+            "returned_records": 20,
+            "counts_by_outcome": {
+              "success": 126,
+              "auth_error": 303,
+              "network_error": 0,
+              "server_error": 0,
+              "other": 0
+            },
+            "records": [
+              {
+                "started_at": "2026-11-06T10:31:32.709Z",
+                "ended_at": "2026-11-06T10:31:32.782154875Z",
+                "event_id": "a4e93f31-3968-4848-91fa-9ee812c399bd",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 72.266,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:33.793Z",
+                "ended_at": "2026-11-06T10:31:33.864972333Z",
+                "event_id": "5eea473d-8dcb-4a89-b3ae-7efd13a3b56b",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 71.481,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:33.867Z",
+                "ended_at": "2026-11-06T10:31:33.937949875Z",
+                "event_id": "12c32528-d7e4-4aa4-adf7-d026a9c18319",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 70.844,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:33.941Z",
+                "ended_at": "2026-11-06T10:31:34.012599833Z",
+                "event_id": "30f87105-6a68-433d-88f4-75654f37f376",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 71.31,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:35.018Z",
+                "ended_at": "2026-11-06T10:31:35.091812458Z",
+                "event_id": "38d9e831-349d-4cf6-b9f8-9413d89524e1",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 73.03,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:35.094Z",
+                "ended_at": "2026-11-06T10:31:35.165566625Z",
+                "event_id": "430ba3e6-e945-425e-a3a9-3b5ac69a4b31",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 70.92,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:35.167Z",
+                "ended_at": "2026-11-06T10:31:35.238777250Z",
+                "event_id": "b437a334-03bd-4c85-8905-f2ef4bc519b2",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 71.231,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:35.241Z",
+                "ended_at": "2026-11-06T10:31:35.312692458Z",
+                "event_id": "3cb8ce8e-a248-4d42-95a6-89febe89e04e",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 70.999,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:36.322Z",
+                "ended_at": "2026-11-06T10:31:36.398647958Z",
+                "event_id": "47506f30-d55f-4127-a89a-eebe65a2a75d",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 76.623,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:36.400Z",
+                "ended_at": "2026-11-06T10:31:36.471410208Z",
+                "event_id": "de08e32f-4892-4ea9-9778-6c3cd997e933",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 70.974,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:36.472Z",
+                "ended_at": "2026-11-06T10:31:36.543689042Z",
+                "event_id": "07e8d862-3a87-4b96-b640-c98e8d21c825",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 70.965,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:36.546Z",
+                "ended_at": "2026-11-06T10:31:36.618163375Z",
+                "event_id": "ecfec8cb-ecdc-45e9-b008-371e747bf1ac",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 71.612,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:37.626Z",
+                "ended_at": "2026-11-06T10:31:37.703277250Z",
+                "event_id": "e9cc7c6a-709b-4915-91b4-a774fa424540",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 76.527,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:37.705Z",
+                "ended_at": "2026-11-06T10:31:37.777017500Z",
+                "event_id": "771d5ce5-62e7-498a-b031-c16fc4ae8f0f",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 71.197,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:37.780Z",
+                "ended_at": "2026-11-06T10:31:37.851558667Z",
+                "event_id": "8d9b3f3a-d331-4ef9-8a45-e2652eb35b75",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 71.219,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:37.855Z",
+                "ended_at": "2026-11-06T10:31:37.926564250Z",
+                "event_id": "76722f14-5dd4-4e02-91c1-664433e051fd",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 70.893,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:38.935Z",
+                "ended_at": "2026-11-06T10:31:39.006904458Z",
+                "event_id": "0034a2d7-5f87-4bd2-ab95-d9f27a08f980",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 71.806,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:39.008Z",
+                "ended_at": "2026-11-06T10:31:39.080106666Z",
+                "event_id": "34be84e0-2a98-4c21-bbbb-279ed486d7b4",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 71.742,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:39.081Z",
+                "ended_at": "2026-11-06T10:31:39.152893792Z",
+                "event_id": "74a2b9cf-972a-4a44-b942-2d4b35cd440f",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 71.192,
+                "transition_recorded": true
+              },
+              {
+                "started_at": "2026-11-06T10:31:39.156Z",
+                "ended_at": "2026-11-06T10:31:39.227316916Z",
+                "event_id": "5df19c13-62f4-4f97-b61c-ce00b93e3da8",
+                "attempt": 1,
+                "total_attempt": 1,
+                "result": "SUCCESS",
+                "outcome": "success",
+                "http_status": 200,
+                "duration_ms": 71.23,
+                "transition_recorded": true
+              }
+            ],
+            "ingestion": {
+              "caught_up_at": "2026-11-06T10:32:41.564Z",
+              "discontinuities": []
+            },
+            "record_check": {
+              "attempt_records": 429,
+              "attempts_reported_by_poll_batches": 439
+            },
+            "note": "Records are LedgerCore's own delivery-attempt log lines, earliest first."
+          },
+          "limitations": [
+            "Only the earliest 20 of 429 matching records are listed; counts_by_outcome covers all of them."
+          ],
+          "errors": []
+        }
+      }
+    },
+    {
+      "fault": "lock_contention",
+      "window": {
+        "start": "2026-11-06T10:32:54.044Z",
+        "end": "2026-11-06T10:33:59.071Z"
+      },
+      "signal_present": true,
+      "detail": "blocker roles {'other': 6, 'ledger_app': 7}, samples with blocking 19",
+      "workload": {
+        "sent": 210,
+        "statuses": {
+          "201": 175,
+          "500": 35
+        },
+        "errors": {},
+        "started_at": "2026-11-06T10:32:54.043Z",
+        "ended_at": "2026-11-06T10:33:59.465Z"
+      },
+      "workload_rate": 3.2,
+      "controller_run": "validate-lock_contention-103254",
+      "parameters": {},
+      "observations": {
+        "get_database_blockers": {
+          "evidence_id": "2dfa8c71-ffb9-4631-abef-d4e3248dc542",
+          "tool": "get_database_blockers",
+          "arguments": {
+            "mode": "historical",
+            "limit": 10
+          },
+          "requested_window": {
+            "start": "2026-11-06T10:32:54.044Z",
+            "end": "2026-11-06T10:33:59.071Z"
+          },
+          "observed_window": {
+            "first": "2026-11-06T10:32:55.494Z",
+            "last": "2026-11-06T10:33:57.495Z"
+          },
+          "collected_at": "2026-11-06T10:34:15.476Z",
+          "coverage": "COMPLETE",
+          "truncated": false,
+          "source": {
+            "kind": "postgres_samples",
+            "instance": "ledgercore-local",
+            "adapter_version": "1.0",
+            "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+            "target_instance_id": "09afff1c-3772-474c-a4c2-95e928e5acfc"
+          },
+          "data": {
+            "mode": "historical",
+            "samples": {
+              "expected": 33,
+              "successful": 32,
+              "failed": 0,
+              "with_blocking": 19,
+              "gaps": []
+            },
+            "relationships": 13,
+            "blocked_sessions": 6,
+            "blocker_roles": {
+              "other": 6,
+              "ledger_app": 7
+            },
+            "max_blocked_wait_seconds": 1.964,
+            "first_blocking_at": "2026-11-06T10:33:09.492Z",
+            "last_blocking_at": "2026-11-06T10:33:47.493Z",
+            "edges": [
+              {
+                "blocked_pid": 74762,
+                "blocker_pid": 79529,
+                "blocker_role": "other",
+                "first_seen": "2026-11-06T10:33:09.492Z",
+                "last_seen": "2026-11-06T10:33:45.491Z",
+                "samples": 8,
+                "max_blocked_wait_seconds": 1.854,
+                "blocker_states": [
+                  "idle in transaction"
+                ],
+                "blocked_wait_event": "transactionid",
+                "max_blocker_transaction_seconds": 36.437
+              },
+              {
+                "blocked_pid": 73285,
+                "blocker_pid": 79529,
+                "blocker_role": "other",
+                "first_seen": "2026-11-06T10:33:11.495Z",
+                "last_seen": "2026-11-06T10:33:45.491Z",
+                "samples": 10,
+                "max_blocked_wait_seconds": 1.917,
+                "blocker_states": [
+                  "idle in transaction"
+                ],
+                "blocked_wait_event": "transactionid",
+                "max_blocker_transaction_seconds": 36.437
+              },
+              {
+                "blocked_pid": 74762,
+                "blocker_pid": 73285,
+                "blocker_role": "ledger_app",
+                "first_seen": "2026-11-06T10:33:11.495Z",
+                "last_seen": "2026-11-06T10:33:11.495Z",
+                "samples": 1,
+                "max_blocked_wait_seconds": 0.168,
+                "blocker_states": [
+                  "active"
+                ],
+                "blocked_wait_event": "tuple",
+                "max_blocker_transaction_seconds": 0.787
+              },
+              {
+                "blocked_pid": 74828,
+                "blocker_pid": 79529,
+                "blocker_role": "other",
+                "first_seen": "2026-11-06T10:33:15.495Z",
+                "last_seen": "2026-11-06T10:33:47.493Z",
+                "samples": 7,
+                "max_blocked_wait_seconds": 1.913,
+                "blocker_states": [
+                  "idle in transaction"
+                ],
+                "blocked_wait_event": "transactionid",
+                "max_blocker_transaction_seconds": 38.439
+              },
+              {
+                "blocked_pid": 75105,
+                "blocker_pid": 79529,
+                "blocker_role": "other",
+                "first_seen": "2026-11-06T10:33:17.495Z",
+                "last_seen": "2026-11-06T10:33:41.494Z",
+                "samples": 5,
+                "max_blocked_wait_seconds": 1.664,
+                "blocker_states": [
+                  "idle in transaction"
+                ],
+                "blocked_wait_event": "transactionid",
+                "max_blocker_transaction_seconds": 32.441
+              },
+              {
+                "blocked_pid": 74762,
+                "blocker_pid": 74828,
+                "blocker_role": "ledger_app",
+                "first_seen": "2026-11-06T10:33:23.495Z",
+                "last_seen": "2026-11-06T10:33:23.495Z",
+                "samples": 1,
+                "max_blocked_wait_seconds": 0.296,
+                "blocker_states": [
+                  "active"
+                ],
+                "blocked_wait_event": "tuple",
+                "max_blocker_transaction_seconds": 1.854
+              },
+              {
+                "blocked_pid": 75114,
+                "blocker_pid": 74828,
+                "blocker_role": "ledger_app",
+                "first_seen": "2026-11-06T10:33:25.494Z",
+                "last_seen": "2026-11-06T10:33:25.494Z",
+                "samples": 1,
+                "max_blocked_wait_seconds": 1.037,
+                "blocker_states": [
+                  "active"
+                ],
+                "blocked_wait_event": "tuple",
+                "max_blocker_transaction_seconds": 1.347
+              },
+              {
+                "blocked_pid": 75238,
+                "blocker_pid": 74828,
+                "blocker_role": "ledger_app",
+                "first_seen": "2026-11-06T10:33:25.494Z",
+                "last_seen": "2026-11-06T10:33:25.494Z",
+                "samples": 1,
+                "max_blocked_wait_seconds": 0.094,
+                "blocker_states": [
+                  "active"
+                ],
+                "blocked_wait_event": "tuple",
+                "max_blocker_transaction_seconds": 1.347
+              },
+              {
+                "blocked_pid": 75238,
+                "blocker_pid": 75114,
+                "blocker_role": "ledger_app",
+                "first_seen": "2026-11-06T10:33:25.494Z",
+                "last_seen": "2026-11-06T10:33:25.494Z",
+                "samples": 1,
+                "max_blocked_wait_seconds": 0.094,
+                "blocker_states": [
+                  "active"
+                ],
+                "blocked_wait_event": "tuple",
+                "max_blocker_transaction_seconds": 1.039
+              },
+              {
+                "blocked_pid": 75114,
+                "blocker_pid": 79529,
+                "blocker_role": "other",
+                "first_seen": "2026-11-06T10:33:27.495Z",
+                "last_seen": "2026-11-06T10:33:35.492Z",
+                "samples": 2,
+                "max_blocked_wait_seconds": 1.964,
+                "blocker_states": [
+                  "idle in transaction"
+                ],
+                "blocked_wait_event": "transactionid",
+                "max_blocker_transaction_seconds": 26.441
+              }
+            ],
+            "meaning": "Each edge: a waiting ledger_app session (blocked_pid) and the session holding the lock (blocker_pid), labelled only ledger_app or other. No query text is collected."
+          },
+          "limitations": [
+            "Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited.",
+            "Only the first 10 of 13 blocking relationships are listed."
+          ],
+          "errors": []
+        },
+        "get_request_metrics": {
+          "evidence_id": "d2ec6b28-152c-4e29-ae32-f3cf4a963814",
+          "tool": "get_request_metrics",
+          "arguments": {
+            "route_group": "transfers"
+          },
+          "requested_window": {
+            "start": "2026-11-06T10:32:54.044Z",
+            "end": "2026-11-06T10:33:59.071Z"
+          },
+          "observed_window": {
+            "first": "2026-11-06T10:32:58.722Z",
+            "last": "2026-11-06T10:33:58.722Z"
+          },
+          "collected_at": "2026-11-06T10:34:15.515Z",
+          "coverage": "COMPLETE",
+          "truncated": false,
+          "source": {
+            "kind": "prometheus",
+            "instance": "ledgercore-local",
+            "adapter_version": "1.0",
+            "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+            "target_instance_id": "09afff1c-3772-474c-a4c2-95e928e5acfc"
+          },
+          "data": {
+            "route_group": "transfers",
+            "route_template": "/v1/transfers",
+            "requests": 207,
+            "requests_per_second": 3.183,
+            "server_error_ratio": 0.1691,
+            "by_status": [
+              {
+                "status": "201",
+                "outcome": "SUCCESS",
+                "count": 172
+              },
+              {
+                "status": "500",
+                "outcome": "SERVER_ERROR",
+                "count": 35
+              }
+            ],
+            "latency_seconds": {
+              "p50": 0.1848,
+              "p95": 2.3267,
+              "p99": 4.2607,
+              "method": "interpolated within fixed histogram buckets summed across series"
+            },
+            "bucket_counts": [
+              {
+                "le": 0.005,
+                "count": 0
+              },
+              {
+                "le": 0.01,
+                "count": 0
+              },
+              {
+                "le": 0.025,
+                "count": 0
+              },
+              {
+                "le": 0.05,
+                "count": 0
+              },
+              {
+                "le": 0.1,
+                "count": 17
+              },
+              {
+                "le": 0.25,
+                "count": 170
+              },
+              {
+                "le": 0.5,
+                "count": 171
+              },
+              {
+                "le": 1.0,
+                "count": 171
+              },
+              {
+                "le": 2.5,
+                "count": 200
+              },
+              {
+                "le": 5.0,
+                "count": 207
+              },
+              {
+                "le": 10.0,
+                "count": 207
+              },
+              {
+                "le": "+Inf",
+                "count": 207
+              }
+            ],
+            "counter_resets": 0,
+            "scrapes": {
+              "expected_scrapes": 13,
+              "successful_scrapes": 13,
+              "failed_scrapes": 0,
+              "gaps": [],
+              "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)"
+            },
+            "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)"
+          },
+          "limitations": [],
+          "errors": []
+        }
+      }
+    }
+  ]
+}

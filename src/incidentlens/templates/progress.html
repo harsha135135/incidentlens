@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block page %}progress{% endblock %}
+{% block content %}
+<section class="card" id="progress" data-job="{{ job.id }}">
+  <h1>Investigating</h1>
+  <p class="symptom">“{{ job.symptom }}”</p>
+  <p class="muted">Window {{ job.window_start[:19] }} to {{ job.window_end[:19] }} UTC</p>
+  <dl class="facts">
+    <dt>Status</dt><dd id="status">{{ job.status }}</dd>
+    <dt>Elapsed</dt><dd id="elapsed">–</dd>
+    <dt>Calls used</dt><dd id="calls">{{ job.tool_actions }} data, {{ job.model_actions }} model</dd>
+  </dl>
+  <h2>What has happened</h2>
+  <ol class="timeline" id="timeline" aria-live="polite"></ol>
+  <button type="button" id="cancel" class="secondary">Cancel investigation</button>
+</section>
+{% endblock %}

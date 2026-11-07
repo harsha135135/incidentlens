@@ -1,0 +1,368 @@
+{
+  "label": "FIXTURE RESULT: size and schema probe, not a quality evaluation",
+  "scenario": "evaluation/results/stage1/scenarios-20261106T054219Z/slow_consumer.json",
+  "estimated_input_tokens": 3368,
+  "prompt": "service: ledgercore-local\nsymptom (from the developer): Transfers succeed but notifications are delayed\nwindow: 2026-11-06T05:45:47.815Z to 2026-11-06T05:46:27.833Z\n\nSaved observations:\n[E1] get_request_metrics {\"route_group\":\"transfers\"} coverage COMPLETE\n  route /v1/transfers: 128 requests (3.199/s); status 201\u00d7128; server_error_ratio 0.0\n  latency p50 0.1693 s, p95 0.2419 s, p99 0.2484 s; counter restarts 0\n  scrapes 8/8 ok\n  (full observation saved as E1)\n[E2] get_request_metrics {\"route_group\":\"consumer\"} coverage COMPLETE\n  route /demo-consumer/events: 0 requests (0.0/s); status none; server_error_ratio None\n  latency p50 None s, p95 None s, p99 None s; counter restarts 0\n  scrapes 8/8 ok\n  limitation: No requests to /demo-consumer/events were recorded in the window; percentiles are unavailable.\n  limitation: LedgerCore delivers to an external consumer in this window, so its in-process consumer route is not expected to receive requests. Use get_delivery_timings.\n  (full observation saved as E2)\n[E3] get_outbox_stats coverage COMPLETE\n  committed arrivals 128 (3.199/s); recorded publications 74 (1.849/s); arrivals minus publications 54; over 40.018 s; settled True\n  per 10 s bucket, arrivals: 32 32 32 32 0\n  per 10 s bucket, publications: 18 19 18 19 0\n  pending: first 12 at 05:45:48, last 60 at 05:46:23, min 12, max 60; samples: 05:45:48=12 05:45:58=26 05:46:08=39 05:46:18=53 05:46:23=60\n  failed: first 0 at 05:45:48, last 0 at 05:46:23, min 0, max 0; samples: 05:45:48=0 05:45:58=0 05:46:08=0 05:46:18=0 05:46:23=0\n  oldest_undelivered_age_seconds: first 3.72918 at 05:45:48, last 18.7285 at 05:46:23, min 3.72918, max 18.7285; samples: 05:45:48=3.72918 05:45:58=8.09024 05:46:08=12.1584 05:46:18=16.5344 05:46:23=18.7285\n  scrapes 8/8 ok\n  limitation: Pending is a gauge sampled at scrape times; arrivals and publications are durable counts by timestamp. Transitions to FAILED and the different sampling instant\u2026\n  (full observation saved as E3)\n[E4] search_delivery_logs {\"outcome\":\"any\",\"limit\":100} coverage COMPLETE\n  filter any: 74 matching records; by outcome: success 74, auth_error 0, network_error 0, server_error 0, other 0\n  first 05:45:48.277, last listed 05:46:27.600\n    05:45:48.277 attempt 1 SUCCESS status 200 476.678 ms\n    05:45:48.756 attempt 1 SUCCESS status 200 478.641 ms\n    05:46:27.112 attempt 1 SUCCESS status 200 483.721 ms\n    05:46:27.600 attempt 1 SUCCESS status 200 482.836 ms\n    (70 more listed rows omitted here)\n  record check: 74 attempt records vs 78 attempts reported by poll batches\n  (full observation saved as E4)\n[E5] search_delivery_logs {\"outcome\":\"network_error\",\"limit\":100} coverage COMPLETE\n  filter network_error: 0 matching records; by outcome: success 74, auth_error 0, network_error 0, server_error 0, other 0\n  record check: 74 attempt records vs 78 attempts reported by poll batches\n  (full observation saved as E5)\n[E6] get_delivery_timings coverage COMPLETE\n  attempts 74, correlated with consumer records 74\n  total (LedgerCore-measured) n=74 p50=481.579ms p95=488.058ms max=494.465ms\n    SUCCESS: n=74 p50=481.579ms p95=488.058ms max=494.465ms\n  consumer auth n=74 p50=70.715ms p95=78.859ms max=82.72ms; consumer handler n=74 p50=407.612ms p95=410.083ms max=410.115ms; unattributed n=74 p50=1.658ms p95=2.132ms max=2.299ms (measured by fixture consumer (test fixture))\n  (full observation saved as E6)\n\nThe diagnostic budget is used up: submit your report now, or stop as inconclusive.",
+  "calls": [
+    {
+      "stop_reason": "tool_use",
+      "output_tokens": 1026,
+      "input_tokens": 3368,
+      "latency_seconds": 9.84,
+      "action": "SubmitReport",
+      "problem": null,
+      "report": {
+        "outcome": "SUPPORTED",
+        "summary": "Transfers are healthy, but outbox deliveries run at about 1.85/s against 3.2/s arrivals. Each delivery takes about 480 ms, mostly consumer handler time, so the backlog and delay grow.",
+        "findings": [
+          {
+            "claim": "Outbox backlog grows because publication rate (1.849/s) is lower than arrival rate (3.199/s); pending rose 12 to 60.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3"
+            ],
+            "reason": "Arrivals 128 vs publications 74, pending and oldest undelivered age (3.7 s to 18.7 s) increased steadily with no failures."
+          },
+          {
+            "claim": "Transfers themselves are fast and error-free, so the delay is in notification delivery, not the transfer path.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "128 requests all returned 201, p95 0.24 s, server_error_ratio 0.0."
+          },
+          {
+            "claim": "Each delivery takes about 480 ms, mostly consumer handler time (about 408 ms) plus auth (about 71 ms). Serial delivery at this latency would cap throughput near 2/s, matching the observed rate.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E6",
+              "E4",
+              "E3"
+            ],
+            "reason": "All 74 attempts succeeded on attempt 1 with consistent latency; about 1/0.48 s is roughly 2/s, close to 1.85/s. Serial delivery is inferred, not directly observed."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Delivery failures or retries cause the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E4",
+              "E5",
+              "E3"
+            ],
+            "reason": "There were 0 failed, auth, network or server errors, and every attempt succeeded on attempt 1."
+          },
+          {
+            "hypothesis": "The publisher is under-polling or concurrency-limited independently of consumer latency.",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E4"
+            ],
+            "reason": "The 74 attempt records vs 78 reported by poll batches is a small gap, and publisher concurrency or poll config was not inspected."
+          }
+        ],
+        "limitations": [
+          "The window is only 40 s and the backlog was still growing, so steady-state behavior is unknown.",
+          "Publisher concurrency and poll configuration were not observed, and 4 poll-reported attempts have no records."
+        ],
+        "next_checks": [
+          "Inspect the outbox publisher's concurrency, batch size and poll interval settings.",
+          "Check why the consumer handler takes about 400 ms and whether delivery can run in parallel."
+        ]
+      }
+    },
+    {
+      "stop_reason": "tool_use",
+      "output_tokens": 939,
+      "input_tokens": 3368,
+      "latency_seconds": 8.58,
+      "action": "SubmitReport",
+      "problem": null,
+      "report": {
+        "outcome": "SUPPORTED",
+        "summary": "Transfers are healthy, but the outbox publishes at about 1.85/s against 3.2/s arrivals. The backlog grows and notifications are delayed. Each delivery takes about 480 ms, mostly in the consumer handler.",
+        "findings": [
+          {
+            "claim": "The outbox drains slower than transfers arrive, so a backlog builds.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3"
+            ],
+            "reason": "128 arrivals vs 74 publications; pending rose 12 to 60 and oldest undelivered age rose 3.7 s to 18.7 s; failed stayed 0."
+          },
+          {
+            "claim": "Transfers themselves are healthy; the delay is only on the notification path.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "128 requests, all 201, no server errors, p95 0.24 s."
+          },
+          {
+            "claim": "Deliveries all succeed on attempt 1 but take about 480 ms, mostly consumer handler time (about 408 ms) plus auth (about 71 ms). This is consistent with serial delivery capping throughput near 2/s.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E4",
+              "E6",
+              "E3"
+            ],
+            "reason": "About 1/0.48 s is about 2.1/s, close to the observed 1.85/s publication rate. Serial dispatch is not directly observed."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Delivery failures or retries cause the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E4",
+              "E5",
+              "E3"
+            ],
+            "reason": "All 74 attempts succeeded with no auth, network or server errors, and failed count stayed 0."
+          },
+          {
+            "hypothesis": "The in-process consumer route is slow or down.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E2",
+              "E6"
+            ],
+            "reason": "The route is not used in this window; delivery goes to an external consumer, which responded 200 in about 480 ms."
+          }
+        ],
+        "limitations": [
+          "Delivery concurrency and the poll batch size were not observed, so the serial-dispatch cause is inferred from rates only.",
+          "The 74 attempt records vs 78 attempts reported by poll batches is a small unexplained mismatch."
+        ],
+        "next_checks": [
+          "Check the dispatcher's configured concurrency and batch size, and whether deliveries are issued serially.",
+          "Reconcile the 4 attempts counted by poll batches but missing from the delivery logs."
+        ]
+      }
+    },
+    {
+      "stop_reason": "tool_use",
+      "output_tokens": 1148,
+      "input_tokens": 3368,
+      "latency_seconds": 9.23,
+      "action": "SubmitReport",
+      "problem": null,
+      "report": {
+        "outcome": "SUPPORTED",
+        "summary": "Transfers are healthy, but outbox publication (1.85/s) lags commits (3.2/s), so pending grows and notifications are delayed. Each delivery takes about 480 ms, mostly consumer handler time.",
+        "findings": [
+          {
+            "claim": "Transfers are healthy: 128 requests, all 201, no server errors, p95 0.24 s. The delay is not in the transfer path.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "E1 shows status 201 for all 128 requests and a server_error_ratio of 0.0."
+          },
+          {
+            "claim": "The outbox backlog grows steadily: 128 arrivals vs 74 publications, pending 12 to 60, oldest undelivered age 3.7 s to 18.7 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3"
+            ],
+            "reason": "Publications run at about 18 per 10 s against 32 arrivals per 10 s in every bucket. Pending and age rise monotonically with no failures."
+          },
+          {
+            "claim": "Deliveries all succeed on the first attempt but take about 480 ms each. About 408 ms of that is consumer handler time and about 71 ms is consumer auth.",
+            "support": "observed",
+            "evidence_ids": [
+              "E4",
+              "E6",
+              "E5"
+            ],
+            "reason": "74 successes, no network, auth or server errors. Timings show a consistent ~482 ms with small LedgerCore overhead (~1.7 ms unattributed)."
+          },
+          {
+            "claim": "The publisher appears to deliver serially, so about 480 ms per delivery caps throughput near 2/s, below the 3.2/s arrival rate.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E3",
+              "E6"
+            ],
+            "reason": "The publication rate (1.85/s) is close to 1/0.48 s, which fits serial delivery. Concurrency was not observed directly."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Delivery failures or retries are causing the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E4",
+              "E5",
+              "E3"
+            ],
+            "reason": "All 74 attempts succeeded on attempt 1, and the failed count stayed at 0."
+          },
+          {
+            "hypothesis": "The external consumer handler is slow and drives the backlog.",
+            "assessment": "supported",
+            "evidence_ids": [
+              "E6"
+            ],
+            "reason": "Handler time is about 408 ms of the ~482 ms total, but the cause of that slowness was not examined."
+          }
+        ],
+        "limitations": [
+          "Publisher concurrency and polling configuration were not observed, so serial delivery is inferred.",
+          "The delivery-log check found 74 attempt records against 78 attempts reported by poll batches, a small unexplained gap."
+        ],
+        "next_checks": [
+          "Check the outbox publisher's batch size, concurrency and poll interval settings.",
+          "Profile the consumer handler's ~408 ms and its ~71 ms auth step."
+        ]
+      }
+    },
+    {
+      "stop_reason": "tool_use",
+      "output_tokens": 1039,
+      "input_tokens": 3368,
+      "latency_seconds": 8.6,
+      "action": "SubmitReport",
+      "problem": null,
+      "report": {
+        "outcome": "SUPPORTED",
+        "summary": "Transfers succeed, but outbox publication runs at about 1.85/s against 3.2/s arrivals. The backlog grows and notifications are delayed. Each delivery takes about 480 ms and none fail; most of that time is in the consumer.",
+        "findings": [
+          {
+            "claim": "The outbox backlog grows because publications run at about 58% of the arrival rate.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3"
+            ],
+            "reason": "128 arrivals against 74 publications; pending rose from 12 to 60 and the oldest undelivered age from 3.7 s to 18.7 s."
+          },
+          {
+            "claim": "Transfers are healthy, so the delay is downstream of the transfer commit.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "All 128 requests returned 201, with p99 latency of 0.25 s and no server errors."
+          },
+          {
+            "claim": "Deliveries are slow but succeed, and the consumer handler accounts for most of the time. Delivery errors are not the cause.",
+            "support": "observed",
+            "evidence_ids": [
+              "E4",
+              "E5",
+              "E6"
+            ],
+            "reason": "All 74 attempts succeeded at about 480 ms each, split into about 408 ms handler and about 71 ms auth, with 0 failures or retries."
+          },
+          {
+            "claim": "Deliveries appear to run one at a time, so throughput is capped near 2 per second by the per-delivery latency.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E3",
+              "E6"
+            ],
+            "reason": "Rate 1.85/s is close to 1/0.48 s = 2.08/s, which fits a serial publisher. Concurrency was not measured directly."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "The publisher is stalled or polling too slowly rather than limited by consumer latency.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E3",
+              "E4"
+            ],
+            "reason": "Publications were steady at 18-19 per 10 s and attempts continued through the end of the window, so there was no stall."
+          },
+          {
+            "hypothesis": "Delivery failures or retries cause the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E4",
+              "E5"
+            ],
+            "reason": "No auth, network or server errors, and every attempt was attempt 1."
+          }
+        ],
+        "limitations": [
+          "Poll batches report 78 attempts but only 74 attempt records exist, so 4 attempts are unexplained.",
+          "Publisher concurrency and batch configuration were not observed, so the serial-delivery explanation is inferred."
+        ],
+        "next_checks": [
+          "Check the publisher's concurrency and batch size settings, and whether deliveries run serially.",
+          "Profile the consumer handler's roughly 408 ms, and find the 4 attempts missing from the delivery logs."
+        ]
+      }
+    },
+    {
+      "stop_reason": "tool_use",
+      "output_tokens": 985,
+      "input_tokens": 3368,
+      "latency_seconds": 7.81,
+      "action": "SubmitReport",
+      "problem": null,
+      "report": {
+        "outcome": "SUPPORTED",
+        "summary": "Outbox backlog grows because publication throughput (~1.85/s) is below arrival rate (~3.2/s). Each delivery takes ~480 ms, mostly consumer handler time, with no failures.",
+        "findings": [
+          {
+            "claim": "Transfers are healthy; the delay is downstream of the transfer API.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1"
+            ],
+            "reason": "128 requests all returned 201, no server errors, p99 0.25 s."
+          },
+          {
+            "claim": "The outbox backlog grows steadily: pending rose 12 to 60 and oldest undelivered age rose 3.7 s to 18.7 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3"
+            ],
+            "reason": "128 arrivals vs 74 publications (3.2/s vs 1.85/s) with zero failures, so the delay comes from throughput."
+          },
+          {
+            "claim": "Per-delivery latency of ~480 ms is dominated by the consumer handler (~408 ms) plus auth (~71 ms); at that latency, sequential delivery would cap near 2/s.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E6",
+              "E4",
+              "E3"
+            ],
+            "reason": "All 74 attempts succeeded at ~480 ms, and the publication rate matches roughly 1/0.48 s. Sequential delivery is inferred, not directly observed."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Delivery errors or retries are causing the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E4",
+              "E5",
+              "E3"
+            ],
+            "reason": "All 74 attempts succeeded on attempt 1; no network, auth or server errors; failed count is 0."
+          },
+          {
+            "hypothesis": "Transfer API slowness or in-process consumer route is the cause.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "reason": "Transfer latency is low; the consumer route is not used in this window."
+          }
+        ],
+        "limitations": [
+          "Dispatcher concurrency and poll configuration were not inspected, so the sequential-delivery cause is inferred.",
+          "Poll batches report 78 attempts vs 74 records; the 4-attempt discrepancy is unexplained."
+        ],
+        "next_checks": [
+          "Check outbox dispatcher concurrency and batch size settings.",
+          "Investigate why the consumer handler takes ~408 ms and auth ~70 ms, and reconcile the 78 vs 74 attempt counts."
+        ]
+      }
+    }
+  ]
+}

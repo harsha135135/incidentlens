@@ -1,0 +1,5 @@
+{"at": "2026-11-06T05:15:03.312Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0}
+{"at": "2026-11-06T05:15:09.517Z", "action": "accounts_prepared", "pairs": 20, "seed": 20261106}
+{"at": "2026-11-06T05:15:32.652Z", "action": "burst_sent", "sent": 600, "statuses": {"201": 600}, "errors": {}, "started_at": "2026-11-06T05:15:12.581Z", "ended_at": "2026-11-06T05:15:32.652Z"}
+{"at": "2026-11-06T05:16:29.679Z", "action": "baseline_started", "rate_per_second": 3.2}
+{"at": "2026-11-06T05:17:59.487Z", "action": "baseline_finished", "sent": 288, "statuses": {"201": 288}, "errors": {}, "started_at": "2026-11-06T05:16:29.680Z", "ended_at": "2026-11-06T05:17:59.487Z"}

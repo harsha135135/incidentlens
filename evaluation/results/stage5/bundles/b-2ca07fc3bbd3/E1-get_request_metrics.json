@@ -1,0 +1,130 @@
+{
+ "arguments": {
+  "route_group": "transfers"
+ },
+ "collected_at": "2026-11-06T17:37:57.045Z",
+ "coverage": "PARTIAL",
+ "data": {
+  "bucket_counts": [
+   {
+    "count": 0,
+    "le": 0.005
+   },
+   {
+    "count": 0,
+    "le": 0.01
+   },
+   {
+    "count": 0,
+    "le": 0.025
+   },
+   {
+    "count": 0,
+    "le": 0.05
+   },
+   {
+    "count": 100,
+    "le": 0.1
+   },
+   {
+    "count": 618,
+    "le": 0.25
+   },
+   {
+    "count": 652,
+    "le": 0.5
+   },
+   {
+    "count": 653,
+    "le": 1.0
+   },
+   {
+    "count": 719,
+    "le": 2.5
+   },
+   {
+    "count": 737,
+    "le": 5.0
+   },
+   {
+    "count": 737,
+    "le": 10.0
+   },
+   {
+    "count": 737,
+    "le": "+Inf"
+   }
+  ],
+  "by_status": [
+   {
+    "count": 608,
+    "outcome": "SUCCESS",
+    "status": "201"
+   },
+   {
+    "count": 16,
+    "outcome": "CLIENT_ERROR",
+    "status": "422"
+   },
+   {
+    "count": 83,
+    "outcome": "SERVER_ERROR",
+    "status": "500"
+   },
+   {
+    "count": 30,
+    "outcome": "SERVER_ERROR",
+    "status": "503"
+   }
+  ],
+  "counter_resets": 1,
+  "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)",
+  "latency_seconds": {
+   "method": "interpolated within fixed histogram buckets summed across series",
+   "p50": 0.1778,
+   "p95": 2.0716,
+   "p99": 3.9764
+  },
+  "requests": 737,
+  "requests_per_second": 3.071,
+  "route_group": "transfers",
+  "route_template": "/v1/transfers",
+  "scrapes": {
+   "expected_scrapes": 48,
+   "failed_scrapes": 1,
+   "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)",
+   "gaps": [
+    {
+     "end": "2026-11-06T17:34:23.681Z",
+     "seconds": 10.0,
+     "start": "2026-11-06T17:34:13.684Z"
+    }
+   ],
+   "successful_scrapes": 47
+  },
+  "server_error_ratio": 0.1533
+ },
+ "errors": [],
+ "evidence_id": "d14d539e-56f5-4559-8ff7-4ecdd389ae12",
+ "limitations": [
+  "Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+  "Counters restarted 1 time(s) in the window (application restart); counts include requests on both sides of each restart."
+ ],
+ "observed_window": {
+  "first": "2026-11-06T17:33:48.683Z",
+  "last": "2026-11-06T17:37:43.680Z"
+ },
+ "requested_window": {
+  "end": "2026-11-06T17:37:46.000Z",
+  "start": "2026-11-06T17:33:46.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "6294c423-dc3d-4650-8670-d13cb21892fb",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_request_metrics",
+ "truncated": false
+}

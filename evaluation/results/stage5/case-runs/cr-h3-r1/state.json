@@ -1,0 +1,178 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cr-h3-r1",
+  "template": "cr-h3",
+  "split": "held_out",
+  "category": "credential_rejection",
+  "ground_truth": "consumer_credential_rejected",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3388950910,
+      "controller_run": "stage5-cr-h3-r1-a1",
+      "bundle": "b-ed190ef1f54d",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T07:14:09.000Z",
+        "end": "2026-11-07T07:17:39.000Z"
+      },
+      "validity": "logs COMPLETE, auth_error 422 of 422 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_credential_rejected",
+    "rule": "422 of 422 failed deliveries were auth_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "652ef9f7-e312-4986-88de-71f333654a20",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4028,
+        "reported_output_tokens": 1075,
+        "tokens_counted_against_budget": 5103,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 7,
+        "numbers_not_found_in_cited_evidence": 2
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publications stalled (0 per 10 s bucket for ~50 s) while transfers kept arriving. Pending grew to 166, and 422 delivery attempts got HTTP 401 from the consumer. The 401 cause is not directly shown.",
+      "evidence": {
+        "E1": "cea4e544-2946-4ca7-91d5-3c84935dc49b",
+        "E2": "089e32ee-dbc4-4920-8995-48f85706c05b",
+        "E3": "f8197f29-8e03-4350-ba56-97e22b1a6ee6",
+        "E4": "fbd2680f-7436-4c99-8715-c9899be6ad8e",
+        "E5": "fb418322-91bb-447c-82a3-8bf6f8622439",
+        "E6": "5052de66-be6d-4b05-99c3-c3524a700408",
+        "E7": "e16f75e7-8feb-43ce-8ed4-8c55115a3899"
+      },
+      "findings": [
+        {
+          "claim": "Notification publication stalled for about 50 s while transfer arrivals continued at ~30 per 10 s, so a backlog built up and notifications were delayed.",
+          "reason": "Publications were 0 in five consecutive buckets with arrivals steady; pending peaked at 166, then publications ran at 81 per bucket, consistent with draining the backlog.",
+          "support": "observed",
+          "evidence_ids": [
+            "089e32ee-dbc4-4920-8995-48f85706c05b"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "50"
+          ]
+        },
+        {
+          "claim": "422 of 1046 delivery attempts were rejected with HTTP 401 (auth_error) by the consumer; the other 624 succeeded.",
+          "reason": "Outcome counts show auth_error 422 and success 624; HTTP_401 attempts took about 71 ms like successes, so these are fast rejections, not timeouts.",
+          "support": "observed",
+          "evidence_ids": [
+            "f8197f29-8e03-4350-ba56-97e22b1a6ee6",
+            "fbd2680f-7436-4c99-8715-c9899be6ad8e"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": [
+            "401"
+          ]
+        },
+        {
+          "claim": "The delay is not explained by transfer API errors, DB pool exhaustion, DB blocking or slow consumer handling.",
+          "reason": "Transfers are all 201 with p99 of 0.25 s; pool pending is 0 with no timeouts; there is no DB blocking; consumer handler time is about 0.01 ms.",
+          "support": "observed",
+          "evidence_ids": [
+            "cea4e544-2946-4ca7-91d5-3c84935dc49b",
+            "fb418322-91bb-447c-82a3-8bf6f8622439",
+            "5052de66-be6d-4b05-99c3-c3524a700408",
+            "fbd2680f-7436-4c99-8715-c9899be6ad8e"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6",
+            "E4"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Delivery logs list only the earliest 100 of 1046 records (07:14:09 to 07:14:42), so the stall period (about 07:15:50 to 07:16:40) is not shown at attempt level.",
+        "The failed count of 1034 and the oldest undelivered age of about 48,000 s predate the window, so this old backlog is not explained; the link between the 401s and the stall is not shown."
+      ],
+      "next_checks": [
+        "List delivery attempt logs by timestamp for 07:15:50 to 07:16:45 to see whether attempts occurred and what status they returned.",
+        "Check consumer auth configuration or credential changes and the outbox poller logs around the stall."
+      ],
+      "alternatives": [
+        {
+          "reason": "No poller logs or thread state were collected; the zero-publication gap could also be a worker pause.",
+          "assessment": "unassessed",
+          "hypothesis": "The stall was caused by the poller or outbox worker pausing, not by auth failures.",
+          "evidence_ids": [
+            "089e32ee-dbc4-4920-8995-48f85706c05b",
+            "e16f75e7-8feb-43ce-8ed4-8c55115a3899"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E7"
+          ]
+        },
+        {
+          "reason": "Pool pending was 0, acquire time was tiny and no blocking was sampled.",
+          "assessment": "weakened",
+          "hypothesis": "Database or connection pool contention delayed publication.",
+          "evidence_ids": [
+            "fb418322-91bb-447c-82a3-8bf6f8622439",
+            "5052de66-be6d-4b05-99c3-c3524a700408"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4028,
+    "output_tokens": 1075,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "consumer_credential_rejected",
+    "cost_usd": 0.01881,
+    "checks": {
+      "numbers_checked": 7,
+      "numbers_not_found_in_cited_evidence": 2
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

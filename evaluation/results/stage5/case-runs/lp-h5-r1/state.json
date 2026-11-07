@@ -1,0 +1,207 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "lp-h5-r1",
+  "template": "lp-h5",
+  "split": "held_out",
+  "category": "lock_pool_exhaustion",
+  "ground_truth": "lock_contention+pool_saturation",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3774815622,
+      "controller_run": "stage5-lp-h5-r1-a1",
+      "bundle": "b-21229c6e2a8b",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T17:20:13.000Z",
+        "end": "2026-11-06T17:24:13.000Z"
+      },
+      "validity": "blockers COMPLETE, other edges 3, pool timeouts 85"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "dd2866f5-56f9-48fc-bf63-be79e2ebffce",
+    "status": "COMPLETED",
+    "final_reason": "model report: SUPPORTED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4730,
+        "reported_output_tokens": 1231,
+        "tokens_counted_against_budget": 5961,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 13,
+        "numbers_not_found_in_cited_evidence": 2
+      },
+      "outcome": "SUPPORTED",
+      "summary": "After the 17:20:46 restart the pool shrank to 3 connections with a 250 ms timeout. An idle-in-transaction session holding locks made requests wait, so connections ran out and transfers returned 500/503 or ran slow.",
+      "evidence": {
+        "E1": "163f4bce-222d-4f55-a9a9-5b3a944a64cc",
+        "E2": "7adfe8e0-9ddd-4e37-b7ed-5c0223817069",
+        "E3": "ac21db2d-0d74-4a4b-a2a6-14e3a11f491f",
+        "E4": "f686f0a5-7506-47f2-b1ff-c88823b357a8",
+        "E5": "7f9c7664-3555-41d3-a980-ed2545f8ae75",
+        "E6": "86e3f57e-d9eb-4efd-8219-db890f04d3dd",
+        "E7": "d62ae7e2-ee42-4820-aae9-e3c1bdc7076a"
+      },
+      "findings": [
+        {
+          "claim": "The restart at 17:20:46 cut the pool from 10 to 3 connections and the acquire timeout from 30000 ms to 250 ms.",
+          "reason": "Runtime config shows the changed poolMaximumSize and poolConnectionTimeoutMs at the restart.",
+          "support": "observed",
+          "evidence_ids": [
+            "d62ae7e2-ee42-4820-aae9-e3c1bdc7076a"
+          ],
+          "evidence_handles": [
+            "E7"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The pool ran out of connections: 85 acquisition timeouts, active reached the max of 3, and pending borrowers appeared.",
+          "reason": "Pool metrics show timeouts against a configured maximum of 3 and a 250 ms timeout.",
+          "support": "observed",
+          "evidence_ids": [
+            "7f9c7664-3555-41d3-a980-ed2545f8ae75"
+          ],
+          "evidence_handles": [
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "An idle-in-transaction session blocked three ledger_app sessions for up to ~2 s between 17:20:50 and 17:23:50, which held connections and exhausted the small pool.",
+          "reason": "The blocked sessions sit inside the pool-exhaustion period, so they would hold connections up to ~2 s. The blocker's own origin is not shown.",
+          "support": "inferred",
+          "evidence_ids": [
+            "86e3f57e-d9eb-4efd-8219-db890f04d3dd",
+            "7f9c7664-3555-41d3-a980-ed2545f8ae75"
+          ],
+          "evidence_handles": [
+            "E6",
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Transfer failures and slowness match the pool exhaustion: 170 of 726 requests failed with 500/503 (24%), and p95 was 2.35 s.",
+          "reason": "The error volume is similar to the 85 pool timeouts, and the slow tail is similar to the ~2 s lock waits.",
+          "support": "inferred",
+          "evidence_ids": [
+            "163f4bce-222d-4f55-a9a9-5b3a944a64cc",
+            "7f9c7664-3555-41d3-a980-ed2545f8ae75"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5"
+          ],
+          "unverified_numbers": [
+            "170",
+            "24"
+          ]
+        },
+        {
+          "claim": "The outbox delivery path is healthy and not the cause.",
+          "reason": "Deliveries all succeeded at ~72 ms, with no failed outbox rows and arrivals matching publications.",
+          "support": "observed",
+          "evidence_ids": [
+            "7adfe8e0-9ddd-4e37-b7ed-5c0223817069",
+            "ac21db2d-0d74-4a4b-a2a6-14e3a11f491f",
+            "f686f0a5-7506-47f2-b1ff-c88823b357a8"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Scrapes have a 10 s gap, counters restarted 3 times, and the 2 s blocker sampling can miss short blocks.",
+        "The window has no per-request link between 500/503 errors and pool timeouts, and the idle-in-transaction session's origin is not identified.",
+        "E1 (get_request_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+        "E2 (get_outbox_stats) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+        "E5 (get_pool_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero."
+      ],
+      "next_checks": [
+        "Find what application or session owns the idle-in-transaction session 77198 and why it holds locks.",
+        "Restore poolMaximumSize=10 and a longer connection timeout, then re-check the error rate under the same blocking."
+      ],
+      "alternatives": [
+        {
+          "reason": "566 deliveries all succeeded in ~72 ms, and the outbox backlog stayed minimal.",
+          "assessment": "weakened",
+          "hypothesis": "Consumer or outbox slowness caused the transfer failures.",
+          "evidence_ids": [
+            "ac21db2d-0d74-4a4b-a2a6-14e3a11f491f",
+            "f686f0a5-7506-47f2-b1ff-c88823b357a8",
+            "7adfe8e0-9ddd-4e37-b7ed-5c0223817069"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4",
+            "E2"
+          ]
+        },
+        {
+          "reason": "The blocking and the pool shrink overlap in time, and the evidence cannot separate their effects. The old 10-connection pool is not observed under the same blocking.",
+          "assessment": "unassessed",
+          "hypothesis": "The idle-in-transaction blocker alone caused the failures, without the pool change.",
+          "evidence_ids": [
+            "86e3f57e-d9eb-4efd-8219-db890f04d3dd",
+            "d62ae7e2-ee42-4820-aae9-e3c1bdc7076a"
+          ],
+          "evidence_handles": [
+            "E6",
+            "E7"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4730,
+    "output_tokens": 1231,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 18.1,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.02177,
+    "checks": {
+      "numbers_checked": 13,
+      "numbers_not_found_in_cited_evidence": 2
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "lock_contention",
+    "rule": "a non-ledger_app session blocked ledger_app sessions in 74 samples; 85 pool acquisition timeouts",
+    "evidence_ids": [
+      "E6",
+      "E5"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

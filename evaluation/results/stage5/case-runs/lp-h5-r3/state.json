@@ -1,0 +1,171 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "lp-h5-r3",
+  "template": "lp-h5",
+  "split": "held_out",
+  "category": "lock_pool_exhaustion",
+  "ground_truth": "lock_contention+pool_saturation",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 507348869,
+      "controller_run": "stage5-lp-h5-r3-a1",
+      "bundle": "b-ad9ec30981e6",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T18:31:35.000Z",
+        "end": "2026-11-06T18:35:35.000Z"
+      },
+      "validity": "blockers COMPLETE, other edges 3, pool timeouts 62"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "lock_contention",
+    "rule": "a non-ledger_app session blocked ledger_app sessions in 72 samples; 62 pool acquisition timeouts",
+    "evidence_ids": [
+      "E6",
+      "E5"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "511d9268-4821-4814-9882-1870e5133d5d",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4496,
+        "reported_output_tokens": 1104,
+        "tokens_counted_against_budget": 5600,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 8,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "A restart at 18:32:08 cut the pool from 10 to 3 connections with a 250 ms timeout. An idle-in-transaction session then held locks that blocked app sessions, so transfers failed on pool timeouts or ran slowly.",
+      "evidence": {
+        "E1": "76ebeac9-5f12-4bd8-bea5-39c142628ef3",
+        "E2": "d4a916c7-e8a2-4f54-ae81-e25e5cc51919",
+        "E3": "cf0ba3a3-7b53-4e55-bd68-a8e963bb45e7",
+        "E4": "5764ed95-dec5-4e05-bca7-fb6b81288571",
+        "E5": "714bc7ea-51cb-44b1-9fbc-c504e38306b0",
+        "E6": "319fbff8-673a-49bb-8f18-04638803985e",
+        "E7": "0adf65a0-4c52-48fe-8108-7d10fd80134a"
+      },
+      "findings": [
+        {
+          "claim": "The 18:32:08 restart shrank the pool (max 10\u21923) and cut the connection timeout from 30000 ms to 250 ms.",
+          "reason": "Runtime config shows the changed settings at the in-window restart.",
+          "support": "observed",
+          "evidence_ids": [
+            "0adf65a0-4c52-48fe-8108-7d10fd80134a"
+          ],
+          "evidence_handles": [
+            "E7"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The small pool produced 62 acquisition timeouts, and borrowers queued during 18:33:18\u201318:34:23.",
+          "reason": "Pool metrics show 62 timeouts against a configured maximum of 3 and a 250 ms timeout.",
+          "support": "observed",
+          "evidence_ids": [
+            "714bc7ea-51cb-44b1-9fbc-c504e38306b0"
+          ],
+          "evidence_handles": [
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "An 'other' session idle in a transaction blocked ledger_app sessions for up to ~2 s. Blocked sessions hold pool connections, which likely caused the 500/503s and multi-second latency.",
+          "reason": "Blocking from 18:32:10 overlaps the pool pressure and the 141 5xx responses (ratio 0.19, p95 2.3 s). No sample links a specific failed request to a timeout.",
+          "support": "inferred",
+          "evidence_ids": [
+            "319fbff8-673a-49bb-8f18-04638803985e",
+            "714bc7ea-51cb-44b1-9fbc-c504e38306b0",
+            "76ebeac9-5f12-4bd8-bea5-39c142628ef3"
+          ],
+          "evidence_handles": [
+            "E6",
+            "E5",
+            "E1"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "No per-request trace ties 5xx responses to pool timeouts or lock waits. Blocker sampling is every 2 s and pool gauges every 5 s.",
+        "The owner of the idle-in-transaction session 94390 is unknown. The request metrics counters also restarted 3 times in the window."
+      ],
+      "next_checks": [
+        "Find the owner and query of session 94390 (idle in transaction) and fix it or set idle_in_transaction_session_timeout.",
+        "Restore poolMaximumSize and connection timeout to the previous values and check whether transfer 5xx and latency drop."
+      ],
+      "alternatives": [
+        {
+          "reason": "All 588 delivery attempts succeeded in about 71 ms. The 138 failed outbox rows are constant and predate the window, so they are not the cause.",
+          "assessment": "weakened",
+          "hypothesis": "Outbox delivery failures are causing the transfer errors.",
+          "evidence_ids": [
+            "d4a916c7-e8a2-4f54-ae81-e25e5cc51919",
+            "cf0ba3a3-7b53-4e55-bd68-a8e963bb45e7",
+            "5764ed95-dec5-4e05-bca7-fb6b81288571"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3",
+            "E4"
+          ]
+        },
+        {
+          "reason": "Consumer handler time is about 0.015 ms and total delivery p95 is 76 ms.",
+          "assessment": "weakened",
+          "hypothesis": "The consumer is slow.",
+          "evidence_ids": [
+            "5764ed95-dec5-4e05-bca7-fb6b81288571"
+          ],
+          "evidence_handles": [
+            "E4"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4496,
+    "output_tokens": 1104,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.02003,
+    "checks": {
+      "numbers_checked": 8,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

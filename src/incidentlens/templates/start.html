@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block page %}start{% endblock %}
+{% block content %}
+<section class="card">
+  <h1>Start an investigation</h1>
+  <form id="start-form" novalidate>
+    <label for="service">Service</label>
+    <select id="service" name="service"><option value="ledgercore-local">ledgercore-local</option></select>
+    <div class="availability" id="availability" aria-live="polite">Checking which telemetry is available…</div>
+
+    <label for="symptom">What is wrong? <span class="muted">(as a developer would describe it)</span></label>
+    <textarea id="symptom" name="symptom" rows="3" maxlength="2000" required></textarea>
+
+    <fieldset>
+      <legend>Time window <span class="muted">(1 to 30 minutes, within the last 24 hours)</span></legend>
+      <label class="inline"><input type="radio" name="window-mode" value="relative" checked> Last
+        <select id="relative" aria-label="Relative window">
+          <option value="5">5 minutes</option><option value="10">10 minutes</option>
+          <option value="15" selected>15 minutes</option><option value="30">30 minutes</option>
+        </select></label>
+      <label class="inline"><input type="radio" name="window-mode" value="absolute"> Between</label>
+      <div class="absolute">
+        <label for="start">Start (UTC)</label><input id="start" type="datetime-local" step="1">
+        <label for="end">End (UTC)</label><input id="end" type="datetime-local" step="1">
+      </div>
+    </fieldset>
+    <button type="submit" id="investigate">Investigate</button>
+  </form>
+</section>
+<section class="card">
+  <h2>Recent investigations</h2>
+  {% if recent %}
+  <ul class="history">
+    {% for item in recent %}
+    <li><a href="/investigations/{{ item.id }}">{{ item.symptom }}</a>
+      <span class="status status-{{ item.status|lower }}">{{ item.status }}</span>
+      <time datetime="{{ item.created_at }}">{{ item.created_at[:19] }} UTC</time></li>
+    {% endfor %}
+  </ul>
+  {% else %}<p class="muted">None yet.</p>{% endif %}
+</section>
+{% endblock %}

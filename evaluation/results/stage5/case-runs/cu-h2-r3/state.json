@@ -1,0 +1,172 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cu-h2-r3",
+  "template": "cu-h2",
+  "split": "held_out",
+  "category": "consumer_unavailable",
+  "ground_truth": "consumer_unavailable",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 1047670580,
+      "controller_run": "stage5-cu-h2-r3-a1",
+      "bundle": "b-eee5027dc88b",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T05:34:53.000Z",
+        "end": "2026-11-07T05:37:53.000Z"
+      },
+      "validity": "logs COMPLETE, network_error 2788 of 2788 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_unavailable",
+    "rule": "2788 of 2788 failed deliveries were network_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "bf6c6f5e-13a9-4822-8dd6-f92e25441c28",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4043,
+        "reported_output_tokens": 1027,
+        "tokens_counted_against_budget": 5070,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 3,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publications stalled from ~05:35:03 to ~05:37:30 while arrivals continued, so a backlog built up. Delivery attempts failed with connection errors to the consumer; the reason it was unreachable is not shown.",
+      "evidence": {
+        "E1": "071d242f-0e4e-40d6-90bb-3b14b5482ae5",
+        "E2": "1b91796e-94f4-4afc-9fd9-5f3d961ca7b1",
+        "E3": "d4c3baee-9944-4f1d-be68-18c8e9b286f6",
+        "E4": "9e1bbaad-05c8-4048-abfd-026fac81dfa5",
+        "E5": "75f60a91-67f6-4804-880c-5c2576ba37d7",
+        "E6": "8a6ca232-fb1a-4e98-a929-16104b112fad",
+        "E7": "471cc0f7-1bbe-400b-bb46-edcd521e9a63"
+      },
+      "findings": [
+        {
+          "claim": "The outbox backlog grew because publications stopped while commits continued at a steady rate.",
+          "reason": "Arrivals stayed at ~36 per 10 s bucket; publications fell to 0 for about 14 buckets; pending rose from 2 to 446.",
+          "support": "observed",
+          "evidence_ids": [
+            "1b91796e-94f4-4afc-9fd9-5f3d961ca7b1"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Delivery attempts failed at connect time (CONNECTION_FAILED, no HTTP status, ~0.2 ms) for 2788 of 2962 attempts.",
+          "reason": "Only 174 attempts succeeded, and the failures return in under 1 ms with no consumer record, which fits refused connections to the consumer.",
+          "support": "observed",
+          "evidence_ids": [
+            "d4c3baee-9944-4f1d-be68-18c8e9b286f6",
+            "9e1bbaad-05c8-4048-abfd-026fac81dfa5"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The delay is in outbox delivery to the consumer, not in the API, database or pool.",
+          "reason": "The transfers route had 0 server errors with p95 of 0.24 s, the pool had no pending borrowers or timeouts, and there was no DB blocking.",
+          "support": "inferred",
+          "evidence_ids": [
+            "071d242f-0e4e-40d6-90bb-3b14b5482ae5",
+            "75f60a91-67f6-4804-880c-5c2576ba37d7",
+            "8a6ca232-fb1a-4e98-a929-16104b112fad"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "No data shows why the consumer at 127.0.0.1:18090 refused connections, such as a process outage or a port problem.",
+        "oldest_undelivered_age is ~42,700 s, far older than the window, so a pre-existing backlog exists that this window cannot explain."
+      ],
+      "next_checks": [
+        "Check consumer availability and listener status on 127.0.0.1:18090 around 05:35:03-05:37:30, and why it recovered.",
+        "Inspect the oldest undelivered and FAILED outbox rows to see whether they are retried or stuck."
+      ],
+      "alternatives": [
+        {
+          "reason": "The failed count rose from 778 to 826, but the tools don't show whether failed rows are retried once the consumer recovers.",
+          "assessment": "unassessed",
+          "hypothesis": "Retry exhaustion (maxAttempts=8) moved events to FAILED, and that is what keeps notifications from being delivered later.",
+          "evidence_ids": [
+            "1b91796e-94f4-4afc-9fd9-5f3d961ca7b1",
+            "471cc0f7-1bbe-400b-bb46-edcd521e9a63"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E7"
+          ]
+        },
+        {
+          "reason": "The pool showed no waits or timeouts and the DB showed no blocking.",
+          "assessment": "weakened",
+          "hypothesis": "The slowness is in the database or connection pool.",
+          "evidence_ids": [
+            "75f60a91-67f6-4804-880c-5c2576ba37d7",
+            "8a6ca232-fb1a-4e98-a929-16104b112fad"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4043,
+    "output_tokens": 1027,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "consumer_unavailable",
+    "cost_usd": 0.01836,
+    "checks": {
+      "numbers_checked": 3,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

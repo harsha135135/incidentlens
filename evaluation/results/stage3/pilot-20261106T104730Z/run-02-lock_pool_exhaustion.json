@@ -1,0 +1,286 @@
+{
+  "label": "FIXTURE RESULT: pilot (live recorded window), not the evaluation",
+  "scenario_set": "extended",
+  "symptom": "Some customers say their transfers are failing or taking several seconds.",
+  "run": 2,
+  "scenario": "lock_pool_exhaustion",
+  "ground_truth_cause": "lock_contention",
+  "window": {
+    "start": "2026-11-06T10:51:06.336Z",
+    "end": "2026-11-06T10:53:36.341Z"
+  },
+  "system_order": [
+    "B",
+    "C",
+    "A"
+  ],
+  "controller_run": "pilot-02-105106",
+  "bundle": [
+    {
+      "handle": "E1",
+      "tool": "get_request_metrics",
+      "arguments": {
+        "route_group": "transfers"
+      },
+      "coverage": "PARTIAL"
+    },
+    {
+      "handle": "E2",
+      "tool": "get_outbox_stats",
+      "arguments": {},
+      "coverage": "PARTIAL"
+    },
+    {
+      "handle": "E3",
+      "tool": "search_delivery_logs",
+      "arguments": {
+        "outcome": "any",
+        "limit": 100
+      },
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E4",
+      "tool": "get_delivery_timings",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E5",
+      "tool": "get_pool_metrics",
+      "arguments": {},
+      "coverage": "PARTIAL"
+    },
+    {
+      "handle": "E6",
+      "tool": "get_database_blockers",
+      "arguments": {
+        "mode": "historical",
+        "limit": 50
+      },
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E7",
+      "tool": "get_runtime_config",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    }
+  ],
+  "results": {
+    "B": {
+      "report": {
+        "outcome": "TENTATIVE",
+        "summary": "Transfer failures and slowness coincide with a restart at 10:51:39 that shrank the DB pool from 10 to 2 connections with a 250 ms timeout, plus a session idle in a transaction holding locks. Outbox delivery is healthy.",
+        "findings": [
+          {
+            "claim": "The restart at 10:51:39 cut pool max from 10 to 2 and connection timeout from 30000 ms to 250 ms.",
+            "support": "observed",
+            "evidence_ids": [
+              "E7"
+            ],
+            "reason": "Runtime config shows the changed settings after the restart."
+          },
+          {
+            "claim": "The pool hit its limit: 127 acquisition timeouts, with the configured maximum at 2 and a 250 ms timeout. This plausibly explains the 500/503 responses (30.8% server errors).",
+            "support": "inferred",
+            "evidence_ids": [
+              "E5",
+              "E1"
+            ],
+            "reason": "Timeouts match the 250 ms limit and the error ratio is high. No log ties the 500/503s to the timeouts directly."
+          },
+          {
+            "claim": "An 'other' session idle in a transaction blocked ledger_app sessions for up to ~2 s, which is consistent with the slow requests (p95 2.0 s).",
+            "support": "observed",
+            "evidence_ids": [
+              "E6",
+              "E1"
+            ],
+            "reason": "Blocking was seen in sampled data from 10:51:41 to 10:53:05, with a max wait of 1.976 s."
+          },
+          {
+            "claim": "Outbox delivery is not the cause: all 329 attempts succeeded in ~72 ms, with no failures.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3",
+              "E4",
+              "E2"
+            ],
+            "reason": "There were no delivery errors, and arrivals minus publications was only 3."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "The idle-in-transaction blocker alone causes the slowness and errors, independent of the pool change.",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E6"
+            ],
+            "reason": "The blocker and the pool shrink overlap in time and cannot be separated with this data."
+          },
+          {
+            "hypothesis": "The restart itself caused transient errors.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E5",
+              "E6"
+            ],
+            "reason": "Timeouts and blocking persisted until ~10:53, well after the restart."
+          }
+        ],
+        "limitations": [
+          "Metrics have a 10 s scrape gap (10:51:33\u201343) that overlaps the restart, and counters restarted once.",
+          "Blocking is sampled every 2 s, and the blocker's identity and origin are unknown."
+        ],
+        "next_checks": [
+          "Find the source of the idle-in-transaction session (the 'other' role) and close it.",
+          "Restore pool size and timeout (10 / 30000 ms) and compare error rate and latency."
+        ]
+      },
+      "malformed": null,
+      "unknown_citations": [],
+      "stop_reason": "tool_use",
+      "input_tokens": 4481,
+      "output_tokens": 1022,
+      "model_calls": 1,
+      "tool_calls": 7,
+      "latency_seconds": 9.46,
+      "classified": "lock_contention",
+      "cost_usd": 0.01918
+    },
+    "C": {
+      "job_id": "d6800e59-0ea7-423e-bc6d-523fa6ee968f",
+      "status": "COMPLETED",
+      "final_reason": "model report: TENTATIVE",
+      "elapsed_seconds": 28.2,
+      "report": {
+        "usage": {
+          "tool_actions": 6,
+          "model_actions": 5,
+          "reported_input_tokens": 21602,
+          "reported_output_tokens": 1385,
+          "tokens_counted_against_budget": 22987,
+          "model_calls_with_unknown_usage": 0
+        },
+        "outcome": "TENTATIVE",
+        "summary": "After a restart at 10:51:39 the pool was cut from 10 to 2 connections with a 250 ms timeout. An idle-in-transaction session also blocked ledger_app sessions, likely causing the 500/503s and slow transfers.",
+        "evidence": {
+          "E1": "1e15321e-e975-41cb-a5ea-c90966b1acef",
+          "E2": "556403ff-fd58-4d64-b266-1b923c4d0c83",
+          "E3": "2d25ef32-42e6-427d-9d09-22bd91897db0",
+          "E4": "48d0ea0e-ba77-421e-978a-9747003df249",
+          "E5": "df4b9844-4124-4b40-a968-370c6f01f882",
+          "E6": "93b2d7e1-7825-4258-af97-965472ce471f"
+        },
+        "findings": [
+          {
+            "claim": "Restart at 10:51:39 shrank the pool from 10 to 2 connections and the acquire timeout from 30000 ms to 250 ms.",
+            "reason": "Runtime config shows both values changing at the restart inside the window.",
+            "support": "observed",
+            "evidence_ids": [
+              "48d0ea0e-ba77-421e-978a-9747003df249"
+            ],
+            "evidence_handles": [
+              "E4"
+            ]
+          },
+          {
+            "claim": "The pool is hitting acquisition timeouts (127), consistent with the transfer 500/503 errors (about 31% server errors) and slow tail latency.",
+            "reason": "A 2-connection pool with a 250 ms timeout times out under load; the timeout count roughly matches the 140 failed requests, but this is not directly linked.",
+            "support": "inferred",
+            "evidence_ids": [
+              "1e15321e-e975-41cb-a5ea-c90966b1acef",
+              "2d25ef32-42e6-427d-9d09-22bd91897db0"
+            ],
+            "evidence_handles": [
+              "E1",
+              "E3"
+            ]
+          },
+          {
+            "claim": "A session that is idle in a transaction held locks blocking ledger_app sessions for up to ~2 s, tying up the scarce pool connections.",
+            "reason": "Sampled blockers show sessions 84034 and 84035 waiting on idle-in-transaction session 84036 for most of the window, with a max wait of 1.976 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "df4b9844-4124-4b40-a968-370c6f01f882"
+            ],
+            "evidence_handles": [
+              "E5"
+            ]
+          }
+        ],
+        "limitations": [
+          "Coverage is partial: a 10 s scrape gap, one counter restart and NaN gauges mean some values are unknown.",
+          "Blocker sampling is every 2 s, and the idle-in-transaction session's owner (role 'other') is not identified.",
+          "E1 (get_request_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+          "E2 (get_outbox_stats) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+          "E3 (get_pool_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+          "E6 (get_request_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero."
+        ],
+        "next_checks": [
+          "Identify session 84036 (owner, query, transaction start) and why it stays idle in a transaction.",
+          "Compare transfer errors before and after 10:51:39, and retest with the pool at 10 and a 30 s timeout."
+        ],
+        "alternatives": [
+          {
+            "reason": "Outbox pending and failed counts stay small, but the poller's connection usage was not measured.",
+            "assessment": "unassessed",
+            "hypothesis": "The outbox poller is what exhausts the pool and starves transfers.",
+            "evidence_ids": [
+              "556403ff-fd58-4d64-b266-1b923c4d0c83",
+              "2d25ef32-42e6-427d-9d09-22bd91897db0"
+            ],
+            "evidence_handles": [
+              "E2",
+              "E3"
+            ]
+          },
+          {
+            "reason": "Outbox failed count stays at 0 and publications track arrivals; no consumer requests were recorded on the route group.",
+            "assessment": "weakened",
+            "hypothesis": "The consumer target is slow or failing and causes the delays.",
+            "evidence_ids": [
+              "556403ff-fd58-4d64-b266-1b923c4d0c83",
+              "93b2d7e1-7825-4258-af97-965472ce471f"
+            ],
+            "evidence_handles": [
+              "E2",
+              "E6"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 5,
+      "tool_calls": 6,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "get_pool_metrics",
+        "get_runtime_config",
+        "get_database_blockers",
+        "get_request_metrics"
+      ],
+      "recoveries": 0,
+      "input_tokens": 21602,
+      "output_tokens": 1385,
+      "unknown_usage_calls": 0,
+      "classified": "lock_contention",
+      "cost_usd": 0.05705
+    },
+    "A": {
+      "outcome": "SUPPORTED",
+      "primary_cause": "lock_contention",
+      "rule": "a non-ledger_app session blocked ledger_app sessions in 38 samples; 127 pool acquisition timeouts",
+      "evidence_ids": [
+        "E6",
+        "E5"
+      ],
+      "model_calls": 0,
+      "tool_calls": 7,
+      "classified": "lock_contention"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+ "arguments": {},
+ "collected_at": "2026-11-06T18:58:23.053Z",
+ "coverage": "UNAVAILABLE",
+ "data": {},
+ "errors": [
+  "Prometheus unreachable"
+ ],
+ "evidence_id": "f87e7a25-7120-4212-a0db-7f8f1aa3de41",
+ "limitations": [
+  "Prometheus could not be queried, so the pool state is unknown."
+ ],
+ "observed_window": {
+  "first": null,
+  "last": null
+ },
+ "requested_window": {
+  "end": "2026-11-06T18:58:12.000Z",
+  "start": "2026-11-06T18:55:42.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "bfbab21a-90b8-4082-b0e2-fd50ef6a2c29",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_pool_metrics",
+ "truncated": false
+}

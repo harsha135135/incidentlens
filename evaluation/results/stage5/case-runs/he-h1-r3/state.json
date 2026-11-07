@@ -1,0 +1,178 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-h1-r3",
+  "template": "he-h1",
+  "split": "held_out",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3042215704,
+      "controller_run": "stage5-he-h1-r3-a1",
+      "bundle": "b-15ffd5d666de",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T03:33:33.000Z",
+        "end": "2026-11-07T03:37:33.000Z"
+      },
+      "validity": "all complete True, pending max 6.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "c8dc4ca2-7359-4d1d-9992-33d49660e86f",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3968,
+        "reported_output_tokens": 970,
+        "tokens_counted_against_budget": 4938,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 5,
+        "numbers_not_found_in_cited_evidence": 2
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Current deliveries are fast and keep pace with arrivals. A stuck backlog of 296 FAILED outbox events, the oldest about 9.9 h old, matches late notifications but is not tied to the window.",
+      "evidence": {
+        "E1": "60840ea0-c104-4257-afbf-690c0c76fa7c",
+        "E2": "a1b11663-af64-4579-97ef-e35632b7d439",
+        "E3": "d5fb3407-3eef-4a8e-b619-0651bceab776",
+        "E4": "d1cd344a-d033-4e3d-971a-e833cd551dd2",
+        "E5": "3412f4c3-46bb-43b7-99c0-9179341d4548",
+        "E6": "d4894799-be14-4693-8e8a-fc75bef72b71",
+        "E7": "f89986c6-fc7e-48ea-af52-ed51083523c2"
+      },
+      "findings": [
+        {
+          "claim": "296 outbox events sit in FAILED state for the whole window, with the oldest undelivered event aged ~35,450-35,680 s.",
+          "reason": "failed stayed at 296 in every sample, and oldest_undelivered_age grew from 35447 to 35682 s.",
+          "support": "observed",
+          "evidence_ids": [
+            "a1b11663-af64-4579-97ef-e35632b7d439"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "35450",
+            "680"
+          ]
+        },
+        {
+          "claim": "Deliveries made during the window were healthy: all 661 attempts succeeded in ~71 ms with no auth, server or network errors.",
+          "reason": "All attempts were SUCCESS with HTTP 200; latency was dominated by consumer auth, with a p95 of 81 ms.",
+          "support": "observed",
+          "evidence_ids": [
+            "d5fb3407-3eef-4a8e-b619-0651bceab776",
+            "d1cd344a-d033-4e3d-971a-e833cd551dd2"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The outbox kept pace with arrivals, including a burst, and no DB pool or lock contention was seen, so no live slowdown explains late notifications.",
+          "reason": "Arrivals minus publications was -2; pool pending was 0 with no timeouts, and there were no DB blockers.",
+          "support": "observed",
+          "evidence_ids": [
+            "a1b11663-af64-4579-97ef-e35632b7d439",
+            "3412f4c3-46bb-43b7-99c0-9179341d4548",
+            "d4894799-be14-4693-8e8a-fc75bef72b71"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "No data on why the 296 events failed or when they failed, since the failures predate the window and delivery logs show no failures.",
+        "Cannot confirm customers' late notifications correspond to the FAILED events rather than to something outside LedgerCore."
+      ],
+      "next_checks": [
+        "Inspect the 296 FAILED outbox rows (created time, attempt count, last error) and compare them with the outboxMaxAttempts=8 cutoff.",
+        "Match the late notifications reported by customers to specific outbox event IDs and their statuses."
+      ],
+      "alternatives": [
+        {
+          "reason": "Publications tracked arrivals during the burst and per-attempt latency stayed ~71 ms.",
+          "assessment": "weakened",
+          "hypothesis": "Late notifications come from the burst (38 per 10 s) briefly delaying delivery.",
+          "evidence_ids": [
+            "a1b11663-af64-4579-97ef-e35632b7d439",
+            "d1cd344a-d033-4e3d-971a-e833cd551dd2"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E4"
+          ]
+        },
+        {
+          "reason": "Timings, pool and blocker data all look normal.",
+          "assessment": "weakened",
+          "hypothesis": "The consumer, auth, pool or DB is slow now.",
+          "evidence_ids": [
+            "d1cd344a-d033-4e3d-971a-e833cd551dd2",
+            "3412f4c3-46bb-43b7-99c0-9179341d4548",
+            "d4894799-be14-4693-8e8a-fc75bef72b71"
+          ],
+          "evidence_handles": [
+            "E4",
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3968,
+    "output_tokens": 970,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "other",
+    "cost_usd": 0.01764,
+    "checks": {
+      "numbers_checked": 5,
+      "numbers_not_found_in_cited_evidence": 2
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

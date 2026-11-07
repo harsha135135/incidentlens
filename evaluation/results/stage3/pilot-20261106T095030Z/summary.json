@@ -1,0 +1,53 @@
+[
+  {
+    "run": 1,
+    "scenario": "healthy",
+    "truth": "none",
+    "A_cause": "none",
+    "B_cause": "none",
+    "C_cause": "none",
+    "A_outcome": "NO_FAULT_OBSERVED",
+    "B_outcome": "NO_FAULT_OBSERVED",
+    "C_outcome": "NO_FAULT_OBSERVED",
+    "C_status": "COMPLETED",
+    "C_tools": 5,
+    "C_model_calls": 4,
+    "C_seconds": 24.2,
+    "B_cost": 0.01617,
+    "C_cost": 0.03858
+  },
+  {
+    "run": 2,
+    "scenario": "slow_consumer",
+    "truth": "slow_consumer_handler",
+    "A_cause": "unclassified",
+    "B_cause": "slow_consumer_handler",
+    "C_cause": "slow_consumer_handler",
+    "A_outcome": "INCONCLUSIVE",
+    "B_outcome": "TENTATIVE",
+    "C_outcome": "SUPPORTED",
+    "C_status": "COMPLETED",
+    "C_tools": 4,
+    "C_model_calls": 3,
+    "C_seconds": 18.1,
+    "B_cost": 0.01779,
+    "C_cost": 0.03128
+  },
+  {
+    "run": 3,
+    "scenario": "unavailable_consumer",
+    "truth": "consumer_unavailable",
+    "A_cause": "consumer_unavailable",
+    "B_cause": "other",
+    "C_cause": "consumer_unavailable",
+    "A_outcome": "SUPPORTED",
+    "B_outcome": "SUPPORTED",
+    "C_outcome": "SUPPORTED",
+    "C_status": "COMPLETED",
+    "C_tools": 6,
+    "C_model_calls": 5,
+    "C_seconds": 28.2,
+    "B_cost": 0.01619,
+    "C_cost": 0.04981
+  }
+]

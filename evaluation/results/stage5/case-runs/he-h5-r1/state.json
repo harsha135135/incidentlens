@@ -1,0 +1,173 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-h5-r1",
+  "template": "he-h5",
+  "split": "held_out",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 1534892480,
+      "controller_run": "stage5-he-h5-r1-a1",
+      "bundle": "b-e0b5e7edde89",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T17:29:17.000Z",
+        "end": "2026-11-06T17:33:17.000Z"
+      },
+      "validity": "all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "85138002-612a-498c-bf40-f8bd5971cd92",
+    "status": "COMPLETED",
+    "final_reason": "model report: NO_FAULT_OBSERVED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3985,
+        "reported_output_tokens": 924,
+        "tokens_counted_against_budget": 4909,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 0,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "NO_FAULT_OBSERVED",
+      "summary": "Within the window, outbox delivery was timely: publications tracked arrivals, there were no failures, the backlog stayed under 1.2 s, and delivery latency was about 71 ms. The late notifications are not reproduced here.",
+      "evidence": {
+        "E1": "3768cc1d-9518-47cd-9d72-3571c213ce26",
+        "E2": "11daddc5-90e8-4c5c-aa9b-0a9f597104e9",
+        "E3": "96dc5d2a-4fbe-49bd-ab1b-e8059c42d9e2",
+        "E4": "d94db6f5-9648-41b8-b22f-bcf931937cf0",
+        "E5": "c8691b76-1a48-42ee-be7a-76188cb9af7a",
+        "E6": "73635928-2de5-4d01-b389-24d6ce286c1a",
+        "E7": "644d0123-5070-4a75-a90d-b0957b94195a"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publishes essentially as fast as events commit; the backlog is tiny and never grows.",
+          "reason": "720 arrivals vs 719 publications, pending 1-4, oldest undelivered age max 1.15 s, failed 0 throughout.",
+          "support": "observed",
+          "evidence_ids": [
+            "11daddc5-90e8-4c5c-aa9b-0a9f597104e9"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Deliveries to the consumer all succeeded on the first attempt with low latency.",
+          "reason": "718 of 718 attempts were SUCCESS (HTTP 200) with p95 74 ms, and the time was dominated by consumer auth.",
+          "support": "observed",
+          "evidence_ids": [
+            "96dc5d2a-4fbe-49bd-ab1b-e8059c42d9e2",
+            "d94db6f5-9648-41b8-b22f-bcf931937cf0"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "No upstream resource contention or request errors that could delay notifications.",
+          "reason": "Transfers returned 201s with p99 0.248 s, pool had 0 timeouts and 0 pending, and no DB blocking was sampled.",
+          "support": "observed",
+          "evidence_ids": [
+            "3768cc1d-9518-47cd-9d72-3571c213ce26",
+            "c8691b76-1a48-42ee-be7a-76188cb9af7a",
+            "73635928-2de5-4d01-b389-24d6ce286c1a"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Window is only 4 minutes; the customer-reported delays may have occurred at other times.",
+        "Delivery is measured only to the fixture consumer, not to real customer notification channels."
+      ],
+      "next_checks": [
+        "Re-run the diagnosis over the time period when customers reported late notifications.",
+        "Check downstream notification provider latency and the consumer's own onward delivery path."
+      ],
+      "alternatives": [
+        {
+          "reason": "Only the fixture consumer's receipt was measured; the downstream path to customers is not covered.",
+          "assessment": "unassessed",
+          "hypothesis": "Delay occurs outside the observed window or downstream of the consumer (e.g. push/email provider).",
+          "evidence_ids": [
+            "d94db6f5-9648-41b8-b22f-bcf931937cf0"
+          ],
+          "evidence_handles": [
+            "E4"
+          ]
+        },
+        {
+          "reason": "Sampling is coarse, but the outbox age max of 1.15 s shows no stall in the window.",
+          "assessment": "weakened",
+          "hypothesis": "Intermittent short stalls (e.g. brief blocking or pool saturation) missed by sampling.",
+          "evidence_ids": [
+            "c8691b76-1a48-42ee-be7a-76188cb9af7a",
+            "73635928-2de5-4d01-b389-24d6ce286c1a",
+            "11daddc5-90e8-4c5c-aa9b-0a9f597104e9"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6",
+            "E2"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3985,
+    "output_tokens": 924,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "none",
+    "cost_usd": 0.01721,
+    "checks": {
+      "numbers_checked": 0,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

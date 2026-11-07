@@ -1,0 +1,33 @@
+{
+  "blocks": [
+    {
+      "text": "Let me check the arithmetic: 2880 arrivals over 900 s is 3.2/s. Publications were 1980 over 900 s, or 2.2/s. The backlog grew by 900 (12 \u2192 912), and 2880 \u2212 1980 = 900, so the numbers are consistent.\n\nPoller capacity is batch 20 per 1000 ms poll, or at most 20/s if the poll is instantaneous. Observed delivery is 2.2/s, though, which is far below that ceiling. Per-delivery timing is about 452 ms, mostly consumer handler time (401 ms). If the single poller delivers sequentially, throughput is about 1/0.452 = 2.2/s, which matches the observed 2.2/s. That points to serialized delivery as the limit, though the evidence doesn't show directly that delivery is serial. The oldest undelivered age rose to 410 s, which fits a backlog growing at 1/s over a 900 s window.\n\nThe evidence doesn't separate the config limit from the consumer latency. No error, timeout, or failure evidence was observed.",
+      "type": "text"
+    },
+    {
+      "id": "toolu_01DA3H5gNGaGR64XDfNhiPE8",
+      "caller": {
+        "type": "direct"
+      },
+      "input": {
+        "outcome": "TENTATIVE",
+        "summary": "Notifications are late because the outbox is accumulating a backlog. Commits arrived at about 3.2/s but only about 2.2/s were published, so pending grew from 12 to 912 and the oldest undelivered age grew from 0.8 s to 410 s. Deliveries themselves are healthy (all SUCCESS, about 0.45 s each), so the delay is queueing before delivery. The publish rate matches roughly one delivery in flight at a time (1/0.452 s is about 2.2/s) with a single poller. That serialization is an inference and was not directly observed."
+      },
+      "name": "submit_report",
+      "type": "tool_use",
+      "toolset_name": null
+    }
+  ],
+  "tool_calls": [
+    {
+      "name": "submit_report",
+      "args": {
+        "outcome": "TENTATIVE",
+        "summary": "Notifications are late because the outbox is accumulating a backlog. Commits arrived at about 3.2/s but only about 2.2/s were published, so pending grew from 12 to 912 and the oldest undelivered age grew from 0.8 s to 410 s. Deliveries themselves are healthy (all SUCCESS, about 0.45 s each), so the delay is queueing before delivery. The publish rate matches roughly one delivery in flight at a time (1/0.452 s is about 2.2/s) with a single poller. That serialization is an inference and was not directly observed."
+      },
+      "id": "toolu_01DA3H5gNGaGR64XDfNhiPE8",
+      "type": "tool_call"
+    }
+  ],
+  "invalid_tool_calls": []
+}

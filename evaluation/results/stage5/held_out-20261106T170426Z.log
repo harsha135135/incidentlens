@@ -1,0 +1,80 @@
+cr-h5-r3 attempt 1: valid (logs COMPLETE, auth_error 1505 of 1505 failures)
+{"case_run": "cr-h5-r3", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.01856, "P_seconds": 16.1}
+lp-h2-r2 attempt 1: valid (blockers COMPLETE, other edges 3, pool timeouts 115)
+{"case_run": "lp-h2-r2", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "pool_saturation", "P_status": "COMPLETED", "P_cost": 0.02131, "P_seconds": 16.1}
+cr-h2-r1 attempt 1: valid (logs COMPLETE, auth_error 1189 of 1189 failures)
+{"case_run": "cr-h2-r1", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.01891, "P_seconds": 16.1}
+lc-h4-r1 attempt 1: valid (blockers COMPLETE, other edges 6, samples with blocking 14)
+{"case_run": "lc-h4-r1", "status": "valid", "truth": "lock_contention", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01951, "P_seconds": 16.1}
+lp-h5-r1 attempt 1: valid (blockers COMPLETE, other edges 3, pool timeouts 85)
+{"case_run": "lp-h5-r1", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.02177, "P_seconds": 18.1}
+cu-h1-r1 attempt 1: valid (logs COMPLETE, network_error 1577 of 1577 failures)
+{"case_run": "cu-h1-r1", "status": "valid", "truth": "consumer_unavailable", "A": "consumer_unavailable", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_unavailable", "P_status": "COMPLETED", "P_cost": 0.01877, "P_seconds": 16.1}
+he-h5-r1 attempt 1: valid (all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-h5-r1", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "NO_FAULT_OBSERVED", "P_dev_aid": "none", "P_status": "COMPLETED", "P_cost": 0.01721, "P_seconds": 16.1}
+lp-h5-r2 attempt 1: valid (blockers COMPLETE, other edges 3, pool timeouts 50)
+{"case_run": "lp-h5-r2", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "pool_saturation", "P_status": "COMPLETED", "P_cost": 0.02067, "P_seconds": 18.2}
+lp-h3-r3 attempt 1: valid (blockers COMPLETE, other edges 2, pool timeouts 161)
+{"case_run": "lp-h3-r3", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.02064, "P_seconds": 18.1}
+me-h5-r1 attempt 1: valid (deciding source logs PARTIAL; durable backlog peak 578)
+{"case_run": "me-h5-r1", "status": "valid", "truth": "insufficient_evidence", "A": "publisher_throughput", "A_outcome": "TENTATIVE", "P_outcome": "INCONCLUSIVE", "P_dev_aid": "other", "P_status": "COMPLETED", "P_cost": 0.01779, "P_seconds": 14.1}
+me-h2-r3 attempt 1: valid (deciding source logs PARTIAL; durable backlog peak 522)
+{"case_run": "me-h2-r3", "status": "valid", "truth": "insufficient_evidence", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "INCONCLUSIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01647, "P_seconds": 14.1}
+cr-h4-r2 attempt 1: valid (logs COMPLETE, auth_error 218 of 218 failures)
+{"case_run": "cr-h4-r2", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.01837, "P_seconds": 16.2}
+he-h2-r1 attempt 1: valid (all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-h2-r1", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "NO_FAULT_OBSERVED", "P_dev_aid": "none", "P_status": "COMPLETED", "P_cost": 0.0182, "P_seconds": 16.1}
+sc-h3-r3 attempt 1: valid (logs COMPLETE, timings COMPLETE, handler max 1210.089 ms, failures 0)
+{"case_run": "sc-h3-r3", "status": "valid", "truth": "slow_consumer_handler", "A": "publisher_throughput", "A_outcome": "TENTATIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "slow_consumer_handler", "P_status": "COMPLETED", "P_cost": 0.02245, "P_seconds": 20.2}
+cu-h3-r3 attempt 1: valid (logs COMPLETE, network_error 918 of 918 failures)
+{"case_run": "cu-h3-r3", "status": "valid", "truth": "consumer_unavailable", "A": "consumer_unavailable", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_unavailable", "P_status": "COMPLETED", "P_cost": 0.01976, "P_seconds": 18.2}
+sc-h1-r1 attempt 1: valid (logs COMPLETE, timings COMPLETE, handler max 910.11 ms, failures 0)
+{"case_run": "sc-h1-r1", "status": "valid", "truth": "slow_consumer_handler", "A": "publisher_throughput", "A_outcome": "TENTATIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "slow_consumer_handler", "P_status": "COMPLETED", "P_cost": 0.04161, "P_seconds": 28.2}
+lp-h4-r3 attempt 1: valid (blockers COMPLETE, other edges 1, pool timeouts 149)
+{"case_run": "lp-h4-r3", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.02118, "P_seconds": 16.1}
+he-h4-r2 attempt 1: valid (all complete True, pending max 3.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-h4-r2", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "INCONCLUSIVE", "P_dev_aid": "other", "P_status": "COMPLETED", "P_cost": 0.0174, "P_seconds": 14.1}
+he-h5-r3 attempt 1: valid (all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-h5-r3", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "TENTATIVE", "P_dev_aid": "other", "P_status": "COMPLETED", "P_cost": 0.01801, "P_seconds": 16.1}
+cr-h3-r3 attempt 1: valid (logs COMPLETE, auth_error 423 of 423 failures)
+{"case_run": "cr-h3-r3", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.02181, "P_seconds": 18.2}
+he-h4-r3 attempt 1: valid (all complete True, pending max 2.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-h4-r3", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "NO_FAULT_OBSERVED", "P_dev_aid": "none", "P_status": "COMPLETED", "P_cost": 0.01717, "P_seconds": 16.1}
+lc-h2-r2 attempt 1: valid (blockers COMPLETE, other edges 10, samples with blocking 75)
+{"case_run": "lc-h2-r2", "status": "valid", "truth": "lock_contention", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01882, "P_seconds": 16.1}
+lp-h5-r3 attempt 1: valid (blockers COMPLETE, other edges 3, pool timeouts 62)
+{"case_run": "lp-h5-r3", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.02003, "P_seconds": 16.1}
+cr-h4-r3 attempt 1: valid (logs COMPLETE, auth_error 217 of 217 failures)
+{"case_run": "cr-h4-r3", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.01963, "P_seconds": 18.1}
+cu-h5-r2 attempt 1: valid (logs COMPLETE, network_error 3322 of 3322 failures)
+{"case_run": "cu-h5-r2", "status": "valid", "truth": "consumer_unavailable", "A": "consumer_unavailable", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_unavailable", "P_status": "COMPLETED", "P_cost": 0.01736, "P_seconds": 16.1}
+cu-h3-r2 attempt 1: valid (logs COMPLETE, network_error 904 of 904 failures)
+{"case_run": "cu-h3-r2", "status": "valid", "truth": "consumer_unavailable", "A": "consumer_unavailable", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01891, "P_seconds": 16.2}
+lp-h2-r1 attempt 1: valid (blockers COMPLETE, other edges 3, pool timeouts 104)
+{"case_run": "lp-h2-r1", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.02193, "P_seconds": 18.2}
+lp-h1-r3 attempt 1: valid (blockers COMPLETE, other edges 1, pool timeouts 304)
+{"case_run": "lp-h1-r3", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "pool_saturation", "P_status": "COMPLETED", "P_cost": 0.02066, "P_seconds": 16.1}
+me-h4-r3 attempt 1: valid (deciding source logs PARTIAL; durable backlog peak 223)
+{"case_run": "me-h4-r3", "status": "valid", "truth": "insufficient_evidence", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "other", "P_status": "COMPLETED", "P_cost": 0.01719, "P_seconds": 16.1}
+cr-h2-r2 attempt 1: valid (logs COMPLETE, auth_error 1204 of 1204 failures)
+{"case_run": "cr-h2-r2", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.01754, "P_seconds": 16.1}
+sc-h5-r2 attempt 1: valid (logs COMPLETE, timings COMPLETE, handler max 2410.118 ms, failures 0)
+{"case_run": "sc-h5-r2", "status": "valid", "truth": "slow_consumer_handler", "A": "publisher_throughput", "A_outcome": "TENTATIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "slow_consumer_handler", "P_status": "COMPLETED", "P_cost": 0.02176, "P_seconds": 18.1}
+he-h2-r2 attempt 1: valid (all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-h2-r2", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "NO_FAULT_OBSERVED", "P_dev_aid": "none", "P_status": "COMPLETED", "P_cost": 0.01805, "P_seconds": 16.1}
+lc-h3-r2 attempt 1: valid (blockers COMPLETE, other edges 8, samples with blocking 27)
+{"case_run": "lc-h3-r2", "status": "valid", "truth": "lock_contention", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01984, "P_seconds": 16.1}
+sc-h1-r2 attempt 1: valid (logs COMPLETE, timings COMPLETE, handler max 910.121 ms, failures 0)
+{"case_run": "sc-h1-r2", "status": "valid", "truth": "slow_consumer_handler", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "slow_consumer_handler", "P_status": "COMPLETED", "P_cost": 0.02233, "P_seconds": 20.1}
+cr-h1-r3 attempt 1: valid (logs COMPLETE, auth_error 1007 of 1007 failures)
+{"case_run": "cr-h1-r3", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.02201, "P_seconds": 20.1}
+me-h2-r1 attempt 1: valid (deciding source logs PARTIAL; durable backlog peak 522)
+{"case_run": "me-h2-r1", "status": "valid", "truth": "insufficient_evidence", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "other", "P_status": "COMPLETED", "P_cost": 0.01626, "P_seconds": 16.1}
+cu-h4-r2 attempt 1: valid (logs COMPLETE, network_error 428 of 428 failures)
+{"case_run": "cu-h4-r2", "status": "valid", "truth": "consumer_unavailable", "A": "consumer_unavailable", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "consumer_unavailable", "P_status": "COMPLETED", "P_cost": 0.01916, "P_seconds": 18.2}
+he-h3-r2 attempt 1: valid (all complete True, pending max 5.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-h3-r2", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "TENTATIVE", "P_dev_aid": "other", "P_status": "COMPLETED", "P_cost": 0.01797, "P_seconds": 16.1}
+me-h4-r2 attempt 1: valid (deciding source logs PARTIAL; durable backlog peak 222)
+{"case_run": "me-h4-r2", "status": "valid", "truth": "insufficient_evidence", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "INCONCLUSIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.0156, "P_seconds": 14.1}
+sc-h2-r2 attempt 1: valid (logs COMPLETE, timings COMPLETE, handler max 260.064 ms, failures 0)
+{"case_run": "sc-h2-r2", "status": "valid", "truth": "slow_consumer_handler", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": null, "P_dev_aid": "no_report", "P_status": "FAILED", "P_cost": null, "P_seconds": 8.1}

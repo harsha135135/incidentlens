@@ -1,0 +1,2 @@
+{"at": "2026-11-06T10:34:29.083Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T10:34:29.078Z"}
+{"at": "2026-11-06T10:34:29.083Z", "action": "workload_started", "rate_per_second": 3.2, "seed": 20261183}

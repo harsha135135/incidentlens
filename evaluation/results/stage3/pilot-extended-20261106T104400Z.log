@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/Users/harshamac/developer/two/incidentlens/evaluation/pilot.py", line 196, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/evaluation/pilot.py", line 163, in main
+    bundle = collect_bundle(window, store, settings)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/evaluation/baselines.py", line 43, in collect_bundle
+    return [(f"E{i + 1}", tool, arguments, run_tool(tool, arguments, context))
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/src/incidentlens/tools/registry.py", line 49, in run_tool
+    return adapter(context, validated)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/src/incidentlens/tools/outbox.py", line 42, in get_outbox_stats
+    data["gauges"] = {name: gauge_summary(context, metric, window, deadline) for name, metric in GAUGES.items()}
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/src/incidentlens/tools/outbox.py", line 79, in gauge_summary
+    unreadable = sum(s.unreadable for s in series)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/harshamac/developer/two/incidentlens/src/incidentlens/tools/outbox.py", line 79, in <genexpr>
+    unreadable = sum(s.unreadable for s in series)
+                     ^^^^^^^^^^^^
+AttributeError: 'Series' object has no attribute 'unreadable'

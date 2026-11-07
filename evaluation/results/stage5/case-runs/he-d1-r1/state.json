@@ -1,0 +1,318 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-d1-r1",
+  "template": "he-d1",
+  "split": "development",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 2434550744,
+      "controller_run": "stage5-he-d1-r1-a1",
+      "bundle": "b-6c75ddecaad5",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T14:43:59.000Z",
+        "end": "2026-11-06T14:46:29.000Z"
+      },
+      "validity": "all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "679e7dea-9d03-41a1-919a-9c2207860088",
+    "status": "COMPLETED",
+    "final_reason": "model report: NO_FAULT_OBSERVED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3716,
+        "reported_output_tokens": 979,
+        "tokens_counted_against_budget": 4695,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 7,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "NO_FAULT_OBSERVED",
+      "summary": "No delay observed in the window: outbox publications keep pace with arrivals, deliveries all succeed in about 71 ms, and the oldest undelivered age never exceeded about 1.2 s.",
+      "evidence": {
+        "E1": "be5b3eef-03c3-4e35-baa9-5bdf6cf71703",
+        "E2": "474c0fef-fd64-4ef1-ac07-52a5577a8616",
+        "E3": "705f1f90-7a77-4084-8750-a61af34f8709",
+        "E4": "1f2ac9dd-b253-40c6-a6f2-6e150c983da9",
+        "E5": "ef93e3f7-e644-4e0c-ba84-ab377ae1d8f8",
+        "E6": "403c039f-ea32-45d5-bc25-0d4815231ac5",
+        "E7": "5ed54f9b-0772-4fc2-8d62-49715ca042c3"
+      },
+      "findings": [
+        {
+          "claim": "The outbox is not backing up: 480 arrivals vs 479 publications, pending 1-4, no failures.",
+          "reason": "Arrivals minus publications is 1 and the run settled. Failed stayed 0 and pending ranged 1-4.",
+          "support": "observed",
+          "evidence_ids": [
+            "474c0fef-fd64-4ef1-ac07-52a5577a8616"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Oldest undelivered event age stayed between 0.22 s and 1.18 s, consistent with the 1 s poll interval.",
+          "reason": "The maximum age of 1.18 s is about one outbox poll interval (1000 ms).",
+          "support": "observed",
+          "evidence_ids": [
+            "474c0fef-fd64-4ef1-ac07-52a5577a8616",
+            "5ed54f9b-0772-4fc2-8d62-49715ca042c3"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E7"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Delivery attempts were fast and all succeeded on attempt 1; no retries, errors or slow consumer.",
+          "reason": "479/479 SUCCESS, p95 77.7 ms, max 80 ms, with the consumer's own handler time negligible.",
+          "support": "observed",
+          "evidence_ids": [
+            "705f1f90-7a77-4084-8750-a61af34f8709",
+            "1f2ac9dd-b253-40c6-a6f2-6e150c983da9"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The database and connection pool were not contended.",
+          "reason": "Zero acquisition timeouts, pending borrowers 0, and no blocking in 75 samples.",
+          "support": "observed",
+          "evidence_ids": [
+            "ef93e3f7-e644-4e0c-ba84-ab377ae1d8f8",
+            "403c039f-ea32-45d5-bc25-0d4815231ac5"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Only a 150 s window at low steady load was observed; the delayed notifications may have occurred outside it.",
+        "The consumer is a test fixture, so real notification provider latency is not covered."
+      ],
+      "next_checks": [
+        "Re-run the diagnostics over the time period when customers reported late notifications.",
+        "Inspect the downstream notification provider and the consumer's own pipeline for queueing delays."
+      ],
+      "alternatives": [
+        {
+          "reason": "The tools only measured the delivery to the consumer endpoint, a local fixture, not any downstream notification channel.",
+          "assessment": "unassessed",
+          "hypothesis": "Lateness occurs downstream of the consumer (push/SMS/email provider) or on the customer device.",
+          "evidence_ids": [
+            "1f2ac9dd-b253-40c6-a6f2-6e150c983da9"
+          ],
+          "evidence_handles": [
+            "E4"
+          ]
+        },
+        {
+          "reason": "The window had a steady 3.2/s load with no stress, so it may not reproduce the customers' conditions.",
+          "assessment": "unassessed",
+          "hypothesis": "The problem occurred at a different time or under higher load than this 150 s window.",
+          "evidence_ids": [
+            "be5b3eef-03c3-4e35-baa9-5bdf6cf71703",
+            "474c0fef-fd64-4ef1-ac07-52a5577a8616"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E2"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3716,
+    "output_tokens": 979,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "none",
+    "cost_usd": 0.01722,
+    "checks": {
+      "numbers_checked": 7,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.1"
+  },
+  "P_replays": {
+    "2026-11-06.2": {
+      "job_id": "7b61f7b0-5abe-4aaf-a88e-68b920c6c3e1",
+      "status": "COMPLETED",
+      "final_reason": "model report: NO_FAULT_OBSERVED",
+      "report": {
+        "usage": {
+          "tool_actions": 7,
+          "model_actions": 1,
+          "reported_input_tokens": 3920,
+          "reported_output_tokens": 905,
+          "tokens_counted_against_budget": 4825,
+          "model_calls_with_unknown_usage": 0
+        },
+        "checks": {
+          "numbers_checked": 2,
+          "numbers_not_found_in_cited_evidence": 0
+        },
+        "outcome": "NO_FAULT_OBSERVED",
+        "summary": "Within the window, outbox deliveries kept pace with transfers and were delivered quickly with no failures, retries, pool pressure or DB blocking. The late notifications are not reproduced here.",
+        "evidence": {
+          "E1": "bd669f6c-eef8-4184-a5b3-7d0f75704343",
+          "E2": "d7502ce7-76bd-4d70-a212-ead447823d67",
+          "E3": "1fbe085a-f88f-4b05-bb6d-b1c7d3ce0046",
+          "E4": "cf4caaea-9e34-48e8-a443-e2d80e53b14d",
+          "E5": "658eccd2-f122-430b-993a-e2ed1c00598b",
+          "E6": "a971473e-d837-4f47-aae5-f79a8cdd94d2",
+          "E7": "255ac12b-e4fa-4fd1-9833-02afae5a216c"
+        },
+        "findings": [
+          {
+            "claim": "Outbox publications kept pace with committed transfers; the backlog stayed tiny and short-lived.",
+            "reason": "480 arrivals vs 479 publications, pending 1-4, oldest undelivered age max 1.18 s, failed 0.",
+            "support": "observed",
+            "evidence_ids": [
+              "d7502ce7-76bd-4d70-a212-ead447823d67"
+            ],
+            "evidence_handles": [
+              "E2"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "All 479 deliveries succeeded on the first attempt with about 71 ms latency, dominated by consumer auth time.",
+            "reason": "479 SUCCESS, no errors or retries; p95 77.7 ms, max 80 ms.",
+            "support": "observed",
+            "evidence_ids": [
+              "1fbe085a-f88f-4b05-bb6d-b1c7d3ce0046",
+              "cf4caaea-9e34-48e8-a443-e2d80e53b14d"
+            ],
+            "evidence_handles": [
+              "E3",
+              "E4"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "Transfer API, DB pool and DB locks show no stress that could delay the outbox.",
+            "reason": "No 5xx, p99 0.25 s; pool pending 0 with no timeouts; 0 blocked sessions in 75 samples.",
+            "support": "observed",
+            "evidence_ids": [
+              "bd669f6c-eef8-4184-a5b3-7d0f75704343",
+              "658eccd2-f122-430b-993a-e2ed1c00598b",
+              "a971473e-d837-4f47-aae5-f79a8cdd94d2"
+            ],
+            "evidence_handles": [
+              "E1",
+              "E5",
+              "E6"
+            ],
+            "unverified_numbers": []
+          }
+        ],
+        "limitations": [
+          "Window is only 150 s; the intermittent lateness customers report may fall outside it.",
+          "Consumer is a test fixture; real downstream notification channels were not observed."
+        ],
+        "next_checks": [
+          "Obtain timestamps of specific late notifications and re-run over that window.",
+          "Inspect the downstream notification provider path and the real consumer's latency."
+        ],
+        "alternatives": [
+          {
+            "reason": "Evidence only covers delivery to the consumer endpoint, a test fixture, not end-customer receipt.",
+            "assessment": "unassessed",
+            "hypothesis": "Delay occurs downstream of the consumer (push/notification provider) or outside this window.",
+            "evidence_ids": [
+              "cf4caaea-9e34-48e8-a443-e2d80e53b14d"
+            ],
+            "evidence_handles": [
+              "E4"
+            ]
+          },
+          {
+            "reason": "Oldest undelivered age never exceeded about 1.2 s, consistent with the 1 s poll interval, not a material delay.",
+            "assessment": "weakened",
+            "hypothesis": "Polling interval (1 s) and batch config add latency.",
+            "evidence_ids": [
+              "d7502ce7-76bd-4d70-a212-ead447823d67",
+              "255ac12b-e4fa-4fd1-9833-02afae5a216c"
+            ],
+            "evidence_handles": [
+              "E2",
+              "E7"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 1,
+      "tool_calls": 7,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "search_delivery_logs",
+        "get_delivery_timings",
+        "get_pool_metrics",
+        "get_database_blockers",
+        "get_runtime_config"
+      ],
+      "recoveries": 0,
+      "input_tokens": 3920,
+      "output_tokens": 905,
+      "unknown_usage_calls": 0,
+      "replay_elapsed_seconds": 22.1,
+      "classified_dev_aid": "none",
+      "cost_usd": 0.01689,
+      "checks": {
+        "numbers_checked": 2,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "prompt_version": "2026-11-06.2"
+    }
+  }
+}

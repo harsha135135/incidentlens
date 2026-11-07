@@ -1,0 +1,91 @@
+{
+ "arguments": {},
+ "collected_at": "2026-11-07T04:04:40.121Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "attempts": 418,
+  "consumer_auth_ms": {
+   "count": 418,
+   "max": 78.361,
+   "mean": 70.664,
+   "min": 70.033,
+   "p50": 70.272,
+   "p95": 73.698
+  },
+  "consumer_handler_ms": {
+   "count": 418,
+   "max": 1610.06,
+   "mean": 134.444,
+   "min": 0.005,
+   "p50": 0.012,
+   "p95": 1604.962
+  },
+  "consumer_measured_by": "fixture consumer (test fixture)",
+  "consumer_target": "http://127.0.0.1:18090/events",
+  "correlated_attempts": 418,
+  "correlation": "same event ID, consumer receipt time inside the attempt's start and end (+/- 50 ms)",
+  "ingestion": {
+   "fixture_consumer": {
+    "caught_up_at": "2026-11-07T04:04:33.629Z",
+    "discontinuities": []
+   },
+   "ledgercore": {
+    "caught_up_at": "2026-11-07T04:04:33.629Z",
+    "discontinuities": []
+   }
+  },
+  "meaning": "total_ms is LedgerCore's measured attempt duration. consumer_auth_ms and consumer_handler_ms are measured sequentially inside the consumer. unattributed_ms is the remainder (network, connection setup, request parsing) and is not broken down further.",
+  "record_check": {
+   "attempt_records": 418,
+   "attempts_reported_by_poll_batches": 418
+  },
+  "total_ms": {
+   "count": 418,
+   "max": 1685.832,
+   "mean": 205.834,
+   "min": 70.481,
+   "p50": 70.946,
+   "p95": 1677.455
+  },
+  "total_ms_by_result": {
+   "SUCCESS": {
+    "count": 418,
+    "max": 1685.832,
+    "mean": 205.834,
+    "min": 70.481,
+    "p50": 70.946,
+    "p95": 1677.455
+   }
+  },
+  "unattributed_ms": {
+   "count": 418,
+   "max": 1.802,
+   "mean": 0.727,
+   "min": 0.402,
+   "p50": 0.618,
+   "p95": 1.396
+  },
+  "uncorrelated_attempts": 0,
+  "unmatched_consumer_records": 43
+ },
+ "errors": [],
+ "evidence_id": "52649d64-4053-4daa-b109-43b5cc4cd01f",
+ "limitations": [],
+ "observed_window": {
+  "first": "2026-11-07T04:02:00.045Z",
+  "last": "2026-11-07T04:04:28.408Z"
+ },
+ "requested_window": {
+  "end": "2026-11-07T04:04:29.000Z",
+  "start": "2026-11-07T04:01:59.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "structured_logs",
+  "target_instance_id": "0f455471-024c-4d27-9421-48a029a7719d",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_delivery_timings",
+ "truncated": false
+}

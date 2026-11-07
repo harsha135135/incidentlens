@@ -1,0 +1,85 @@
+openshell: downloading Homebrew formula from https://github.com/NVIDIA/OpenShell/releases/download/v0.1.7/openshell.rb...
+openshell: creating local Homebrew tap nvidia/openshell...
+Warning: tap-new is a developer command, so Homebrew's
+developer mode has been automatically turned on.
+To turn developer mode off, run:
+  brew developer off
+
+openshell: staging Homebrew formula in tap nvidia/openshell...
+openshell: installing OpenShell with Homebrew...
+==> Trusted formula nvidia/openshell/openshell
+Warning: The following taps are not trusted:
+  ethereum/ethereum
+  mongodb/brew
+  steipete/tap
+  xdevplatform/tap
+
+Homebrew is currently ignoring formulae, casks and commands
+from these taps because tap trust is required.
+Prefer trusting only the specific formulae, casks or commands you need.
+Trust installed formulae from these taps with:
+  brew trust --formula mongodb/brew/mongodb-community mongodb/brew/mongodb-database-tools
+  brew trust --formula steipete/tap/summarize
+Trust installed casks from these taps with:
+  brew trust --cask xdevplatform/tap/xurl
+Trust other specific commands with:
+  brew trust --command <user>/<tap>/<command>
+Whole-tap trust is broader and includes all current and future formulae,
+casks and commands from the listed taps. Trust whole taps with:
+  brew trust ethereum/ethereum mongodb/brew steipete/tap xdevplatform/tap
+Untap them with:
+  brew untap ethereum/ethereum mongodb/brew steipete/tap xdevplatform/tap
+For more information, see:
+  https://docs.brew.sh/Tap-Trust
+==> Fetching downloads for: openshell
+✔︎ Resource openshell--openshell-prover
+✔︎ Formula openshell (0.1.7)
+✔︎ Resource openshell--openshell-driver-vm
+✔︎ Resource openshell--openshell-gateway
+==> Installing openshell from nvidia/openshell
+Warning: Your Xcode (26.3) is outdated.
+Please update to Xcode 27.0 (or delete it).
+Xcode can be updated from the App Store.
+Warning: A newer Command Line Tools release is available.
+Update them from Software Update in System Settings.
+
+If that doesn't show you any updates, run:
+  sudo rm -rf /Library/Developer/CommandLineTools
+  sudo xcode-select --install
+
+Alternatively, manually download them from:
+  https://developer.apple.com/download/all/.
+You should download the Command Line Tools for Xcode 27.0.
+[33mWarning:[0m Calling `post_install` is deprecated! Use `post_install_steps` instead.
+[34m==>[0m [1m/opt/homebrew/Cellar/openshell/0.1.7/bin/openshell-gateway generate-certs --[0m
+[34m==>[0m [1m/usr/bin/codesign --entitlements /opt/homebrew/var/openshell/openshell-drive[0m
+
+This is a Tier 2 configuration:
+  https://docs.brew.sh/Support-Tiers#tier-2
+You can report issues with Tier 2 configurations to Homebrew/* repositories!
+  https://docs.brew.sh/Troubleshooting
+Read the above document before opening any issues or PRs.
+🍺  /opt/homebrew/Cellar/openshell/0.1.7: 10 files, 178.8MB, built in 5 seconds
+==> Caveats
+==> openshell
+Start or restart the local gateway with:
+  brew services restart openshell
+
+Register it with the OpenShell CLI:
+  openshell gateway add https://localhost:17670 --local --name openshell
+
+To start nvidia/openshell/openshell now and restart at login:
+  brew services start nvidia/openshell/openshell
+Or, if you don't want/need a background service you can just run:
+  /opt/homebrew/opt/openshell/libexec/openshell-gateway-homebrew-service
+openshell: restarting OpenShell Homebrew service...
+==> Successfully started `openshell` (label: sh.brew.openshell)
+openshell: registering local gateway as harshamac...
+✓ Gateway 'openshell' added and set as active
+  Endpoint: https://localhost:17670
+  Type: local
+✓ TLS certificates present
+openshell: waiting for local gateway listener to become reachable...
+openshell: local gateway listener is reachable
+openshell: waiting for openshell status to report connected...
+openshell: openshell status reports connected

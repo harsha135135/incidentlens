@@ -1,0 +1,67 @@
+{
+ "window": {
+  "start": "2026-11-07T05:00:43.000Z",
+  "end": "2026-11-07T05:03:43.000Z"
+ },
+ "frozen_at": "2026-11-07T05:04:00.201Z",
+ "files": [
+  {
+   "handle": "E1",
+   "file": "E1-get_request_metrics.json",
+   "tool": "get_request_metrics",
+   "arguments": {
+    "route_group": "transfers"
+   },
+   "sha256": "8d111fdc2c90faf281761b9ddcab796f05a7c38a8a3ad1bc6d2df4e954b65400"
+  },
+  {
+   "handle": "E2",
+   "file": "E2-get_outbox_stats.json",
+   "tool": "get_outbox_stats",
+   "arguments": {},
+   "sha256": "3a577ef77ee714574bd5bfe163aee7c3863e4bb92d1287c622b017de0677a6d6"
+  },
+  {
+   "handle": "E3",
+   "file": "E3-search_delivery_logs.json",
+   "tool": "search_delivery_logs",
+   "arguments": {
+    "outcome": "any",
+    "limit": 100
+   },
+   "sha256": "b01e8e58793fa4372dcb36208b5405832f4a102bd65b6b02e462fb1044ae31b6"
+  },
+  {
+   "handle": "E4",
+   "file": "E4-get_delivery_timings.json",
+   "tool": "get_delivery_timings",
+   "arguments": {},
+   "sha256": "59e51971e7ccc6625b987f2cbe80cf6e6ba30017e0e1dfc4d225d2afce3b7fb2"
+  },
+  {
+   "handle": "E5",
+   "file": "E5-get_pool_metrics.json",
+   "tool": "get_pool_metrics",
+   "arguments": {},
+   "sha256": "cc63b5b4ab6bf7e1f583e36c21e6c29917b14149d2552d6a936b50b42ec40b65"
+  },
+  {
+   "handle": "E6",
+   "file": "E6-get_database_blockers.json",
+   "tool": "get_database_blockers",
+   "arguments": {
+    "mode": "historical",
+    "limit": 50
+   },
+   "sha256": "73cba90484c3ab9bcfd0a7ba2d77290a452e2718a54789c70daa495ee63097eb"
+  },
+  {
+   "handle": "E7",
+   "file": "E7-get_runtime_config.json",
+   "tool": "get_runtime_config",
+   "arguments": {},
+   "sha256": "df2a7f5ed4463d10be5190395e2ad499e916eb6620d3c1b5262e5ca3931888f0"
+  }
+ ],
+ "freeze": "held_out"
+}

@@ -1,0 +1,323 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "lc-d2-r1",
+  "template": "lc-d2",
+  "split": "development",
+  "category": "lock_contention",
+  "ground_truth": "lock_contention",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3096367220,
+      "controller_run": "stage5-lc-d2-r1-a1",
+      "bundle": "b-e5c9f0ead0b7",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T15:47:13.000Z",
+        "end": "2026-11-06T15:50:13.000Z"
+      },
+      "validity": "blockers COMPLETE, other edges 7, samples with blocking 26"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "44c453a7-a967-4920-86b3-a6e345879248",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3909,
+        "reported_output_tokens": 984,
+        "tokens_counted_against_budget": 4893,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 9,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Transfers show 8% 500s and multi-second tail latency. Sampled DB lock waits behind an idle-in-transaction session fit this. Outbox, pool and consumer look healthy. The 500s are not linked to a cause.",
+      "evidence": {
+        "E1": "a3e2d3ea-0579-49bc-8a9c-8aef17f7ede5",
+        "E2": "f6b0df10-0a66-4ca6-9d95-4c6aadb58211",
+        "E3": "bdc09bac-f27f-479d-8544-ca49046590da",
+        "E4": "2032ea45-8bc7-4366-a3b6-a65eb9b85574",
+        "E5": "dabaf2ec-e6fc-4f20-9e6c-e7ff61197d6e",
+        "E6": "a84a8a5d-470b-4b4a-ab49-c6aa330b2e38",
+        "E7": "c2b77598-df77-471e-80fd-7ff036ba3fd1"
+      },
+      "findings": [
+        {
+          "claim": "The transfers route has 45 of 557 requests returning 500 (8.1%), with p95 1.76 s and p99 3.45 s.",
+          "reason": "Route metrics are complete and match the reported failures and multi-second slowness.",
+          "support": "observed",
+          "evidence_ids": [
+            "a3e2d3ea-0579-49bc-8a9c-8aef17f7ede5"
+          ],
+          "evidence_handles": [
+            "E1"
+          ],
+          "unverified_numbers": [
+            "8.1"
+          ]
+        },
+        {
+          "claim": "Sessions were blocked by an idle-in-transaction session (54810) from 15:47:54 to 15:49:02, with waits up to 1.8 s.",
+          "reason": "Historical blocker samples show ledger_app sessions waiting on that session in 9 to 11 samples each.",
+          "support": "observed",
+          "evidence_ids": [
+            "a84a8a5d-470b-4b4a-ab49-c6aa330b2e38"
+          ],
+          "evidence_handles": [
+            "E6"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Lock waits are a plausible cause of the slow and failed transfers, but no link to the individual 500s is shown.",
+          "reason": "The blocking window overlaps the window, and pool saturation is ruled out (0 timeouts, 0 pending). No request-level correlation was collected.",
+          "support": "inferred",
+          "evidence_ids": [
+            "a84a8a5d-470b-4b4a-ab49-c6aa330b2e38",
+            "a3e2d3ea-0579-49bc-8a9c-8aef17f7ede5",
+            "dabaf2ec-e6fc-4f20-9e6c-e7ff61197d6e"
+          ],
+          "evidence_handles": [
+            "E6",
+            "E1",
+            "E5"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Blocker sampling is every 2 s, so short blocks may be missed. The 500 error causes were not directly observed, since no application error logs were available.",
+        "The origin of the idle-in-transaction session 54810 (role 'other') is unidentified."
+      ],
+      "next_checks": [
+        "Identify session 54810's role and query (pg_stat_activity), and check which code path holds a transaction open.",
+        "Correlate the 500 timestamps and error messages in the application logs with the 15:47:54 to 15:49:02 blocking window."
+      ],
+      "alternatives": [
+        {
+          "reason": "Arrivals match publications, there were 0 failed deliveries, and delivery took about 71 ms on every attempt.",
+          "assessment": "weakened",
+          "hypothesis": "Outbox or consumer delivery slowness is causing the failures.",
+          "evidence_ids": [
+            "f6b0df10-0a66-4ca6-9d95-4c6aadb58211",
+            "bdc09bac-f27f-479d-8544-ca49046590da",
+            "2032ea45-8bc7-4366-a3b6-a65eb9b85574"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3",
+            "E4"
+          ]
+        },
+        {
+          "reason": "There were 0 acquisition timeouts, 0 pending borrowers, and a max of 3 active connections out of 10.",
+          "assessment": "weakened",
+          "hypothesis": "Connection pool exhaustion is causing the failures.",
+          "evidence_ids": [
+            "dabaf2ec-e6fc-4f20-9e6c-e7ff61197d6e"
+          ],
+          "evidence_handles": [
+            "E5"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3909,
+    "output_tokens": 984,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.01766,
+    "checks": {
+      "numbers_checked": 9,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.1"
+  },
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "lock_contention",
+    "rule": "a non-ledger_app session blocked ledger_app sessions in 26 samples",
+    "evidence_ids": [
+      "E6"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P_replays": {
+    "2026-11-06.2": {
+      "job_id": "5c6f8b9e-50ff-4b7e-a04a-033772abbfd5",
+      "status": "COMPLETED",
+      "final_reason": "model report: TENTATIVE",
+      "report": {
+        "usage": {
+          "tool_actions": 7,
+          "model_actions": 1,
+          "reported_input_tokens": 4113,
+          "reported_output_tokens": 1132,
+          "tokens_counted_against_budget": 5245,
+          "model_calls_with_unknown_usage": 0
+        },
+        "checks": {
+          "numbers_checked": 7,
+          "numbers_not_found_in_cited_evidence": 0
+        },
+        "outcome": "TENTATIVE",
+        "summary": "Transfer errors and latency coincide with a non-ledger_app session stuck idle in transaction, blocking ledger_app sessions for up to 1.8 s. The session's origin and the cause of the 500s are not confirmed.",
+        "evidence": {
+          "E1": "74adad65-ebad-41ce-adc1-e7a52275fc46",
+          "E2": "12e2a9f2-00c6-4503-bde0-33afa6e6de47",
+          "E3": "9f1691ce-2c6a-4423-b6e5-bcfce3bf65f5",
+          "E4": "b7da28f3-3b48-487d-be73-32435a72602d",
+          "E5": "58211282-7433-4559-ad82-48ae971d76dc",
+          "E6": "614b0396-6155-4344-b4e7-dda4a4939cfc",
+          "E7": "f0384faa-0390-4521-b67c-2ee81699c5bf"
+        },
+        "findings": [
+          {
+            "claim": "Transfers show 8% HTTP 500s and a p95 of 1.76 s / p99 of 3.45 s, so the symptom is real.",
+            "reason": "45 of 557 requests returned 500, and the latency tail is several seconds.",
+            "support": "observed",
+            "evidence_ids": [
+              "74adad65-ebad-41ce-adc1-e7a52275fc46"
+            ],
+            "evidence_handles": [
+              "E1"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "An 'other' role session (54810), idle in transaction, blocked ledger_app sessions for up to 1.8 s between 15:47:54 and 15:49:02.",
+            "reason": "Sessions 54528 and 54529 waited on 54810 in 11 and 9 samples. Session 54530 waited on 54528 in 2 samples, so the blocking chained.",
+            "support": "observed",
+            "evidence_ids": [
+              "614b0396-6155-4344-b4e7-dda4a4939cfc"
+            ],
+            "evidence_handles": [
+              "E6"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "The blocking likely explains the slow transfers. The 500s are plausibly lock waits, but no evidence links them to the blocking.",
+            "reason": "The blocking window overlaps the period of connection activity (15:47:53 to 15:48:53). The pool shows no saturation or timeouts, so the pool is not the bottleneck.",
+            "support": "inferred",
+            "evidence_ids": [
+              "614b0396-6155-4344-b4e7-dda4a4939cfc",
+              "74adad65-ebad-41ce-adc1-e7a52275fc46",
+              "58211282-7433-4559-ad82-48ae971d76dc"
+            ],
+            "evidence_handles": [
+              "E6",
+              "E1",
+              "E5"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "The outbox and the consumer are healthy and are not the cause.",
+            "reason": "500 of 500 deliveries succeeded at about 71 ms, there were 0 failures, arrivals matched publications, and the oldest undelivered age stayed under 3 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "12e2a9f2-00c6-4503-bde0-33afa6e6de47",
+              "9f1691ce-2c6a-4423-b6e5-bcfce3bf65f5",
+              "b7da28f3-3b48-487d-be73-32435a72602d"
+            ],
+            "evidence_handles": [
+              "E2",
+              "E3",
+              "E4"
+            ],
+            "unverified_numbers": []
+          }
+        ],
+        "limitations": [
+          "No application error logs or traces tie the 500s to lock waits, and blocking is sampled only every 2 s.",
+          "The owner of session 54810 (the 'other' role) and the statement it ran are not identified."
+        ],
+        "next_checks": [
+          "Identify the application, user and last query of session 54810 in pg_stat_activity and check whether it is a manual or tooling session.",
+          "Check the transfer 500 error messages and slow-request traces for lock-wait or timeout errors and compare their timestamps with 15:47:54 to 15:49:02."
+        ],
+        "alternatives": [
+          {
+            "reason": "There were 0 acquisition timeouts, 0 pending borrowers, and a maximum of 3 active connections out of 10.",
+            "assessment": "weakened",
+            "hypothesis": "Connection pool exhaustion caused the slowness.",
+            "evidence_ids": [
+              "58211282-7433-4559-ad82-48ae971d76dc"
+            ],
+            "evidence_handles": [
+              "E5"
+            ]
+          },
+          {
+            "reason": "All deliveries succeeded in about 71 ms with no backlog.",
+            "assessment": "weakened",
+            "hypothesis": "Outbox or consumer delivery slowness caused the slowness.",
+            "evidence_ids": [
+              "9f1691ce-2c6a-4423-b6e5-bcfce3bf65f5",
+              "b7da28f3-3b48-487d-be73-32435a72602d",
+              "12e2a9f2-00c6-4503-bde0-33afa6e6de47"
+            ],
+            "evidence_handles": [
+              "E3",
+              "E4",
+              "E2"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 1,
+      "tool_calls": 7,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "search_delivery_logs",
+        "get_delivery_timings",
+        "get_pool_metrics",
+        "get_database_blockers",
+        "get_runtime_config"
+      ],
+      "recoveries": 0,
+      "input_tokens": 4113,
+      "output_tokens": 1132,
+      "unknown_usage_calls": 0,
+      "replay_elapsed_seconds": 22.1,
+      "classified_dev_aid": "lock_contention",
+      "cost_usd": 0.01955,
+      "checks": {
+        "numbers_checked": 7,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "prompt_version": "2026-11-06.2"
+    }
+  }
+}

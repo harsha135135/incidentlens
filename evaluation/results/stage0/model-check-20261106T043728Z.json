@@ -1,0 +1,86 @@
+{
+  "checked_at": "2026-11-06T04:37:23.270799+00:00",
+  "versions": {
+    "anthropic": "2.4.0",
+    "langchain_anthropic": "1.7.9"
+  },
+  "model": {
+    "requested_id": "claude-sonnet-5-5",
+    "listed_for_account": true,
+    "id": "claude-sonnet-5-5",
+    "display_name": "Claude Sonnet 5.5",
+    "created_at": "2026-09-28T00:00:00+00:00",
+    "max_input_tokens": 1000000,
+    "max_tokens": 128000
+  },
+  "calls": [
+    {
+      "config": "thinking_between_tools",
+      "settings": {
+        "thinking": {
+          "type": "between_tools"
+        }
+      },
+      "latency_seconds": 2.572,
+      "response_model": "claude-sonnet-5-5",
+      "response_id": "msg_011Cgm4A3nHxGohZfuXUr5En",
+      "stop_reason": "tool_use",
+      "estimated_input_tokens": 2291,
+      "reported_input_tokens": 2291,
+      "estimate_minus_reported": 0,
+      "reported_output_tokens": 136,
+      "reservation_tokens": 3791,
+      "tool_calls": [
+        {
+          "name": "search_delivery_logs",
+          "args": {
+            "outcome": "any",
+            "limit": 50
+          },
+          "id": "toolu_01RoErkyA5Jbdtb9QYhiVUzu",
+          "type": "tool_call"
+        }
+      ],
+      "action_type": "CallTool",
+      "action_problem": null,
+      "schema_obeyed": true,
+      "content_block_types": [
+        "text",
+        "tool_use"
+      ]
+    },
+    {
+      "config": "adaptive_low_effort",
+      "settings": {
+        "thinking": {
+          "type": "adaptive"
+        },
+        "effort": "low"
+      },
+      "latency_seconds": 1.508,
+      "response_model": "claude-sonnet-5-5",
+      "response_id": "msg_011Cgm4AFbStbHxk17f1bAGt",
+      "stop_reason": "tool_use",
+      "estimated_input_tokens": 2292,
+      "reported_input_tokens": 2292,
+      "estimate_minus_reported": 0,
+      "reported_output_tokens": 87,
+      "reservation_tokens": 3792,
+      "tool_calls": [
+        {
+          "name": "get_runtime_config",
+          "args": {},
+          "id": "toolu_017NjuVMf794cHgb125TwekA",
+          "type": "tool_call"
+        }
+      ],
+      "action_type": "CallTool",
+      "action_problem": null,
+      "schema_obeyed": true,
+      "content_block_types": [
+        "text",
+        "tool_use"
+      ]
+    }
+  ]
+}

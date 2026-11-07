@@ -1,0 +1,186 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "lp-h1-r1",
+  "template": "lp-h1",
+  "split": "held_out",
+  "category": "lock_pool_exhaustion",
+  "ground_truth": "lock_contention+pool_saturation",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 176711662,
+      "controller_run": "stage5-lp-h1-r1-a1",
+      "bundle": "b-fe0b0d5f8712",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T03:25:05.000Z",
+        "end": "2026-11-07T03:29:05.000Z"
+      },
+      "validity": "blockers COMPLETE, other edges 1, pool timeouts 276"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "lock_contention",
+    "rule": "a non-ledger_app session blocked ledger_app sessions in 48 samples; 276 pool acquisition timeouts",
+    "evidence_ids": [
+      "E6",
+      "E5"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "f8ef397d-8289-4599-9201-68ec41fac7d5",
+    "status": "COMPLETED",
+    "final_reason": "model report: SUPPORTED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4633,
+        "reported_output_tokens": 1147,
+        "tokens_counted_against_budget": 5780,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 8,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "SUPPORTED",
+      "summary": "The restart at 03:26:28 cut the pool to 1 connection with a 250 ms timeout. An idle-in-transaction session then held a lock, so transfers timed out on acquisition (500/503) or ran slowly.",
+      "evidence": {
+        "E1": "7ac1e22b-415a-4814-8780-598463ef92eb",
+        "E2": "f4970a4f-fb72-4baf-801f-59de64b0fca2",
+        "E3": "ea513da5-8e0e-4452-8c6f-06b48b869e61",
+        "E4": "16b222e9-f8fa-47a1-80a0-69a994a60fe7",
+        "E5": "093b4cf7-6ed2-42ac-a16b-5aac54ec6e9b",
+        "E6": "8a0b26dd-5030-4147-b9ed-bda682b49609",
+        "E7": "fbea36a4-bc4b-4628-95ab-250ac3b70246"
+      },
+      "findings": [
+        {
+          "claim": "The 03:26:28 restart changed poolMaximumSize from 10 to 1 and poolConnectionTimeoutMs from 30000 to 250.",
+          "reason": "Runtime config shows the changed settings, with a restart inside the window at 03:26:28.",
+          "support": "observed",
+          "evidence_ids": [
+            "fbea36a4-bc4b-4628-95ab-250ac3b70246"
+          ],
+          "evidence_handles": [
+            "E7"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The one-connection pool timed out on acquisition 276 times; pending borrowers and active connections were above zero from about 03:25:55 to 03:28:40.",
+          "reason": "Pool metrics show 276 acquisition timeouts, with maximum 1 and a 250 ms timeout.",
+          "support": "observed",
+          "evidence_ids": [
+            "093b4cf7-6ed2-42ac-a16b-5aac54ec6e9b"
+          ],
+          "evidence_handles": [
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "A session idle in transaction blocked another ledger_app session for up to 1.9 s between 03:26:29 and 03:28:29, so the single connection stayed tied up and transfers failed or were slow.",
+          "reason": "The blocking starts just after the restart and overlaps the pool pressure. Transfers show 213 server errors of 586 (500\u00d749, 503\u00d7164) and p95 of 1.6 s.",
+          "support": "inferred",
+          "evidence_ids": [
+            "8a0b26dd-5030-4147-b9ed-bda682b49609",
+            "7ac1e22b-415a-4814-8780-598463ef92eb",
+            "093b4cf7-6ed2-42ac-a16b-5aac54ec6e9b"
+          ],
+          "evidence_handles": [
+            "E6",
+            "E1",
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Outbox delivery is not the cause: all 390 deliveries succeeded in about 71 ms.",
+          "reason": "Every delivery attempt succeeded with fast timings.",
+          "support": "observed",
+          "evidence_ids": [
+            "ea513da5-8e0e-4452-8c6f-06b48b869e61",
+            "16b222e9-f8fa-47a1-80a0-69a994a60fe7"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Coverage is partial: a 10 s scrape gap at 03:26:20\u201303:26:30, 2 counter restarts, and gauges exported as NaN.",
+        "The idle-in-transaction session's origin and query were not identified, and the per-request error timing was not broken down.",
+        "E1 (get_request_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+        "E2 (get_outbox_stats) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+        "E5 (get_pool_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero."
+      ],
+      "next_checks": [
+        "Identify the owner and code path of session 28884 (idle in transaction) and fix its transaction handling.",
+        "Restore the pool to maximumSize 10 and timeout 30000 ms and check whether the errors stop."
+      ],
+      "alternatives": [
+        {
+          "reason": "Deliveries all succeeded at about 71 ms and the handler time was negligible.",
+          "assessment": "weakened",
+          "hypothesis": "Consumer or outbox slowness caused the failures",
+          "evidence_ids": [
+            "ea513da5-8e0e-4452-8c6f-06b48b869e61",
+            "16b222e9-f8fa-47a1-80a0-69a994a60fe7"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ]
+        },
+        {
+          "reason": "The failed count stayed constant at 296 throughout the window, so it appears to predate it.",
+          "assessment": "unassessed",
+          "hypothesis": "The old backlog of failed outbox rows (296 failed, oldest undelivered about 35,000 s) is related",
+          "evidence_ids": [
+            "f4970a4f-fb72-4baf-801f-59de64b0fca2"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4633,
+    "output_tokens": 1147,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.02074,
+    "checks": {
+      "numbers_checked": 8,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

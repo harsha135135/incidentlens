@@ -1,0 +1,174 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cr-h4-r2",
+  "template": "cr-h4",
+  "split": "held_out",
+  "category": "credential_rejection",
+  "ground_truth": "consumer_credential_rejected",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 2741304112,
+      "controller_run": "stage5-cr-h4-r2-a1",
+      "bundle": "b-326f0371f37e",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T17:51:07.000Z",
+        "end": "2026-11-06T17:53:37.000Z"
+      },
+      "validity": "logs COMPLETE, auth_error 218 of 218 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "90624f3d-e741-4bc5-b6f2-51405e3051da",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3979,
+        "reported_output_tokens": 1041,
+        "tokens_counted_against_budget": 5020,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 9,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Notifications are delayed because the consumer rejected deliveries with HTTP 401 (auth_error). The rejected rows ended in FAILED and still sit undelivered. The reason for the 401s is not in the evidence.",
+      "evidence": {
+        "E1": "a5a246cf-f399-47d6-9399-4402b3a7bf87",
+        "E2": "5407948f-1de8-4f81-b30e-a146f15d317a",
+        "E3": "d0a64e4a-da78-4868-83b8-a64d04634f4a",
+        "E4": "d59803b4-be95-45fb-a644-acf52e920c2a",
+        "E5": "4dc10df9-db3e-404a-9f39-fcfbe25cf7d4",
+        "E6": "4412567f-12c3-4459-8320-17e966ed5c26",
+        "E7": "149b126a-5557-4308-9ce8-cb2aa40a8cee"
+      },
+      "findings": [
+        {
+          "claim": "Delivery attempts to the consumer were rejected with HTTP 401: 218 auth_error against 421 successes.",
+          "reason": "Outcome counts cover all 639 attempts; the consumer's auth step is where the 401s occur, with no server or network errors.",
+          "support": "observed",
+          "evidence_ids": [
+            "d0a64e4a-da78-4868-83b8-a64d04634f4a",
+            "d59803b4-be95-45fb-a644-acf52e920c2a"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "138 outbox rows are stuck in FAILED and the oldest undelivered age keeps growing (500s to 645s), so those notifications are late or never sent.",
+          "reason": "The failed count stays at 138 through the window while oldest_undelivered_age rises steadily.",
+          "support": "observed",
+          "evidence_ids": [
+            "5407948f-1de8-4f81-b30e-a146f15d317a"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Publications stalled for about 20 s, then caught up in a burst (81, 60 per bucket), which fits retries after 401s delaying delivery.",
+          "reason": "Buckets show 0 publications while arrivals stay at 28 per bucket. 401 retries (attempt 2) begin at 17:51:28. Timing is only roughly aligned.",
+          "support": "inferred",
+          "evidence_ids": [
+            "5407948f-1de8-4f81-b30e-a146f15d317a",
+            "d0a64e4a-da78-4868-83b8-a64d04634f4a"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3"
+          ],
+          "unverified_numbers": [
+            "20"
+          ]
+        }
+      ],
+      "limitations": [
+        "The evidence does not show why the consumer returned 401 (credential rotation, config drift or consumer-side change). The runtime config shows a dirty revision but no credentials.",
+        "Only the earliest 100 of 639 delivery log records are listed, and the outbox pending gauge is sampled, so the timing of the stall is approximate."
+      ],
+      "next_checks": [
+        "Compare the delivery auth credential or token in ledgercore config with what the consumer expects, and check for recent rotation or the dirty local change.",
+        "After fixing auth, requeue the 138 FAILED outbox rows and confirm the oldest undelivered age drops."
+      ],
+      "alternatives": [
+        {
+          "reason": "Transfer p99 was 0.25 s with no errors, the pool had 0 pending and 0 timeouts, and no blocking was sampled.",
+          "assessment": "weakened",
+          "hypothesis": "Slow transfers API, DB pool exhaustion or DB lock blocking delayed the notifications",
+          "evidence_ids": [
+            "a5a246cf-f399-47d6-9399-4402b3a7bf87",
+            "4dc10df9-db3e-404a-9f39-fcfbe25cf7d4",
+            "4412567f-12c3-4459-8320-17e966ed5c26"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ]
+        },
+        {
+          "reason": "Attempts took about 71 ms against a 3000 ms timeout, and the consumer handler took about 0.02 ms.",
+          "assessment": "weakened",
+          "hypothesis": "Consumer slowness or delivery timeouts caused the delay",
+          "evidence_ids": [
+            "d59803b4-be95-45fb-a644-acf52e920c2a",
+            "149b126a-5557-4308-9ce8-cb2aa40a8cee"
+          ],
+          "evidence_handles": [
+            "E4",
+            "E7"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3979,
+    "output_tokens": 1041,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.2,
+    "classified_dev_aid": "consumer_credential_rejected",
+    "cost_usd": 0.01837,
+    "checks": {
+      "numbers_checked": 9,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_credential_rejected",
+    "rule": "218 of 218 failed deliveries were auth_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

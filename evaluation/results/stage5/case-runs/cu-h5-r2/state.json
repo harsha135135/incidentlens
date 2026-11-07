@@ -1,0 +1,172 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cu-h5-r2",
+  "template": "cu-h5",
+  "split": "held_out",
+  "category": "consumer_unavailable",
+  "ground_truth": "consumer_unavailable",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 2933522104,
+      "controller_run": "stage5-cu-h5-r2-a1",
+      "bundle": "b-3099510a443d",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T18:39:05.000Z",
+        "end": "2026-11-06T18:43:05.000Z"
+      },
+      "validity": "logs COMPLETE, network_error 3322 of 3322 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_unavailable",
+    "rule": "3322 of 3322 failed deliveries were network_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "d58e34af-f621-49fb-99cb-145e1678ed41",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4092,
+        "reported_output_tokens": 918,
+        "tokens_counted_against_budget": 5010,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 8,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publications stalled after ~18:39:35 while transfers kept arriving. Delivery attempts to the consumer fail with connection errors, so notifications back up. Why the consumer refuses connections is not shown.",
+      "evidence": {
+        "E1": "ab19e6ed-997e-4875-9288-eeb7f4ba6f23",
+        "E2": "26f774eb-8454-4713-b9b0-de31a2efa50f",
+        "E3": "3b877118-1b71-44ab-8087-d2a9b6e74c79",
+        "E4": "7e457343-2612-4f5b-8949-1ad7fed06d12",
+        "E5": "352d5e53-527b-44b7-988d-f8d55b6d5c12",
+        "E6": "ccf4a2a1-d97a-4531-b8e9-5733804d569a",
+        "E7": "6a9bc66e-c459-4266-8dd8-99bfd5c446f5"
+      },
+      "findings": [
+        {
+          "claim": "Outbox delivery stalled: 430 more events committed than published; publications fell from ~30/10s to 0 from about 18:39:35 on.",
+          "reason": "Per-bucket arrivals stayed at 30 while publications dropped to 0, and pending grew to 400.",
+          "support": "observed",
+          "evidence_ids": [
+            "26f774eb-8454-4713-b9b0-de31a2efa50f"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Delivery attempts fail with CONNECTION_FAILED (3322 of 3613), taking about 0.25 ms each, while only 291 succeeded early in the window.",
+          "reason": "Failures return instantly with no status and no consumer record, consistent with refused connections to the consumer target.",
+          "support": "observed",
+          "evidence_ids": [
+            "3b877118-1b71-44ab-8087-d2a9b6e74c79",
+            "7e457343-2612-4f5b-8949-1ad7fed06d12"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The late notifications come from the consumer being unreachable, not from the database, pool or transfer API.",
+          "reason": "Transfers stay fast with no errors, the pool has no waits and there is no DB blocking, while the outbox backlog and failed count grow.",
+          "support": "inferred",
+          "evidence_ids": [
+            "ab19e6ed-997e-4875-9288-eeb7f4ba6f23",
+            "352d5e53-527b-44b7-988d-f8d55b6d5c12",
+            "ccf4a2a1-d97a-4531-b8e9-5733804d569a",
+            "26f774eb-8454-4713-b9b0-de31a2efa50f"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6",
+            "E2"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "No consumer-side or network logs explain why connections were refused from about 18:39:35.",
+        "The oldest undelivered age of about 3400 s predates the window, so there was already a backlog; its origin is unseen."
+      ],
+      "next_checks": [
+        "Check whether the consumer at 127.0.0.1:18090 was listening and healthy from about 18:39:35.",
+        "Review the 138 events already FAILED before the window and what retry or max-attempts handling applies."
+      ],
+      "alternatives": [
+        {
+          "reason": "No pool waits or timeouts and no blocking sessions were observed.",
+          "assessment": "weakened",
+          "hypothesis": "DB pool exhaustion or lock contention slowing the outbox poller",
+          "evidence_ids": [
+            "352d5e53-527b-44b7-988d-f8d55b6d5c12",
+            "ccf4a2a1-d97a-4531-b8e9-5733804d569a"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        },
+        {
+          "reason": "Failures are instant connection failures, not 3 s timeouts; successful calls took about 71 ms.",
+          "assessment": "weakened",
+          "hypothesis": "Slow consumer responses causing delivery timeouts",
+          "evidence_ids": [
+            "7e457343-2612-4f5b-8949-1ad7fed06d12"
+          ],
+          "evidence_handles": [
+            "E4"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4092,
+    "output_tokens": 918,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "consumer_unavailable",
+    "cost_usd": 0.01736,
+    "checks": {
+      "numbers_checked": 8,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

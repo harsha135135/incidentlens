@@ -1,0 +1,181 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-h3-r3",
+  "template": "he-h3",
+  "split": "held_out",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3732852232,
+      "controller_run": "stage5-he-h3-r3-a1",
+      "bundle": "b-6ac60fc2b239",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T04:15:23.000Z",
+        "end": "2026-11-07T04:18:53.000Z"
+      },
+      "validity": "all complete True, pending max 6.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "afcf3080-909e-489c-8957-b31e9078b10b",
+    "status": "COMPLETED",
+    "final_reason": "model report: NO_FAULT_OBSERVED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3979,
+        "reported_output_tokens": 979,
+        "tokens_counted_against_budget": 4958,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 6,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "NO_FAULT_OBSERVED",
+      "summary": "In the window, delivery was healthy: arrivals matched publications and all 733 attempts succeeded in about 71 ms. A static FAILED row (619, ~10.6 h old) predates the window.",
+      "evidence": {
+        "E1": "fcb0ece9-86c5-4657-b210-b57b5d7bf277",
+        "E2": "afd9e7b8-ee90-45f0-b0ce-982875b9786d",
+        "E3": "592dbbb9-fcf5-4e30-a670-2bb6eb61ddab",
+        "E4": "d54d77be-8b9d-4a1b-b925-3c2b8452ea7b",
+        "E5": "b3b937e0-aee0-49ea-a66b-b603c5772c82",
+        "E6": "4ae61143-e618-449d-a452-ccd7727dd569",
+        "E7": "516dbcbe-9bbf-47f6-b68a-61c4677739dc"
+      },
+      "findings": [
+        {
+          "claim": "Outbox kept pace with arrivals; pending stayed at 2-6 and arrivals minus publications was -2, so no backlog.",
+          "reason": "Counts are settled and per-bucket publications track arrivals.",
+          "support": "observed",
+          "evidence_ids": [
+            "afd9e7b8-ee90-45f0-b0ce-982875b9786d"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "All 733 delivery attempts succeeded on attempt 1 with p95 about 73 ms, almost all of it consumer auth time.",
+          "reason": "There were zero errors and no retries, and the timings are tight.",
+          "support": "observed",
+          "evidence_ids": [
+            "592dbbb9-fcf5-4e30-a670-2bb6eb61ddab",
+            "d54d77be-8b9d-4a1b-b925-3c2b8452ea7b"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "No DB pool or lock contention: zero acquisition timeouts, zero pending borrowers, zero blocked sessions.",
+          "reason": "The pool and blocker samples show no contention.",
+          "support": "observed",
+          "evidence_ids": [
+            "b3b937e0-aee0-49ea-a66b-b603c5772c82",
+            "4ae61143-e618-449d-a452-ccd7727dd569"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "A constant 619 failed rows exist with oldest undelivered age of about 38,000 s; they predate the window and did not change during it.",
+          "reason": "The failed count was flat at 619 and the oldest age grew exactly with wall-clock time.",
+          "support": "observed",
+          "evidence_ids": [
+            "afd9e7b8-ee90-45f0-b0ce-982875b9786d"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "38000"
+          ]
+        }
+      ],
+      "limitations": [
+        "The window is only 210 s and does not cover when customers saw the delay.",
+        "There is no data on why the 619 rows failed, or on the config revision marked dirty."
+      ],
+      "next_checks": [
+        "Inspect the 619 FAILED outbox rows: failure times, error causes and affected customers.",
+        "Re-run the diagnosis over the period when customers reported delays, and check downstream delivery."
+      ],
+      "alternatives": [
+        {
+          "reason": "The rows exist, but the evidence does not show when or why they failed, or whether they match the complaints.",
+          "assessment": "unassessed",
+          "hypothesis": "Old permanently FAILED outbox rows (about 10 h old) were never delivered and are the late notifications customers saw.",
+          "evidence_ids": [
+            "afd9e7b8-ee90-45f0-b0ce-982875b9786d"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        },
+        {
+          "reason": "Only LedgerCore-to-consumer timing in this 3.5-minute window was observed.",
+          "assessment": "unassessed",
+          "hypothesis": "Lateness occurs downstream of the consumer, or in an earlier period.",
+          "evidence_ids": [
+            "d54d77be-8b9d-4a1b-b925-3c2b8452ea7b"
+          ],
+          "evidence_handles": [
+            "E4"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3979,
+    "output_tokens": 979,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "none",
+    "cost_usd": 0.01775,
+    "checks": {
+      "numbers_checked": 6,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

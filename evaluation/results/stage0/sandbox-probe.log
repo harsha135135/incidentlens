@@ -1,0 +1,16 @@
+
+Created sandbox: il-probe
+
+  [0.0s] Requesting compute...
+[0.0s] Sandbox allocated
+[0.0s] Pulling image nvcr.io/nvidia/base/ubuntu:24.04
+[0.0s] Image already present
+[0.1s] Starting sandbox Container created
+user=uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu)
+aarch64
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+NAME="Ubuntu"
+total 8
+drwx------ 2 ubuntu ubuntu 4096 Jan  1  1970 .
+drwxr-xr-x 1 root   root   4096 Nov  4 15:28 ..
+✓ Sandbox il-probe deletion accepted; cleanup is pending

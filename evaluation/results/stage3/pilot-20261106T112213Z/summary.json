@@ -1,0 +1,19 @@
+[
+  {
+    "run": 1,
+    "scenario": "slow_consumer",
+    "truth": "slow_consumer_handler",
+    "A_cause": "unclassified",
+    "B_cause": "slow_consumer_handler",
+    "C_cause": "slow_consumer_handler",
+    "A_outcome": "INCONCLUSIVE",
+    "B_outcome": "TENTATIVE",
+    "C_outcome": "TENTATIVE",
+    "C_status": "COMPLETED",
+    "C_tools": 7,
+    "C_model_calls": 1,
+    "C_seconds": 16.1,
+    "B_cost": 0.01777,
+    "C_cost": 0.01885
+  }
+]

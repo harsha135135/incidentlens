@@ -1,0 +1,176 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-h5-r2",
+  "template": "he-h5",
+  "split": "held_out",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 2387956216,
+      "controller_run": "stage5-he-h5-r2-a1",
+      "bundle": "b-c20c922b32b5",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T04:25:20.000Z",
+        "end": "2026-11-07T04:29:20.000Z"
+      },
+      "validity": "all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "33d01e0f-43dc-4925-ac1d-451606c04e75",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3996,
+        "reported_output_tokens": 1015,
+        "tokens_counted_against_budget": 5011,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 6,
+        "numbers_not_found_in_cited_evidence": 2
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Current deliveries are timely, but 619 outbox rows are stuck FAILED with the oldest undelivered about 10.7 h old. That backlog could explain the late notifications, but its cause and its link to affected customers are not shown.",
+      "evidence": {
+        "E1": "636a2906-086a-4cb2-9a90-73a82282c925",
+        "E2": "018f9968-5639-4387-9444-e30e52460bab",
+        "E3": "fe74435e-66c7-4a1e-9193-a45eeca89840",
+        "E4": "f013e63c-149e-4d59-acea-82f8f7d62ac8",
+        "E5": "b2898de2-8206-4e12-8b57-6ace1dfca9e6",
+        "E6": "1a39dbb2-f4e4-41e8-bf3b-d5e60a263bfc",
+        "E7": "9a149b82-1632-4b74-b1d8-af4be24c277a"
+      },
+      "findings": [
+        {
+          "claim": "A static backlog of 619 FAILED outbox rows persists, with the oldest undelivered event aged ~38,500-38,800 s.",
+          "reason": "failed stayed at 619 across the whole window and oldest_undelivered_age grew in step with wall-clock time, so these rows are never retried.",
+          "support": "observed",
+          "evidence_ids": [
+            "018f9968-5639-4387-9444-e30e52460bab"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "38500",
+            "800"
+          ]
+        },
+        {
+          "claim": "New transfers are published promptly: 720 arrivals and 720 publications, no growing pending queue.",
+          "reason": "Arrivals minus publications is 0, pending stays at 1-4, and the transfers route shows no 5xx and p95 of 0.24 s.",
+          "support": "observed",
+          "evidence_ids": [
+            "018f9968-5639-4387-9444-e30e52460bab",
+            "636a2906-086a-4cb2-9a90-73a82282c925"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E1"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Delivery attempts in this window all succeeded quickly (~71 ms), with no consumer, pool or DB-lock delay.",
+          "reason": "All 719 attempts are SUCCESS on attempt 1, the consumer handler takes ~0.01 ms, there are no pool timeouts and no DB blocking.",
+          "support": "observed",
+          "evidence_ids": [
+            "fe74435e-66c7-4a1e-9193-a45eeca89840",
+            "f013e63c-149e-4d59-acea-82f8f7d62ac8",
+            "b2898de2-8206-4e12-8b57-6ace1dfca9e6",
+            "1a39dbb2-f4e4-41e8-bf3b-d5e60a263bfc"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "No data on why the 619 rows failed or when; the window shows no failed attempts, so the failure cause is not visible.",
+        "The window is 4 minutes and the log listing is truncated, so earlier delays are not covered."
+      ],
+      "next_checks": [
+        "Inspect the FAILED outbox rows: creation times, last error and attempt counts (max attempts 8), and whether they match the affected customers' transfers.",
+        "Check the earlier time period when those rows failed for consumer errors, then decide whether to requeue them."
+      ],
+      "alternatives": [
+        {
+          "reason": "The fixture consumer is fast, but real downstream notification delivery is not observed.",
+          "assessment": "unassessed",
+          "hypothesis": "Lateness is at the customer notification channel downstream of the consumer, not in LedgerCore.",
+          "evidence_ids": [
+            "f013e63c-149e-4d59-acea-82f8f7d62ac8"
+          ],
+          "evidence_handles": [
+            "E4"
+          ]
+        },
+        {
+          "reason": "No failures occur in this window, so the 619 rows predate it and may not match the window's symptom.",
+          "assessment": "supported",
+          "hypothesis": "The stuck FAILED rows are older, unrelated failures, and customers' late notices come from another time period.",
+          "evidence_ids": [
+            "018f9968-5639-4387-9444-e30e52460bab",
+            "fe74435e-66c7-4a1e-9193-a45eeca89840"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3996,
+    "output_tokens": 1015,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "other",
+    "cost_usd": 0.01814,
+    "checks": {
+      "numbers_checked": 6,
+      "numbers_not_found_in_cited_evidence": 2
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

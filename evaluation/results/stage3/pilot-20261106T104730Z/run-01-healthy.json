@@ -1,0 +1,274 @@
+{
+  "label": "FIXTURE RESULT: pilot (live recorded window), not the evaluation",
+  "scenario_set": "extended",
+  "symptom": "Customers say that transfer notifications are arriving late.",
+  "run": 1,
+  "scenario": "healthy",
+  "ground_truth_cause": "none",
+  "window": {
+    "start": "2026-11-06T10:47:36.713Z",
+    "end": "2026-11-06T10:50:06.719Z"
+  },
+  "system_order": [
+    "A",
+    "C",
+    "B"
+  ],
+  "controller_run": "pilot-01-104736",
+  "bundle": [
+    {
+      "handle": "E1",
+      "tool": "get_request_metrics",
+      "arguments": {
+        "route_group": "transfers"
+      },
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E2",
+      "tool": "get_outbox_stats",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E3",
+      "tool": "search_delivery_logs",
+      "arguments": {
+        "outcome": "any",
+        "limit": 100
+      },
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E4",
+      "tool": "get_delivery_timings",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E5",
+      "tool": "get_pool_metrics",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E6",
+      "tool": "get_database_blockers",
+      "arguments": {
+        "mode": "historical",
+        "limit": 50
+      },
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E7",
+      "tool": "get_runtime_config",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    }
+  ],
+  "results": {
+    "A": {
+      "outcome": "NO_FAULT_OBSERVED",
+      "primary_cause": "none",
+      "rule": "no failed deliveries and pending stayed low",
+      "evidence_ids": [
+        "E3",
+        "E2"
+      ],
+      "model_calls": 0,
+      "tool_calls": 7,
+      "classified": "none"
+    },
+    "C": {
+      "job_id": "f998be2e-7b88-4251-9282-dcce20116a01",
+      "status": "COMPLETED",
+      "final_reason": "model report: NO_FAULT_OBSERVED",
+      "elapsed_seconds": 34.2,
+      "report": {
+        "usage": {
+          "tool_actions": 7,
+          "model_actions": 6,
+          "reported_input_tokens": 23212,
+          "reported_output_tokens": 1491,
+          "tokens_counted_against_budget": 24703,
+          "model_calls_with_unknown_usage": 0
+        },
+        "outcome": "NO_FAULT_OBSERVED",
+        "summary": "No backlog or latency fault found in the window. Outbox keeps pace with arrivals and delivery takes about 71 ms. Late notifications are not reproduced by this evidence.",
+        "evidence": {
+          "E1": "b37845bf-5e0a-42f2-beba-ea8a7ccbd4d4",
+          "E2": "c1b3e117-7299-4c80-be69-b22c890ec0fc",
+          "E3": "91cb65db-a90b-489d-9cbf-6fba64328061",
+          "E4": "0dcd0132-1557-49b3-b7f3-039b16e39860",
+          "E5": "1894744d-ed24-4cde-8f89-a641d23f81b9",
+          "E6": "2e4a4e0a-380a-4e60-918f-f9fc744e6120",
+          "E7": "a830555a-51f7-4228-8bff-e2acefaf967b"
+        },
+        "findings": [
+          {
+            "claim": "Outbox is keeping up: 480 arrivals vs 478 publications, pending 1-4, oldest undelivered age max ~1.07 s, failed 0.",
+            "reason": "The durable counts nearly match and the pending age stays near the 1 s poll interval.",
+            "support": "observed",
+            "evidence_ids": [
+              "c1b3e117-7299-4c80-be69-b22c890ec0fc"
+            ],
+            "evidence_handles": [
+              "E2"
+            ]
+          },
+          {
+            "claim": "Delivery attempts are fast and all succeed: total p95 ~78 ms, mostly consumer auth time (~70 ms); handler is negligible.",
+            "reason": "478 of 478 attempts were correlated and succeeded, with a max total of 82 ms.",
+            "support": "observed",
+            "evidence_ids": [
+              "0dcd0132-1557-49b3-b7f3-039b16e39860"
+            ],
+            "evidence_handles": [
+              "E4"
+            ]
+          },
+          {
+            "claim": "No DB or pool contention and the transfer API is healthy: pool pending 0, 0 timeouts, no blockers, 471 transfers all 201, p99 0.25 s.",
+            "reason": "No saturation, blocking or errors were seen that could delay outbox publication.",
+            "support": "observed",
+            "evidence_ids": [
+              "b37845bf-5e0a-42f2-beba-ea8a7ccbd4d4",
+              "2e4a4e0a-380a-4e60-918f-f9fc744e6120",
+              "a830555a-51f7-4228-8bff-e2acefaf967b"
+            ],
+            "evidence_handles": [
+              "E1",
+              "E6",
+              "E7"
+            ]
+          }
+        ],
+        "limitations": [
+          "The window is only 150 s and may not include the period when customers saw delays.",
+          "Pending and pool are sampled gauges and blockers are sampled every 2 s, so brief spikes could be missed."
+        ],
+        "next_checks": [
+          "Re-run over the time window when customers reported lateness, and compare the arrival-to-delivery latency.",
+          "Check the downstream notification pipeline or consumer for its own queueing delay."
+        ],
+        "alternatives": [
+          {
+            "reason": "Only delivery to the consumer endpoint was measured, not end-to-end notification to the customer.",
+            "assessment": "unassessed",
+            "hypothesis": "Lateness is introduced downstream of LedgerCore, in the consumer or notification channel.",
+            "evidence_ids": [
+              "0dcd0132-1557-49b3-b7f3-039b16e39860"
+            ],
+            "evidence_handles": [
+              "E4"
+            ]
+          },
+          {
+            "reason": "Oldest undelivered age peaks near 1 s, and batch capacity of 20/s exceeds the 3.2/s arrival rate.",
+            "assessment": "weakened",
+            "hypothesis": "Poll interval (1 s) and batch size (20) cause delay.",
+            "evidence_ids": [
+              "c1b3e117-7299-4c80-be69-b22c890ec0fc",
+              "1894744d-ed24-4cde-8f89-a641d23f81b9"
+            ],
+            "evidence_handles": [
+              "E2",
+              "E5"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 6,
+      "tool_calls": 7,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "get_request_metrics",
+        "get_delivery_timings",
+        "get_runtime_config",
+        "get_pool_metrics",
+        "get_database_blockers"
+      ],
+      "recoveries": 0,
+      "input_tokens": 23212,
+      "output_tokens": 1491,
+      "unknown_usage_calls": 0,
+      "classified": "none",
+      "cost_usd": 0.06133
+    },
+    "B": {
+      "report": {
+        "outcome": "NO_FAULT_OBSERVED",
+        "summary": "No delivery fault in this window. Outbox publications keep pace with arrivals, all 478 attempts succeeded on the first try, and the oldest undelivered event was about 1 s old at most.",
+        "findings": [
+          {
+            "claim": "Outbox publishes keep pace with commits. Backlog stays at 1-4 pending, none failed, and the oldest undelivered age peaks at 1.07 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "E2"
+            ],
+            "reason": "Arrivals were 480 against 478 publications, pending max was 4, failed was 0, and the oldest undelivered age max was 1.07 s."
+          },
+          {
+            "claim": "All 478 delivery attempts succeeded on attempt 1 with status 200. There were no auth, network or server errors.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3"
+            ],
+            "reason": "Outcome counts cover all 478 records: success 478 and every error category 0."
+          },
+          {
+            "claim": "Delivery latency is about 71 ms (p95 78 ms), almost all of it consumer auth time. Pool, DB blocking and transfer latency show no contention.",
+            "support": "observed",
+            "evidence_ids": [
+              "E4",
+              "E5",
+              "E6",
+              "E1"
+            ],
+            "reason": "Handler time is negligible. Pool pending is 0 with no timeouts, there are no DB blockers, and transfer p99 is 0.25 s."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Lateness occurs downstream of the outbox, in the consumer's own notification delivery to customers (push, SMS or email).",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E4"
+            ],
+            "reason": "The consumer here is a test fixture, and no data covers the real notification pipeline."
+          },
+          {
+            "hypothesis": "The delay happened outside this 150 s window, for example during a burst or an earlier config state.",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E7"
+            ],
+            "reason": "Only this window was observed, and config is shown only from 10:42:07."
+          }
+        ],
+        "limitations": [
+          "The window is only 150 s at about 3 events/s. Bursts or incidents at other times are not covered.",
+          "Delivery is measured only to a fixture consumer, so end-to-end customer notification timing is unobserved."
+        ],
+        "next_checks": [
+          "Check timing in the real downstream notification service, from receipt to the customer's device.",
+          "Re-run the outbox and delivery checks over a window when customers actually reported delays."
+        ]
+      },
+      "malformed": null,
+      "unknown_citations": [],
+      "stop_reason": "tool_use",
+      "input_tokens": 3710,
+      "output_tokens": 969,
+      "model_calls": 1,
+      "tool_calls": 7,
+      "latency_seconds": 8.8,
+      "classified": "none",
+      "cost_usd": 0.01711
+    }
+  }
+}

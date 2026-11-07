@@ -1,0 +1,5 @@
+{"at": "2026-11-06T10:36:57.165Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T10:36:57.159Z"}
+{"at": "2026-11-06T10:36:57.166Z", "action": "workload_started", "rate_per_second": 3.2, "seed": 20261183}
+{"at": "2026-11-06T10:37:15.459Z", "action": "ledgercore_restarted", "pool_size": 1, "connection_timeout_ms": 250, "requested_at": "2026-11-06T10:37:12.170Z"}
+{"at": "2026-11-06T10:38:05.708Z", "action": "workload_stopped", "sent": 220, "statuses": {"201": 211}, "errors": {"ConnectError": 9}, "started_at": "2026-11-06T10:36:57.166Z", "ended_at": "2026-11-06T10:38:05.708Z"}
+{"at": "2026-11-06T10:38:08.944Z", "action": "ledgercore_restarted", "pool_size": null, "connection_timeout_ms": null, "requested_at": "2026-11-06T10:38:05.708Z"}

@@ -1,0 +1,3151 @@
+{
+  "label": "FIXTURE RESULT",
+  "scenario": "unavailable_consumer",
+  "window": {
+    "start": "2026-11-06T05:43:51.123Z",
+    "end": "2026-11-06T05:45:11.599Z"
+  },
+  "ground_truth": [
+    {
+      "at": "2026-11-06T05:43:46.110Z",
+      "action": "consumer_mode",
+      "mode": "normal",
+      "handler_delay_ms": 0,
+      "requested_at": "2026-11-06T05:43:46.105Z"
+    },
+    {
+      "at": "2026-11-06T05:43:46.117Z",
+      "action": "workload_started",
+      "rate_per_second": 3.2,
+      "seed": 20261126
+    },
+    {
+      "at": "2026-11-06T05:44:06.596Z",
+      "action": "consumer_mode",
+      "mode": "unavailable",
+      "handler_delay_ms": 0,
+      "requested_at": "2026-11-06T05:44:06.123Z"
+    },
+    {
+      "at": "2026-11-06T05:44:46.609Z",
+      "action": "consumer_mode",
+      "mode": "normal",
+      "handler_delay_ms": 0,
+      "requested_at": "2026-11-06T05:44:46.599Z"
+    },
+    {
+      "at": "2026-11-06T05:45:16.847Z",
+      "action": "workload_stopped",
+      "sent": 291,
+      "statuses": {
+        "201": 291
+      },
+      "errors": {},
+      "started_at": "2026-11-06T05:43:46.117Z",
+      "ended_at": "2026-11-06T05:45:16.847Z"
+    }
+  ],
+  "observations": {
+    "requests_transfers": {
+      "evidence_id": "334b360a-96b5-49f1-af90-5c802b877daf",
+      "tool": "get_request_metrics",
+      "arguments": {
+        "route_group": "transfers"
+      },
+      "requested_window": {
+        "start": "2026-11-06T05:43:51.123Z",
+        "end": "2026-11-06T05:45:11.599Z"
+      },
+      "observed_window": {
+        "first": "2026-11-06T05:43:53.720Z",
+        "last": "2026-11-06T05:45:08.719Z"
+      },
+      "collected_at": "2026-11-06T05:45:27.648Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "prometheus",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+        "target_instance_id": "de7f3c97-2510-4d2b-a2c2-178ad22d8018"
+      },
+      "data": {
+        "route_group": "transfers",
+        "route_template": "/v1/transfers",
+        "requests": 256,
+        "requests_per_second": 3.181,
+        "server_error_ratio": 0.0,
+        "by_status": [
+          {
+            "status": "201",
+            "outcome": "SUCCESS",
+            "count": 256
+          }
+        ],
+        "latency_seconds": {
+          "p50": 0.1643,
+          "p95": 0.2414,
+          "p99": 0.2483,
+          "method": "interpolated within fixed histogram buckets summed across series"
+        },
+        "bucket_counts": [
+          {
+            "le": 0.005,
+            "count": 0
+          },
+          {
+            "le": 0.01,
+            "count": 0
+          },
+          {
+            "le": 0.025,
+            "count": 0
+          },
+          {
+            "le": 0.05,
+            "count": 0
+          },
+          {
+            "le": 0.1,
+            "count": 32
+          },
+          {
+            "le": 0.25,
+            "count": 256
+          },
+          {
+            "le": 0.5,
+            "count": 256
+          },
+          {
+            "le": 1.0,
+            "count": 256
+          },
+          {
+            "le": 2.5,
+            "count": 256
+          },
+          {
+            "le": 5.0,
+            "count": 256
+          },
+          {
+            "le": 10.0,
+            "count": 256
+          },
+          {
+            "le": "+Inf",
+            "count": 256
+          }
+        ],
+        "counter_resets": 0,
+        "scrapes": {
+          "expected_scrapes": 16,
+          "successful_scrapes": 16,
+          "failed_scrapes": 0,
+          "gaps": [],
+          "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)"
+        },
+        "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)"
+      },
+      "limitations": [],
+      "errors": []
+    },
+    "requests_consumer": {
+      "evidence_id": "871b92cb-8ff0-4a03-b08d-08be9b79317e",
+      "tool": "get_request_metrics",
+      "arguments": {
+        "route_group": "consumer"
+      },
+      "requested_window": {
+        "start": "2026-11-06T05:43:51.123Z",
+        "end": "2026-11-06T05:45:11.599Z"
+      },
+      "observed_window": {
+        "first": "2026-11-06T05:43:53.720Z",
+        "last": "2026-11-06T05:45:08.719Z"
+      },
+      "collected_at": "2026-11-06T05:45:27.677Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "prometheus",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+        "target_instance_id": "de7f3c97-2510-4d2b-a2c2-178ad22d8018"
+      },
+      "data": {
+        "route_group": "consumer",
+        "route_template": "/demo-consumer/events",
+        "requests": 0,
+        "requests_per_second": 0.0,
+        "server_error_ratio": null,
+        "by_status": [],
+        "latency_seconds": {
+          "p50": null,
+          "p95": null,
+          "p99": null,
+          "method": "interpolated within fixed histogram buckets summed across series"
+        },
+        "bucket_counts": [],
+        "counter_resets": 0,
+        "scrapes": {
+          "expected_scrapes": 16,
+          "successful_scrapes": 16,
+          "failed_scrapes": 0,
+          "gaps": [],
+          "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)"
+        },
+        "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)"
+      },
+      "limitations": [
+        "No requests to /demo-consumer/events were recorded in the window; percentiles are unavailable.",
+        "LedgerCore delivers to an external consumer in this window, so its in-process consumer route is not expected to receive requests. Use get_delivery_timings."
+      ],
+      "errors": []
+    },
+    "outbox": {
+      "evidence_id": "510b52ef-bc77-436d-989c-7bfadd393ce8",
+      "tool": "get_outbox_stats",
+      "arguments": {},
+      "requested_window": {
+        "start": "2026-11-06T05:43:51.123Z",
+        "end": "2026-11-06T05:45:11.599Z"
+      },
+      "observed_window": {
+        "first": "2026-11-06T05:43:53.720Z",
+        "last": "2026-11-06T05:45:08.719Z"
+      },
+      "collected_at": "2026-11-06T05:45:27.752Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "prometheus+postgres_aggregate",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+        "target_instance_id": "de7f3c97-2510-4d2b-a2c2-178ad22d8018"
+      },
+      "data": {
+        "gauges": {
+          "pending": {
+            "samples": 16,
+            "first": {
+              "at": "2026-11-06T05:43:53.720Z",
+              "value": 2.0
+            },
+            "last": {
+              "at": "2026-11-06T05:45:08.719Z",
+              "value": 29.0
+            },
+            "min": 2.0,
+            "max": 123.0,
+            "points": [
+              [
+                "2026-11-06T05:43:53.720Z",
+                2.0
+              ],
+              [
+                "2026-11-06T05:43:58.721Z",
+                4.0
+              ],
+              [
+                "2026-11-06T05:44:03.721Z",
+                4.0
+              ],
+              [
+                "2026-11-06T05:44:08.719Z",
+                11.0
+              ],
+              [
+                "2026-11-06T05:44:13.720Z",
+                27.0
+              ],
+              [
+                "2026-11-06T05:44:18.728Z",
+                43.0
+              ],
+              [
+                "2026-11-06T05:44:23.720Z",
+                59.0
+              ],
+              [
+                "2026-11-06T05:44:28.719Z",
+                75.0
+              ],
+              [
+                "2026-11-06T05:44:33.720Z",
+                91.0
+              ],
+              [
+                "2026-11-06T05:44:38.719Z",
+                107.0
+              ],
+              [
+                "2026-11-06T05:44:43.720Z",
+                123.0
+              ],
+              [
+                "2026-11-06T05:44:48.726Z",
+                121.0
+              ],
+              [
+                "2026-11-06T05:44:53.722Z",
+                97.0
+              ],
+              [
+                "2026-11-06T05:44:58.724Z",
+                73.0
+              ],
+              [
+                "2026-11-06T05:45:03.719Z",
+                49.0
+              ],
+              [
+                "2026-11-06T05:45:08.719Z",
+                29.0
+              ]
+            ]
+          },
+          "failed": {
+            "samples": 16,
+            "first": {
+              "at": "2026-11-06T05:43:53.720Z",
+              "value": 0.0
+            },
+            "last": {
+              "at": "2026-11-06T05:45:08.719Z",
+              "value": 0.0
+            },
+            "min": 0.0,
+            "max": 0.0,
+            "points": [
+              [
+                "2026-11-06T05:43:53.720Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:43:58.721Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:03.721Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:08.719Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:13.720Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:18.728Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:23.720Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:28.719Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:33.720Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:38.719Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:43.720Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:48.726Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:53.722Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:44:58.724Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:45:03.719Z",
+                0.0
+              ],
+              [
+                "2026-11-06T05:45:08.719Z",
+                0.0
+              ]
+            ]
+          },
+          "oldest_undelivered_age_seconds": {
+            "samples": 16,
+            "first": {
+              "at": "2026-11-06T05:43:53.720Z",
+              "value": 0.394489
+            },
+            "last": {
+              "at": "2026-11-06T05:45:08.719Z",
+              "value": 63.218394
+            },
+            "min": 0.394489,
+            "max": 63.218394,
+            "points": [
+              [
+                "2026-11-06T05:43:53.720Z",
+                0.394489
+              ],
+              [
+                "2026-11-06T05:43:58.721Z",
+                1.028171
+              ],
+              [
+                "2026-11-06T05:44:03.721Z",
+                1.022469
+              ],
+              [
+                "2026-11-06T05:44:08.719Z",
+                3.21991
+              ],
+              [
+                "2026-11-06T05:44:13.720Z",
+                8.221916
+              ],
+              [
+                "2026-11-06T05:44:18.728Z",
+                13.232083
+              ],
+              [
+                "2026-11-06T05:44:23.720Z",
+                18.218804
+              ],
+              [
+                "2026-11-06T05:44:28.719Z",
+                23.223359
+              ],
+              [
+                "2026-11-06T05:44:33.720Z",
+                28.21927
+              ],
+              [
+                "2026-11-06T05:44:38.719Z",
+                33.221136
+              ],
+              [
+                "2026-11-06T05:44:43.720Z",
+                38.219292
+              ],
+              [
+                "2026-11-06T05:44:48.726Z",
+                43.229578
+              ],
+              [
+                "2026-11-06T05:44:53.722Z",
+                48.222725
+              ],
+              [
+                "2026-11-06T05:44:58.724Z",
+                53.22552
+              ],
+              [
+                "2026-11-06T05:45:03.719Z",
+                58.218827
+              ],
+              [
+                "2026-11-06T05:45:08.719Z",
+                63.218394
+              ]
+            ]
+          }
+        },
+        "scrapes": {
+          "expected_scrapes": 16,
+          "successful_scrapes": 16,
+          "failed_scrapes": 0,
+          "gaps": [],
+          "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)"
+        },
+        "durable_counts": {
+          "committed_arrivals": 258,
+          "recorded_publications": 232,
+          "window_seconds": 80.476,
+          "arrivals_per_second": 3.206,
+          "publications_per_second": 2.883,
+          "bucket_seconds": 10,
+          "buckets": [
+            {
+              "start": "2026-11-06T05:43:51.123Z",
+              "arrivals": 32,
+              "publications": 30
+            },
+            {
+              "start": "2026-11-06T05:44:01.123Z",
+              "arrivals": 32,
+              "publications": 17
+            },
+            {
+              "start": "2026-11-06T05:44:11.123Z",
+              "arrivals": 32,
+              "publications": 0
+            },
+            {
+              "start": "2026-11-06T05:44:21.123Z",
+              "arrivals": 32,
+              "publications": 0
+            },
+            {
+              "start": "2026-11-06T05:44:31.123Z",
+              "arrivals": 32,
+              "publications": 0
+            },
+            {
+              "start": "2026-11-06T05:44:41.123Z",
+              "arrivals": 32,
+              "publications": 38
+            },
+            {
+              "start": "2026-11-06T05:44:51.123Z",
+              "arrivals": 32,
+              "publications": 80
+            },
+            {
+              "start": "2026-11-06T05:45:01.123Z",
+              "arrivals": 32,
+              "publications": 61
+            },
+            {
+              "start": "2026-11-06T05:45:11.123Z",
+              "arrivals": 2,
+              "publications": 6,
+              "partial_seconds": 0.476
+            }
+          ],
+          "arrival_timestamp_meaning": "committed outbox records grouped by creation (transaction-start) timestamp",
+          "publication_timestamp_meaning": "recorded publications grouped by publication-transaction timestamp",
+          "settled": true
+        }
+      },
+      "limitations": [
+        "Pending is a gauge sampled at scrape times; arrivals and publications are durable counts by timestamp. Transitions to FAILED and the different sampling instants mean pending change need not equal arrivals minus publications."
+      ],
+      "errors": []
+    },
+    "delivery_logs": {
+      "evidence_id": "0c2e549e-ae7a-479e-92fb-8262116066fc",
+      "tool": "search_delivery_logs",
+      "arguments": {
+        "outcome": "any",
+        "limit": 100
+      },
+      "requested_window": {
+        "start": "2026-11-06T05:43:51.123Z",
+        "end": "2026-11-06T05:45:11.599Z"
+      },
+      "observed_window": {
+        "first": "2026-11-06T05:43:52.112Z",
+        "last": "2026-11-06T05:45:11.571Z"
+      },
+      "collected_at": "2026-11-06T05:45:27.759Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "structured_logs",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+        "target_instance_id": "de7f3c97-2510-4d2b-a2c2-178ad22d8018"
+      },
+      "data": {
+        "outcome_filter": "any",
+        "matching_records": 819,
+        "returned_records": 100,
+        "counts_by_outcome": {
+          "success": 233,
+          "auth_error": 0,
+          "network_error": 586,
+          "server_error": 0,
+          "other": 0
+        },
+        "records": [
+          {
+            "started_at": "2026-11-06T05:43:52.112Z",
+            "ended_at": "2026-11-06T05:43:52.183995167Z",
+            "event_id": "f0dda4a2-4899-4a1f-a21f-a24c955666aa",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.953,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:52.185Z",
+            "ended_at": "2026-11-06T05:43:52.256776958Z",
+            "event_id": "616b687a-a439-4145-bffd-1d70b8e9b3dd",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.208,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:52.259Z",
+            "ended_at": "2026-11-06T05:43:52.330914375Z",
+            "event_id": "344b1080-1fa1-4b13-81ea-4f2703c348fc",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.509,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:52.333Z",
+            "ended_at": "2026-11-06T05:43:52.404969375Z",
+            "event_id": "1a30c3e5-3761-49a8-8ee0-8cd6e1ecfba6",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.5,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:53.416Z",
+            "ended_at": "2026-11-06T05:43:53.488435250Z",
+            "event_id": "832d1a83-f06d-4c90-989e-5c9992150bd7",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 72.432,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:53.491Z",
+            "ended_at": "2026-11-06T05:43:53.562656375Z",
+            "event_id": "024f2c76-ffcd-4a13-966e-6ba7b88a9c54",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.273,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:53.565Z",
+            "ended_at": "2026-11-06T05:43:53.636935Z",
+            "event_id": "10dfc948-1cb9-42b6-8d25-ae9571ab5320",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.103,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:53.639Z",
+            "ended_at": "2026-11-06T05:43:53.710832667Z",
+            "event_id": "45a5ff2b-6786-4bfd-95e1-a99750f92b2c",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 70.939,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:54.722Z",
+            "ended_at": "2026-11-06T05:43:54.794124209Z",
+            "event_id": "007931e3-a99c-4512-85c8-afd7ec9433a1",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.777,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:54.796Z",
+            "ended_at": "2026-11-06T05:43:54.867764541Z",
+            "event_id": "db4c5ace-308d-44ea-acec-378981b4a383",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.173,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:54.870Z",
+            "ended_at": "2026-11-06T05:43:54.942616750Z",
+            "event_id": "44b5c949-b754-41ae-80df-9e385ef6f5ef",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.941,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:54.944Z",
+            "ended_at": "2026-11-06T05:43:55.015747166Z",
+            "event_id": "ad07a16b-fcab-479f-9c39-3628547b7c13",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.613,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:55.016Z",
+            "ended_at": "2026-11-06T05:43:55.088223375Z",
+            "event_id": "e1a94d43-7a78-47fd-97e1-7d221fc94071",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.443,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:56.093Z",
+            "ended_at": "2026-11-06T05:43:56.169036791Z",
+            "event_id": "f69ce88a-67c8-47d4-abe0-5e0c92e73991",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 75.112,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:56.171Z",
+            "ended_at": "2026-11-06T05:43:56.242798625Z",
+            "event_id": "a919c9ef-8243-462a-9210-d85dd824de89",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.341,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:56.244Z",
+            "ended_at": "2026-11-06T05:43:56.315751167Z",
+            "event_id": "ab90b40e-627d-429b-9664-db4e79bdeca2",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.419,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:56.318Z",
+            "ended_at": "2026-11-06T05:43:56.390059792Z",
+            "event_id": "150f4638-8da1-41aa-a98e-11852f7228cd",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.518,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:57.398Z",
+            "ended_at": "2026-11-06T05:43:57.473742083Z",
+            "event_id": "24abf1a5-3425-4d1c-a1f4-003f629d6c28",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 74.981,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:57.476Z",
+            "ended_at": "2026-11-06T05:43:57.548175625Z",
+            "event_id": "9488243b-7afc-4c2b-b721-a5b0725d5dc2",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.908,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:57.549Z",
+            "ended_at": "2026-11-06T05:43:57.620927250Z",
+            "event_id": "5a7b9685-941c-405a-b7a8-1f48925899c1",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.254,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:57.623Z",
+            "ended_at": "2026-11-06T05:43:57.694782708Z",
+            "event_id": "7a6d3622-3bff-4c6f-b489-4f861648243d",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.141,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:58.709Z",
+            "ended_at": "2026-11-06T05:43:58.781495709Z",
+            "event_id": "6dc37840-15ab-48b3-b4e0-d9c2998a1953",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.907,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:58.783Z",
+            "ended_at": "2026-11-06T05:43:58.854990292Z",
+            "event_id": "bde96dc6-e765-4359-9155-869f2cb3e910",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.582,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:58.857Z",
+            "ended_at": "2026-11-06T05:43:58.929153667Z",
+            "event_id": "7a877682-0141-4dbb-828c-145152888ace",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.413,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:43:58.931Z",
+            "ended_at": "2026-11-06T05:43:59.003216Z",
+            "event_id": "2e7ba0ee-1d52-448b-b952-7bb27ba63c58",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.982,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:00.008Z",
+            "ended_at": "2026-11-06T05:44:00.080840709Z",
+            "event_id": "2c88d4d5-856a-4631-ace7-a1b88338267c",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 72.05,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:00.084Z",
+            "ended_at": "2026-11-06T05:44:00.155740833Z",
+            "event_id": "cf747bc4-c7fd-4715-8c01-56ea97ecb9a3",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.225,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:00.158Z",
+            "ended_at": "2026-11-06T05:44:00.229425750Z",
+            "event_id": "3a8a14ec-20b3-4b6a-a539-8319c9245e5e",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.1,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:00.231Z",
+            "ended_at": "2026-11-06T05:44:00.303097084Z",
+            "event_id": "7cbd54b1-04fe-4b9a-a66f-fe9d9b935d41",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.41,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:00.304Z",
+            "ended_at": "2026-11-06T05:44:00.375509Z",
+            "event_id": "9e17042f-9e1b-41fb-aa89-7e407936489a",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.113,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:01.382Z",
+            "ended_at": "2026-11-06T05:44:01.459472417Z",
+            "event_id": "b2e3413e-89cc-49d4-bdc7-75e077dd87f7",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 76.983,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:01.462Z",
+            "ended_at": "2026-11-06T05:44:01.533841417Z",
+            "event_id": "296c5a6c-fc6c-4100-80bc-efb0bf7297d7",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 70.864,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:01.535Z",
+            "ended_at": "2026-11-06T05:44:01.606706250Z",
+            "event_id": "6927cd04-1942-41ad-a64e-f0eaacd5b44a",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.01,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:01.609Z",
+            "ended_at": "2026-11-06T05:44:01.680508834Z",
+            "event_id": "56b7c58d-b6e4-4682-90eb-db6c4ee982a9",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.017,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:02.689Z",
+            "ended_at": "2026-11-06T05:44:02.768873375Z",
+            "event_id": "e5bad527-8311-472a-b27a-6ca0f9eb7908",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 79.173,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:02.775Z",
+            "ended_at": "2026-11-06T05:44:02.846684709Z",
+            "event_id": "41ad7c5d-a8d8-4e00-a6f3-672f6f29e659",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.556,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:02.849Z",
+            "ended_at": "2026-11-06T05:44:02.920733584Z",
+            "event_id": "74f17d55-bac2-43a3-9d58-2d59719b9cbb",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.259,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:02.923Z",
+            "ended_at": "2026-11-06T05:44:02.994230209Z",
+            "event_id": "c41ecf42-45c5-4380-9ed8-f37bdb0eec27",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 70.95,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:04.001Z",
+            "ended_at": "2026-11-06T05:44:04.073811584Z",
+            "event_id": "9b130605-ff4c-4d3f-9eeb-7fec300c3bf5",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 72.108,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:04.074Z",
+            "ended_at": "2026-11-06T05:44:04.145931833Z",
+            "event_id": "687818b5-24dc-4c27-8c25-be98cf563679",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.082,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:04.149Z",
+            "ended_at": "2026-11-06T05:44:04.220077583Z",
+            "event_id": "3f91de32-4025-4d82-a2d0-f0cf14ed441e",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.075,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:04.222Z",
+            "ended_at": "2026-11-06T05:44:04.293924667Z",
+            "event_id": "426a5bfa-892a-4c40-991b-c59e896f93e6",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 70.934,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:05.297Z",
+            "ended_at": "2026-11-06T05:44:05.369174833Z",
+            "event_id": "1da0a896-e9c5-4f7b-9e8a-2afb8528b376",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.685,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:05.372Z",
+            "ended_at": "2026-11-06T05:44:05.443248709Z",
+            "event_id": "246ce7ed-fb2f-4e22-a26b-037326a36367",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.083,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:05.446Z",
+            "ended_at": "2026-11-06T05:44:05.517314875Z",
+            "event_id": "d1063dfa-2268-4b1c-b65a-431468e8b2ee",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.246,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:05.518Z",
+            "ended_at": "2026-11-06T05:44:05.589482542Z",
+            "event_id": "3881f748-c4c3-40ff-8d3f-f5962310b95f",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 70.786,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:05.591Z",
+            "ended_at": "2026-11-06T05:44:05.662734167Z",
+            "event_id": "027adbc4-5849-41a3-b5d4-53eb900ce2bd",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "SUCCESS",
+            "outcome": "success",
+            "http_status": 200,
+            "duration_ms": 71.262,
+            "transition_recorded": true
+          },
+          {
+            "started_at": "2026-11-06T05:44:06.677Z",
+            "ended_at": "2026-11-06T05:44:06.679667667Z",
+            "event_id": "5673167e-22f0-4cee-9620-69c361689aae",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 2.107,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:06.684Z",
+            "ended_at": "2026-11-06T05:44:06.685198791Z",
+            "event_id": "88af1467-7c96-49e2-8ab0-c480ed23f81b",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.676,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:06.686Z",
+            "ended_at": "2026-11-06T05:44:06.687295833Z",
+            "event_id": "0f81ad99-b398-43f0-ad83-d0254368004c",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.511,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:06.689Z",
+            "ended_at": "2026-11-06T05:44:06.689515959Z",
+            "event_id": "4802b36f-2cb2-4d21-943e-76ce78632281",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.497,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.696Z",
+            "ended_at": "2026-11-06T05:44:07.697482833Z",
+            "event_id": "9cb1929f-b07a-42ce-81bf-b4bdf290d385",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 1.187,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.699Z",
+            "ended_at": "2026-11-06T05:44:07.700082834Z",
+            "event_id": "f6ab7e05-3fb0-4932-b174-5eb4d7e51e79",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.594,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.701Z",
+            "ended_at": "2026-11-06T05:44:07.701723208Z",
+            "event_id": "eed6513a-63e9-41f2-8818-dc7707cea92e",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.54,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.703Z",
+            "ended_at": "2026-11-06T05:44:07.704109416Z",
+            "event_id": "5673167e-22f0-4cee-9620-69c361689aae",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.449,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.705Z",
+            "ended_at": "2026-11-06T05:44:07.705558916Z",
+            "event_id": "88af1467-7c96-49e2-8ab0-c480ed23f81b",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.414,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.706Z",
+            "ended_at": "2026-11-06T05:44:07.706926417Z",
+            "event_id": "0f81ad99-b398-43f0-ad83-d0254368004c",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.428,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.707Z",
+            "ended_at": "2026-11-06T05:44:07.708377458Z",
+            "event_id": "4802b36f-2cb2-4d21-943e-76ce78632281",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.46,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.720Z",
+            "ended_at": "2026-11-06T05:44:08.721508958Z",
+            "event_id": "6bfb5b6a-b866-4e13-b1e0-1e7c51439052",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.98,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.723Z",
+            "ended_at": "2026-11-06T05:44:08.724369750Z",
+            "event_id": "81fb29ce-eea8-4b05-bc67-06d11fc58ecf",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.521,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.725Z",
+            "ended_at": "2026-11-06T05:44:08.726243833Z",
+            "event_id": "ecb9da51-b837-4f7f-a183-ea35db69425f",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.663,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.727Z",
+            "ended_at": "2026-11-06T05:44:08.728465666Z",
+            "event_id": "9cb1929f-b07a-42ce-81bf-b4bdf290d385",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.542,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.729Z",
+            "ended_at": "2026-11-06T05:44:08.729942292Z",
+            "event_id": "f6ab7e05-3fb0-4932-b174-5eb4d7e51e79",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.501,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.730Z",
+            "ended_at": "2026-11-06T05:44:08.731026208Z",
+            "event_id": "eed6513a-63e9-41f2-8818-dc7707cea92e",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.416,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.745Z",
+            "ended_at": "2026-11-06T05:44:09.746298375Z",
+            "event_id": "4d92b28a-5b0b-4f0e-9a58-68219b749f99",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 1.142,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.749Z",
+            "ended_at": "2026-11-06T05:44:09.749946833Z",
+            "event_id": "48fe2ef5-7d29-4c3c-b471-f7527da4697c",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.471,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.751Z",
+            "ended_at": "2026-11-06T05:44:09.751588834Z",
+            "event_id": "a3ff6f0b-e9ae-4a19-8665-820123a7c081",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.454,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.752Z",
+            "ended_at": "2026-11-06T05:44:09.753017917Z",
+            "event_id": "141d7590-090b-442e-927d-f200311c051e",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.411,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.754Z",
+            "ended_at": "2026-11-06T05:44:09.754554833Z",
+            "event_id": "5673167e-22f0-4cee-9620-69c361689aae",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.371,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.755Z",
+            "ended_at": "2026-11-06T05:44:09.755868167Z",
+            "event_id": "88af1467-7c96-49e2-8ab0-c480ed23f81b",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.342,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.756Z",
+            "ended_at": "2026-11-06T05:44:09.757064792Z",
+            "event_id": "0f81ad99-b398-43f0-ad83-d0254368004c",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.341,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.758Z",
+            "ended_at": "2026-11-06T05:44:09.758576792Z",
+            "event_id": "4802b36f-2cb2-4d21-943e-76ce78632281",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.364,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.759Z",
+            "ended_at": "2026-11-06T05:44:09.759985459Z",
+            "event_id": "6bfb5b6a-b866-4e13-b1e0-1e7c51439052",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.348,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.760Z",
+            "ended_at": "2026-11-06T05:44:09.761319958Z",
+            "event_id": "81fb29ce-eea8-4b05-bc67-06d11fc58ecf",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.333,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.762Z",
+            "ended_at": "2026-11-06T05:44:09.762926042Z",
+            "event_id": "ecb9da51-b837-4f7f-a183-ea35db69425f",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.561,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.772Z",
+            "ended_at": "2026-11-06T05:44:10.774107833Z",
+            "event_id": "fc4845c7-af96-4b9b-b74c-fe2c9bdfdb64",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 2.005,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.776Z",
+            "ended_at": "2026-11-06T05:44:10.777525375Z",
+            "event_id": "80279ce4-410e-4c64-8ade-371aa3cc1821",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.658,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.778Z",
+            "ended_at": "2026-11-06T05:44:10.779362166Z",
+            "event_id": "4634565e-ab1d-4b81-abf2-1df374852634",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.545,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.780Z",
+            "ended_at": "2026-11-06T05:44:10.781151334Z",
+            "event_id": "9cb1929f-b07a-42ce-81bf-b4bdf290d385",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.565,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.782Z",
+            "ended_at": "2026-11-06T05:44:10.783420Z",
+            "event_id": "f6ab7e05-3fb0-4932-b174-5eb4d7e51e79",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.976,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.784Z",
+            "ended_at": "2026-11-06T05:44:10.785179042Z",
+            "event_id": "eed6513a-63e9-41f2-8818-dc7707cea92e",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.628,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.786Z",
+            "ended_at": "2026-11-06T05:44:10.786882959Z",
+            "event_id": "4d92b28a-5b0b-4f0e-9a58-68219b749f99",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.628,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.787Z",
+            "ended_at": "2026-11-06T05:44:10.788571541Z",
+            "event_id": "48fe2ef5-7d29-4c3c-b471-f7527da4697c",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.692,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.789Z",
+            "ended_at": "2026-11-06T05:44:10.790488875Z",
+            "event_id": "a3ff6f0b-e9ae-4a19-8665-820123a7c081",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.82,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.791Z",
+            "ended_at": "2026-11-06T05:44:10.792017250Z",
+            "event_id": "141d7590-090b-442e-927d-f200311c051e",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.541,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.806Z",
+            "ended_at": "2026-11-06T05:44:11.807924958Z",
+            "event_id": "74a4f920-576d-4b2c-b82d-90af505a05f0",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 1.02,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.810Z",
+            "ended_at": "2026-11-06T05:44:11.810652750Z",
+            "event_id": "6a0a4dcc-4257-498e-bd95-cc89da3bcdda",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.476,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.812Z",
+            "ended_at": "2026-11-06T05:44:11.812518834Z",
+            "event_id": "16826258-4fb0-401e-ac80-2f2753bd907c",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.48,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.813Z",
+            "ended_at": "2026-11-06T05:44:11.814214167Z",
+            "event_id": "6bfb5b6a-b866-4e13-b1e0-1e7c51439052",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.491,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.815Z",
+            "ended_at": "2026-11-06T05:44:11.815698959Z",
+            "event_id": "81fb29ce-eea8-4b05-bc67-06d11fc58ecf",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.443,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.816Z",
+            "ended_at": "2026-11-06T05:44:11.816939083Z",
+            "event_id": "ecb9da51-b837-4f7f-a183-ea35db69425f",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.346,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.817Z",
+            "ended_at": "2026-11-06T05:44:11.818016041Z",
+            "event_id": "fc4845c7-af96-4b9b-b74c-fe2c9bdfdb64",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.289,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.818Z",
+            "ended_at": "2026-11-06T05:44:11.819187042Z",
+            "event_id": "80279ce4-410e-4c64-8ade-371aa3cc1821",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.38,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.819Z",
+            "ended_at": "2026-11-06T05:44:11.820250583Z",
+            "event_id": "4634565e-ab1d-4b81-abf2-1df374852634",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.29,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.823Z",
+            "ended_at": "2026-11-06T05:44:12.825045333Z",
+            "event_id": "cc14890d-85ea-4906-9141-f30ea5d44205",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 1.132,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.826Z",
+            "ended_at": "2026-11-06T05:44:12.826905542Z",
+            "event_id": "bd3740d8-1c39-495a-a1f8-8722df582215",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.672,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.827Z",
+            "ended_at": "2026-11-06T05:44:12.828206583Z",
+            "event_id": "344b5196-97a8-455e-a887-41d85ef868b7",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.481,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.829Z",
+            "ended_at": "2026-11-06T05:44:12.829864500Z",
+            "event_id": "4d92b28a-5b0b-4f0e-9a58-68219b749f99",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.739,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.830Z",
+            "ended_at": "2026-11-06T05:44:12.831355291Z",
+            "event_id": "48fe2ef5-7d29-4c3c-b471-f7527da4697c",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.426,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.831Z",
+            "ended_at": "2026-11-06T05:44:12.832268500Z",
+            "event_id": "a3ff6f0b-e9ae-4a19-8665-820123a7c081",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.321,
+            "transition_recorded": false
+          }
+        ],
+        "ingestion": {
+          "caught_up_at": "2026-11-06T05:45:19.760Z",
+          "discontinuities": []
+        },
+        "record_check": {
+          "attempt_records": 819,
+          "attempts_reported_by_poll_batches": 820
+        },
+        "note": "Records are LedgerCore's own delivery-attempt log lines, earliest first."
+      },
+      "limitations": [
+        "Only the earliest 100 of 819 matching records are listed; counts_by_outcome covers all of them."
+      ],
+      "errors": []
+    },
+    "network_errors": {
+      "evidence_id": "a10ae541-8395-4952-a35d-b14b38cc318d",
+      "tool": "search_delivery_logs",
+      "arguments": {
+        "outcome": "network_error",
+        "limit": 100
+      },
+      "requested_window": {
+        "start": "2026-11-06T05:43:51.123Z",
+        "end": "2026-11-06T05:45:11.599Z"
+      },
+      "observed_window": {
+        "first": "2026-11-06T05:43:52.112Z",
+        "last": "2026-11-06T05:45:11.571Z"
+      },
+      "collected_at": "2026-11-06T05:45:27.767Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "structured_logs",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+        "target_instance_id": "de7f3c97-2510-4d2b-a2c2-178ad22d8018"
+      },
+      "data": {
+        "outcome_filter": "network_error",
+        "matching_records": 586,
+        "returned_records": 100,
+        "counts_by_outcome": {
+          "success": 233,
+          "auth_error": 0,
+          "network_error": 586,
+          "server_error": 0,
+          "other": 0
+        },
+        "records": [
+          {
+            "started_at": "2026-11-06T05:44:06.677Z",
+            "ended_at": "2026-11-06T05:44:06.679667667Z",
+            "event_id": "5673167e-22f0-4cee-9620-69c361689aae",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 2.107,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:06.684Z",
+            "ended_at": "2026-11-06T05:44:06.685198791Z",
+            "event_id": "88af1467-7c96-49e2-8ab0-c480ed23f81b",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.676,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:06.686Z",
+            "ended_at": "2026-11-06T05:44:06.687295833Z",
+            "event_id": "0f81ad99-b398-43f0-ad83-d0254368004c",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.511,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:06.689Z",
+            "ended_at": "2026-11-06T05:44:06.689515959Z",
+            "event_id": "4802b36f-2cb2-4d21-943e-76ce78632281",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.497,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.696Z",
+            "ended_at": "2026-11-06T05:44:07.697482833Z",
+            "event_id": "9cb1929f-b07a-42ce-81bf-b4bdf290d385",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 1.187,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.699Z",
+            "ended_at": "2026-11-06T05:44:07.700082834Z",
+            "event_id": "f6ab7e05-3fb0-4932-b174-5eb4d7e51e79",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.594,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.701Z",
+            "ended_at": "2026-11-06T05:44:07.701723208Z",
+            "event_id": "eed6513a-63e9-41f2-8818-dc7707cea92e",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.54,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.703Z",
+            "ended_at": "2026-11-06T05:44:07.704109416Z",
+            "event_id": "5673167e-22f0-4cee-9620-69c361689aae",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.449,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.705Z",
+            "ended_at": "2026-11-06T05:44:07.705558916Z",
+            "event_id": "88af1467-7c96-49e2-8ab0-c480ed23f81b",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.414,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.706Z",
+            "ended_at": "2026-11-06T05:44:07.706926417Z",
+            "event_id": "0f81ad99-b398-43f0-ad83-d0254368004c",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.428,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:07.707Z",
+            "ended_at": "2026-11-06T05:44:07.708377458Z",
+            "event_id": "4802b36f-2cb2-4d21-943e-76ce78632281",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.46,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.720Z",
+            "ended_at": "2026-11-06T05:44:08.721508958Z",
+            "event_id": "6bfb5b6a-b866-4e13-b1e0-1e7c51439052",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.98,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.723Z",
+            "ended_at": "2026-11-06T05:44:08.724369750Z",
+            "event_id": "81fb29ce-eea8-4b05-bc67-06d11fc58ecf",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.521,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.725Z",
+            "ended_at": "2026-11-06T05:44:08.726243833Z",
+            "event_id": "ecb9da51-b837-4f7f-a183-ea35db69425f",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.663,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.727Z",
+            "ended_at": "2026-11-06T05:44:08.728465666Z",
+            "event_id": "9cb1929f-b07a-42ce-81bf-b4bdf290d385",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.542,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.729Z",
+            "ended_at": "2026-11-06T05:44:08.729942292Z",
+            "event_id": "f6ab7e05-3fb0-4932-b174-5eb4d7e51e79",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.501,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:08.730Z",
+            "ended_at": "2026-11-06T05:44:08.731026208Z",
+            "event_id": "eed6513a-63e9-41f2-8818-dc7707cea92e",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.416,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.745Z",
+            "ended_at": "2026-11-06T05:44:09.746298375Z",
+            "event_id": "4d92b28a-5b0b-4f0e-9a58-68219b749f99",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 1.142,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.749Z",
+            "ended_at": "2026-11-06T05:44:09.749946833Z",
+            "event_id": "48fe2ef5-7d29-4c3c-b471-f7527da4697c",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.471,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.751Z",
+            "ended_at": "2026-11-06T05:44:09.751588834Z",
+            "event_id": "a3ff6f0b-e9ae-4a19-8665-820123a7c081",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.454,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.752Z",
+            "ended_at": "2026-11-06T05:44:09.753017917Z",
+            "event_id": "141d7590-090b-442e-927d-f200311c051e",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.411,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.754Z",
+            "ended_at": "2026-11-06T05:44:09.754554833Z",
+            "event_id": "5673167e-22f0-4cee-9620-69c361689aae",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.371,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.755Z",
+            "ended_at": "2026-11-06T05:44:09.755868167Z",
+            "event_id": "88af1467-7c96-49e2-8ab0-c480ed23f81b",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.342,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.756Z",
+            "ended_at": "2026-11-06T05:44:09.757064792Z",
+            "event_id": "0f81ad99-b398-43f0-ad83-d0254368004c",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.341,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.758Z",
+            "ended_at": "2026-11-06T05:44:09.758576792Z",
+            "event_id": "4802b36f-2cb2-4d21-943e-76ce78632281",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.364,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.759Z",
+            "ended_at": "2026-11-06T05:44:09.759985459Z",
+            "event_id": "6bfb5b6a-b866-4e13-b1e0-1e7c51439052",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.348,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.760Z",
+            "ended_at": "2026-11-06T05:44:09.761319958Z",
+            "event_id": "81fb29ce-eea8-4b05-bc67-06d11fc58ecf",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.333,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:09.762Z",
+            "ended_at": "2026-11-06T05:44:09.762926042Z",
+            "event_id": "ecb9da51-b837-4f7f-a183-ea35db69425f",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.561,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.772Z",
+            "ended_at": "2026-11-06T05:44:10.774107833Z",
+            "event_id": "fc4845c7-af96-4b9b-b74c-fe2c9bdfdb64",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 2.005,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.776Z",
+            "ended_at": "2026-11-06T05:44:10.777525375Z",
+            "event_id": "80279ce4-410e-4c64-8ade-371aa3cc1821",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.658,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.778Z",
+            "ended_at": "2026-11-06T05:44:10.779362166Z",
+            "event_id": "4634565e-ab1d-4b81-abf2-1df374852634",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.545,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.780Z",
+            "ended_at": "2026-11-06T05:44:10.781151334Z",
+            "event_id": "9cb1929f-b07a-42ce-81bf-b4bdf290d385",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.565,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.782Z",
+            "ended_at": "2026-11-06T05:44:10.783420Z",
+            "event_id": "f6ab7e05-3fb0-4932-b174-5eb4d7e51e79",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.976,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.784Z",
+            "ended_at": "2026-11-06T05:44:10.785179042Z",
+            "event_id": "eed6513a-63e9-41f2-8818-dc7707cea92e",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.628,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.786Z",
+            "ended_at": "2026-11-06T05:44:10.786882959Z",
+            "event_id": "4d92b28a-5b0b-4f0e-9a58-68219b749f99",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.628,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.787Z",
+            "ended_at": "2026-11-06T05:44:10.788571541Z",
+            "event_id": "48fe2ef5-7d29-4c3c-b471-f7527da4697c",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.692,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.789Z",
+            "ended_at": "2026-11-06T05:44:10.790488875Z",
+            "event_id": "a3ff6f0b-e9ae-4a19-8665-820123a7c081",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.82,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:10.791Z",
+            "ended_at": "2026-11-06T05:44:10.792017250Z",
+            "event_id": "141d7590-090b-442e-927d-f200311c051e",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.541,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.806Z",
+            "ended_at": "2026-11-06T05:44:11.807924958Z",
+            "event_id": "74a4f920-576d-4b2c-b82d-90af505a05f0",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 1.02,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.810Z",
+            "ended_at": "2026-11-06T05:44:11.810652750Z",
+            "event_id": "6a0a4dcc-4257-498e-bd95-cc89da3bcdda",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.476,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.812Z",
+            "ended_at": "2026-11-06T05:44:11.812518834Z",
+            "event_id": "16826258-4fb0-401e-ac80-2f2753bd907c",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.48,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.813Z",
+            "ended_at": "2026-11-06T05:44:11.814214167Z",
+            "event_id": "6bfb5b6a-b866-4e13-b1e0-1e7c51439052",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.491,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.815Z",
+            "ended_at": "2026-11-06T05:44:11.815698959Z",
+            "event_id": "81fb29ce-eea8-4b05-bc67-06d11fc58ecf",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.443,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.816Z",
+            "ended_at": "2026-11-06T05:44:11.816939083Z",
+            "event_id": "ecb9da51-b837-4f7f-a183-ea35db69425f",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.346,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.817Z",
+            "ended_at": "2026-11-06T05:44:11.818016041Z",
+            "event_id": "fc4845c7-af96-4b9b-b74c-fe2c9bdfdb64",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.289,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.818Z",
+            "ended_at": "2026-11-06T05:44:11.819187042Z",
+            "event_id": "80279ce4-410e-4c64-8ade-371aa3cc1821",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.38,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:11.819Z",
+            "ended_at": "2026-11-06T05:44:11.820250583Z",
+            "event_id": "4634565e-ab1d-4b81-abf2-1df374852634",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.29,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.823Z",
+            "ended_at": "2026-11-06T05:44:12.825045333Z",
+            "event_id": "cc14890d-85ea-4906-9141-f30ea5d44205",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 1.132,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.826Z",
+            "ended_at": "2026-11-06T05:44:12.826905542Z",
+            "event_id": "bd3740d8-1c39-495a-a1f8-8722df582215",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.672,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.827Z",
+            "ended_at": "2026-11-06T05:44:12.828206583Z",
+            "event_id": "344b5196-97a8-455e-a887-41d85ef868b7",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.481,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.829Z",
+            "ended_at": "2026-11-06T05:44:12.829864500Z",
+            "event_id": "4d92b28a-5b0b-4f0e-9a58-68219b749f99",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.739,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.830Z",
+            "ended_at": "2026-11-06T05:44:12.831355291Z",
+            "event_id": "48fe2ef5-7d29-4c3c-b471-f7527da4697c",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.426,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.831Z",
+            "ended_at": "2026-11-06T05:44:12.832268500Z",
+            "event_id": "a3ff6f0b-e9ae-4a19-8665-820123a7c081",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.321,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.832Z",
+            "ended_at": "2026-11-06T05:44:12.833153833Z",
+            "event_id": "141d7590-090b-442e-927d-f200311c051e",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.291,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.833Z",
+            "ended_at": "2026-11-06T05:44:12.834033166Z",
+            "event_id": "01db8ee1-f00c-410a-994e-fec992399dd7",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.302,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.834Z",
+            "ended_at": "2026-11-06T05:44:12.834928875Z",
+            "event_id": "74a4f920-576d-4b2c-b82d-90af505a05f0",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.309,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.835Z",
+            "ended_at": "2026-11-06T05:44:12.835848667Z",
+            "event_id": "6a0a4dcc-4257-498e-bd95-cc89da3bcdda",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.339,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:12.836Z",
+            "ended_at": "2026-11-06T05:44:12.836878750Z",
+            "event_id": "16826258-4fb0-401e-ac80-2f2753bd907c",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.404,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.842Z",
+            "ended_at": "2026-11-06T05:44:13.843218125Z",
+            "event_id": "1a2d6eaf-8830-4660-8bb8-1922d083b414",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.809,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.844Z",
+            "ended_at": "2026-11-06T05:44:13.845199875Z",
+            "event_id": "bbd2c2aa-413d-4b70-91c3-7b65880e1223",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.422,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.846Z",
+            "ended_at": "2026-11-06T05:44:13.846608792Z",
+            "event_id": "df32d682-4947-4171-9e3a-ef29b046298a",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.38,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.847Z",
+            "ended_at": "2026-11-06T05:44:13.847719Z",
+            "event_id": "5673167e-22f0-4cee-9620-69c361689aae",
+            "attempt": 4,
+            "total_attempt": 4,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.322,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.849Z",
+            "ended_at": "2026-11-06T05:44:13.849519417Z",
+            "event_id": "88af1467-7c96-49e2-8ab0-c480ed23f81b",
+            "attempt": 4,
+            "total_attempt": 4,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.388,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.850Z",
+            "ended_at": "2026-11-06T05:44:13.850618792Z",
+            "event_id": "0f81ad99-b398-43f0-ad83-d0254368004c",
+            "attempt": 4,
+            "total_attempt": 4,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.372,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.851Z",
+            "ended_at": "2026-11-06T05:44:13.851867792Z",
+            "event_id": "4802b36f-2cb2-4d21-943e-76ce78632281",
+            "attempt": 4,
+            "total_attempt": 4,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.401,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.852Z",
+            "ended_at": "2026-11-06T05:44:13.853085708Z",
+            "event_id": "fc4845c7-af96-4b9b-b74c-fe2c9bdfdb64",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.343,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.853Z",
+            "ended_at": "2026-11-06T05:44:13.854139833Z",
+            "event_id": "80279ce4-410e-4c64-8ade-371aa3cc1821",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.341,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.855Z",
+            "ended_at": "2026-11-06T05:44:13.855292042Z",
+            "event_id": "4634565e-ab1d-4b81-abf2-1df374852634",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.279,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.856Z",
+            "ended_at": "2026-11-06T05:44:13.856421292Z",
+            "event_id": "cc14890d-85ea-4906-9141-f30ea5d44205",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.294,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.857Z",
+            "ended_at": "2026-11-06T05:44:13.857437416Z",
+            "event_id": "bd3740d8-1c39-495a-a1f8-8722df582215",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.272,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.858Z",
+            "ended_at": "2026-11-06T05:44:13.858449291Z",
+            "event_id": "344b5196-97a8-455e-a887-41d85ef868b7",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.301,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:13.859Z",
+            "ended_at": "2026-11-06T05:44:13.859378083Z",
+            "event_id": "01db8ee1-f00c-410a-994e-fec992399dd7",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.29,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.872Z",
+            "ended_at": "2026-11-06T05:44:14.874870208Z",
+            "event_id": "abd231b4-8dd6-4780-a37d-fc4b4b969d29",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 1.961,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.877Z",
+            "ended_at": "2026-11-06T05:44:14.878584458Z",
+            "event_id": "379bc44d-3717-4e4b-bd79-95739ca9b0a9",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.936,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.880Z",
+            "ended_at": "2026-11-06T05:44:14.880914500Z",
+            "event_id": "59f343fe-149c-4e5d-9ab1-9ddb725b0b5c",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.793,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.882Z",
+            "ended_at": "2026-11-06T05:44:14.883295958Z",
+            "event_id": "9cb1929f-b07a-42ce-81bf-b4bdf290d385",
+            "attempt": 4,
+            "total_attempt": 4,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.905,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.884Z",
+            "ended_at": "2026-11-06T05:44:14.885544708Z",
+            "event_id": "f6ab7e05-3fb0-4932-b174-5eb4d7e51e79",
+            "attempt": 4,
+            "total_attempt": 4,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.692,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.887Z",
+            "ended_at": "2026-11-06T05:44:14.887694042Z",
+            "event_id": "eed6513a-63e9-41f2-8818-dc7707cea92e",
+            "attempt": 4,
+            "total_attempt": 4,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.679,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.889Z",
+            "ended_at": "2026-11-06T05:44:14.889773084Z",
+            "event_id": "74a4f920-576d-4b2c-b82d-90af505a05f0",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.692,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.891Z",
+            "ended_at": "2026-11-06T05:44:14.892159584Z",
+            "event_id": "6a0a4dcc-4257-498e-bd95-cc89da3bcdda",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.79,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.893Z",
+            "ended_at": "2026-11-06T05:44:14.894612917Z",
+            "event_id": "16826258-4fb0-401e-ac80-2f2753bd907c",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.829,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.896Z",
+            "ended_at": "2026-11-06T05:44:14.897077334Z",
+            "event_id": "1a2d6eaf-8830-4660-8bb8-1922d083b414",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.872,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.898Z",
+            "ended_at": "2026-11-06T05:44:14.898999875Z",
+            "event_id": "bbd2c2aa-413d-4b70-91c3-7b65880e1223",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.606,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:14.900Z",
+            "ended_at": "2026-11-06T05:44:14.900714500Z",
+            "event_id": "df32d682-4947-4171-9e3a-ef29b046298a",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.446,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.909Z",
+            "ended_at": "2026-11-06T05:44:15.910237459Z",
+            "event_id": "f19ef8cc-3048-4ed4-9165-2a877e7caccb",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 1.048,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.912Z",
+            "ended_at": "2026-11-06T05:44:15.913324250Z",
+            "event_id": "125516af-e4e5-45d7-8078-f25459768533",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.419,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.914Z",
+            "ended_at": "2026-11-06T05:44:15.914677083Z",
+            "event_id": "baba6e20-d146-40ab-a327-fb49804e8647",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.371,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.915Z",
+            "ended_at": "2026-11-06T05:44:15.916009209Z",
+            "event_id": "6bfb5b6a-b866-4e13-b1e0-1e7c51439052",
+            "attempt": 4,
+            "total_attempt": 4,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.522,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.916Z",
+            "ended_at": "2026-11-06T05:44:15.917290625Z",
+            "event_id": "81fb29ce-eea8-4b05-bc67-06d11fc58ecf",
+            "attempt": 4,
+            "total_attempt": 4,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.403,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.918Z",
+            "ended_at": "2026-11-06T05:44:15.918483916Z",
+            "event_id": "ecb9da51-b837-4f7f-a183-ea35db69425f",
+            "attempt": 4,
+            "total_attempt": 4,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.369,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.919Z",
+            "ended_at": "2026-11-06T05:44:15.919725334Z",
+            "event_id": "cc14890d-85ea-4906-9141-f30ea5d44205",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.316,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.920Z",
+            "ended_at": "2026-11-06T05:44:15.920754125Z",
+            "event_id": "bd3740d8-1c39-495a-a1f8-8722df582215",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.286,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.921Z",
+            "ended_at": "2026-11-06T05:44:15.922189667Z",
+            "event_id": "344b5196-97a8-455e-a887-41d85ef868b7",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.593,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.922Z",
+            "ended_at": "2026-11-06T05:44:15.923301042Z",
+            "event_id": "01db8ee1-f00c-410a-994e-fec992399dd7",
+            "attempt": 3,
+            "total_attempt": 3,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.313,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.924Z",
+            "ended_at": "2026-11-06T05:44:15.924667792Z",
+            "event_id": "abd231b4-8dd6-4780-a37d-fc4b4b969d29",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.353,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.925Z",
+            "ended_at": "2026-11-06T05:44:15.926195125Z",
+            "event_id": "379bc44d-3717-4e4b-bd79-95739ca9b0a9",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.496,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:15.926Z",
+            "ended_at": "2026-11-06T05:44:15.927362042Z",
+            "event_id": "59f343fe-149c-4e5d-9ab1-9ddb725b0b5c",
+            "attempt": 2,
+            "total_attempt": 2,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.433,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:16.937Z",
+            "ended_at": "2026-11-06T05:44:16.938136375Z",
+            "event_id": "349b53cc-0dbc-4a59-9a23-38556931739a",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.942,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:16.939Z",
+            "ended_at": "2026-11-06T05:44:16.940335209Z",
+            "event_id": "a388eae1-8d1b-4123-8a2f-7c9501a8560e",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.535,
+            "transition_recorded": false
+          },
+          {
+            "started_at": "2026-11-06T05:44:16.941Z",
+            "ended_at": "2026-11-06T05:44:16.941747583Z",
+            "event_id": "2009dfae-c56d-4620-9c72-ecc3c504c9aa",
+            "attempt": 1,
+            "total_attempt": 1,
+            "result": "CONNECTION_FAILED",
+            "outcome": "network_error",
+            "http_status": null,
+            "duration_ms": 0.446,
+            "transition_recorded": false
+          }
+        ],
+        "ingestion": {
+          "caught_up_at": "2026-11-06T05:45:19.760Z",
+          "discontinuities": []
+        },
+        "record_check": {
+          "attempt_records": 819,
+          "attempts_reported_by_poll_batches": 820
+        },
+        "note": "Records are LedgerCore's own delivery-attempt log lines, earliest first."
+      },
+      "limitations": [
+        "Only the earliest 100 of 586 matching records are listed; counts_by_outcome covers all of them."
+      ],
+      "errors": []
+    },
+    "timings": {
+      "evidence_id": "cd3f021e-c027-4e8d-ade6-caf1946b6cd9",
+      "tool": "get_delivery_timings",
+      "arguments": {},
+      "requested_window": {
+        "start": "2026-11-06T05:43:51.123Z",
+        "end": "2026-11-06T05:45:11.599Z"
+      },
+      "observed_window": {
+        "first": "2026-11-06T05:43:52.112Z",
+        "last": "2026-11-06T05:45:11.571Z"
+      },
+      "collected_at": "2026-11-06T05:45:27.782Z",
+      "coverage": "COMPLETE",
+      "truncated": false,
+      "source": {
+        "kind": "structured_logs",
+        "instance": "ledgercore-local",
+        "adapter_version": "1.0",
+        "target_revision": "86e4bf1c38fb+dirty.ed5247a36278",
+        "target_instance_id": "de7f3c97-2510-4d2b-a2c2-178ad22d8018"
+      },
+      "data": {
+        "attempts": 819,
+        "correlated_attempts": 233,
+        "uncorrelated_attempts": 586,
+        "unmatched_consumer_records": 42,
+        "total_ms": {
+          "count": 819,
+          "min": 0.173,
+          "p50": 0.443,
+          "p95": 71.567,
+          "max": 80.331,
+          "mean": 20.624
+        },
+        "total_ms_by_result": {
+          "CONNECTION_FAILED": {
+            "count": 586,
+            "min": 0.173,
+            "p50": 0.347,
+            "p95": 0.936,
+            "max": 2.107,
+            "mean": 0.439
+          },
+          "SUCCESS": {
+            "count": 233,
+            "min": 70.621,
+            "p50": 71.092,
+            "p95": 72.432,
+            "max": 80.331,
+            "mean": 71.391
+          }
+        },
+        "consumer_auth_ms": {
+          "count": 233,
+          "min": 70.04,
+          "p50": 70.218,
+          "p95": 71.077,
+          "max": 78.565,
+          "mean": 70.456
+        },
+        "consumer_handler_ms": {
+          "count": 233,
+          "min": 0.006,
+          "p50": 0.012,
+          "p95": 0.03,
+          "max": 0.04,
+          "mean": 0.015
+        },
+        "unattributed_ms": {
+          "count": 233,
+          "min": 0.529,
+          "p50": 0.824,
+          "p95": 1.595,
+          "max": 3.653,
+          "mean": 0.92
+        },
+        "consumer_measured_by": "fixture consumer (test fixture)",
+        "consumer_target": "http://127.0.0.1:18090/events",
+        "meaning": "total_ms is LedgerCore's measured attempt duration. consumer_auth_ms and consumer_handler_ms are measured sequentially inside the consumer. unattributed_ms is the remainder (network, connection setup, request parsing) and is not broken down further.",
+        "correlation": "same event ID, consumer receipt time inside the attempt's start and end (+/- 50 ms)",
+        "ingestion": {
+          "ledgercore": {
+            "caught_up_at": "2026-11-06T05:45:19.760Z",
+            "discontinuities": []
+          },
+          "fixture_consumer": {
+            "caught_up_at": "2026-11-06T05:45:19.760Z",
+            "discontinuities": []
+          }
+        },
+        "record_check": {
+          "attempt_records": 819,
+          "attempts_reported_by_poll_batches": 820
+        }
+      },
+      "limitations": [
+        "586 attempt(s) had no matching consumer record (for example refused connections or timeouts before the consumer logged)."
+      ],
+      "errors": []
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+ "arguments": {},
+ "collected_at": "2026-11-07T05:30:03.086Z",
+ "coverage": "PARTIAL",
+ "data": {
+  "attempts": 0,
+  "consumer_auth_ms": {
+   "count": 0,
+   "max": null,
+   "mean": null,
+   "min": null,
+   "p50": null,
+   "p95": null
+  },
+  "consumer_handler_ms": {
+   "count": 0,
+   "max": null,
+   "mean": null,
+   "min": null,
+   "p50": null,
+   "p95": null
+  },
+  "consumer_measured_by": null,
+  "consumer_target": "http://127.0.0.1:18090/events",
+  "correlated_attempts": 0,
+  "correlation": "same event ID, consumer receipt time inside the attempt's start and end (+/- 50 ms)",
+  "ingestion": {
+   "fixture_consumer": {
+    "caught_up_at": null,
+    "discontinuities": []
+   },
+   "ledgercore": {
+    "caught_up_at": null,
+    "discontinuities": []
+   }
+  },
+  "meaning": "total_ms is LedgerCore's measured attempt duration. consumer_auth_ms and consumer_handler_ms are measured sequentially inside the consumer. unattributed_ms is the remainder (network, connection setup, request parsing) and is not broken down further.",
+  "record_check": {
+   "attempt_records": 0,
+   "attempts_reported_by_poll_batches": 0
+  },
+  "total_ms": {
+   "count": 0,
+   "max": null,
+   "mean": null,
+   "min": null,
+   "p50": null,
+   "p95": null
+  },
+  "total_ms_by_result": {},
+  "unattributed_ms": {
+   "count": 0,
+   "max": null,
+   "mean": null,
+   "min": null,
+   "p50": null,
+   "p95": null
+  },
+  "uncorrelated_attempts": 0,
+  "unmatched_consumer_records": 0
+ },
+ "errors": [],
+ "evidence_id": "6073d1ee-5e1b-4bb6-9159-891411ffd64c",
+ "limitations": [
+  "The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+  "No consumer-side timing records in the window: authentication and handler times are unknown."
+ ],
+ "observed_window": {
+  "first": null,
+  "last": null
+ },
+ "requested_window": {
+  "end": "2026-11-07T05:29:52.000Z",
+  "start": "2026-11-07T05:26:22.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "structured_logs",
+  "target_instance_id": "6f3ef0f4-2e96-4ef1-8f9e-edd3c4770b13",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_delivery_timings",
+ "truncated": false
+}

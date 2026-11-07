@@ -1,0 +1,4 @@
+{"at": "2026-11-06T14:34:48.480Z", "action": "component_stopped", "component": "collector"}
+{"at": "2026-11-06T14:34:48.623Z", "action": "component_restarted", "component": "collector"}
+{"at": "2026-11-06T14:34:48.983Z", "action": "component_stopped", "component": "prometheus"}
+{"at": "2026-11-06T14:34:49.148Z", "action": "component_restarted", "component": "prometheus"}

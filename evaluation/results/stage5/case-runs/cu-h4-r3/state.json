@@ -1,0 +1,168 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cu-h4-r3",
+  "template": "cu-h4",
+  "split": "held_out",
+  "category": "consumer_unavailable",
+  "ground_truth": "consumer_unavailable",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 305062554,
+      "controller_run": "stage5-cu-h4-r3-a1",
+      "bundle": "b-12196089e42e",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T07:03:40.000Z",
+        "end": "2026-11-07T07:06:10.000Z"
+      },
+      "validity": "logs COMPLETE, network_error 428 of 428 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "557fd397-5766-43ae-ae6d-14583952c645",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4051,
+        "reported_output_tokens": 1300,
+        "tokens_counted_against_budget": 5351,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 11,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publication stalled ~30 s while commits continued, and the backlog was then drained in a burst. Delivery attempts failed with instant connection failures to the consumer, which matches late notifications. Why the consumer refused connections is not shown.",
+      "evidence": {
+        "E1": "352fb44f-ca29-427d-9978-e7e48660b0cf",
+        "E2": "563081f9-e7fb-4578-9685-33ff44f52163",
+        "E3": "6ebcd36f-8b8a-49ae-bfab-fa61358921a1",
+        "E4": "7b5699f5-aa31-4009-a1d1-18d6836bfcb9",
+        "E5": "28086eca-4157-4297-a343-378b8a197498",
+        "E6": "9572414b-c212-47b7-a31e-32722fc26172",
+        "E7": "869c9631-f938-4cc4-acda-5775edcc0771"
+      },
+      "findings": [
+        {
+          "claim": "Publications stopped for about 30 s (buckets 2-4 at 0) while commits stayed at 28 per bucket, then caught up with a burst (38, 81, 40, 39).",
+          "reason": "Per-bucket arrivals vs publications, with pending rising to 98 and then draining to 2.",
+          "support": "observed",
+          "evidence_ids": [
+            "563081f9-e7fb-4578-9685-33ff44f52163"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "428 delivery attempts failed with CONNECTION_FAILED in about 0.5 ms, and the first failures were at 07:03:58. This points to refused connections to the consumer rather than slow processing.",
+          "reason": "Failures are near-instant with no consumer record, while successful attempts take ~71 ms (consumer auth).",
+          "support": "observed",
+          "evidence_ids": [
+            "6ebcd36f-8b8a-49ae-bfab-fa61358921a1",
+            "7b5699f5-aa31-4009-a1d1-18d6836bfcb9"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The API, DB pool and DB locks are not the cause. Transfers returned 201 with stable latency, the pool had no waits or timeouts, and no blocking was sampled.",
+          "reason": "All three show healthy values over the window.",
+          "support": "observed",
+          "evidence_ids": [
+            "352fb44f-ca29-427d-9978-e7e48660b0cf",
+            "28086eca-4157-4297-a343-378b8a197498",
+            "9572414b-c212-47b7-a31e-32722fc26172"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "No data on consumer process state or network, so the reason for the refused connections is unknown.",
+        "Delivery logs list only the first 100 of 849 records, and 849 attempt records vs 847 reported by poll batches is a small unexplained mismatch."
+      ],
+      "next_checks": [
+        "Check consumer availability and logs at 127.0.0.1:18090 around 07:03:58-07:04:30 for a restart or listener outage.",
+        "Inspect the 1034 old FAILED outbox rows to see whether they come from an earlier incident and need replay."
+      ],
+      "alternatives": [
+        {
+          "reason": "The failed count stayed constant at 1034 during the window, so those rows are old and did not grow with the stall.",
+          "assessment": "weakened",
+          "hypothesis": "The 1034 old FAILED outbox rows (oldest ~48000 s) are the source of the lateness.",
+          "evidence_ids": [
+            "563081f9-e7fb-4578-9685-33ff44f52163"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        },
+        {
+          "reason": "70 ms per call is small against a ~30 s stall; the stall coincides with the connection failures.",
+          "assessment": "weakened",
+          "hypothesis": "Slow consumer auth (~70 ms) delays delivery.",
+          "evidence_ids": [
+            "7b5699f5-aa31-4009-a1d1-18d6836bfcb9"
+          ],
+          "evidence_handles": [
+            "E4"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4051,
+    "output_tokens": 1300,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 18.1,
+    "classified_dev_aid": "consumer_unavailable",
+    "cost_usd": 0.0211,
+    "checks": {
+      "numbers_checked": 11,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_unavailable",
+    "rule": "428 of 428 failed deliveries were network_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

@@ -1,0 +1,312 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "me-d1-r1",
+  "template": "me-d1",
+  "split": "development",
+  "category": "missing_evidence",
+  "ground_truth": "insufficient_evidence",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 1949422272,
+      "controller_run": "stage5-me-d1-r1-a1",
+      "bundle": "b-2d7e5e55cc38",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T14:53:01.000Z",
+        "end": "2026-11-06T14:55:31.000Z"
+      },
+      "validity": "deciding source logs PARTIAL; durable backlog peak 290"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "TENTATIVE",
+    "primary_cause": "publisher_throughput",
+    "rule": "throughput shortfall without a slow consumer component",
+    "evidence_ids": [
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "f5254fdc-f9f9-4153-8571-da1de50fce50",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3544,
+        "reported_output_tokens": 1043,
+        "tokens_counted_against_budget": 4587,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 10,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publication stalled for about 90 s (14:54:23 to 14:55:03) while transfers kept committing, so notifications were delayed. The cause is not determined: delivery logs and blocker samples are missing.",
+      "evidence": {
+        "E1": "79b326db-ff40-47d0-abd9-1439db24e646",
+        "E2": "ce9c32dc-4f9d-4946-819e-9070189ce2d7",
+        "E3": "5efbfb36-0768-4873-959f-dd9efbe4778a",
+        "E4": "17305478-21d3-4df4-8008-2c6214220cef",
+        "E5": "87951605-6422-4fc8-89e2-141d3b713b21",
+        "E6": "77e5a86c-4b07-4c0b-8fec-017eabdb187b",
+        "E7": "76d38053-63f4-481f-8290-43ba05d2abee"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publications dropped to 0 for nine consecutive 10 s buckets while arrivals stayed steady at 32 per bucket, then resumed at 80 per bucket.",
+          "reason": "Per-bucket counts show a stall followed by catch-up. Arrivals minus publications was 146 over the window.",
+          "support": "observed",
+          "evidence_ids": [
+            "ce9c32dc-4f9d-4946-819e-9070189ce2d7"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Notification delay grew with the stall: oldest undelivered age rose from 0.4 s to 118.9 s and pending peaked at 285, with no FAILED rows.",
+          "reason": "The backlog built up and was draining at the end, matching customers seeing late notifications.",
+          "support": "observed",
+          "evidence_ids": [
+            "ce9c32dc-4f9d-4946-819e-9070189ce2d7"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The delay is not on the transfer API or the DB connection pool. Transfers returned 201 with p99 of 0.25 s and no 500s, and the pool had no pending borrowers or timeouts.",
+          "reason": "Request latency, error ratio and pool gauges were all healthy and complete.",
+          "support": "observed",
+          "evidence_ids": [
+            "79b326db-ff40-47d0-abd9-1439db24e646",
+            "87951605-6422-4fc8-89e2-141d3b713b21"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Delivery logs and timings are PARTIAL with zero records, so attempt outcomes and consumer latency are unknown.",
+        "Blocker sampling was UNAVAILABLE (0/75 samples), so DB blocking can't be ruled in or out.",
+        "E3 (search_delivery_logs) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+        "E4 (get_delivery_timings) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+        "E6 (get_database_blockers) is UNAVAILABLE: Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+      ],
+      "next_checks": [
+        "Re-run search_delivery_logs and get_delivery_timings once the collector has read past the window end, to see attempt outcomes and consumer latency during 14:54:23-14:55:03.",
+        "Check the outbox poller thread and the consumer at 127.0.0.1:18090 for a stall or pause in that interval."
+      ],
+      "alternatives": [
+        {
+          "reason": "There are no delivery attempt records or timings, so consumer behavior can't be checked.",
+          "assessment": "unassessed",
+          "hypothesis": "The consumer endpoint at 127.0.0.1:18090 was slow or unresponsive, so delivery attempts hit the 3 s timeout.",
+          "evidence_ids": [
+            "5efbfb36-0768-4873-959f-dd9efbe4778a",
+            "17305478-21d3-4df4-8008-2c6214220cef",
+            "76d38053-63f4-481f-8290-43ba05d2abee"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4",
+            "E7"
+          ]
+        },
+        {
+          "reason": "Blocker sampling was unavailable, and pool gauges show no saturation, which only weakly argues against it.",
+          "assessment": "unassessed",
+          "hypothesis": "DB lock contention or a poller stall blocked the outbox poller.",
+          "evidence_ids": [
+            "77e5a86c-4b07-4c0b-8fec-017eabdb187b",
+            "87951605-6422-4fc8-89e2-141d3b713b21"
+          ],
+          "evidence_handles": [
+            "E6",
+            "E5"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3544,
+    "output_tokens": 1043,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.01752,
+    "checks": {
+      "numbers_checked": 10,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.1"
+  },
+  "P_replays": {
+    "2026-11-06.2": {
+      "job_id": "eebbcf58-22e3-4f79-89f0-f5864f5579cc",
+      "status": "COMPLETED",
+      "final_reason": "model report: INCONCLUSIVE",
+      "report": {
+        "usage": {
+          "tool_actions": 7,
+          "model_actions": 1,
+          "reported_input_tokens": 3748,
+          "reported_output_tokens": 994,
+          "tokens_counted_against_budget": 4742,
+          "model_calls_with_unknown_usage": 0
+        },
+        "checks": {
+          "numbers_checked": 4,
+          "numbers_not_found_in_cited_evidence": 2
+        },
+        "outcome": "INCONCLUSIVE",
+        "summary": "Outbox publication stalled for about 90 s while arrivals continued, which explains the late notifications. The logs, timings and blocker data needed to name the cause are missing.",
+        "evidence": {
+          "E1": "e3f0f89b-95bd-4447-9760-33fee532e4b0",
+          "E2": "cb31f04b-bca6-4677-b1fd-d353385afcaf",
+          "E3": "4ff0f2b4-1362-4608-aa8c-f4554f07633b",
+          "E4": "c811660c-75b6-4a38-9bbb-1c84deabc4d7",
+          "E5": "a542cc32-800e-41eb-aab4-67eb15829544",
+          "E6": "77e6074d-b222-4904-bf60-2094e3b9407e",
+          "E7": "e49da46e-5368-4102-8ed3-588932e5198b"
+        },
+        "findings": [
+          {
+            "claim": "The outbox stopped publishing for about 90 s (buckets 4-12) while arrivals stayed at 32 per bucket. The backlog and oldest-event age grew to about 119 s.",
+            "reason": "Publications were 0 for nine consecutive 10 s buckets. Pending rose to 285 and oldest age reached 118.85 s. This matches the late notifications.",
+            "support": "observed",
+            "evidence_ids": [
+              "cb31f04b-bca6-4677-b1fd-d353385afcaf"
+            ],
+            "evidence_handles": [
+              "E2"
+            ],
+            "unverified_numbers": [
+              "90",
+              "4"
+            ]
+          },
+          {
+            "claim": "The transfer API was healthy. Lateness comes from the outbox delivery stage, not from request handling.",
+            "reason": "All 479 requests returned 201, there were no 500s, and p99 latency was 0.25 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "e3f0f89b-95bd-4447-9760-33fee532e4b0"
+            ],
+            "evidence_handles": [
+              "E1"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "The database connection pool was not the bottleneck, and no deliveries failed outright.",
+            "reason": "The pool showed 0 pending borrowers and 0 acquisition timeouts. The failed count stayed at 0. Publications resumed at 80 per bucket, which looks like a backlog drain.",
+            "support": "observed",
+            "evidence_ids": [
+              "a542cc32-800e-41eb-aab4-67eb15829544",
+              "cb31f04b-bca6-4677-b1fd-d353385afcaf"
+            ],
+            "evidence_handles": [
+              "E5",
+              "E2"
+            ],
+            "unverified_numbers": []
+          }
+        ],
+        "limitations": [
+          "Delivery logs and timings are PARTIAL with zero records, so the delivery attempts during the stall are not visible.",
+          "Blocker sampling was UNAVAILABLE for the whole window, so DB blocking cannot be assessed.",
+          "E3 (search_delivery_logs) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+          "E4 (get_delivery_timings) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+          "E6 (get_database_blockers) is UNAVAILABLE: Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+        ],
+        "next_checks": [
+          "Re-collect the delivery logs and timings once the collector has read past the window end. Look at consumer responses and timeouts between 14:53:40 and 14:55:10.",
+          "Check the consumer fixture and the outbox poller thread for hangs or pauses in that interval."
+        ],
+        "alternatives": [
+          {
+            "reason": "No delivery attempts or consumer timings were collected, so this can be neither supported nor ruled out.",
+            "assessment": "unassessed",
+            "hypothesis": "The consumer endpoint was slow or hung. The 3 s delivery timeout would then stall each poll batch.",
+            "evidence_ids": [
+              "c811660c-75b6-4a38-9bbb-1c84deabc4d7",
+              "e49da46e-5368-4102-8ed3-588932e5198b"
+            ],
+            "evidence_handles": [
+              "E4",
+              "E7"
+            ]
+          },
+          {
+            "reason": "Blocker sampling was unavailable (0/75 samples ok) and the delivery logs were empty.",
+            "assessment": "unassessed",
+            "hypothesis": "Database lock contention or a stalled poller thread blocked the outbox.",
+            "evidence_ids": [
+              "77e6074d-b222-4904-bf60-2094e3b9407e",
+              "4ff0f2b4-1362-4608-aa8c-f4554f07633b"
+            ],
+            "evidence_handles": [
+              "E6",
+              "E3"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 1,
+      "tool_calls": 7,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "search_delivery_logs",
+        "get_delivery_timings",
+        "get_pool_metrics",
+        "get_database_blockers",
+        "get_runtime_config"
+      ],
+      "recoveries": 0,
+      "input_tokens": 3748,
+      "output_tokens": 994,
+      "unknown_usage_calls": 0,
+      "replay_elapsed_seconds": 20.2,
+      "classified_dev_aid": "lock_contention",
+      "cost_usd": 0.01744,
+      "checks": {
+        "numbers_checked": 4,
+        "numbers_not_found_in_cited_evidence": 2
+      },
+      "prompt_version": "2026-11-06.2"
+    }
+  }
+}

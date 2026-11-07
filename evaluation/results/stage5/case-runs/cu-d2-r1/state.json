@@ -1,0 +1,326 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cu-d2-r1",
+  "template": "cu-d2",
+  "split": "development",
+  "category": "consumer_unavailable",
+  "ground_truth": "consumer_unavailable",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3304795726,
+      "controller_run": "stage5-cu-d2-r1-a1",
+      "bundle": "b-68c8b6083448",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T16:02:36.000Z",
+        "end": "2026-11-06T16:05:36.000Z"
+      },
+      "validity": "logs COMPLETE, network_error 912 of 912 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "f570fd80-2278-43bc-bf6f-729c92a2b8a5",
+    "status": "COMPLETED",
+    "final_reason": "model report: SUPPORTED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3858,
+        "reported_output_tokens": 1142,
+        "tokens_counted_against_budget": 5000,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 10,
+        "numbers_not_found_in_cited_evidence": 2
+      },
+      "outcome": "SUPPORTED",
+      "summary": "Outbox publication stalled ~60 s mid-window while arrivals continued, building a backlog (age up to 71 s). The 912 CONNECTION_FAILED attempts to the consumer are the likely cause; the backlog then drained.",
+      "evidence": {
+        "E1": "fa611065-5aa9-445e-ae06-e23c2cec8df7",
+        "E2": "e315e994-86f7-4374-be83-adc6d61fe252",
+        "E3": "d07d8866-71df-4728-a4a6-7f3510292d5a",
+        "E4": "1e48b43b-edfc-43c4-a81e-9a64e53df2ec",
+        "E5": "5ebadf74-4e40-44ee-be48-c5eee82852f3",
+        "E6": "66498cef-efe2-48e6-840b-b535521710d8",
+        "E7": "87f84792-3ab8-40c6-91a6-e43d58a86d92"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publications dropped to ~0 for about 60 s (buckets 5-10) while arrivals stayed at 30 per 10 s, then caught up in bursts of ~80.",
+          "reason": "Per-bucket counts show a publication stall and subsequent catch-up; pending peaked at 176.",
+          "support": "observed",
+          "evidence_ids": [
+            "e315e994-86f7-4374-be83-adc6d61fe252"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "60",
+            "5"
+          ]
+        },
+        {
+          "claim": "Oldest undelivered event age grew to 71.5 s, which matches customers seeing late notifications.",
+          "reason": "oldest_undelivered_age rose from 0.19 s to 71.5 s, then returned to 0.85 s.",
+          "support": "observed",
+          "evidence_ids": [
+            "e315e994-86f7-4374-be83-adc6d61fe252"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "912 of 1452 delivery attempts failed with CONNECTION_FAILED in about 0.27 ms, with no consumer record, consistent with the consumer refusing connections during the stall.",
+          "reason": "Instant failures with no consumer record fit refused connections. Retries at a 1 s poll interval would explain the attempt volume. The timing alignment with the stall was not directly shown.",
+          "support": "inferred",
+          "evidence_ids": [
+            "d07d8866-71df-4728-a4a6-7f3510292d5a",
+            "1e48b43b-edfc-43c4-a81e-9a64e53df2ec",
+            "87f84792-3ab8-40c6-91a6-e43d58a86d92"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4",
+            "E7"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Transfer API, DB pool and DB locking look healthy, so the delay is in outbox delivery rather than request handling.",
+          "reason": "No 500s and p99 of 0.25 s. No pool pending or timeouts. No blocking sampled.",
+          "support": "observed",
+          "evidence_ids": [
+            "fa611065-5aa9-445e-ae06-e23c2cec8df7",
+            "5ebadf74-4e40-44ee-be48-c5eee82852f3",
+            "66498cef-efe2-48e6-840b-b535521710d8"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Only the earliest 100 of 1452 delivery log records were listed, so the failures during the stall window were not individually seen.",
+        "Blocking is sampled every 2 s and the pool gauges every 5 s, so brief contention could be missed."
+      ],
+      "next_checks": [
+        "List delivery attempts between 16:03:10 and 16:04:20 to confirm the CONNECTION_FAILED attempts coincide with the stall.",
+        "Check the consumer's availability and listener logs for 127.0.0.1:18090 during that period."
+      ],
+      "alternatives": [
+        {
+          "reason": "The failed attempts are consistent with consumer refusal, but the attempt timestamps during the stall were not listed.",
+          "assessment": "unassessed",
+          "hypothesis": "Outbox poller itself paused (e.g. stuck thread) rather than consumer unavailability",
+          "evidence_ids": [
+            "e315e994-86f7-4374-be83-adc6d61fe252",
+            "d07d8866-71df-4728-a4a6-7f3510292d5a"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3"
+          ]
+        },
+        {
+          "reason": "No pool waits, no timeouts, and no blocking sampled.",
+          "assessment": "weakened",
+          "hypothesis": "DB or pool contention delayed publication",
+          "evidence_ids": [
+            "5ebadf74-4e40-44ee-be48-c5eee82852f3",
+            "66498cef-efe2-48e6-840b-b535521710d8"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3858,
+    "output_tokens": 1142,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "consumer_unavailable",
+    "cost_usd": 0.01914,
+    "checks": {
+      "numbers_checked": 10,
+      "numbers_not_found_in_cited_evidence": 2
+    },
+    "prompt_version": "2026-11-06.1"
+  },
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_unavailable",
+    "rule": "912 of 912 failed deliveries were network_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P_replays": {
+    "2026-11-06.2": {
+      "job_id": "9aa159a7-be1b-4b8e-b733-80b7d76c47ea",
+      "status": "COMPLETED",
+      "final_reason": "model report: TENTATIVE",
+      "report": {
+        "usage": {
+          "tool_actions": 7,
+          "model_actions": 1,
+          "reported_input_tokens": 4062,
+          "reported_output_tokens": 1044,
+          "tokens_counted_against_budget": 5106,
+          "model_calls_with_unknown_usage": 0
+        },
+        "checks": {
+          "numbers_checked": 9,
+          "numbers_not_found_in_cited_evidence": 1
+        },
+        "outcome": "TENTATIVE",
+        "summary": "Outbox publication stalled from ~16:03:20 to ~16:04:10 while arrivals continued, so notifications were delayed up to ~71 s. 912 CONNECTION_FAILED attempts match the stall, but consumer-side unavailability is not directly confirmed.",
+        "evidence": {
+          "E1": "5f75d0d4-ada4-43e6-add5-a8b4668328b7",
+          "E2": "12090901-df16-4277-a9d5-2525ab2becd2",
+          "E3": "cd71f0a5-c8c1-41fe-981c-a05d48d8c137",
+          "E4": "8f84db41-9798-48b3-ae7d-1e45d2735107",
+          "E5": "299406d5-50df-4a59-be58-746cca84295b",
+          "E6": "fade87ce-6f82-4eca-9172-0372596190d9",
+          "E7": "93ddfe0d-b72e-4f33-b437-47a037a4c0b1"
+        },
+        "findings": [
+          {
+            "claim": "Outbox publications nearly stopped for about 50 s while commits continued at a steady 30 per 10 s, then caught up in a burst.",
+            "reason": "Buckets show 1,0,0,0,0,0 publications, then 78/80/80/63; pending peaked at 176 and oldest undelivered age reached 71.5 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "12090901-df16-4277-a9d5-2525ab2becd2"
+            ],
+            "evidence_handles": [
+              "E2"
+            ],
+            "unverified_numbers": [
+              "50"
+            ]
+          },
+          {
+            "claim": "The stall coincides with 912 connection-refused-style delivery attempts (CONNECTION_FAILED, ~0.27 ms, no consumer record), versus 540 successes at ~71 ms.",
+            "reason": "Failures were instant with no consumer record, consistent with the consumer endpoint being unreachable during the stall; the outage timing is not directly shown.",
+            "support": "inferred",
+            "evidence_ids": [
+              "cd71f0a5-c8c1-41fe-981c-a05d48d8c137",
+              "8f84db41-9798-48b3-ae7d-1e45d2735107"
+            ],
+            "evidence_handles": [
+              "E3",
+              "E4"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "The request path, DB pool and DB locking do not explain the delay: transfers had 0 server errors with p99 0.25 s, no pool waits or timeouts, and no blockers.",
+            "reason": "All three sources are COMPLETE and show no fault, so the delay arises in outbox delivery, after the transfer commits.",
+            "support": "observed",
+            "evidence_ids": [
+              "5f75d0d4-ada4-43e6-add5-a8b4668328b7",
+              "299406d5-50df-4a59-be58-746cca84295b",
+              "fade87ce-6f82-4eca-9172-0372596190d9"
+            ],
+            "evidence_handles": [
+              "E1",
+              "E5",
+              "E6"
+            ],
+            "unverified_numbers": []
+          }
+        ],
+        "limitations": [
+          "The consumer is a test fixture on 127.0.0.1:18090 and no consumer-side availability or log source was available to confirm it was down.",
+          "Only the earliest 100 of 1452 delivery log records were listed, so the failure window is inferred from outbox buckets rather than timestamped failures."
+        ],
+        "next_checks": [
+          "Check consumer process and listener logs on port 18090 for downtime around 16:03:20-16:04:10.",
+          "List delivery log records with outcome network_error and their timestamps to confirm they fall inside the publication stall."
+        ],
+        "alternatives": [
+          {
+            "reason": "No pending borrowers, no acquisition timeouts and no blocked sessions were observed.",
+            "assessment": "weakened",
+            "hypothesis": "Database pool exhaustion or lock contention stalled the outbox poller.",
+            "evidence_ids": [
+              "299406d5-50df-4a59-be58-746cca84295b",
+              "fade87ce-6f82-4eca-9172-0372596190d9"
+            ],
+            "evidence_handles": [
+              "E5",
+              "E6"
+            ]
+          },
+          {
+            "reason": "Failures were instant connection failures, not slow ones; successful attempts took only ~71 ms.",
+            "assessment": "weakened",
+            "hypothesis": "Slow consumer responses (timeouts) delayed delivery.",
+            "evidence_ids": [
+              "8f84db41-9798-48b3-ae7d-1e45d2735107"
+            ],
+            "evidence_handles": [
+              "E4"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 1,
+      "tool_calls": 7,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "search_delivery_logs",
+        "get_delivery_timings",
+        "get_pool_metrics",
+        "get_database_blockers",
+        "get_runtime_config"
+      ],
+      "recoveries": 0,
+      "input_tokens": 4062,
+      "output_tokens": 1044,
+      "unknown_usage_calls": 0,
+      "replay_elapsed_seconds": 22.2,
+      "classified_dev_aid": "consumer_unavailable",
+      "cost_usd": 0.01856,
+      "checks": {
+        "numbers_checked": 9,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "prompt_version": "2026-11-06.2"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{"at": "2026-11-06T18:25:05.577Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T18:25:05.572Z"}
+{"at": "2026-11-06T18:25:05.608Z", "action": "workload_started", "rate_per_second": 2.2, "seed": 4267141191}
+{"at": "2026-11-06T18:25:17.004Z", "action": "distractor_started", "kind": "overspend_and_replays"}
+{"at": "2026-11-06T18:27:17.009Z", "action": "distractor_stopped", "kind": "overspend_and_replays", "request_errors": 0}
+{"at": "2026-11-06T18:27:37.546Z", "action": "workload_stopped", "sent": 335, "statuses": {"201": 335}, "errors": {}, "started_at": "2026-11-06T18:25:05.608Z", "ended_at": "2026-11-06T18:27:37.546Z"}
+{"at": "2026-11-06T18:27:37.546Z", "action": "window", "start": "2026-11-06T18:25:07.000Z", "end": "2026-11-06T18:27:37.000Z", "template": "he-h4"}

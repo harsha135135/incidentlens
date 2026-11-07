@@ -1,0 +1,108 @@
+{
+ "arguments": {
+  "limit": 50,
+  "mode": "historical"
+ },
+ "collected_at": "2026-11-06T15:30:55.165Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "blocked_sessions": 2,
+  "blocker_roles": {
+   "ledger_app": 2,
+   "other": 2
+  },
+  "edges": [
+   {
+    "blocked_pid": 50111,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 50113,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-06T15:28:29.417Z",
+    "last_seen": "2026-11-06T15:29:51.414Z",
+    "max_blocked_wait_seconds": 1.944,
+    "max_blocker_transaction_seconds": 84.118,
+    "samples": 28
+   },
+   {
+    "blocked_pid": 50112,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 50111,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-06T15:28:29.417Z",
+    "last_seen": "2026-11-06T15:29:35.417Z",
+    "max_blocked_wait_seconds": 0.662,
+    "max_blocker_transaction_seconds": 1.544,
+    "samples": 3
+   },
+   {
+    "blocked_pid": 50112,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 50113,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-06T15:28:31.417Z",
+    "last_seen": "2026-11-06T15:29:51.414Z",
+    "max_blocked_wait_seconds": 1.951,
+    "max_blocker_transaction_seconds": 84.118,
+    "samples": 29
+   },
+   {
+    "blocked_pid": 50111,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 50112,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-06T15:28:41.413Z",
+    "last_seen": "2026-11-06T15:29:05.417Z",
+    "max_blocked_wait_seconds": 1.07,
+    "max_blocker_transaction_seconds": 2.198,
+    "samples": 3
+   }
+  ],
+  "first_blocking_at": "2026-11-06T15:28:29.417Z",
+  "last_blocking_at": "2026-11-06T15:29:51.414Z",
+  "max_blocked_wait_seconds": 1.951,
+  "meaning": "Each edge: a waiting ledger_app session (blocked_pid) and the session holding the lock (blocker_pid), labelled only ledger_app or other. No query text is collected.",
+  "mode": "historical",
+  "relationships": 4,
+  "samples": {
+   "expected": 100,
+   "failed": 0,
+   "gaps": [],
+   "successful": 100,
+   "with_blocking": 36
+  }
+ },
+ "errors": [],
+ "evidence_id": "16c7a7a0-612d-4a78-b92b-f4a97b59ff7a",
+ "limitations": [
+  "Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+ ],
+ "observed_window": {
+  "first": "2026-11-06T15:27:25.417Z",
+  "last": "2026-11-06T15:30:43.417Z"
+ },
+ "requested_window": {
+  "end": "2026-11-06T15:30:44.000Z",
+  "start": "2026-11-06T15:27:24.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "postgres_samples",
+  "target_instance_id": "1b3e83f9-9d93-4353-8540-e76d51bf915e",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_database_blockers",
+ "truncated": false
+}

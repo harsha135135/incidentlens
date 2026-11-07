@@ -1,0 +1,6 @@
+{"at": "2026-11-06T20:13:08.046Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T20:13:08.041Z"}
+{"at": "2026-11-06T20:13:08.090Z", "action": "workload_started", "rate_per_second": 3.0, "seed": 3228216117}
+{"at": "2026-11-06T20:47:08.627Z", "action": "distractor_started", "kind": "load_bump"}
+{"at": "2026-11-06T21:19:32.103Z", "action": "distractor_stopped", "kind": "load_bump", "request_errors": 0}
+{"at": "2026-11-06T21:35:58.783Z", "action": "consumer_mode", "mode": "reject", "handler_delay_ms": 0, "requested_at": "2026-11-06T21:35:58.776Z"}
+{"at": "2026-11-06T21:35:58.788Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T21:35:58.784Z"}

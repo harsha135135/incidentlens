@@ -1,0 +1,188 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "lp-h1-r2",
+  "template": "lp-h1",
+  "split": "held_out",
+  "category": "lock_pool_exhaustion",
+  "ground_truth": "lock_contention+pool_saturation",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 695384505,
+      "controller_run": "stage5-lp-h1-r2-a1",
+      "bundle": "b-e6fda3748d4a",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T04:32:48.000Z",
+        "end": "2026-11-07T04:36:48.000Z"
+      },
+      "validity": "blockers COMPLETE, other edges 1, pool timeouts 298"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "lock_contention",
+    "rule": "a non-ledger_app session blocked ledger_app sessions in 52 samples; 298 pool acquisition timeouts",
+    "evidence_ids": [
+      "E6",
+      "E5"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "133bcbe2-0002-47d7-8f0a-2fa207359c66",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4650,
+        "reported_output_tokens": 1174,
+        "tokens_counted_against_budget": 5824,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 7,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "After the 04:34:11 restart the pool was set to max 1 with a 250 ms timeout. An idle-in-transaction session blocked the one connection, causing pool timeouts and failed transfers (500/503). The link to the 500/503 responses is inferred.",
+      "evidence": {
+        "E1": "4f46ab24-c7c2-44f6-8051-b4292799e9c0",
+        "E2": "eb8b4dfd-7fff-4ba1-b7da-df6d0dcd185b",
+        "E3": "84139b21-a22c-48e1-abba-440b13a92f41",
+        "E4": "02dc6818-d763-4904-9211-5eb2717e0289",
+        "E5": "5efa5005-8ba9-4af0-9e75-db87d7e6cdb1",
+        "E6": "37056907-ab5d-4366-ae81-27fd91b9bfbd",
+        "E7": "8690bcc9-af39-4099-889f-a1a20effacc9"
+      },
+      "findings": [
+        {
+          "claim": "A restart at 04:34:11 cut poolMaximumSize from 10 to 1 and connection timeout from 30000 ms to 250 ms.",
+          "reason": "Runtime config shows both values changing at the restart inside the window.",
+          "support": "observed",
+          "evidence_ids": [
+            "8690bcc9-af39-4099-889f-a1a20effacc9"
+          ],
+          "evidence_handles": [
+            "E7"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The 1-connection pool timed out on acquisition (298 timeouts) while pending borrowers and active connections appeared only from 04:34:18.",
+          "reason": "Pool metrics show configured max 1, 250 ms timeout, 298 acquisition timeouts, and pending/active above zero from 04:34:18.",
+          "support": "observed",
+          "evidence_ids": [
+            "5efa5005-8ba9-4af0-9e75-db87d7e6cdb1"
+          ],
+          "evidence_handles": [
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "A session idle in a transaction blocked another session from 04:34:18 to 04:36:16, which fits the pool starvation and transfer failures (38% server errors).",
+          "reason": "The blocking window matches the pool pressure and the 500/503 errors (50 and 172 of 580 requests); no direct request-to-timeout link was observed.",
+          "support": "inferred",
+          "evidence_ids": [
+            "37056907-ab5d-4366-ae81-27fd91b9bfbd",
+            "4f46ab24-c7c2-44f6-8051-b4292799e9c0",
+            "5efa5005-8ba9-4af0-9e75-db87d7e6cdb1"
+          ],
+          "evidence_handles": [
+            "E6",
+            "E1",
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Outbox throughput fell sharply after the restart, while deliveries that did happen were fast and successful.",
+          "reason": "Arrivals dropped from about 38 to about 1-5 per 10 s bucket; all 379 deliveries succeeded in about 71 ms, so the consumer is not the problem.",
+          "support": "observed",
+          "evidence_ids": [
+            "eb8b4dfd-7fff-4ba1-b7da-df6d0dcd185b",
+            "84139b21-a22c-48e1-abba-440b13a92f41",
+            "02dc6818-d763-4904-9211-5eb2717e0289"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "One 10 s scrape gap, a counter restart, and NaN gauge samples limit the metrics, and the 2 s blocker sampling can miss short blocks.",
+        "No evidence shows which code path left the session idle in a transaction, or why the restart changed the pool settings.",
+        "E1 (get_request_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+        "E2 (get_outbox_stats) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+        "E5 (get_pool_metrics) is PARTIAL: Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero."
+      ],
+      "next_checks": [
+        "Find the owner and query of the idle-in-transaction session 45194 (pg_stat_activity) and the code path that holds it open.",
+        "Review the config change deployed at 04:34:11 (dirty revision) and restore poolMaximumSize and the connection timeout."
+      ],
+      "alternatives": [
+        {
+          "reason": "All 379 delivery attempts succeeded with p95 of about 77 ms.",
+          "assessment": "weakened",
+          "hypothesis": "The slow or failing consumer endpoint is the cause.",
+          "evidence_ids": [
+            "84139b21-a22c-48e1-abba-440b13a92f41",
+            "02dc6818-d763-4904-9211-5eb2717e0289"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ]
+        },
+        {
+          "reason": "The backlog predates the window and stays constant, so it does not explain the change at 04:34.",
+          "assessment": "unassessed",
+          "hypothesis": "The outbox backlog (failed=619, oldest undelivered age about 39000 s) caused the failures.",
+          "evidence_ids": [
+            "eb8b4dfd-7fff-4ba1-b7da-df6d0dcd185b"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4650,
+    "output_tokens": 1174,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.02104,
+    "checks": {
+      "numbers_checked": 7,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

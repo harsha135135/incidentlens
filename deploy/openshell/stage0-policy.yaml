@@ -1,0 +1,26 @@
+# Stage 0 sandbox policy: the runner's Python interpreter may reach the internal gateway
+# port on the gateway host, and nothing else. Egress is denied by default, so every other
+# host, port and binary is blocked without a rule here.
+version: 1
+filesystem_policy:
+  include_workdir: true
+  read_only:
+    - /bin
+    - /usr
+    - /lib
+    - /proc
+    - /dev/urandom
+    - /etc
+  read_write:
+    - /tmp
+    - /dev/null
+landlock:
+  compatibility: best_effort
+network_policies:
+  incidentlens_internal_gateway:
+    name: incidentlens-internal-gateway
+    endpoints:
+      - host: host.openshell.internal
+        port: 8089
+    binaries:
+      - path: /usr/bin/python3.12

@@ -1,0 +1,53 @@
+{
+ "arguments": {},
+ "collected_at": "2026-11-07T03:24:47.234Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "meaning": "Allowlisted, non-secret settings from LedgerCore's startup records; one version per start.",
+  "restarts_in_window": [],
+  "versions": [
+   {
+    "effective_at": "2026-11-07T03:13:08.256Z",
+    "settings": {
+     "consumerAuthentication": "HTTP Basic",
+     "consumerTarget": "http://127.0.0.1:18090/events",
+     "databaseSessionOptions": "-c lock_timeout=2s -c statement_timeout=5s -c transaction_timeout=10s",
+     "inProcessConsumerBcryptCost": "10",
+     "instanceId": "01ff0b6b-a6ea-4699-9464-e68b2de808b7",
+     "outboxBackoffBaseMs": 1000,
+     "outboxBackoffMaxMs": 60000,
+     "outboxBatchSize": 20,
+     "outboxDeliveryTimeoutMs": 3000,
+     "outboxMaxAttempts": 8,
+     "outboxPollIntervalMs": 1000,
+     "outboxPollerEnabled": true,
+     "outboxWorkers": 1,
+     "poolConnectionTimeoutMs": 30000,
+     "poolMaximumSize": 10,
+     "poolMinimumIdle": 10,
+     "revision": "86e4bf1c38fb+dirty.ed5247a36278"
+    }
+   }
+  ]
+ },
+ "errors": [],
+ "evidence_id": "9a211394-4f30-4722-892b-9c14c76ba2e8",
+ "limitations": [],
+ "observed_window": {
+  "first": "2026-11-07T03:13:08.256Z",
+  "last": "2026-11-07T03:13:08.256Z"
+ },
+ "requested_window": {
+  "end": "2026-11-07T03:24:36.000Z",
+  "start": "2026-11-07T03:21:06.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "config_history",
+  "target_instance_id": "01ff0b6b-a6ea-4699-9464-e68b2de808b7",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_runtime_config",
+ "truncated": false
+}

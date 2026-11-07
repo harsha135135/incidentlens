@@ -1,0 +1,325 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cr-d1-r1",
+  "template": "cr-d1",
+  "split": "development",
+  "category": "credential_rejection",
+  "ground_truth": "consumer_credential_rejected",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 1253865291,
+      "controller_run": "stage5-cr-d1-r1-a1",
+      "bundle": "b-14e2e8ba8d65",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T14:37:59.000Z",
+        "end": "2026-11-06T14:40:29.000Z"
+      },
+      "validity": "logs COMPLETE, auth_error 705 of 705 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "1d0a12ed-b9ef-405c-8045-bfe01b4b96ef",
+    "status": "COMPLETED",
+    "final_reason": "model report: SUPPORTED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3794,
+        "reported_output_tokens": 1138,
+        "tokens_counted_against_budget": 4932,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 9,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "SUPPORTED",
+      "summary": "Outbox publication stalled for about 90 s while transfers kept committing. During that period the consumer returned HTTP 401 to nearly every delivery attempt, so notifications backed up and were delayed.",
+      "evidence": {
+        "E1": "072819f5-534a-4915-b163-b034b4767651",
+        "E2": "88aa2967-a0b3-4d96-a37f-fc36d69eb576",
+        "E3": "b947db7b-1579-4591-9440-b21e386ecc24",
+        "E4": "9aa2c7ee-4c6c-486e-9eec-112f904cf517",
+        "E5": "3d21ed4d-c59e-48fb-8b5a-ac5bed94d269",
+        "E6": "7a8e103b-524d-48c6-8b0c-e66f18e545ea",
+        "E7": "43a57cd5-b312-4c02-a159-7672a2a8afc6"
+      },
+      "findings": [
+        {
+          "claim": "Transfers were healthy and committed at a steady rate. The delay is downstream of the request path.",
+          "reason": "480 transfers returned 201 with no 500s and p99 of 0.25 s. Outbox arrivals held at 32 per 10 s bucket.",
+          "support": "observed",
+          "evidence_ids": [
+            "072819f5-534a-4915-b163-b034b4767651",
+            "88aa2967-a0b3-4d96-a37f-fc36d69eb576"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Publications dropped to 0 for nine consecutive 10 s buckets, then recovered with a burst of about 80 per bucket. Pending grew to 289 and the oldest undelivered age reached 118 s.",
+          "reason": "The bucket series shows the stall and the catch-up. Pending and oldest-age gauges rose throughout the stall.",
+          "support": "observed",
+          "evidence_ids": [
+            "88aa2967-a0b3-4d96-a37f-fc36d69eb576"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The consumer rejected 705 of 1044 delivery attempts with HTTP 401 (auth_error), against 339 successes. This is the likely cause of the stall.",
+          "reason": "The 401 responses began at about 14:38:29, matching the start of the publication gap. The consumer's own auth step accounts for about 70 ms per attempt, and no server or network errors were seen.",
+          "support": "inferred",
+          "evidence_ids": [
+            "b947db7b-1579-4591-9440-b21e386ecc24",
+            "9aa2c7ee-4c6c-486e-9eec-112f904cf517"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The delay is not explained by LedgerCore slowness, DB pool exhaustion or DB lock blocking.",
+          "reason": "Attempts took about 71 ms, with no pool timeouts or pending borrowers, and no blocking in 75 samples.",
+          "support": "observed",
+          "evidence_ids": [
+            "9aa2c7ee-4c6c-486e-9eec-112f904cf517",
+            "3d21ed4d-c59e-48fb-8b5a-ac5bed94d269",
+            "7a8e103b-524d-48c6-8b0c-e66f18e545ea"
+          ],
+          "evidence_handles": [
+            "E4",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Only the earliest 100 of 1044 delivery records are listed, so the exact 401 onset and recovery times are not fully visible.",
+        "The reason for the 401s (credential rotation, consumer config) is not visible, and attempt records (1044) differ from poll-batch attempts (1052)."
+      ],
+      "next_checks": [
+        "Check the consumer's auth configuration and credential changes around 14:38:29 and the recovery near 14:40.",
+        "Query delivery logs filtered to auth_error with timestamps to confirm the 401 window matches the zero-publication buckets."
+      ],
+      "alternatives": [
+        {
+          "reason": "Attempts continued during the gap and were mostly 401, which points to auth rather than a dead poller. The retry/backoff schedule was not examined.",
+          "assessment": "weakened",
+          "hypothesis": "The outbox poller or its retry/backoff logic stalled independently of the 401s.",
+          "evidence_ids": [
+            "b947db7b-1579-4591-9440-b21e386ecc24",
+            "43a57cd5-b312-4c02-a159-7672a2a8afc6"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E7"
+          ]
+        },
+        {
+          "reason": "The pool showed no waits or timeouts and no lock blockers were sampled.",
+          "assessment": "weakened",
+          "hypothesis": "DB contention or pool starvation delayed publication.",
+          "evidence_ids": [
+            "3d21ed4d-c59e-48fb-8b5a-ac5bed94d269",
+            "7a8e103b-524d-48c6-8b0c-e66f18e545ea"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3794,
+    "output_tokens": 1138,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "consumer_credential_rejected",
+    "cost_usd": 0.01897,
+    "checks": {
+      "numbers_checked": 9,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.1"
+  },
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_credential_rejected",
+    "rule": "705 of 705 failed deliveries were auth_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P_replays": {
+    "2026-11-06.2": {
+      "job_id": "0b537504-22d6-4388-8731-da2a95c1a121",
+      "status": "COMPLETED",
+      "final_reason": "model report: TENTATIVE",
+      "report": {
+        "usage": {
+          "tool_actions": 7,
+          "model_actions": 1,
+          "reported_input_tokens": 3998,
+          "reported_output_tokens": 1057,
+          "tokens_counted_against_budget": 5055,
+          "model_calls_with_unknown_usage": 0
+        },
+        "checks": {
+          "numbers_checked": 6,
+          "numbers_not_found_in_cited_evidence": 1
+        },
+        "outcome": "TENTATIVE",
+        "summary": "Outbox publication stalled for about 90 s while the consumer returned HTTP 401 on 705 delivery attempts. Pending events and their age grew. The root cause of the 401s (credential or config) was not observed.",
+        "evidence": {
+          "E1": "21f3759c-c17a-468e-b416-d4be7eedb5a8",
+          "E2": "708bad02-d44d-49cb-8178-7149af9a107a",
+          "E3": "442e7709-d8c1-4d72-922a-a2fdc7cb1cec",
+          "E4": "b3a6a94d-4886-4bc7-b017-919cb2fbad44",
+          "E5": "87713953-0d87-4322-8242-8aaacd22542c",
+          "E6": "67d63534-c8ef-48a2-8f03-54e55a80f1e1",
+          "E7": "6da1f3e6-0d33-424b-93d7-4dfcb5087a3f"
+        },
+        "findings": [
+          {
+            "claim": "Transfers committed normally, but outbox publications stopped for about 90 s (buckets of 0) and then resumed in a burst, so notifications were late.",
+            "reason": "Arrivals were steady at 32 per 10 s with no 5xx and normal latency. Publications were 0 for 9 buckets. Pending grew to 289 and the oldest age reached 118 s.",
+            "support": "observed",
+            "evidence_ids": [
+              "21f3759c-c17a-468e-b416-d4be7eedb5a8",
+              "708bad02-d44d-49cb-8178-7149af9a107a"
+            ],
+            "evidence_handles": [
+              "E1",
+              "E2"
+            ],
+            "unverified_numbers": [
+              "90"
+            ]
+          },
+          {
+            "claim": "The consumer rejected most delivery attempts with HTTP 401 (705 of 1044), and only 339 succeeded. This is the likely reason publication stalled.",
+            "reason": "The 401s began around 14:38:29. The consumer's own auth step took about 70 ms per attempt, and the handler ran only for the successes.",
+            "support": "observed",
+            "evidence_ids": [
+              "442e7709-d8c1-4d72-922a-a2fdc7cb1cec",
+              "b3a6a94d-4886-4bc7-b017-919cb2fbad44"
+            ],
+            "evidence_handles": [
+              "E3",
+              "E4"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "Database and pool contention are not the cause. The outbox backlog came from delivery rejections, not from LedgerCore being slow.",
+            "reason": "There were no pool timeouts or pending borrowers and no DB blocking. Failed stayed 0, so the rejected deliveries are being retried rather than marked failed.",
+            "support": "observed",
+            "evidence_ids": [
+              "87713953-0d87-4322-8242-8aaacd22542c",
+              "67d63534-c8ef-48a2-8f03-54e55a80f1e1",
+              "708bad02-d44d-49cb-8178-7149af9a107a"
+            ],
+            "evidence_handles": [
+              "E5",
+              "E6",
+              "E2"
+            ],
+            "unverified_numbers": []
+          }
+        ],
+        "limitations": [
+          "Only the earliest 100 of 1044 delivery records were listed, and the sampled rows do not show when or why the 401s started or ended.",
+          "No credential or config change history was available, so the cause of the 401s is not shown."
+        ],
+        "next_checks": [
+          "Check the consumer's auth configuration and credentials for changes around 14:38:29, and whether they were fixed around 14:39:50.",
+          "Inspect the delivery logs for the 401 start and end timestamps, and explain the 1044 vs 1052 attempt discrepancy."
+        ],
+        "alternatives": [
+          {
+            "reason": "The 8-attempt gap is unexplained, and no poller-side telemetry was available to rule this out.",
+            "assessment": "unassessed",
+            "hypothesis": "Poller or batch-handling fault inside LedgerCore (record check shows 1044 attempt records vs 1052 reported attempts)",
+            "evidence_ids": [
+              "442e7709-d8c1-4d72-922a-a2fdc7cb1cec"
+            ],
+            "evidence_handles": [
+              "E3"
+            ]
+          },
+          {
+            "reason": "No acquisition timeouts, no pending borrowers and no blocking sessions were observed.",
+            "assessment": "weakened",
+            "hypothesis": "Pool or DB contention delayed publishing",
+            "evidence_ids": [
+              "87713953-0d87-4322-8242-8aaacd22542c",
+              "67d63534-c8ef-48a2-8f03-54e55a80f1e1"
+            ],
+            "evidence_handles": [
+              "E5",
+              "E6"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 1,
+      "tool_calls": 7,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "search_delivery_logs",
+        "get_delivery_timings",
+        "get_pool_metrics",
+        "get_database_blockers",
+        "get_runtime_config"
+      ],
+      "recoveries": 0,
+      "input_tokens": 3998,
+      "output_tokens": 1057,
+      "unknown_usage_calls": 0,
+      "replay_elapsed_seconds": 22.2,
+      "classified_dev_aid": "consumer_credential_rejected",
+      "cost_usd": 0.01857,
+      "checks": {
+        "numbers_checked": 6,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "prompt_version": "2026-11-06.2"
+    }
+  }
+}

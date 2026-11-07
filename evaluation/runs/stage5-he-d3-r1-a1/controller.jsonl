@@ -1,0 +1,5 @@
+{"at": "2026-11-06T15:53:39.446Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-06T15:53:39.441Z"}
+{"at": "2026-11-06T15:53:39.474Z", "action": "workload_started", "rate_per_second": 3.6, "seed": 1788924878}
+{"at": "2026-11-06T15:53:51.009Z", "action": "distractor_started", "kind": "replays"}
+{"at": "2026-11-06T15:56:11.257Z", "action": "workload_stopped", "sent": 547, "statuses": {"201": 547}, "errors": {}, "started_at": "2026-11-06T15:53:39.474Z", "ended_at": "2026-11-06T15:56:11.257Z"}
+{"at": "2026-11-06T15:56:11.258Z", "action": "window", "start": "2026-11-06T15:53:41.000Z", "end": "2026-11-06T15:56:11.000Z", "template": "he-d3"}

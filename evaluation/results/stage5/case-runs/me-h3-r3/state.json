@@ -1,0 +1,101 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "me-h3-r3",
+  "template": "me-h3",
+  "split": "held_out",
+  "category": "missing_evidence",
+  "ground_truth": "insufficient_evidence",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3951158532,
+      "controller_run": "stage5-me-h3-r3-a1",
+      "bundle": "b-235a50e00864",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T06:08:06.000Z",
+        "end": "2026-11-07T06:11:36.000Z"
+      },
+      "validity": "deciding source blockers UNAVAILABLE; requests COMPLETE, server-error ratio 0.1764"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "762c30df-acdd-461e-909b-b956efee0d5e",
+    "status": "COMPLETED",
+    "final_reason": "model report: INCONCLUSIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3792,
+        "reported_output_tokens": 260,
+        "tokens_counted_against_budget": 4052,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 0,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "INCONCLUSIVE",
+      "summary": "Transfers show 17.6% 500s and p95 2.3 s (E1), but nothing identifies why. The pool shows no timeouts or pending borrowers (E5), and the log and blocker sources have no data (E3, E4, E6).",
+      "evidence": {
+        "E1": "eb5c7418-3688-4f08-b02e-ffe565afa6c2",
+        "E2": "4f7f875c-c07a-4733-9391-385fde1b9aed",
+        "E3": "0c43476b-fcbc-44db-9a0e-7e951a23b927",
+        "E4": "0e79a9c0-d2f4-4908-9659-c7828ace92d8",
+        "E5": "d6eda64e-0fee-446e-8f73-5df457ed8255",
+        "E6": "956d0a13-c3c7-4eac-86f5-fd26614d1939",
+        "E7": "6611ca2b-5a93-473c-8c7f-9698abb43785"
+      },
+      "findings": [],
+      "limitations": [
+        "E3 (search_delivery_logs) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+        "E4 (get_delivery_timings) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+        "E6 (get_database_blockers) is UNAVAILABLE: Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+      ],
+      "next_checks": [
+        "Server error logs or stack traces for the 500 responses on /v1/transfers, with complete log coverage past the window end",
+        "Successful database blocker/lock samples for 06:08-06:11 to rule in or out lock waits"
+      ],
+      "alternatives": [],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3792,
+    "output_tokens": 260,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 10.0,
+    "classified_dev_aid": "inconclusive",
+    "cost_usd": 0.01018,
+    "checks": {
+      "numbers_checked": 0,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "INCONCLUSIVE",
+    "primary_cause": "unclassified",
+    "rule": "no rule matched",
+    "evidence_ids": [],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

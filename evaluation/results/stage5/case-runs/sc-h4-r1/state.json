@@ -1,0 +1,173 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "sc-h4-r1",
+  "template": "sc-h4",
+  "split": "held_out",
+  "category": "slow_consumer",
+  "ground_truth": "slow_consumer_handler",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 323522129,
+      "controller_run": "stage5-sc-h4-r1-a1",
+      "bundle": "b-9e62859a2905",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T03:41:00.000Z",
+        "end": "2026-11-07T03:43:30.000Z"
+      },
+      "validity": "logs COMPLETE, timings COMPLETE, handler max 1610.086 ms, failures 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "74df6f22-0750-4d73-ba10-51f4f3d3d7a3",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3926,
+        "reported_output_tokens": 1360,
+        "tokens_counted_against_budget": 5286,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 14,
+        "numbers_not_found_in_cited_evidence": 3
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Notifications were late because the consumer handler became slow (~1.6 s) for about 60 s, throttling outbox publication and building a backlog that later drained. The sequential-delivery mechanism is inferred.",
+      "evidence": {
+        "E1": "ab9dfd55-6235-4d97-befe-3be45627cdd3",
+        "E2": "41ae78c8-a6f4-4826-be14-25a492c405f4",
+        "E3": "bfe99bed-7c84-4d9e-9e2c-0475ccd59ab5",
+        "E4": "de124583-59d0-4cb1-b80c-4ec616110555",
+        "E5": "dbbbf0fb-be6e-4591-b8aa-ab764e3b21f5",
+        "E6": "4a5d2191-fd53-439d-ad09-5302d308ecc7",
+        "E7": "0c10bdd7-f778-49e9-96ff-d9a49e7fd41c"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publications fell from 28 to ~4-6 per 10 s for ~60 s while arrivals stayed at 28, then ran at 80 per 10 s to catch up; pending peaked at 133.",
+          "reason": "Per-bucket counts show a publication stall and backlog drain, which is the delay customers see.",
+          "support": "observed",
+          "evidence_ids": [
+            "41ae78c8-a6f4-4826-be14-25a492c405f4"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "60"
+          ]
+        },
+        {
+          "claim": "The delay sits in the consumer handler: handler p95 1604 ms vs auth ~70 ms, while LedgerCore transfer latency was normal.",
+          "reason": "Delivery total p95 1677 ms is almost all consumer handler time; request p95 0.24 s with no errors.",
+          "support": "observed",
+          "evidence_ids": [
+            "de124583-59d0-4cb1-b80c-4ec616110555",
+            "ab9dfd55-6235-4d97-befe-3be45627cdd3"
+          ],
+          "evidence_handles": [
+            "E4",
+            "E1"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "At ~1.6 s per delivery, serial sending gives ~0.6/s, matching the 4-6 per 10 s stall; the backlog then cleared once handlers returned to fast.",
+          "reason": "Rate arithmetic fits the 1 s poll with a 3 s delivery timeout, but the serial dispatch is not directly observed.",
+          "support": "inferred",
+          "evidence_ids": [
+            "41ae78c8-a6f4-4826-be14-25a492c405f4",
+            "de124583-59d0-4cb1-b80c-4ec616110555",
+            "0c10bdd7-f778-49e9-96ff-d9a49e7fd41c"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E4",
+            "E7"
+          ],
+          "unverified_numbers": [
+            "1.6",
+            "0.6"
+          ]
+        }
+      ],
+      "limitations": [
+        "Logs list only the earliest 100 attempts, so the slow attempts in the stall period were not individually inspected.",
+        "Consumer is a test fixture; the cause of its slow handler is not visible in these sources."
+      ],
+      "next_checks": [
+        "Check the consumer's handler for what made it slow (~1.6 s) during the stall.",
+        "Confirm the outbox dispatcher is sequential per batch and review the per-attempt timeline for 03:41:10-03:42:20."
+      ],
+      "alternatives": [
+        {
+          "reason": "Pool pending/active were 0 with no timeouts, and no blocking sessions were sampled.",
+          "assessment": "weakened",
+          "hypothesis": "DB pool exhaustion or lock blocking slowed publication",
+          "evidence_ids": [
+            "dbbbf0fb-be6e-4591-b8aa-ab764e3b21f5",
+            "4a5d2191-fd53-439d-ad09-5302d308ecc7"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        },
+        {
+          "reason": "The failed count was constant at 296 through the window and the age grows linearly, so it is a pre-existing static condition, not tied in time to the stall.",
+          "assessment": "weakened",
+          "hypothesis": "The 296 FAILED outbox rows with ~36000 s age caused the lateness",
+          "evidence_ids": [
+            "41ae78c8-a6f4-4826-be14-25a492c405f4"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3926,
+    "output_tokens": 1360,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 20.2,
+    "classified_dev_aid": "slow_consumer_handler",
+    "cost_usd": 0.02145,
+    "checks": {
+      "numbers_checked": 14,
+      "numbers_not_found_in_cited_evidence": 3
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "INCONCLUSIVE",
+    "primary_cause": "unclassified",
+    "rule": "no rule matched",
+    "evidence_ids": [],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

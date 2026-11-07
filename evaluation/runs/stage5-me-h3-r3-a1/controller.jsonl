@@ -1,0 +1,10 @@
+{"at": "2026-11-07T06:08:03.817Z", "action": "consumer_mode", "mode": "normal", "handler_delay_ms": 0, "requested_at": "2026-11-07T06:08:03.812Z"}
+{"at": "2026-11-07T06:08:04.234Z", "action": "component_stopped", "component": "collector"}
+{"at": "2026-11-07T06:08:04.235Z", "action": "workload_started", "rate_per_second": 3.0, "seed": 3951158532}
+{"at": "2026-11-07T06:08:36.007Z", "action": "distractor_started", "kind": "overspend_and_replays"}
+{"at": "2026-11-07T06:09:56.020Z", "action": "account_locks_held", "accounts": 10}
+{"at": "2026-11-07T06:10:16.012Z", "action": "distractor_stopped", "kind": "overspend_and_replays", "request_errors": 0}
+{"at": "2026-11-07T06:11:16.026Z", "action": "account_locks_released"}
+{"at": "2026-11-07T06:11:36.358Z", "action": "workload_stopped", "sent": 637, "statuses": {"201": 520, "500": 117}, "errors": {}, "started_at": "2026-11-07T06:08:04.235Z", "ended_at": "2026-11-07T06:11:36.358Z"}
+{"at": "2026-11-07T06:11:36.359Z", "action": "window", "start": "2026-11-07T06:08:06.000Z", "end": "2026-11-07T06:11:36.000Z", "template": "me-h3"}
+{"at": "2026-11-07T06:11:47.380Z", "action": "component_restarted", "component": "collector"}

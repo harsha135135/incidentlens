@@ -1,0 +1,95 @@
+{
+ "arguments": {},
+ "collected_at": "2026-11-06T17:41:58.164Z",
+ "coverage": "PARTIAL",
+ "data": {
+  "acquire_max_ms_per_scrape": 261.0,
+  "acquire_mean_ms": 12.636,
+  "acquisition_timeouts": 161,
+  "acquisitions": 3661,
+  "configured_connection_timeout_ms": 250,
+  "configured_maximum_at_window_end": 2,
+  "gauges": {
+   "active": {
+    "first": 0.0,
+    "first_above_zero_at": "2026-11-06T17:40:23.683Z",
+    "last": 0.0,
+    "last_above_zero_at": "2026-11-06T17:41:23.680Z",
+    "max": 2.0,
+    "mean": 0.512,
+    "min": 0.0,
+    "samples": 41,
+    "samples_above_zero": 13
+   },
+   "idle": {
+    "first": 10.0,
+    "first_above_zero_at": "2026-11-06T17:38:18.682Z",
+    "last": 2.0,
+    "last_above_zero_at": "2026-11-06T17:41:43.689Z",
+    "max": 10.0,
+    "mean": 6.171,
+    "min": 0.0,
+    "samples": 41,
+    "samples_above_zero": 33
+   },
+   "maximum": {
+    "first": 10.0,
+    "first_above_zero_at": "2026-11-06T17:38:18.682Z",
+    "last": 2.0,
+    "last_above_zero_at": "2026-11-06T17:41:43.689Z",
+    "max": 10.0,
+    "mean": 6.683,
+    "min": 2.0,
+    "samples": 41,
+    "samples_above_zero": 41
+   },
+   "pending": {
+    "first": 0.0,
+    "first_above_zero_at": "2026-11-06T17:40:23.683Z",
+    "last": 0.0,
+    "last_above_zero_at": "2026-11-06T17:41:18.682Z",
+    "max": 2.0,
+    "mean": 0.244,
+    "min": 0.0,
+    "samples": 41,
+    "samples_above_zero": 8
+   }
+  },
+  "scrapes": {
+   "expected_scrapes": 42,
+   "failed_scrapes": 1,
+   "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)",
+   "gaps": [
+    {
+     "end": "2026-11-06T17:40:23.683Z",
+     "seconds": 10.0,
+     "start": "2026-11-06T17:40:13.683Z"
+    }
+   ],
+   "successful_scrapes": 41
+  }
+ },
+ "errors": [],
+ "evidence_id": "b96b38e8-b53d-49cf-b8b0-fd1a34f66802",
+ "limitations": [
+  "Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+  "Pending borrowers and active connections are gauges read at each 5 s scrape; brief saturation between scrapes may not appear in them (acquisition time and timeouts are counters)."
+ ],
+ "observed_window": {
+  "first": "2026-11-06T17:38:18.682Z",
+  "last": "2026-11-06T17:41:43.689Z"
+ },
+ "requested_window": {
+  "end": "2026-11-06T17:41:47.000Z",
+  "start": "2026-11-06T17:38:17.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "b3312f99-3a51-4769-afc0-4a04247624ed",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_pool_metrics",
+ "truncated": false
+}

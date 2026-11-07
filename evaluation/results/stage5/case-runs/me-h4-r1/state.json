@@ -1,0 +1,160 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "me-h4-r1",
+  "template": "me-h4",
+  "split": "held_out",
+  "category": "missing_evidence",
+  "ground_truth": "insufficient_evidence",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 2944247816,
+      "controller_run": "stage5-me-h4-r1-a1",
+      "bundle": "b-7b66757cc6d1",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T03:38:03.000Z",
+        "end": "2026-11-07T03:40:33.000Z"
+      },
+      "validity": "deciding source logs PARTIAL; durable backlog peak 221"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "INCONCLUSIVE",
+    "primary_cause": "unclassified",
+    "rule": "no rule matched",
+    "evidence_ids": [],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "26de2851-f49c-411f-acfb-d5ccbec741ce",
+    "status": "COMPLETED",
+    "final_reason": "model report: INCONCLUSIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3277,
+        "reported_output_tokens": 866,
+        "tokens_counted_against_budget": 4143,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 5,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "INCONCLUSIVE",
+      "summary": "Outbox publications lagged arrivals for most of the window and then caught up, but no source shows why. Metrics, pool, blockers and delivery logs are unavailable or empty.",
+      "evidence": {
+        "E1": "2748849e-04bb-424b-84fd-e0ef38abce0a",
+        "E2": "3037aa29-e0bb-4793-a0d7-56f3f9840743",
+        "E3": "b41a65d0-10b1-4322-9ece-f9c4b9543dfd",
+        "E4": "c23f98a3-5101-4fc2-b928-3f698a052faa",
+        "E5": "6c17d4dd-b939-4c60-885d-7ae39f5d6fe2",
+        "E6": "e8dd8952-24f5-4e49-a771-21b99e75f1a2",
+        "E7": "c474f668-840d-4f5d-b153-816ab9d10ab9"
+      },
+      "findings": [
+        {
+          "claim": "Publications ran well below arrivals for most of the window, leaving a backlog of 125 events, then jumped to 71 and 81 per bucket in the last two buckets.",
+          "reason": "Arrivals were a steady 28 per 10 s bucket. Publications were 8-10 per bucket in buckets 2-13, then 71 and 81 in the final two.",
+          "support": "observed",
+          "evidence_ids": [
+            "3037aa29-e0bb-4793-a0d7-56f3f9840743"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The publication rate of about 10 per 10 s is consistent with a throttled poller, but the cause is not shown.",
+          "reason": "Config is batch 20 at a 1 s poll interval and a 3 s delivery timeout, so slow or failing deliveries could limit throughput. No delivery data confirms this.",
+          "support": "inferred",
+          "evidence_ids": [
+            "3037aa29-e0bb-4793-a0d7-56f3f9840743",
+            "c474f668-840d-4f5d-b153-816ab9d10ab9"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E7"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Prometheus was unreachable, so request, pool and outbox gauge data are missing (E1, E2, E5).",
+        "The delivery log collector had not confirmed reading past the window end, so there are 0 attempt records (E3, E4). Blocker sampling had no successful samples (E6).",
+        "E1 (get_request_metrics) is UNAVAILABLE: Prometheus could not be queried, so request metrics are unknown.",
+        "E2 (get_outbox_stats) is PARTIAL: Outbox gauge history is unavailable (Prometheus could not be queried).",
+        "E3 (search_delivery_logs) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+        "E4 (get_delivery_timings) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+        "E5 (get_pool_metrics) is UNAVAILABLE: Prometheus could not be queried, so the pool state is unknown.",
+        "E6 (get_database_blockers) is UNAVAILABLE: Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+      ],
+      "next_checks": [
+        "Restore Prometheus access and re-query pool, request and outbox gauge metrics for the window.",
+        "Re-run the delivery log and timing queries once the collector has caught up, and check consumer health at 127.0.0.1:18090."
+      ],
+      "alternatives": [
+        {
+          "reason": "No delivery attempt records or consumer-side timings exist in the window.",
+          "assessment": "unassessed",
+          "hypothesis": "Slow or failing consumer endpoint delaying deliveries",
+          "evidence_ids": [
+            "b41a65d0-10b1-4322-9ece-f9c4b9543dfd",
+            "c23f98a3-5101-4fc2-b928-3f698a052faa"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ]
+        },
+        {
+          "reason": "Pool metrics are unavailable and no blocker samples succeeded.",
+          "assessment": "unassessed",
+          "hypothesis": "Database lock contention or pool exhaustion slowing the outbox poller",
+          "evidence_ids": [
+            "6c17d4dd-b939-4c60-885d-7ae39f5d6fe2",
+            "e8dd8952-24f5-4e49-a771-21b99e75f1a2"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3277,
+    "output_tokens": 866,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 14.1,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.01521,
+    "checks": {
+      "numbers_checked": 5,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

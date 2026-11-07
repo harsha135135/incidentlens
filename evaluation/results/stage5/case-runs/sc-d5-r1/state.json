@@ -1,0 +1,309 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "sc-d5-r1",
+  "template": "sc-d5",
+  "split": "development",
+  "category": "slow_consumer",
+  "ground_truth": "slow_consumer_handler",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 741070383,
+      "controller_run": "stage5-sc-d5-r1-a1",
+      "bundle": "b-37484a5880da",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T15:24:25.000Z",
+        "end": "2026-11-06T15:26:55.000Z"
+      },
+      "validity": "logs COMPLETE, timings COMPLETE, handler max 460.063 ms, failures 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "d62275d0-9532-42e0-b420-d58fd95016e3",
+    "status": "COMPLETED",
+    "final_reason": "model report: SUPPORTED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3751,
+        "reported_output_tokens": 1027,
+        "tokens_counted_against_budget": 4778,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 7,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "SUPPORTED",
+      "summary": "Outbox publications lagged arrivals for ~100 s (backlog up to 124, oldest age 38.5 s), then caught up. Deliveries succeeded; slow consumer handler time (~460 ms) coincides with the throttled publish rate.",
+      "evidence": {
+        "E1": "7e1a88c1-bc1c-4017-baa9-4865587bb35d",
+        "E2": "4fe2594b-8d3f-40ea-a47d-01a52132ab50",
+        "E3": "9b982b9a-1bc4-4483-9247-4840c4983ef2",
+        "E4": "4141b173-e947-404f-85c2-6c4ad0f67563",
+        "E5": "d9e2fcb5-5c0e-4e3e-8e47-e97440f6f499",
+        "E6": "77f6572d-ffbb-4e1d-ab42-ec3990ccc68d",
+        "E7": "bd01e782-95a0-4e9c-9c60-8bde50444a9d"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publishing fell behind committed arrivals, building a backlog of up to 124 and oldest undelivered age of 38.5 s, then drained.",
+          "reason": "Arrivals were steady at 32/10s while publications dropped to 15-19/10s mid-window, then spiked to 80/10s; pending peaked at 124.",
+          "support": "observed",
+          "evidence_ids": [
+            "4fe2594b-8d3f-40ea-a47d-01a52132ab50"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The consumer handler adds about 460 ms to some deliveries, raising total delivery time from ~71 ms to ~530 ms.",
+          "reason": "Handler p95 is 460 ms against a p50 of 0.022 ms; slow attempts in the logs are about 528-532 ms.",
+          "support": "observed",
+          "evidence_ids": [
+            "4141b173-e947-404f-85c2-6c4ad0f67563",
+            "9b982b9a-1bc4-4483-9247-4840c4983ef2"
+          ],
+          "evidence_handles": [
+            "E4",
+            "E3"
+          ],
+          "unverified_numbers": [
+            "530"
+          ]
+        },
+        {
+          "claim": "The reduced publish rate is consistent with serial delivery in batches polled every 1 s, where slow consumer responses cap throughput below the 3.2/s arrival rate.",
+          "reason": "Slow attempts of ~0.5 s on a 1 s poll interval would limit throughput to about 1.7/s, matching the ~17 per 10 s buckets. Serial delivery itself is not directly observed.",
+          "support": "inferred",
+          "evidence_ids": [
+            "4fe2594b-8d3f-40ea-a47d-01a52132ab50",
+            "4141b173-e947-404f-85c2-6c4ad0f67563",
+            "bd01e782-95a0-4e9c-9c60-8bde50444a9d"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E4",
+            "E7"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "The 100 delivery log rows listed cover only the first ~33 s, so the slow period is not shown in individual records.",
+        "Consumer timings come from a test fixture and may not reflect a real consumer; the cause of the consumer's slowness is unknown."
+      ],
+      "next_checks": [
+        "Correlate per-attempt handler time with the 15:25-15:26 low-publication buckets across all 480 records.",
+        "Check how the poller dispatches a batch (serial or concurrent) and why handler latency rose to ~460 ms."
+      ],
+      "alternatives": [
+        {
+          "reason": "There were no pool acquisition timeouts or pending borrowers, and no DB blocking was sampled.",
+          "assessment": "weakened",
+          "hypothesis": "Database connection pool exhaustion or lock contention delayed publishing.",
+          "evidence_ids": [
+            "d9e2fcb5-5c0e-4e3e-8e47-e97440f6f499",
+            "77f6572d-ffbb-4e1d-ab42-ec3990ccc68d"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        },
+        {
+          "reason": "Failed count stayed 0, and all 480 attempts were first-attempt successes.",
+          "assessment": "weakened",
+          "hypothesis": "Delivery failures and retries caused the delay.",
+          "evidence_ids": [
+            "4fe2594b-8d3f-40ea-a47d-01a52132ab50",
+            "9b982b9a-1bc4-4483-9247-4840c4983ef2"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3751,
+    "output_tokens": 1027,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "slow_consumer_handler",
+    "cost_usd": 0.01777,
+    "checks": {
+      "numbers_checked": 7,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.1"
+  },
+  "A": {
+    "outcome": "INCONCLUSIVE",
+    "primary_cause": "unclassified",
+    "rule": "no rule matched",
+    "evidence_ids": [],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P_replays": {
+    "2026-11-06.2": {
+      "job_id": "cb8269c4-ac3f-4e19-84c2-c0ac64f60f25",
+      "status": "COMPLETED",
+      "final_reason": "model report: TENTATIVE",
+      "report": {
+        "usage": {
+          "tool_actions": 7,
+          "model_actions": 1,
+          "reported_input_tokens": 3955,
+          "reported_output_tokens": 1050,
+          "tokens_counted_against_budget": 5005,
+          "model_calls_with_unknown_usage": 0
+        },
+        "checks": {
+          "numbers_checked": 8,
+          "numbers_not_found_in_cited_evidence": 1
+        },
+        "outcome": "TENTATIVE",
+        "summary": "Outbox publications lagged arrivals for about 70 s, so the backlog and delivery age grew, then drained. The delay matches slow consumer handling, but the reason for the slowdown is not shown.",
+        "evidence": {
+          "E1": "f32a6eab-1a1b-4646-9194-adaf7f92e8be",
+          "E2": "e7409575-d028-4e96-9103-103f7e4d1290",
+          "E3": "6dd539fb-c4f6-4e7c-9227-6546447f050b",
+          "E4": "a8fb4453-e490-49b4-b61f-ca13c5ee267f",
+          "E5": "69ff30d7-fdb3-40b6-8e90-c2d4543ee134",
+          "E6": "57802a4a-e0a6-4c12-a407-1563c936c996",
+          "E7": "8f370e88-e6d7-4a49-adda-98996f513357"
+        },
+        "findings": [
+          {
+            "claim": "The outbox backlog built up mid-window: publications ran at about 15-19 per 10 s against 32 arrivals, then caught up in a burst.",
+            "reason": "Pending rose from 2 to 124, oldest undelivered age rose to 38.5 s, and both returned to normal by 15:26:53.",
+            "support": "observed",
+            "evidence_ids": [
+              "e7409575-d028-4e96-9103-103f7e4d1290"
+            ],
+            "evidence_handles": [
+              "E2"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "Slow consumer handler time accounts for the slow deliveries (p95 460 ms), while consumer auth and LedgerCore overhead stayed small.",
+            "reason": "Handler p95 is 460 ms against a p50 of 0.02 ms. Delivery latency rose from about 71 ms to about 530 ms during the window. Auth p95 was 76 ms.",
+            "support": "observed",
+            "evidence_ids": [
+              "a8fb4453-e490-49b4-b61f-ca13c5ee267f",
+              "6dd539fb-c4f6-4e7c-9227-6546447f050b"
+            ],
+            "evidence_handles": [
+              "E4",
+              "E3"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "The throughput drop is consistent with a serial poller (batch 20, 1 s interval) whose per-delivery time rose from about 70 ms to about 530 ms, capping throughput below the arrival rate.",
+            "reason": "The config and timings fit the observed rate. No direct trace of the polling loop was collected, so serial delivery is assumed.",
+            "support": "inferred",
+            "evidence_ids": [
+              "8f370e88-e6d7-4a49-adda-98996f513357",
+              "a8fb4453-e490-49b4-b61f-ca13c5ee267f",
+              "e7409575-d028-4e96-9103-103f7e4d1290"
+            ],
+            "evidence_handles": [
+              "E7",
+              "E4",
+              "E2"
+            ],
+            "unverified_numbers": [
+              "530"
+            ]
+          }
+        ],
+        "limitations": [
+          "The consumer is a test fixture, so its handler slowdown may not reflect a real consumer. Why the handler slowed is not explained.",
+          "Delivery logs list only the earliest 100 of 480 records, all from before the backlog peak. The slow period is covered only by aggregates."
+        ],
+        "next_checks": [
+          "Inspect the consumer handler for the cause of the slowdown (about 460 ms) during 15:25-15:26.",
+          "Check the timing of the slowdown against the backlog buckets and the poller's concurrency and batch behaviour."
+        ],
+        "alternatives": [
+          {
+            "reason": "There were no pool waits or timeouts, and no blocking sessions were sampled.",
+            "assessment": "weakened",
+            "hypothesis": "Database pool exhaustion or lock contention in LedgerCore slowed publication.",
+            "evidence_ids": [
+              "69ff30d7-fdb3-40b6-8e90-c2d4543ee134",
+              "57802a4a-e0a6-4c12-a407-1563c936c996"
+            ],
+            "evidence_handles": [
+              "E5",
+              "E6"
+            ]
+          },
+          {
+            "reason": "Transfer latency was low (p99 0.25 s) with no server errors.",
+            "assessment": "weakened",
+            "hypothesis": "Transfer API slowness or errors delayed notifications.",
+            "evidence_ids": [
+              "f32a6eab-1a1b-4646-9194-adaf7f92e8be"
+            ],
+            "evidence_handles": [
+              "E1"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 1,
+      "tool_calls": 7,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "search_delivery_logs",
+        "get_delivery_timings",
+        "get_pool_metrics",
+        "get_database_blockers",
+        "get_runtime_config"
+      ],
+      "recoveries": 0,
+      "input_tokens": 3955,
+      "output_tokens": 1050,
+      "unknown_usage_calls": 0,
+      "replay_elapsed_seconds": 22.2,
+      "classified_dev_aid": "slow_consumer_handler",
+      "cost_usd": 0.01841,
+      "checks": {
+        "numbers_checked": 8,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "prompt_version": "2026-11-06.2"
+    }
+  }
+}

@@ -1,0 +1,150 @@
+{
+ "arguments": {
+  "limit": 50,
+  "mode": "historical"
+ },
+ "collected_at": "2026-11-06T15:46:55.146Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "blocked_sessions": 3,
+  "blocker_roles": {
+   "ledger_app": 4,
+   "other": 3
+  },
+  "edges": [
+   {
+    "blocked_pid": 54010,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 54013,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-06T15:44:40.325Z",
+    "last_seen": "2026-11-06T15:46:12.330Z",
+    "max_blocked_wait_seconds": 1.907,
+    "max_blocker_transaction_seconds": 94.863,
+    "samples": 32
+   },
+   {
+    "blocked_pid": 54011,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 54013,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-06T15:44:40.325Z",
+    "last_seen": "2026-11-06T15:46:12.330Z",
+    "max_blocked_wait_seconds": 1.971,
+    "max_blocker_transaction_seconds": 94.863,
+    "samples": 27
+   },
+   {
+    "blocked_pid": 54012,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 54013,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-06T15:44:42.322Z",
+    "last_seen": "2026-11-06T15:46:12.330Z",
+    "max_blocked_wait_seconds": 1.964,
+    "max_blocker_transaction_seconds": 94.863,
+    "samples": 23
+   },
+   {
+    "blocked_pid": 54010,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 54011,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-06T15:44:46.323Z",
+    "last_seen": "2026-11-06T15:44:46.323Z",
+    "max_blocked_wait_seconds": 0.973,
+    "max_blocker_transaction_seconds": 1.742,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 54012,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 54010,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-06T15:44:46.323Z",
+    "last_seen": "2026-11-06T15:45:16.326Z",
+    "max_blocked_wait_seconds": 1.74,
+    "max_blocker_transaction_seconds": 2.977,
+    "samples": 3
+   },
+   {
+    "blocked_pid": 54011,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 54010,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-06T15:44:52.321Z",
+    "last_seen": "2026-11-06T15:45:50.320Z",
+    "max_blocked_wait_seconds": 1.054,
+    "max_blocker_transaction_seconds": 1.821,
+    "samples": 3
+   },
+   {
+    "blocked_pid": 54011,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 54012,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-06T15:45:24.327Z",
+    "last_seen": "2026-11-06T15:45:24.327Z",
+    "max_blocked_wait_seconds": 0.058,
+    "max_blocker_transaction_seconds": 1.285,
+    "samples": 1
+   }
+  ],
+  "first_blocking_at": "2026-11-06T15:44:40.325Z",
+  "last_blocking_at": "2026-11-06T15:46:12.330Z",
+  "max_blocked_wait_seconds": 1.971,
+  "meaning": "Each edge: a waiting ledger_app session (blocked_pid) and the session holding the lock (blocker_pid), labelled only ledger_app or other. No query text is collected.",
+  "mode": "historical",
+  "relationships": 7,
+  "samples": {
+   "expected": 75,
+   "failed": 0,
+   "gaps": [],
+   "successful": 75,
+   "with_blocking": 46
+  }
+ },
+ "errors": [],
+ "evidence_id": "957fbe09-32ee-4fe0-a8d2-2f0ccc023b70",
+ "limitations": [
+  "Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+ ],
+ "observed_window": {
+  "first": "2026-11-06T15:44:14.323Z",
+  "last": "2026-11-06T15:46:42.320Z"
+ },
+ "requested_window": {
+  "end": "2026-11-06T15:46:44.000Z",
+  "start": "2026-11-06T15:44:14.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "postgres_samples",
+  "target_instance_id": "4770bd40-0231-4fe5-ad2d-832a0bbf4125",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_database_blockers",
+ "truncated": false
+}

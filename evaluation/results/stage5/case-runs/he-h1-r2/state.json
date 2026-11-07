@@ -1,0 +1,171 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-h1-r2",
+  "template": "he-h1",
+  "split": "held_out",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 3489966923,
+      "controller_run": "stage5-he-h1-r2-a1",
+      "bundle": "b-28a72a01261a",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T03:44:03.000Z",
+        "end": "2026-11-07T03:48:03.000Z"
+      },
+      "validity": "all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "9e53e813-a4b3-4104-af47-23f29ff77e2b",
+    "status": "COMPLETED",
+    "final_reason": "model report: INCONCLUSIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3986,
+        "reported_output_tokens": 1251,
+        "tokens_counted_against_budget": 5237,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 8,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "INCONCLUSIVE",
+      "summary": "Delivery in the window is healthy and keeps pace with arrivals. A stale backlog (296 FAILED rows, oldest undelivered ~10 h) predates the window; its cause is not visible.",
+      "evidence": {
+        "E1": "e1bd2c60-bb5b-4068-980e-a33a6870952f",
+        "E2": "320cd930-b6de-4bd8-bd9f-57239d4f7da8",
+        "E3": "88601db8-6af4-43c1-8851-d81771aaa32b",
+        "E4": "4b0bdda2-0781-452c-9bb3-a9d40de6e0f8",
+        "E5": "211b65cd-e857-46a3-bb62-48e933efa5f4",
+        "E6": "eb18be15-aa63-414b-9758-af3758928c50",
+        "E7": "30d5e40f-2183-4d00-8171-a197f3e8417c"
+      },
+      "findings": [
+        {
+          "claim": "In-window outbox keeps up: 660 arrivals, 660 publications, a brief burst to 38/10s was absorbed with no lag.",
+          "reason": "Arrivals minus publications is 0 and settled; per-bucket publications track arrivals.",
+          "support": "observed",
+          "evidence_ids": [
+            "320cd930-b6de-4bd8-bd9f-57239d4f7da8"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "In-window delivery attempts all succeed and are fast (~71 ms p50, 80 ms max), dominated by consumer auth time.",
+          "reason": "660/660 SUCCESS, no errors; latency far below the 3000 ms timeout.",
+          "support": "observed",
+          "evidence_ids": [
+            "88601db8-6af4-43c1-8851-d81771aaa32b",
+            "4b0bdda2-0781-452c-9bb3-a9d40de6e0f8"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "A static backlog exists: 296 FAILED rows unchanged and oldest undelivered age ~36,000 s, growing 1:1 with time.",
+          "reason": "Failed count is constant at 296 and age rises with wall clock, so these rows are stuck, not being retried or delivered.",
+          "support": "observed",
+          "evidence_ids": [
+            "320cd930-b6de-4bd8-bd9f-57239d4f7da8"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "36000"
+          ]
+        }
+      ],
+      "limitations": [
+        "Window is 4 minutes; the original failures that produced the 296 FAILED rows happened outside it and no failure logs are covered.",
+        "Cannot tell whether customers' late notifications map to the stuck backlog or to an earlier period."
+      ],
+      "next_checks": [
+        "Inspect the 296 FAILED outbox rows: failure reasons, timestamps and attempt counts (maxAttempts=8), and whether they are eligible for retry.",
+        "Review delivery logs and consumer availability from ~10 h before the window, when the oldest undelivered row was created."
+      ],
+      "alternatives": [
+        {
+          "reason": "No acquisition timeouts or pending borrowers; no blocking sessions sampled.",
+          "assessment": "weakened",
+          "hypothesis": "DB pool exhaustion or lock contention delaying outbox work",
+          "evidence_ids": [
+            "211b65cd-e857-46a3-bb62-48e933efa5f4",
+            "eb18be15-aa63-414b-9758-af3758928c50"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        },
+        {
+          "reason": "Transfers p99 0.25 s with no 5xx; consumer handling is about 0.015 ms.",
+          "assessment": "weakened",
+          "hypothesis": "Slow consumer or transfer API latency causing late notifications",
+          "evidence_ids": [
+            "e1bd2c60-bb5b-4068-980e-a33a6870952f",
+            "4b0bdda2-0781-452c-9bb3-a9d40de6e0f8"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E4"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3986,
+    "output_tokens": 1251,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 18.1,
+    "classified_dev_aid": "other",
+    "cost_usd": 0.02048,
+    "checks": {
+      "numbers_checked": 8,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

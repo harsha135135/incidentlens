@@ -1,0 +1,170 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "sc-h2-r1",
+  "template": "sc-h2",
+  "split": "held_out",
+  "category": "slow_consumer",
+  "ground_truth": "slow_consumer_handler",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 2554257197,
+      "controller_run": "stage5-sc-h2-r1-a1",
+      "bundle": "b-161ff93449ab",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T04:04:58.000Z",
+        "end": "2026-11-07T04:07:58.000Z"
+      },
+      "validity": "logs COMPLETE, timings COMPLETE, handler max 260.08 ms, failures 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "bbeb8959-99fe-49ff-915b-609317b3acf3",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3937,
+        "reported_output_tokens": 1380,
+        "tokens_counted_against_budget": 5317,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 8,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publication throughput (~3.1/s) is below the arrival rate (~3.6/s), so a backlog grows and notifications are delayed. Per-delivery time is ~329 ms, mostly consumer handler (~256 ms) and auth (~70 ms).",
+      "evidence": {
+        "E1": "183534c6-def4-4766-a13d-878377212f3c",
+        "E2": "cd87bed4-461a-41ee-8333-56cdf604ad38",
+        "E3": "2e60f02c-27d5-4b98-9e70-ea7cb320a1d2",
+        "E4": "91b14de0-c99f-4df4-81b0-3dbc11d9b3e8",
+        "E5": "905c8467-965d-4829-b660-0777c5115e43",
+        "E6": "edf21df5-f386-4732-92fd-28691f3182e6",
+        "E7": "e81cfb63-cb91-44fb-8787-8b87bfb35711"
+      },
+      "findings": [
+        {
+          "claim": "Outbox backlog grew during the window: arrivals outpaced publications, and pending rose from 2 to 114.",
+          "reason": "Arrivals 649 vs publications 563 (86 behind); per-bucket publications ~24-27 vs 36 arrivals; pending 2->114.",
+          "support": "observed",
+          "evidence_ids": [
+            "cd87bed4-461a-41ee-8333-56cdf604ad38"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Each delivery takes ~329 ms, dominated by the consumer (handler ~256 ms, auth ~70 ms), not LedgerCore overhead.",
+          "reason": "Unattributed time is ~1 ms; all 563 attempts succeeded with no errors or timeouts.",
+          "support": "observed",
+          "evidence_ids": [
+            "91b14de0-c99f-4df4-81b0-3dbc11d9b3e8",
+            "2e60f02c-27d5-4b98-9e70-ea7cb320a1d2"
+          ],
+          "evidence_handles": [
+            "E4",
+            "E3"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Serial deliveries at ~329 ms cap throughput near 3/s, below the 3.6/s arrival rate. The consumer latency is what limits drain, so the backlog and late notifications follow.",
+          "reason": "Config shows a 1 s poll and a batch of 20. Observed publication rate matches the per-attempt latency cap; the serial publisher is my assumption.",
+          "support": "inferred",
+          "evidence_ids": [
+            "cd87bed4-461a-41ee-8333-56cdf604ad38",
+            "91b14de0-c99f-4df4-81b0-3dbc11d9b3e8",
+            "e81cfb63-cb91-44fb-8787-8b87bfb35711"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E4",
+            "E7"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Whether the publisher is serial and the full delivery loop timing are not directly shown; the throughput cap is inferred.",
+        "The 571 old FAILED rows and the 37,000 s oldest-undelivered age are unexplained and may be a separate issue."
+      ],
+      "next_checks": [
+        "Check why the consumer handler takes ~256 ms, and whether that is expected for this consumer.",
+        "Inspect the outbox publisher loop and the 571 FAILED rows; test a larger batch or concurrent delivery."
+      ],
+      "alternatives": [
+        {
+          "reason": "No acquisition timeouts, no pending borrowers, and no blocking sessions.",
+          "assessment": "weakened",
+          "hypothesis": "Database pool exhaustion or lock contention is slowing publication.",
+          "evidence_ids": [
+            "905c8467-965d-4829-b660-0777c5115e43",
+            "edf21df5-f386-4732-92fd-28691f3182e6"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        },
+        {
+          "reason": "All attempts succeeded; the failed count is constant at 571 and predates the window.",
+          "assessment": "weakened",
+          "hypothesis": "Delivery failures and retries are delaying notifications.",
+          "evidence_ids": [
+            "2e60f02c-27d5-4b98-9e70-ea7cb320a1d2",
+            "cd87bed4-461a-41ee-8333-56cdf604ad38"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E2"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3937,
+    "output_tokens": 1380,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 18.1,
+    "classified_dev_aid": "slow_consumer_handler",
+    "cost_usd": 0.02167,
+    "checks": {
+      "numbers_checked": 8,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "INCONCLUSIVE",
+    "primary_cause": "unclassified",
+    "rule": "no rule matched",
+    "evidence_ids": [],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

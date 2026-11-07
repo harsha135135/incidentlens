@@ -1,0 +1,299 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "me-d4-r1",
+  "template": "me-d4",
+  "split": "development",
+  "category": "missing_evidence",
+  "ground_truth": "insufficient_evidence",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 354733765,
+      "controller_run": "stage5-me-d4-r1-a1",
+      "bundle": "b-b3f8219eb86b",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T15:03:21.000Z",
+        "end": "2026-11-06T15:06:41.000Z"
+      },
+      "validity": "deciding source blockers UNAVAILABLE; requests COMPLETE, server-error ratio 0.1167"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "INCONCLUSIVE",
+    "primary_cause": "unclassified",
+    "rule": "no rule matched",
+    "evidence_ids": [],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "3754eb13-f9cd-4f44-9790-f32ad502bffa",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3598,
+        "reported_output_tokens": 1031,
+        "tokens_counted_against_budget": 4629,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 11,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Transfers show 11.7% HTTP 500s and a p95 of 2.1 s, which matches the complaint. The cause is not established. Connection pool and outbox publication look healthy; delivery and DB blocker evidence is missing.",
+      "evidence": {
+        "E1": "163b1f63-2d52-48ae-9a9d-74b230e9390f",
+        "E2": "15b64eb8-5f62-4a1d-ba35-472b732461bf",
+        "E3": "7664b251-d0ae-4d0d-81f1-44477c9420c3",
+        "E4": "c7fbc464-74a0-467e-9cc1-74933a1f9a4b",
+        "E5": "fa430ad2-cf25-4c97-801b-c8fd8bc7a80b",
+        "E6": "9a1c801e-4f93-416c-850c-7e9c57f45adf",
+        "E7": "e871ca9d-ea1c-4d9f-b4e1-5287e28639fb"
+      },
+      "findings": [
+        {
+          "claim": "Transfers have a high server-error ratio (79 of 677 returned 500) and a slow latency tail (p95 2.11 s, p99 4.06 s).",
+          "reason": "Request metrics are complete and show both failures and slow requests, matching the customer reports.",
+          "support": "observed",
+          "evidence_ids": [
+            "163b1f63-2d52-48ae-9a9d-74b230e9390f"
+          ],
+          "evidence_handles": [
+            "E1"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Connection pool exhaustion is not the cause: no acquisition timeouts, pending borrowers were always 0, and acquire time was under 3 ms.",
+          "reason": "Pool metrics are complete (40/40 scrapes); a 30 s connection timeout would not match 2-4 s latencies either.",
+          "support": "observed",
+          "evidence_ids": [
+            "fa430ad2-cf25-4c97-801b-c8fd8bc7a80b"
+          ],
+          "evidence_handles": [
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The outbox kept up with arrivals: 601 arrived vs 599 published, 0 failed, and the oldest undelivered age stayed near 1 s. Outbox backlog does not explain the failures.",
+          "reason": "Complete outbox counts show arrivals and publications matching in every bucket, with no failures.",
+          "support": "observed",
+          "evidence_ids": [
+            "15b64eb8-5f62-4a1d-ba35-472b732461bf"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Delivery logs and timings are PARTIAL with zero records, so consumer-side behaviour is unobserved.",
+        "Blocker history is UNAVAILABLE, and no application error logs or stack traces for the 500s were collected.",
+        "E3 (search_delivery_logs) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+        "E4 (get_delivery_timings) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+        "E6 (get_database_blockers) is UNAVAILABLE: Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+      ],
+      "next_checks": [
+        "Retrieve the application error logs and stack traces for the 79 HTTP 500 responses on /v1/transfers.",
+        "Re-run blocker sampling and the delivery log collection once the collectors have caught up past the window end."
+      ],
+      "alternatives": [
+        {
+          "reason": "Blocker sampling was unavailable (0/100 samples ok), so blocking can be neither confirmed nor ruled out.",
+          "assessment": "unassessed",
+          "hypothesis": "Database lock contention or slow queries in the transfer path cause the 500s and the slow tail.",
+          "evidence_ids": [
+            "9a1c801e-4f93-416c-850c-7e9c57f45adf"
+          ],
+          "evidence_handles": [
+            "E6"
+          ]
+        },
+        {
+          "reason": "Delivery logs and timings have no records and partial coverage; the outbox looks healthy but the consumer was not observed.",
+          "assessment": "unassessed",
+          "hypothesis": "Slow or failing downstream consumer delivery (3 s delivery timeout) affects transfers.",
+          "evidence_ids": [
+            "7664b251-d0ae-4d0d-81f1-44477c9420c3",
+            "c7fbc464-74a0-467e-9cc1-74933a1f9a4b",
+            "e871ca9d-ea1c-4d9f-b4e1-5287e28639fb"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4",
+            "E7"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3598,
+    "output_tokens": 1031,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "pool_saturation",
+    "cost_usd": 0.01751,
+    "checks": {
+      "numbers_checked": 11,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.1"
+  },
+  "P_replays": {
+    "2026-11-06.2": {
+      "job_id": "77405e13-d9bd-4d8e-b9b5-e96cb42d8cd5",
+      "status": "COMPLETED",
+      "final_reason": "model report: INCONCLUSIVE",
+      "report": {
+        "usage": {
+          "tool_actions": 7,
+          "model_actions": 1,
+          "reported_input_tokens": 3802,
+          "reported_output_tokens": 954,
+          "tokens_counted_against_budget": 4756,
+          "model_calls_with_unknown_usage": 0
+        },
+        "checks": {
+          "numbers_checked": 11,
+          "numbers_not_found_in_cited_evidence": 0
+        },
+        "outcome": "INCONCLUSIVE",
+        "summary": "Transfers show 11.7% HTTP 500s and a multi-second p95/p99 tail, but no collected source explains them. Outbox, pool and config look benign; log and blocker sources have no data.",
+        "evidence": {
+          "E1": "af8335c2-820a-44e1-af02-5daa60cc4737",
+          "E2": "c578d7e1-3d4e-4d0e-b190-417882bf113c",
+          "E3": "d63f3f94-93c0-4b59-95c1-daf765a7c694",
+          "E4": "196b51bb-ae1f-4719-8840-882daeb864ef",
+          "E5": "b505ccfe-7ce9-4c71-9964-21f299ae01de",
+          "E6": "10c17864-8fa2-4600-9f87-db75aba43e78",
+          "E7": "4277befa-97b1-4714-a341-90d115a4d376"
+        },
+        "findings": [
+          {
+            "claim": "Transfers are failing and slow: 79 of 677 requests returned 500, with p95 2.11 s and p99 4.06 s.",
+            "reason": "Request metrics are COMPLETE and confirm both the failure rate and the latency tail.",
+            "support": "observed",
+            "evidence_ids": [
+              "af8335c2-820a-44e1-af02-5daa60cc4737"
+            ],
+            "evidence_handles": [
+              "E1"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "The outbox is not the bottleneck: arrivals and publications match, nothing is failed and the oldest undelivered age stays about 1 s.",
+            "reason": "Arrivals minus publications is 2 over 200 s, failed is 0 throughout, and pending stays at 3.",
+            "support": "observed",
+            "evidence_ids": [
+              "c578d7e1-3d4e-4d0e-b190-417882bf113c"
+            ],
+            "evidence_handles": [
+              "E2"
+            ],
+            "unverified_numbers": []
+          },
+          {
+            "claim": "The connection pool shows no saturation: 0 acquisition timeouts, 0 pending borrowers, max 5 of 10 active connections, acquire max 3 ms.",
+            "reason": "Complete pool metrics show no waiting for connections, which argues against pool exhaustion as the cause.",
+            "support": "observed",
+            "evidence_ids": [
+              "b505ccfe-7ce9-4c71-9964-21f299ae01de"
+            ],
+            "evidence_handles": [
+              "E5"
+            ],
+            "unverified_numbers": []
+          }
+        ],
+        "limitations": [
+          "Blocker sampling had no successful samples, and the delivery log and timing collectors had not confirmed reading past the window end.",
+          "No application error logs or per-request error details were collected for the 79 HTTP 500 responses.",
+          "E3 (search_delivery_logs) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+          "E4 (get_delivery_timings) is PARTIAL: The collector has not yet confirmed reading the ledgercore log past the window end; recent records may be missing.",
+          "E6 (get_database_blockers) is UNAVAILABLE: Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+        ],
+        "next_checks": [
+          "Collect application error logs or stack traces for the 500 responses on /v1/transfers in this window.",
+          "Restore database blocker sampling and re-check for lock waits or slow statements during failures."
+        ],
+        "alternatives": [
+          {
+            "reason": "Blocker sampling was UNAVAILABLE (0/100 samples ok), so locking can be neither supported nor ruled out.",
+            "assessment": "unassessed",
+            "hypothesis": "Database lock contention or a slow query is causing the 500s and the latency tail.",
+            "evidence_ids": [
+              "10c17864-8fa2-4600-9f87-db75aba43e78"
+            ],
+            "evidence_handles": [
+              "E6"
+            ]
+          },
+          {
+            "reason": "Delivery logs and timings returned no records and are PARTIAL, so no error detail is available.",
+            "assessment": "unassessed",
+            "hypothesis": "A fault in the transfer handler or in the consumer or delivery path causes the errors.",
+            "evidence_ids": [
+              "d63f3f94-93c0-4b59-95c1-daf765a7c694",
+              "196b51bb-ae1f-4719-8840-882daeb864ef"
+            ],
+            "evidence_handles": [
+              "E3",
+              "E4"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 1,
+      "tool_calls": 7,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "search_delivery_logs",
+        "get_delivery_timings",
+        "get_pool_metrics",
+        "get_database_blockers",
+        "get_runtime_config"
+      ],
+      "recoveries": 0,
+      "input_tokens": 3802,
+      "output_tokens": 954,
+      "unknown_usage_calls": 0,
+      "replay_elapsed_seconds": 20.2,
+      "classified_dev_aid": "lock_contention",
+      "cost_usd": 0.01714,
+      "checks": {
+        "numbers_checked": 11,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "prompt_version": "2026-11-06.2"
+    }
+  }
+}

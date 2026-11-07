@@ -1,0 +1,17 @@
+# One scrape job: the instrumented LedgerCore on the host, through the diagnostics login, which can
+# read /actuator/prometheus and nothing else.
+global:
+  scrape_interval: 5s
+  scrape_timeout: 4s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: ledgercore
+    metrics_path: /actuator/prometheus
+    basic_auth:
+      username: diagnostics-reader
+      password_file: /etc/prometheus/scrape-password
+    static_configs:
+      - targets: ["host.docker.internal:18080"]
+        labels:
+          service: ledgercore-local

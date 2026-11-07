@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block page %}report{% endblock %}
+{% block content %}
+<section class="card" id="report" data-job="{{ job.id }}">
+  <h1>Report</h1>
+  <p class="symptom">“{{ job.symptom }}”</p>
+  <p class="muted">Window {{ job.window_start[:19] }} to {{ job.window_end[:19] }} UTC · {{ job.status }}</p>
+  {% include "report_body.html" %}
+  <p class="exports">Export: <a href="/api/v1/investigations/{{ job.id }}/export?format=json" download>JSON</a> ·
+    <a href="/api/v1/investigations/{{ job.id }}/export?format=html" download>HTML</a> · <a href="/">New investigation</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,444 @@
+{
+ "arguments": {
+  "limit": 50,
+  "mode": "historical"
+ },
+ "collected_at": "2026-11-07T05:49:18.205Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "blocked_sessions": 8,
+  "blocker_roles": {
+   "ledger_app": 20,
+   "other": 8
+  },
+  "edges": [
+   {
+    "blocked_pid": 57590,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 62321,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-07T05:45:37.386Z",
+    "last_seen": "2026-11-07T05:48:45.389Z",
+    "max_blocked_wait_seconds": 1.783,
+    "max_blocker_transaction_seconds": 188.383,
+    "samples": 12
+   },
+   {
+    "blocked_pid": 57588,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 62321,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-07T05:45:39.386Z",
+    "last_seen": "2026-11-07T05:48:35.385Z",
+    "max_blocked_wait_seconds": 1.774,
+    "max_blocker_transaction_seconds": 178.38,
+    "samples": 17
+   },
+   {
+    "blocked_pid": 57585,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 62321,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-07T05:45:41.388Z",
+    "last_seen": "2026-11-07T05:48:39.389Z",
+    "max_blocked_wait_seconds": 1.779,
+    "max_blocker_transaction_seconds": 182.381,
+    "samples": 19
+   },
+   {
+    "blocked_pid": 57591,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 62321,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-07T05:45:49.386Z",
+    "last_seen": "2026-11-07T05:48:27.389Z",
+    "max_blocked_wait_seconds": 1.783,
+    "max_blocker_transaction_seconds": 170.381,
+    "samples": 11
+   },
+   {
+    "blocked_pid": 57578,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 62321,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-07T05:45:55.390Z",
+    "last_seen": "2026-11-07T05:48:39.389Z",
+    "max_blocked_wait_seconds": 1.783,
+    "max_blocker_transaction_seconds": 182.381,
+    "samples": 21
+   },
+   {
+    "blocked_pid": 57590,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57578,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:45:55.390Z",
+    "last_seen": "2026-11-07T05:45:55.390Z",
+    "max_blocked_wait_seconds": 1.455,
+    "max_blocker_transaction_seconds": 1.785,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57593,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57590,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:45:57.390Z",
+    "last_seen": "2026-11-07T05:45:57.390Z",
+    "max_blocked_wait_seconds": 1.121,
+    "max_blocker_transaction_seconds": 3.457,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57593,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 62321,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-07T05:45:59.386Z",
+    "last_seen": "2026-11-07T05:48:45.389Z",
+    "max_blocked_wait_seconds": 1.781,
+    "max_blocker_transaction_seconds": 188.383,
+    "samples": 12
+   },
+   {
+    "blocked_pid": 57591,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 57592,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:46:03.390Z",
+    "last_seen": "2026-11-07T05:46:03.390Z",
+    "max_blocked_wait_seconds": 1.447,
+    "max_blocker_transaction_seconds": 1.781,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57592,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 62321,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-07T05:46:03.390Z",
+    "last_seen": "2026-11-07T05:48:41.386Z",
+    "max_blocked_wait_seconds": 1.78,
+    "max_blocker_transaction_seconds": 184.378,
+    "samples": 12
+   },
+   {
+    "blocked_pid": 57578,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57588,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:46:07.388Z",
+    "last_seen": "2026-11-07T05:46:07.388Z",
+    "max_blocked_wait_seconds": 0.777,
+    "max_blocker_transaction_seconds": 1.445,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57585,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57578,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:46:07.388Z",
+    "last_seen": "2026-11-07T05:46:07.388Z",
+    "max_blocked_wait_seconds": 0.118,
+    "max_blocker_transaction_seconds": 0.778,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57585,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57588,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:46:07.388Z",
+    "last_seen": "2026-11-07T05:46:53.390Z",
+    "max_blocked_wait_seconds": 1.107,
+    "max_blocker_transaction_seconds": 1.776,
+    "samples": 3
+   },
+   {
+    "blocked_pid": 57588,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57578,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:46:09.390Z",
+    "last_seen": "2026-11-07T05:46:09.390Z",
+    "max_blocked_wait_seconds": 0.115,
+    "max_blocker_transaction_seconds": 2.778,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57592,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57593,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:46:33.390Z",
+    "last_seen": "2026-11-07T05:46:33.390Z",
+    "max_blocked_wait_seconds": 1.441,
+    "max_blocker_transaction_seconds": 1.776,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57589,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 62321,
+    "blocker_role": "other",
+    "blocker_states": [
+     "idle in transaction"
+    ],
+    "first_seen": "2026-11-07T05:46:37.390Z",
+    "last_seen": "2026-11-07T05:48:43.385Z",
+    "max_blocked_wait_seconds": 1.606,
+    "max_blocker_transaction_seconds": 186.378,
+    "samples": 12
+   },
+   {
+    "blocked_pid": 57589,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57585,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:46:53.390Z",
+    "last_seen": "2026-11-07T05:46:53.390Z",
+    "max_blocked_wait_seconds": 0.114,
+    "max_blocker_transaction_seconds": 0.884,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57578,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57593,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:47:07.390Z",
+    "last_seen": "2026-11-07T05:48:37.389Z",
+    "max_blocked_wait_seconds": 0.773,
+    "max_blocker_transaction_seconds": 1.782,
+    "samples": 2
+   },
+   {
+    "blocked_pid": 57592,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 57588,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:47:33.386Z",
+    "last_seen": "2026-11-07T05:47:33.386Z",
+    "max_blocked_wait_seconds": 0.113,
+    "max_blocker_transaction_seconds": 1.361,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57589,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 57578,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:48:03.388Z",
+    "last_seen": "2026-11-07T05:48:03.388Z",
+    "max_blocked_wait_seconds": 0.778,
+    "max_blocker_transaction_seconds": 1.618,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57593,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57578,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:48:07.388Z",
+    "last_seen": "2026-11-07T05:48:07.388Z",
+    "max_blocked_wait_seconds": 1.44,
+    "max_blocker_transaction_seconds": 1.773,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57578,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57589,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:48:09.386Z",
+    "last_seen": "2026-11-07T05:48:09.386Z",
+    "max_blocked_wait_seconds": 0.78,
+    "max_blocker_transaction_seconds": 1.1,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57591,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57593,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:48:09.386Z",
+    "last_seen": "2026-11-07T05:48:09.386Z",
+    "max_blocked_wait_seconds": 0.107,
+    "max_blocker_transaction_seconds": 3.44,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57589,
+    "blocked_wait_event": "transactionid",
+    "blocker_pid": 57588,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:48:11.390Z",
+    "last_seen": "2026-11-07T05:48:11.390Z",
+    "max_blocked_wait_seconds": 0.781,
+    "max_blocker_transaction_seconds": 1.117,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57592,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57578,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:48:11.390Z",
+    "last_seen": "2026-11-07T05:48:11.390Z",
+    "max_blocked_wait_seconds": 1.783,
+    "max_blocker_transaction_seconds": 2.785,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57592,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57589,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:48:31.389Z",
+    "last_seen": "2026-11-07T05:48:31.389Z",
+    "max_blocked_wait_seconds": 0.106,
+    "max_blocker_transaction_seconds": 1.448,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57588,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57592,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:48:33.389Z",
+    "last_seen": "2026-11-07T05:48:33.389Z",
+    "max_blocked_wait_seconds": 0.106,
+    "max_blocker_transaction_seconds": 2.108,
+    "samples": 1
+   },
+   {
+    "blocked_pid": 57591,
+    "blocked_wait_event": "tuple",
+    "blocker_pid": 57588,
+    "blocker_role": "ledger_app",
+    "blocker_states": [
+     "active"
+    ],
+    "first_seen": "2026-11-07T05:48:35.385Z",
+    "last_seen": "2026-11-07T05:48:35.385Z",
+    "max_blocked_wait_seconds": 1.779,
+    "max_blocker_transaction_seconds": 2.105,
+    "samples": 1
+   }
+  ],
+  "first_blocking_at": "2026-11-07T05:45:37.386Z",
+  "last_blocking_at": "2026-11-07T05:48:45.389Z",
+  "max_blocked_wait_seconds": 1.783,
+  "meaning": "Each edge: a waiting ledger_app session (blocked_pid) and the session holding the lock (blocker_pid), labelled only ledger_app or other. No query text is collected.",
+  "mode": "historical",
+  "relationships": 28,
+  "samples": {
+   "expected": 120,
+   "failed": 0,
+   "gaps": [],
+   "successful": 120,
+   "with_blocking": 77
+  }
+ },
+ "errors": [],
+ "evidence_id": "66d1dd46-e481-4280-a915-c5fb6ec1b8e9",
+ "limitations": [
+  "Blocking is sampled every 2 s: shorter blocks can be missed, and no blocking in the samples is not proof that no session waited."
+ ],
+ "observed_window": {
+  "first": "2026-11-07T05:45:07.390Z",
+  "last": "2026-11-07T05:49:05.387Z"
+ },
+ "requested_window": {
+  "end": "2026-11-07T05:49:07.000Z",
+  "start": "2026-11-07T05:45:07.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "postgres_samples",
+  "target_instance_id": "6f3ef0f4-2e96-4ef1-8f9e-edd3c4770b13",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_database_blockers",
+ "truncated": false
+}

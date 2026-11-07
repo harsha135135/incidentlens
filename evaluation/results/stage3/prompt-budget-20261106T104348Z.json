@@ -1,0 +1,27 @@
+{
+  "scenarios": "evaluation/results/stage1/scenarios-20261106T054219Z",
+  "observations": 12,
+  "characters_per_observation": [
+    1178,
+    986,
+    973,
+    961,
+    953,
+    781,
+    741,
+    718,
+    718,
+    684,
+    647,
+    611
+  ],
+  "tokens_without_evidence": 2621,
+  "tokens_with_largest_observation": 3208,
+  "tokens_worst_case": 5110,
+  "evidence_characters": 5546,
+  "observations_shortened": 6,
+  "observations_reduced_to_header": 0,
+  "limit": 6000,
+  "fits": true,
+  "largest_rendered_observation": "[E1] get_outbox_stats coverage PARTIAL\n  committed arrivals 176 (3.2/s); recorded publications 174 (3.164/s); arrivals minus publications 2; over 55.002 s; settled True\n  per 10 s bucket, arrivals: 32 16 0 80 32 16\n  per 10 s bucket, publications: 29 17 0 38 72 18\n  pending: first 4 at 05:46:48, last 2 at 05:47:38, min 2, max 46; samples: 05:46:48=4 05:46:58=2 05:47:23=46 05:47:33=4 05:47:38=2\n  failed: first 0 at 05:46:48, last 0 at 05:47:38, min 0, max 0; samples: 05:46:48=0 05:46:58=0 05:47:23=0 05:47:33=0 05:47:38=0\n  oldest_undelivered_age_seconds: first 1.02495 at 05:46:48, last 0.381681 at 05:47:38, min 0.235797, max 6.62136; samples: 05:46:48=1.02495 05:46:58=0.392477 05:47:23=4.42287 05:47:33=1.02279 05:47:38=0.381681\n  scrapes 8/11 ok; gaps: 05:46:58\u201305:47:18 (20.0 s) (scrape start times; each bound accurate to about one scrape interval (5 s))\n  limitation: Scrapes are missing for 20 s of the window (1 gap(s)); values there are unknown, not zero.\n  limitation: Pending is a gauge sampled at scrape times; arrivals and publications are durable counts by timestamp. Transitions to FAILED and the different sampling instant\u2026\n  (full observation saved as E1)"
+}

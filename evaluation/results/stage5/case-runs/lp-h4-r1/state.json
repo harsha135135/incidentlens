@@ -1,0 +1,197 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "lp-h4-r1",
+  "template": "lp-h4",
+  "split": "held_out",
+  "category": "lock_pool_exhaustion",
+  "ground_truth": "lock_contention+pool_saturation",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 1486704566,
+      "controller_run": "stage5-lp-h4-r1-a1",
+      "bundle": "b-51861fde5cbc",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T04:29:49.000Z",
+        "end": "2026-11-07T04:32:19.000Z"
+      },
+      "validity": "blockers COMPLETE, other edges 1, pool timeouts 174"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "61b7279a-de20-47c1-9f9c-1c31e117a3d3",
+    "status": "COMPLETED",
+    "final_reason": "model report: SUPPORTED",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4383,
+        "reported_output_tokens": 1174,
+        "tokens_counted_against_budget": 5557,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 18,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "SUPPORTED",
+      "summary": "After the 04:30:02 restart the DB pool was cut to 1 connection with a 250 ms timeout. An idle-in-transaction session then blocked the only connection, causing pool timeouts, 503s and slow transfers.",
+      "evidence": {
+        "E1": "e289fc26-966c-4ec8-ade8-0098bb58faec",
+        "E2": "77724b2b-df1c-4df7-b1fd-061a24714e0b",
+        "E3": "a5f27420-b8c4-4359-a7a8-614b6889f38d",
+        "E4": "42fd663f-ced8-4806-91cd-1a85745e2b3d",
+        "E5": "055555a2-be5a-48ab-bd72-523bcb2c0f4d",
+        "E6": "1f0df6a4-02bd-4abd-8c73-cd95b8b139ec",
+        "E7": "97215f04-10fb-4535-a856-131390140d34"
+      },
+      "findings": [
+        {
+          "claim": "At 04:30:02 the app restarted with poolMaximumSize 10\u21921 and connection timeout 30000\u2192250 ms.",
+          "reason": "Runtime config shows the changed pool settings at the restart inside the window.",
+          "support": "observed",
+          "evidence_ids": [
+            "97215f04-10fb-4535-a856-131390140d34"
+          ],
+          "evidence_handles": [
+            "E7"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "With a single connection, borrowers queued and timed out: 174 acquisition timeouts, pending up to 2, only during 04:30:03\u201304:30:58.",
+          "reason": "Pool metrics show timeouts and saturation within the post-restart interval, with a max of 1.",
+          "support": "observed",
+          "evidence_ids": [
+            "055555a2-be5a-48ab-bd72-523bcb2c0f4d"
+          ],
+          "evidence_handles": [
+            "E5"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "A session idle in transaction blocked a ledger_app session (up to ~2 s) from 04:30:04 to 04:30:58, holding the one connection and stalling requests.",
+          "reason": "Blocker samples show a 24-sample block matching the pool-saturation interval.",
+          "support": "observed",
+          "evidence_ids": [
+            "1f0df6a4-02bd-4abd-8c73-cd95b8b139ec"
+          ],
+          "evidence_handles": [
+            "E6"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Transfers failed (500\u00d724, 503\u00d7107, ratio 0.32) with p95 1.2 s and p99 2.2 s, consistent with pool exhaustion rather than the downstream consumer.",
+          "reason": "The error and latency symptoms coincide with the pool-starved period; the tiny pool made the blocker's impact severe.",
+          "support": "inferred",
+          "evidence_ids": [
+            "e289fc26-966c-4ec8-ade8-0098bb58faec",
+            "055555a2-be5a-48ab-bd72-523bcb2c0f4d",
+            "1f0df6a4-02bd-4abd-8c73-cd95b8b139ec"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Outbox delivery to the consumer is healthy (282/282 success, ~71 ms); the stuck failed=619 and old undelivered age are pre-existing and unchanged.",
+          "reason": "Deliveries all succeeded, and arrivals match publications, so the consumer is not the cause.",
+          "support": "observed",
+          "evidence_ids": [
+            "77724b2b-df1c-4df7-b1fd-061a24714e0b",
+            "a5f27420-b8c4-4359-a7a8-614b6889f38d",
+            "42fd663f-ced8-4806-91cd-1a85745e2b3d"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Blocker sampling is every 2 s, and the identity and origin of the idle-in-transaction session (44179) are unknown.",
+        "Counters restarted, so request counts span both sides of the restart and are not split into before and after."
+      ],
+      "next_checks": [
+        "Identify what session 44179 is and why it was idle in transaction, e.g. from application or DB logs.",
+        "Review why the pool was reduced to 1 with a 250 ms timeout (dirty revision) and restore the previous settings."
+      ],
+      "alternatives": [
+        {
+          "reason": "All deliveries succeeded at ~71 ms with no server or network errors.",
+          "assessment": "weakened",
+          "hypothesis": "Slow or failing downstream consumer causing transfer slowness",
+          "evidence_ids": [
+            "a5f27420-b8c4-4359-a7a8-614b6889f38d",
+            "42fd663f-ced8-4806-91cd-1a85745e2b3d"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ]
+        },
+        {
+          "reason": "Arrivals equal publications; the failed count of 619 is constant and predates the window.",
+          "assessment": "weakened",
+          "hypothesis": "Outbox backlog degrading transfers",
+          "evidence_ids": [
+            "77724b2b-df1c-4df7-b1fd-061a24714e0b"
+          ],
+          "evidence_handles": [
+            "E2"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4383,
+    "output_tokens": 1174,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.02051,
+    "checks": {
+      "numbers_checked": 18,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "lock_contention",
+    "rule": "a non-ledger_app session blocked ledger_app sessions in 24 samples; 174 pool acquisition timeouts",
+    "evidence_ids": [
+      "E6",
+      "E5"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

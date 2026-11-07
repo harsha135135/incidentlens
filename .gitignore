@@ -1,0 +1,13 @@
+# Local secrets and generated credentials: never committed.
+.env.local
+.env
+deploy/local/
+
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Runtime state
+logs/
+evaluation/bundles/

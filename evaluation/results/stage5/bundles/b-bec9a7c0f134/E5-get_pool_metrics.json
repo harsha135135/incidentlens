@@ -1,0 +1,88 @@
+{
+ "arguments": {},
+ "collected_at": "2026-11-07T04:25:02.156Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "acquire_max_ms_per_scrape": 3.0,
+  "acquire_mean_ms": 0.078,
+  "acquisition_timeouts": 0,
+  "acquisitions": 2813,
+  "configured_connection_timeout_ms": 30000,
+  "configured_maximum_at_window_end": 10,
+  "gauges": {
+   "active": {
+    "first": 0.0,
+    "first_above_zero_at": "2026-11-07T04:22:33.713Z",
+    "last": 0.0,
+    "last_above_zero_at": "2026-11-07T04:22:58.711Z",
+    "max": 4.0,
+    "mean": 0.367,
+    "min": 0.0,
+    "samples": 30,
+    "samples_above_zero": 4
+   },
+   "idle": {
+    "first": 10.0,
+    "first_above_zero_at": "2026-11-07T04:22:23.712Z",
+    "last": 10.0,
+    "last_above_zero_at": "2026-11-07T04:24:48.713Z",
+    "max": 10.0,
+    "mean": 9.633,
+    "min": 6.0,
+    "samples": 30,
+    "samples_above_zero": 30
+   },
+   "maximum": {
+    "first": 10.0,
+    "first_above_zero_at": "2026-11-07T04:22:23.712Z",
+    "last": 10.0,
+    "last_above_zero_at": "2026-11-07T04:24:48.713Z",
+    "max": 10.0,
+    "mean": 10.0,
+    "min": 10.0,
+    "samples": 30,
+    "samples_above_zero": 30
+   },
+   "pending": {
+    "first": 0.0,
+    "first_above_zero_at": null,
+    "last": 0.0,
+    "last_above_zero_at": null,
+    "max": 0.0,
+    "mean": 0.0,
+    "min": 0.0,
+    "samples": 30,
+    "samples_above_zero": 0
+   }
+  },
+  "scrapes": {
+   "expected_scrapes": 30,
+   "failed_scrapes": 0,
+   "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)",
+   "gaps": [],
+   "successful_scrapes": 30
+  }
+ },
+ "errors": [],
+ "evidence_id": "c28b84ab-03f9-4adf-952d-9d5788c7e742",
+ "limitations": [
+  "Pending borrowers and active connections are gauges read at each 5 s scrape; brief saturation between scrapes may not appear in them (acquisition time and timeouts are counters)."
+ ],
+ "observed_window": {
+  "first": "2026-11-07T04:22:23.712Z",
+  "last": "2026-11-07T04:24:48.713Z"
+ },
+ "requested_window": {
+  "end": "2026-11-07T04:24:51.000Z",
+  "start": "2026-11-07T04:22:21.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "0f455471-024c-4d27-9421-48a029a7719d",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_pool_metrics",
+ "truncated": false
+}

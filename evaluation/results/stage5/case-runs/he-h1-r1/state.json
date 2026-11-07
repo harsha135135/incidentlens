@@ -1,0 +1,171 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-h1-r1",
+  "template": "he-h1",
+  "split": "held_out",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 1399293659,
+      "controller_run": "stage5-he-h1-r1-a1",
+      "bundle": "b-6462696f03f4",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-07T05:04:20.000Z",
+        "end": "2026-11-07T05:08:20.000Z"
+      },
+      "validity": "all complete True, pending max 6.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "542c1f5c-4936-465a-bb8f-ed80866ef0b0",
+    "status": "COMPLETED",
+    "final_reason": "model report: INCONCLUSIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3991,
+        "reported_output_tokens": 980,
+        "tokens_counted_against_budget": 4971,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 9,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "INCONCLUSIVE",
+      "summary": "Within the window, outbox deliveries are timely and healthy. A static backlog of 778 FAILED rows, the oldest about 11 hours old, predates the window. The evidence does not show why they failed or tie them to the symptom.",
+      "evidence": {
+        "E1": "2c0139ff-abdf-43db-8933-b14f414ca061",
+        "E2": "89804d9c-d1e6-4c3f-9fdf-097137dd4ecb",
+        "E3": "72443921-3412-4b8f-845e-43be49904457",
+        "E4": "6e0cc1fc-05f3-4c4a-ac46-e3c56ebda03a",
+        "E5": "7297869f-dbe2-45ca-baf9-0dfe562aa311",
+        "E6": "766a17d0-4469-47db-9f05-083780edd77a",
+        "E7": "6e8599d1-b734-4270-bc08-17f0c18cd761"
+      },
+      "findings": [
+        {
+          "claim": "Current publication keeps pace with arrivals: 660 arrivals vs 659 publications, with pending at most 6.",
+          "reason": "Per-bucket arrivals and publications match, including the 38/10s burst, so no live backlog is building.",
+          "support": "observed",
+          "evidence_ids": [
+            "89804d9c-d1e6-4c3f-9fdf-097137dd4ecb"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "All 659 delivery attempts in the window succeeded on attempt 1 with status 200 in about 71 ms. Delivery itself is fast.",
+          "reason": "There were no auth, server or network errors, and the consumer handler time is negligible.",
+          "support": "observed",
+          "evidence_ids": [
+            "72443921-3412-4b8f-845e-43be49904457",
+            "6e0cc1fc-05f3-4c4a-ac46-e3c56ebda03a"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "778 outbox rows are stuck FAILED and the oldest undelivered age is about 41,000 s. Both are constant through the window, so they predate it.",
+          "reason": "The failed count stays at 778 and the age grows only with the clock. The cause of the failures is not visible here.",
+          "support": "observed",
+          "evidence_ids": [
+            "89804d9c-d1e6-4c3f-9fdf-097137dd4ecb"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "41000"
+          ]
+        }
+      ],
+      "limitations": [
+        "The window starts after the 778 rows failed, so the failure cause is not in the data. Whether those rows match the customers' late notifications is unknown.",
+        "The sources cover only 4 minutes, and the delivery log listing was truncated to 100 rows."
+      ],
+      "next_checks": [
+        "Inspect the 778 FAILED outbox rows: their timestamps, attempt counts (max 8) and last error. Check logs from around the time they failed.",
+        "Ask which customers and times were affected, and compare them against the failed rows' creation times."
+      ],
+      "alternatives": [
+        {
+          "reason": "There were no acquisition timeouts, no pending borrowers and no blocking sessions in the samples.",
+          "assessment": "weakened",
+          "hypothesis": "Pool exhaustion or DB lock contention delaying notifications",
+          "evidence_ids": [
+            "7297869f-dbe2-45ca-baf9-0dfe562aa311",
+            "766a17d0-4469-47db-9f05-083780edd77a"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        },
+        {
+          "reason": "Transfer p99 is 0.25 s with no server errors, and consumer auth and handler timings are small.",
+          "assessment": "weakened",
+          "hypothesis": "Slow transfer handling or consumer latency is causing late notifications",
+          "evidence_ids": [
+            "2c0139ff-abdf-43db-8933-b14f414ca061",
+            "6e0cc1fc-05f3-4c4a-ac46-e3c56ebda03a"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E4"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3991,
+    "output_tokens": 980,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 18.1,
+    "classified_dev_aid": "other",
+    "cost_usd": 0.01778,
+    "checks": {
+      "numbers_checked": 9,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

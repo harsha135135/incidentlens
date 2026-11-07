@@ -1,0 +1,175 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "he-h5-r3",
+  "template": "he-h5",
+  "split": "held_out",
+  "category": "healthy",
+  "ground_truth": "none",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 2830407777,
+      "controller_run": "stage5-he-h5-r3-a1",
+      "bundle": "b-235b6250a11b",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T18:16:34.000Z",
+        "end": "2026-11-06T18:20:34.000Z"
+      },
+      "validity": "all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "A",
+    "P"
+  ],
+  "A": {
+    "outcome": "NO_FAULT_OBSERVED",
+    "primary_cause": "none",
+    "rule": "no failed deliveries and pending stayed low",
+    "evidence_ids": [
+      "E3",
+      "E2"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  },
+  "P": {
+    "job_id": "bf03cfd6-bbaa-4093-8552-456e38207421",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 3961,
+        "reported_output_tokens": 1009,
+        "tokens_counted_against_budget": 4970,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 9,
+        "numbers_not_found_in_cited_evidence": 0
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Current deliveries are timely, but 138 outbox rows are stuck FAILED with the oldest undelivered at ~2030-2265 s. Late notifications likely come from these rows; why they failed is not shown.",
+      "evidence": {
+        "E1": "e112f8c4-5b4c-4d0c-98b4-6bd51b1f98bb",
+        "E2": "a7827c21-5125-4f08-947f-6fc94a8764a2",
+        "E3": "e6df1a72-bb08-4b56-9c7a-25568b7e6643",
+        "E4": "b65d4baa-0015-4cdd-a8e3-e031b66ddada",
+        "E5": "a19965a4-d827-4115-87c1-232e98faf196",
+        "E6": "4cad84df-0cc6-4543-9260-588f36a77ee1",
+        "E7": "6268c960-26be-4ba7-bad6-19b600ff111a"
+      },
+      "findings": [
+        {
+          "claim": "138 outbox rows sit in FAILED for the whole window and are never retried; the oldest undelivered age grows 2030 s to 2265 s.",
+          "reason": "Failed count is flat at 138 and oldest age rises about 1 s per second, so these notifications stay undelivered.",
+          "support": "observed",
+          "evidence_ids": [
+            "a7827c21-5125-4f08-947f-6fc94a8764a2"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "New transfers are published in time: 720 arrivals vs 719 publications, pending 1-4, no backlog growth.",
+          "reason": "Per-bucket publications track arrivals and the pending gauge stays small, so the delay is limited to the stuck rows.",
+          "support": "observed",
+          "evidence_ids": [
+            "a7827c21-5125-4f08-947f-6fc94a8764a2",
+            "e112f8c4-5b4c-4d0c-98b4-6bd51b1f98bb"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E1"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "The consumer is fast and healthy during the window: 718 attempts all succeeded at about 72 ms with 0 errors, and the pool and DB show no contention.",
+          "reason": "No failure outcomes, near-zero handler time, no pool timeouts and no DB blockers, so no live fault explains the failed rows.",
+          "support": "observed",
+          "evidence_ids": [
+            "e6df1a72-bb08-4b56-9c7a-25568b7e6643",
+            "b65d4baa-0015-4cdd-a8e3-e031b66ddada",
+            "a19965a4-d827-4115-87c1-232e98faf196",
+            "4cad84df-0cc6-4543-9260-588f36a77ee1"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "The window starts after the failed rows had already aged ~2000 s, so the original failure cause is outside the evidence.",
+        "Only the earliest 100 of 718 delivery log rows are listed, and none concern the FAILED rows."
+      ],
+      "next_checks": [
+        "Query the FAILED outbox rows (created time, attempt count, last error) and delivery logs from about 17:40-18:16.",
+        "Check whether a replay or requeue of the FAILED rows delivers them successfully now."
+      ],
+      "alternatives": [
+        {
+          "reason": "Max attempts is 8 and the rows are about 2000 s old, which fits an earlier failure, but no logs from before the window were collected.",
+          "assessment": "unassessed",
+          "hypothesis": "The FAILED rows exhausted outboxMaxAttempts (8) during an earlier consumer outage or error, before this window.",
+          "evidence_ids": [
+            "6268c960-26be-4ba7-bad6-19b600ff111a",
+            "a7827c21-5125-4f08-947f-6fc94a8764a2"
+          ],
+          "evidence_handles": [
+            "E7",
+            "E2"
+          ]
+        },
+        {
+          "reason": "There were 0 acquisition timeouts, 0 pending borrowers and 0 blocked sessions.",
+          "assessment": "weakened",
+          "hypothesis": "Pool exhaustion or DB locking in this window is delaying notifications.",
+          "evidence_ids": [
+            "a19965a4-d827-4115-87c1-232e98faf196",
+            "4cad84df-0cc6-4543-9260-588f36a77ee1"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 3961,
+    "output_tokens": 1009,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.1,
+    "classified_dev_aid": "other",
+    "cost_usd": 0.01801,
+    "checks": {
+      "numbers_checked": 9,
+      "numbers_not_found_in_cited_evidence": 0
+    },
+    "prompt_version": "2026-11-06.2"
+  }
+}

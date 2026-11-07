@@ -1,0 +1,125 @@
+{
+ "arguments": {
+  "route_group": "transfers"
+ },
+ "collected_at": "2026-11-07T04:36:59.052Z",
+ "coverage": "PARTIAL",
+ "data": {
+  "bucket_counts": [
+   {
+    "count": 0,
+    "le": 0.005
+   },
+   {
+    "count": 0,
+    "le": 0.01
+   },
+   {
+    "count": 0,
+    "le": 0.025
+   },
+   {
+    "count": 0,
+    "le": 0.05
+   },
+   {
+    "count": 42,
+    "le": 0.1
+   },
+   {
+    "count": 345,
+    "le": 0.25
+   },
+   {
+    "count": 529,
+    "le": 0.5
+   },
+   {
+    "count": 529,
+    "le": 1.0
+   },
+   {
+    "count": 580,
+    "le": 2.5
+   },
+   {
+    "count": 580,
+    "le": 5.0
+   },
+   {
+    "count": 580,
+    "le": 10.0
+   },
+   {
+    "count": 580,
+    "le": "+Inf"
+   }
+  ],
+  "by_status": [
+   {
+    "count": 358,
+    "outcome": "SUCCESS",
+    "status": "201"
+   },
+   {
+    "count": 50,
+    "outcome": "SERVER_ERROR",
+    "status": "500"
+   },
+   {
+    "count": 172,
+    "outcome": "SERVER_ERROR",
+    "status": "503"
+   }
+  ],
+  "counter_resets": 1,
+  "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)",
+  "latency_seconds": {
+   "method": "interpolated within fixed histogram buckets summed across series",
+   "p50": 0.2228,
+   "p95": 1.6471,
+   "p99": 2.3294
+  },
+  "requests": 580,
+  "requests_per_second": 2.417,
+  "route_group": "transfers",
+  "route_template": "/v1/transfers",
+  "scrapes": {
+   "expected_scrapes": 48,
+   "failed_scrapes": 1,
+   "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)",
+   "gaps": [
+    {
+     "end": "2026-11-07T04:34:13.720Z",
+     "seconds": 10.0,
+     "start": "2026-11-07T04:34:03.715Z"
+    }
+   ],
+   "successful_scrapes": 47
+  },
+  "server_error_ratio": 0.3828
+ },
+ "errors": [],
+ "evidence_id": "5fd0d263-bc98-4df3-8fae-3ffdeb189e02",
+ "limitations": [
+  "Scrapes are missing for 10 s of the window (1 gap(s)); values there are unknown, not zero.",
+  "Counters restarted 1 time(s) in the window (application restart); counts include requests on both sides of each restart."
+ ],
+ "observed_window": {
+  "first": "2026-11-07T04:32:48.714Z",
+  "last": "2026-11-07T04:36:43.716Z"
+ },
+ "requested_window": {
+  "end": "2026-11-07T04:36:48.000Z",
+  "start": "2026-11-07T04:32:48.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "9aae4840-16b8-4f1a-b619-8056fdf68ca5",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_request_metrics",
+ "truncated": false
+}

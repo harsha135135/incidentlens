@@ -1,0 +1,390 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IncidentLens — Technical & Implementation Design</title><style>
+  :root{color-scheme:light;--ink:#183038;--muted:#53696f;--accent:#17695d;--line:#d8e3e2}
+  *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;overflow-wrap:anywhere;background:#f4f7f6;color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+  .cover{background:#143d3a;color:#fff;padding:52px max(28px,calc((100vw - 1360px)/2));border-bottom:6px solid #72b9a2}.eyebrow{font-size:12px;font-weight:700;letter-spacing:.18em;color:#b5dfd1}.cover h1{font-size:48px;line-height:1.1;margin:16px 0}.cover p{max-width:800px;color:#d7e8e3;font-size:18px}.badges{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px}.badge{font-size:12px;border:1px solid #5d8981;padding:5px 12px;border-radius:20px}
+  .layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:38px;max-width:1400px;margin:0 auto;padding:38px 28px}nav{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow:auto;font-size:13px;padding:0 8px 20px 0}nav strong{display:block;margin-bottom:10px}nav a{display:block;color:var(--muted);text-decoration:none;border-left:2px solid var(--line);padding:6px 11px;line-height:1.4}nav a:hover{border-color:var(--accent);color:var(--accent)}
+  main{min-width:0;background:white;border:1px solid var(--line);border-radius:12px;padding:34px 42px;box-shadow:0 5px 28px #173d3605}main>h1{font-size:29px;line-height:1.25;margin-top:0}h2{font-size:25px;line-height:1.3;margin:50px 0 18px;padding-top:20px;border-top:1px solid var(--line)}h3{font-size:19px;margin:28px 0 12px}p{margin:13px 0}a{color:var(--accent);text-underline-offset:3px}li{margin:7px 0}code{font:13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;background:#edf3f2;border-radius:3px;padding:2px 4px;overflow-wrap:anywhere}pre{background:#132c32;color:#edf6f4;padding:20px;border-radius:8px;overflow:auto;max-width:100%}pre code{background:none;color:inherit;padding:0;white-space:pre;overflow-wrap:normal}.table-scroll{overflow:auto;margin:20px 0;border:1px solid var(--line);border-radius:7px}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--line);min-width:125px;overflow-wrap:anywhere}th{background:#eaf2ef;font-weight:650}tr:last-child td{border-bottom:0}tr:nth-child(even) td{background:#fafcfb}.diagram{margin:24px 0;padding:20px 10px;background:#f7faf9;border:1px solid var(--line);border-radius:8px;overflow:auto}.diagram svg{display:block;width:100%;height:auto;min-width:550px}figcaption{text-align:center;font-size:12px;color:var(--muted);margin-top:12px}footer{max-width:1000px;margin:0 auto;padding:0 28px 35px;color:var(--muted);font-size:13px}
+  @media(max-width:950px){.layout{grid-template-columns:1fr;gap:24px}nav{position:static;max-height:240px;background:#fff;border:1px solid var(--line);padding:16px;border-radius:8px}main{padding:24px}}
+  @media(max-width:520px){body{font-size:15px}.cover{padding:32px 20px}.cover h1{font-size:36px}.cover p{font-size:16px}.layout{padding:20px 12px}main{padding:22px 16px}main>h1{font-size:25px}h2{font-size:22px}.diagram{padding:10px}th,td{padding:10px;min-width:145px}}
+  @media print{body{background:white;font-size:10pt}.cover{padding:20px;color:#143d3a;background:white;border-bottom:2px solid #143d3a}.cover p,.eyebrow{color:#143d3a}.cover h1{font-size:30pt}.badges,nav{display:none}.layout{display:block;padding:0}main{border:0;padding:12px;box-shadow:none}h2,h3{break-after:avoid}pre,figure,tr{break-inside:avoid}.table-scroll{overflow:visible}table{font-size:9pt}.diagram svg{min-width:0}a{color:inherit}}
+  </style></head><body><header class="cover"><div class="eyebrow">TECHNICAL DESIGN · REVISION 1.0</div><h1>IncidentLens</h1><p>From a backend symptom to a diagnosis you can inspect.<br>A bounded agent, explicit evidence, and dependable execution.</p><div class="badges"><span class="badge">Design only</span><span class="badge">Python + PostgreSQL</span><span class="badge">OpenShell isolation</span><span class="badge">4 November 2026</span></div></header><div class="layout"><nav aria-label="Contents"><strong>IMPLEMENTATION CONTRACT</strong><a href="#1-outcome-and-exact-scope">1. Outcome and exact scope</a><a href="#2-technology-decisions-and-reasoning">2. Technology decisions and reasoning</a><a href="#3-repository-reuse-and-original-work">3. Repository reuse and original work</a><a href="#4-architecture-and-process-boundaries">4. Architecture and process boundaries</a><a href="#5-ledgercore-integration-and-evidence-gaps">5. LedgerCore integration and evidence gaps</a><a href="#6-time-scope-and-data-quality">6. Time, scope and data quality</a><a href="#7-public-http-api-contract">7. Public HTTP API contract</a><a href="#8-internal-gateway-contract">8. Internal gateway contract</a><a href="#9-diagnostic-tool-interfaces">9. Diagnostic tool interfaces</a><a href="#10-restricted-target-access">10. Restricted target access</a><a href="#11-job-state-machine-and-persistence">11. Job state machine and persistence</a><a href="#12-dependable-execution-and-recovery">12. Dependable execution and recovery</a><a href="#13-budgets-and-predictable-resource-use">13. Budgets and predictable resource use</a><a href="#14-report-schema-and-validation">14. Report schema and validation</a><a href="#15-interface-and-user-journey">15. Interface and user journey</a><a href="#16-evaluation-contract">16. Evaluation contract</a><a href="#17-reliability-and-security-acceptance-tests">17. Reliability and security acceptance tests</a><a href="#18-implementation-layout-and-coding-style">18. Implementation layout and coding style</a><a href="#19-staged-implementation-plan">19. Staged implementation plan</a><a href="#20-operating-and-demonstration-runbook">20. Operating and demonstration runbook</a><a href="#21-story-what-the-finished-system-should-do">21. Story: what the finished system should do</a><a href="#22-sources-and-verification-boundaries">22. Sources and verification boundaries</a></nav><main><h1 id="incidentlens-technical-design-and-implementation-specification">IncidentLens — technical design and implementation specification</h1><p><strong>Revision 1.0 · 4 November 2026 · Design only; application not implemented</strong></p>
+<p><strong>Purpose:</strong> investigate a backend symptom using bounded, read-only diagnostic tools and return an inspectable diagnosis supported by saved evidence. The developer decides and applies the fix.</p>
+<p>This is the implementation contract for a fresher-sized first release. Requirements marked <strong>MUST</strong> are release gates. Numbers below are proposed limits or acceptance targets, not measured results. Commands and interfaces describe future implementation. Existing LedgerCore code and its documentation were inspected; framework documentation was checked on the revision date.</p>
+<h2 id="1-outcome-and-exact-scope">1. Outcome and exact scope</h2><p>The user chooses the registered service <code>ledgercore-local</code>, supplies a symptom and a UTC time window, then receives a report containing findings, citations, alternatives, missing information and next diagnostic checks.</p>
+<p>Version one supports one local developer, one registered application, one active investigation and a queue of at most ten waiting investigations. All traffic and accounts are synthetic. It diagnoses five fault classes: consumer unavailability, consumer slowness, rejected service credentials, database lock contention and connection-pool saturation. Healthy and insufficient-evidence cases are first-class outcomes. Authentication overhead and polling delay are possible contributors to consumer slowness, only when instrumented evidence supports them.</p>
+<p>The target is an explanatory chain such as <strong>slow password verification → slow delivery requests → delivery capacity below arrivals → growing pending queue</strong>. When only the last two links are observable, the report MUST stop at those links and identify the missing measurement.</p>
+<h3 id="explicit-exclusions">Explicit exclusions</h3><ul>
+<li>No automatic repair, balance changes, outbox retries, process termination in the target application, deployment or configuration changes by the agent.</li>
+<li>No universal diagnosis of arbitrary services, automatic service discovery, arbitrary SQL, shell, browser, user-provided URLs or code execution tools.</li>
+<li>No model training, GNN, RAG index, multiple cooperating agents, Kubernetes or streaming data platform.</li>
+<li>No production banking deployment, availability guarantee or claim to have proved causality from correlations alone.</li>
+<li>No claim that the local fault suite is an established public benchmark.</li>
+</ul>
+<h3 id="what-completion-means">What completion means</h3><p>There are two independent gates: <strong>A. dependable diagnostic software</strong> and <strong>B. measured diagnostic usefulness</strong>. Passing A does not imply B. A project may be mechanically correct while its model fails to outperform a fixed script. The final report must state both outcomes.</p>
+<h2 id="2-technology-decisions-and-reasoning">2. Technology decisions and reasoning</h2><div class="table-scroll"><table><thead><tr><th>Decision</th><th>Selected approach</th><th>Reason</th></tr></thead><tbody><tr><td>Main language</td><td>Python 3.12</td><td>One readable backend; direct model, HTTP and database integration</td></tr><tr><td>API and validation</td><td>FastAPI, Pydantic v2</td><td>Explicit input/output schemas and generated OpenAPI</td></tr><tr><td>Database access</td><td>Psycopg 3 with a small connection pool and parameterized SQL</td><td>Transactions remain visible; no large repository abstraction</td></tr><tr><td>Durable state</td><td>Separate PostgreSQL 17 database with durability enabled</td><td>Jobs, evidence and reports share a clear transaction boundary</td></tr><tr><td>Agent loop</td><td>Small explicit Python loop; model adapter using LangChain Core/provider integration</td><td>Fixed action surface, predictable persistence and limits</td></tr><tr><td>Sandbox</td><td>NVIDIA OpenShell; pin a tested release</td><td>Reuse runtime isolation instead of building it</td></tr><tr><td>Telemetry</td><td>Prometheus, redacted JSON logs, periodic database samples</td><td>Enough historical evidence without a full observability platform</td></tr><tr><td>UI</td><td>Server-rendered HTML plus small JavaScript polling</td><td>Three screens; no separate frontend framework required</td></tr><tr><td>Deployment</td><td>Local Compose infrastructure plus an OpenShell-managed runner</td><td>Reproducible development with an explicit sandbox boundary</td></tr><tr><td>Tests</td><td>Pytest; real PostgreSQL integration tests; browser smoke check</td><td>Validate transactions and failure behaviour, not only mocked functions</td></tr></tbody></table></div><p><strong>Why not Rust for the whole system?</strong> This workload is expected to spend much of its time in remote model and telemetry calls. Measure this expectation. Rust is already used inside OpenShell; another language boundary is not justified before a measured processing bottleneck exists.</p>
+<p><strong>Why a small loop instead of the full Deep Agents harness?</strong> Earlier discussion proposed Deep Agents. For this constrained diagnostic product, its general filesystem, shell, delegation and memory surface is unnecessary. The final v1 decision is an explicit loop with one authoritative persistence mechanism. Use LangChain&#39;s model integration, not Deep Agents&#39; full runtime. This avoids maintaining application state and framework checkpoints with conflicting recovery semantics. Deep Agents remains a reference implementation, not a required dependency. Its documentation distinguishes the full harness from lighter alternatives [S2].</p>
+<p>At Stage 0, pin exact tested package versions in <code>uv.lock</code>, container image digests, OpenShell CLI/gateway versions and a dated model identifier. Record them in <code>versions.json</code>. Do not invent a compatible lockfile in a design document or use moving <code>latest</code> tags in results. CLI and gateway versions must be compatible. A change to any of these requires rerunning the relevant contract tests.</p>
+<h2 id="3-repository-reuse-and-original-work">3. Repository reuse and original work</h2><div class="table-scroll"><table><thead><tr><th>Repository</th><th>Used in v1</th><th>Boundary</th></tr></thead><tbody><tr><td>NVIDIA/OpenShell</td><td>Yes: sandbox lifecycle and access policy</td><td>It confines the runner; it does not diagnose LedgerCore or validate evidence</td></tr><tr><td>langchain-ai/langchain</td><td>Yes: model adapter and message/tool schemas</td><td>It calls the chosen model; our loop owns budgets, state and retries</td></tr><tr><td>langchain-ai/deepagents</td><td>Reference only</td><td>No installed full harness, implicit shell tools or subagents</td></tr><tr><td>NVIDIA/SkillSpector</td><td>Optional development check if a skill package is distributed</td><td>Scanner findings do not certify the product or its diagnoses</td></tr><tr><td>NVIDIA/NemoClaw</td><td>No</td><td>Adds a deployment layer unnecessary for one custom runner</td></tr><tr><td>AiSOC</td><td>Reference only</td><td>Do not copy a complete SOC workflow into this application</td></tr><tr><td>Kornia / Megatron-LM / FreeToken</td><td>No</td><td>Vision, large-scale training and model-serving optimization are outside scope</td></tr></tbody></table></div><p>OpenShell documents policy-controlled files and network access and an Apple Silicon macOS deployment path [S1]. SkillSpector provides static and optional LLM-assisted scanning of skill packages [S3]. Upstream license and attribution requirements must be retained if source is reused. Original work consists of adapters, telemetry contracts, orchestration, evidence persistence, validation, interface and evaluation suite.</p>
+<h2 id="4-architecture-and-process-boundaries">4. Architecture and process boundaries</h2><figure class="diagram"><svg role="img" aria-label="IncidentLens architecture and trust boundaries" width="1093pt" height="276pt"
+ viewBox="0.00 0.00 1093.00 276.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(18 258)">
+<title>architecture</title>
+<!-- UI -->
+<g id="node1" class="node">
+<title>UI</title>
+<path fill="#edf5f4" stroke="#28766c" d="M168.09,-172C168.09,-172 94.35,-172 94.35,-172 88.35,-172 82.35,-166 82.35,-160 82.35,-160 82.35,-148 82.35,-148 82.35,-142 88.35,-136 94.35,-136 94.35,-136 168.09,-136 168.09,-136 174.09,-136 180.09,-142 180.09,-148 180.09,-148 180.09,-160 180.09,-160 180.09,-166 174.09,-172 168.09,-172"/>
+<text xml:space="preserve" text-anchor="middle" x="131.22" y="-150.4" font-family="Arial" font-size="12.00">Local browser</text>
+</g>
+<!-- API -->
+<g id="node2" class="node">
+<title>API</title>
+<path fill="#edf5f4" stroke="#28766c" d="M177.77,-104C177.77,-104 84.68,-104 84.68,-104 78.68,-104 72.68,-98 72.68,-92 72.68,-92 72.68,-80 72.68,-80 72.68,-74 78.68,-68 84.68,-68 84.68,-68 177.77,-68 177.77,-68 183.77,-68 189.77,-74 189.77,-80 189.77,-80 189.77,-92 189.77,-92 189.77,-98 183.77,-104 177.77,-104"/>
+<text xml:space="preserve" text-anchor="middle" x="131.22" y="-82.4" font-family="Arial" font-size="12.00">Public API and UI</text>
+</g>
+<!-- UI&#45;&gt;API -->
+<g id="edge1" class="edge">
+<title>UI&#45;&gt;API</title>
+<path fill="none" stroke="#65818b" d="M131.22,-135.66C131.22,-128.44 131.22,-119.92 131.22,-112.04"/>
+<polygon fill="#65818b" stroke="#65818b" points="133.5,-112.47 131.22,-105.97 128.95,-112.47 133.5,-112.47"/>
+</g>
+<!-- DB -->
+<g id="node3" class="node">
+<title>DB</title>
+<path fill="#edf5f4" stroke="#28766c" d="M308.12,-36C308.12,-36 172.33,-36 172.33,-36 166.33,-36 160.33,-30 160.33,-24 160.33,-24 160.33,-12 160.33,-12 160.33,-6 166.33,0 172.33,0 172.33,0 308.12,0 308.12,0 314.12,0 320.12,-6 320.12,-12 320.12,-12 320.12,-24 320.12,-24 320.12,-30 314.12,-36 308.12,-36"/>
+<text xml:space="preserve" text-anchor="middle" x="240.22" y="-14.4" font-family="Arial" font-size="12.00">IncidentLens PostgreSQL</text>
+</g>
+<!-- API&#45;&gt;DB -->
+<g id="edge2" class="edge">
+<title>API&#45;&gt;DB</title>
+<path fill="none" stroke="#65818b" d="M159.86,-67.66C173.65,-59.31 190.3,-49.23 204.87,-40.41"/>
+<polygon fill="#65818b" stroke="#65818b" points="205.72,-42.55 210.1,-37.24 203.36,-38.66 205.72,-42.55"/>
+</g>
+<!-- REPORT -->
+<g id="node12" class="node">
+<title>REPORT</title>
+<path fill="#edf5f4" stroke="#28766c" d="M132.45,-36C132.45,-36 12,-36 12,-36 6,-36 0,-30 0,-24 0,-24 0,-12 0,-12 0,-6 6,0 12,0 12,0 132.45,0 132.45,0 138.45,0 144.45,-6 144.45,-12 144.45,-12 144.45,-24 144.45,-24 144.45,-30 138.45,-36 132.45,-36"/>
+<text xml:space="preserve" text-anchor="middle" x="72.22" y="-14.4" font-family="Arial" font-size="12.00">Stored validated report</text>
+</g>
+<!-- API&#45;&gt;REPORT -->
+<g id="edge13" class="edge">
+<title>API&#45;&gt;REPORT</title>
+<path fill="none" stroke="#65818b" d="M115.72,-67.66C108.73,-59.84 100.38,-50.49 92.86,-42.09"/>
+<polygon fill="#65818b" stroke="#65818b" points="94.86,-40.91 88.83,-37.58 91.47,-43.94 94.86,-40.91"/>
+</g>
+<!-- SUP -->
+<g id="node4" class="node">
+<title>SUP</title>
+<path fill="#edf5f4" stroke="#28766c" d="M355.77,-240C355.77,-240 264.68,-240 264.68,-240 258.68,-240 252.68,-234 252.68,-228 252.68,-228 252.68,-216 252.68,-216 252.68,-210 258.68,-204 264.68,-204 264.68,-204 355.77,-204 355.77,-204 361.77,-204 367.77,-210 367.77,-216 367.77,-216 367.77,-228 367.77,-228 367.77,-234 361.77,-240 355.77,-240"/>
+<text xml:space="preserve" text-anchor="middle" x="310.22" y="-218.4" font-family="Arial" font-size="12.00">Single supervisor</text>
+</g>
+<!-- SUP&#45;&gt;DB -->
+<g id="edge3" class="edge">
+<title>SUP&#45;&gt;DB</title>
+<path fill="none" stroke="#65818b" d="M304.25,-203.78C291.86,-168.01 263.29,-85.58 248.88,-43.98"/>
+<polygon fill="#65818b" stroke="#65818b" points="251.05,-43.29 246.77,-37.9 246.75,-44.78 251.05,-43.29"/>
+</g>
+<!-- RUN -->
+<g id="node5" class="node">
+<title>RUN</title>
+<path fill="#edf5f4" stroke="#28766c" d="M467.46,-172C467.46,-172 326.99,-172 326.99,-172 320.99,-172 314.99,-166 314.99,-160 314.99,-160 314.99,-148 314.99,-148 314.99,-142 320.99,-136 326.99,-136 326.99,-136 467.46,-136 467.46,-136 473.46,-136 479.46,-142 479.46,-148 479.46,-148 479.46,-160 479.46,-160 479.46,-166 473.46,-172 467.46,-172"/>
+<text xml:space="preserve" text-anchor="middle" x="397.22" y="-150.4" font-family="Arial" font-size="12.00">Agent runner in OpenShell</text>
+</g>
+<!-- SUP&#45;&gt;RUN -->
+<g id="edge4" class="edge">
+<title>SUP&#45;&gt;RUN</title>
+<path fill="none" stroke="#65818b" d="M333.08,-203.66C343.79,-195.54 356.66,-185.77 368.06,-177.12"/>
+<polygon fill="#65818b" stroke="#65818b" points="369.21,-179.11 373.01,-173.37 366.46,-175.48 369.21,-179.11"/>
+</g>
+<!-- GW -->
+<g id="node6" class="node">
+<title>GW</title>
+<path fill="#edf5f4" stroke="#28766c" d="M555.46,-104C555.46,-104 410.99,-104 410.99,-104 404.99,-104 398.99,-98 398.99,-92 398.99,-92 398.99,-80 398.99,-80 398.99,-74 404.99,-68 410.99,-68 410.99,-68 555.46,-68 555.46,-68 561.46,-68 567.46,-74 567.46,-80 567.46,-80 567.46,-92 567.46,-92 567.46,-98 561.46,-104 555.46,-104"/>
+<text xml:space="preserve" text-anchor="middle" x="483.22" y="-82.4" font-family="Arial" font-size="12.00">Internal diagnostic gateway</text>
+</g>
+<!-- RUN&#45;&gt;GW -->
+<g id="edge5" class="edge">
+<title>RUN&#45;&gt;GW</title>
+<path fill="none" stroke="#65818b" d="M419.82,-135.66C430.4,-127.54 443.13,-117.77 454.39,-109.12"/>
+<polygon fill="#65818b" stroke="#65818b" points="455.51,-111.14 459.28,-105.38 452.74,-107.53 455.51,-111.14"/>
+</g>
+<!-- GW&#45;&gt;DB -->
+<g id="edge10" class="edge">
+<title>GW&#45;&gt;DB</title>
+<path fill="none" stroke="#65818b" d="M419.06,-67.57C386.12,-58.63 345.88,-47.7 311.92,-38.47"/>
+<polygon fill="#65818b" stroke="#65818b" points="312.65,-36.32 305.78,-36.81 311.46,-40.71 312.65,-36.32"/>
+</g>
+<!-- MODEL -->
+<g id="node7" class="node">
+<title>MODEL</title>
+<path fill="#edf5f4" stroke="#28766c" d="M480.78,-36C480.78,-36 347.67,-36 347.67,-36 341.67,-36 335.67,-30 335.67,-24 335.67,-24 335.67,-12 335.67,-12 335.67,-6 341.67,0 347.67,0 347.67,0 480.78,0 480.78,0 486.78,0 492.78,-6 492.78,-12 492.78,-12 492.78,-24 492.78,-24 492.78,-30 486.78,-36 480.78,-36"/>
+<text xml:space="preserve" text-anchor="middle" x="414.22" y="-14.4" font-family="Arial" font-size="12.00">Approved model provider</text>
+</g>
+<!-- GW&#45;&gt;MODEL -->
+<g id="edge6" class="edge">
+<title>GW&#45;&gt;MODEL</title>
+<path fill="none" stroke="#65818b" d="M465.09,-67.66C456.84,-59.76 446.96,-50.31 438.11,-41.85"/>
+<polygon fill="#65818b" stroke="#65818b" points="439.83,-40.35 433.56,-37.5 436.69,-43.64 439.83,-40.35"/>
+</g>
+<!-- PROM -->
+<g id="node8" class="node">
+<title>PROM</title>
+<path fill="#edf5f4" stroke="#28766c" d="M584.09,-36C584.09,-36 520.35,-36 520.35,-36 514.35,-36 508.35,-30 508.35,-24 508.35,-24 508.35,-12 508.35,-12 508.35,-6 514.35,0 520.35,0 520.35,0 584.09,0 584.09,0 590.09,0 596.09,-6 596.09,-12 596.09,-12 596.09,-24 596.09,-24 596.09,-30 590.09,-36 584.09,-36"/>
+<text xml:space="preserve" text-anchor="middle" x="552.22" y="-14.4" font-family="Arial" font-size="12.00">Prometheus</text>
+</g>
+<!-- GW&#45;&gt;PROM -->
+<g id="edge7" class="edge">
+<title>GW&#45;&gt;PROM</title>
+<path fill="none" stroke="#65818b" d="M501.35,-67.66C509.61,-59.76 519.49,-50.31 528.34,-41.85"/>
+<polygon fill="#65818b" stroke="#65818b" points="529.76,-43.64 532.88,-37.5 526.61,-40.35 529.76,-43.64"/>
+</g>
+<!-- OBS -->
+<g id="node9" class="node">
+<title>OBS</title>
+<path fill="#edf5f4" stroke="#28766c" d="M822.13,-36C822.13,-36 624.32,-36 624.32,-36 618.32,-36 612.32,-30 612.32,-24 612.32,-24 612.32,-12 612.32,-12 612.32,-6 618.32,0 624.32,0 624.32,0 822.13,0 822.13,0 828.13,0 834.13,-6 834.13,-12 834.13,-12 834.13,-24 834.13,-24 834.13,-30 828.13,-36 822.13,-36"/>
+<text xml:space="preserve" text-anchor="middle" x="723.22" y="-14.4" font-family="Arial" font-size="12.00">Redacted logs and historical samples</text>
+</g>
+<!-- GW&#45;&gt;OBS -->
+<g id="edge8" class="edge">
+<title>GW&#45;&gt;OBS</title>
+<path fill="none" stroke="#65818b" d="M546.59,-67.57C579.13,-58.63 618.87,-47.7 652.42,-38.47"/>
+<polygon fill="#65818b" stroke="#65818b" points="652.79,-40.73 658.45,-36.81 651.58,-36.34 652.79,-40.73"/>
+</g>
+<!-- TARGET -->
+<g id="node10" class="node">
+<title>TARGET</title>
+<path fill="#edf5f4" stroke="#28766c" d="M1044.79,-36C1044.79,-36 861.66,-36 861.66,-36 855.66,-36 849.66,-30 849.66,-24 849.66,-24 849.66,-12 849.66,-12 849.66,-6 855.66,0 861.66,0 861.66,0 1044.79,0 1044.79,0 1050.79,0 1056.79,-6 1056.79,-12 1056.79,-12 1056.79,-24 1056.79,-24 1056.79,-30 1050.79,-36 1044.79,-36"/>
+<text xml:space="preserve" text-anchor="middle" x="953.22" y="-14.4" font-family="Arial" font-size="12.00">Restricted LedgerCore diagnostics</text>
+</g>
+<!-- GW&#45;&gt;TARGET -->
+<g id="edge9" class="edge">
+<title>GW&#45;&gt;TARGET</title>
+<path fill="none" stroke="#65818b" d="M567.78,-73.85C638.72,-64.41 742.92,-50.33 841.55,-36.09"/>
+<polygon fill="#65818b" stroke="#65818b" points="841.64,-38.38 847.74,-35.19 840.99,-33.87 841.64,-38.38"/>
+</g>
+<!-- COL -->
+<g id="node11" class="node">
+<title>COL</title>
+<path fill="#edf5f4" stroke="#28766c" d="M888.42,-104C888.42,-104 788.02,-104 788.02,-104 782.02,-104 776.02,-98 776.02,-92 776.02,-92 776.02,-80 776.02,-80 776.02,-74 782.02,-68 788.02,-68 788.02,-68 888.42,-68 888.42,-68 894.42,-68 900.42,-74 900.42,-80 900.42,-80 900.42,-92 900.42,-92 900.42,-98 894.42,-104 888.42,-104"/>
+<text xml:space="preserve" text-anchor="middle" x="838.22" y="-82.4" font-family="Arial" font-size="12.00">Telemetry collector</text>
+</g>
+<!-- COL&#45;&gt;OBS -->
+<g id="edge12" class="edge">
+<title>COL&#45;&gt;OBS</title>
+<path fill="none" stroke="#65818b" d="M808.01,-67.66C793.47,-59.31 775.89,-49.23 760.52,-40.41"/>
+<polygon fill="#65818b" stroke="#65818b" points="761.72,-38.47 754.95,-37.21 759.45,-42.42 761.72,-38.47"/>
+</g>
+<!-- COL&#45;&gt;TARGET -->
+<g id="edge11" class="edge">
+<title>COL&#45;&gt;TARGET</title>
+<path fill="none" stroke="#65818b" d="M868.44,-67.66C882.98,-59.31 900.56,-49.23 915.92,-40.41"/>
+<polygon fill="#65818b" stroke="#65818b" points="916.99,-42.42 921.5,-37.21 914.73,-38.47 916.99,-42.42"/>
+</g>
+</g>
+</svg>
+<figcaption>One codebase. Explicit process, credential and persistence boundaries.</figcaption></figure><p>This is one application codebase with separate entry points, not a general microservice platform. The API/gateway, supervisor and collector run as host-side processes or containers. The runner alone executes in OpenShell. Their separate credentials define trust boundaries.</p>
+<p>The browser reaches a loopback-only public listener, proposed port <code>8088</code>. The runner reaches a private internal listener, proposed port <code>8089</code>, reachable through the tested OpenShell gateway/network setup. Never assume that <code>localhost</code> inside the sandbox means the host. Stage 0 must demonstrate an allowed request to the internal gateway and a denied request elsewhere on the actual Mac/Linux setup.</p>
+<p>The runner receives no database credentials or model-provider key. It receives only a random, short-lived capability for one investigation and one execution generation. It can call narrow internal endpoints. The gateway performs model calls and source queries, applies budgets, and stores results. Neither runner nor model receives the target application&#39;s administrative credentials.</p>
+<p>The supervisor alone can create or stop the sandbox. It MUST NOT expose Docker sockets, its OpenShell administrative credentials or fault-injection controls to the runner. Internal network access is not enough: every internal request also authenticates its job capability and generation.</p>
+<h2 id="5-ledgercore-integration-and-evidence-gaps">5. LedgerCore integration and evidence gaps</h2><p>Inspected paths: <code>ledgercore/README.md</code>, <code>OutboxMetrics.java</code> and <code>OutboxPoller.java</code> under <code>src/main/java/io/github/harsha135135/ledgercore/outbox/</code>.</p>
+<p>Observed design: Java/Spring modular monolith, PostgreSQL, one outbox poller, a demonstration consumer in the same application process. Existing outbox gauges include pending count, failed count and oldest-undelivered age. The README reports no distributed tracing. Successful delivery timing and an authentication breakdown are not established by those inspected files.</p>
+<p>Do not describe the existing consumer as an independent deployed service. A local test-only consumer stub may be introduced for controlled failures; label it as a test fixture. Instrumentation additions need their own implementation and verification and MUST preserve ledger correctness.</p>
+<p>Required instrumentation contract:</p>
+<div class="table-scroll"><table><thead><tr><th>Signal</th><th>Required behaviour</th></tr></thead><tbody><tr><td>HTTP rate/errors/duration</td><td>Fixed route templates, status class, histogram units in seconds; no account/request IDs as metric labels</td></tr><tr><td>Outbox pending/failed/oldest age</td><td>Preserve current gauges; confirm exported Prometheus names through the actual registry</td></tr><tr><td>Committed event arrivals</td><td>Count durable committed outbox records by creation time; never count an attempted insert before commit as an arrival</td></tr><tr><td>Recorded publications</td><td>Count first durable <code>PUBLISHED</code> transitions; duplicate HTTP delivery attempts are a separate signal</td></tr><tr><td>Delivery attempt log</td><td>Event correlation ID, start/end, result category, status, duration; no event financial payload</td></tr><tr><td>Delivery timing</td><td>Correlated measurements of authentication and handler duration; unavailable if the selected auth path has no timer</td></tr><tr><td>Polling behaviour</td><td>Batch start/end, selected/published counts, configured delay; pauses are measured, not inferred only from settings</td></tr><tr><td>Pool</td><td>Active/idle/max, pending borrowers, acquisition timeout counter; confirm instrument export</td></tr><tr><td>Blocking history</td><td>Collector samples filtered PostgreSQL activity every 2 seconds, with actual timestamps and collection errors</td></tr><tr><td>Config history</td><td>Approved non-secret config snapshot at startup/change, application revision and instance ID</td></tr></tbody></table></div><p>Prometheus scrape interval is 5 seconds with 24-hour local retention. Tools use fixed query templates through its HTTP API [S4]; the model cannot submit PromQL. A rate or percentile is unavailable when samples are inadequate. Never average per-instance p95 values; aggregate appropriate histogram buckets first. The one-instance v1 contract must still record resets and gaps.</p>
+<p>Arrival/publication rates use durable timestamp counts when available; separately reported process counters can undercount across a commit/process-crash gap. Their source semantics MUST be visible. Retain outbox rows for the evaluation window. A transition into FAILED, capture timing and samples taken at different instants can invalidate a naive <code>pending = arrivals - deliveries</code> calculation. Do not claim exact conservation from unrelated telemetry samples.</p>
+<p>The collector&#39;s database connection is outside LedgerCore&#39;s application connection pool. If it used the same exhausted pool, it could fail precisely when needed. PostgreSQL activity is current state; history exists only because we record samples [S5]. Two-second sampling may miss shorter blocks. Absence of samples is not proof of absence of contention.</p>
+<h2 id="6-time-scope-and-data-quality">6. Time, scope and data quality</h2><p>All stored timestamps are UTC RFC 3339 or PostgreSQL <code>timestamptz</code>. API windows use <code>[start, end)</code>. Resolve “last 15 minutes” once in the browser/API; persist absolute times. Do not silently slide the window during an investigation.</p>
+<p>Allow windows from 1 minute to 30 minutes, ending no later than server time and starting within the past 24 hours. For an out-of-retention window return validation error. A valid but poorly covered window is accepted and marked incomplete.</p>
+<p>Every tool envelope includes requested window, actual observation times, source revision, completeness, truncation and errors. Cross-source correlation uses overlapping timestamps and correlation IDs; unrelated samples cannot be described as one atomic system snapshot. Rate analysis for the normal benchmark uses at least 60 seconds of healthy sample coverage.</p>
+<p>Historical window queries MUST NOT silently substitute current database state. <code>get_database_blockers</code> supports <code>historical</code> and <code>current</code> explicitly; current evidence is labelled as follow-up outside the incident window where applicable. Configuration from today cannot be asserted to have applied yesterday without a historical snapshot.</p>
+<h2 id="7-public-http-api-contract">7. Public HTTP API contract</h2><p>All public APIs except liveness require the local developer session. JSON uses snake_case. IDs are server-generated UUIDs. Lists use opaque cursors, stable <code>(created_at, id)</code> order, default limit 20 and maximum 100. Unknown fields are rejected. Responses never include internal capabilities or source credentials.</p>
+<div class="table-scroll"><table><thead><tr><th>Method and path</th><th>Success</th><th>Meaning</th></tr></thead><tbody><tr><td><code>POST /api/v1/session</code></td><td>204</td><td>Exchange local access secret for a browser session</td></tr><tr><td><code>GET /api/v1/session</code></td><td>200</td><td>Current identity, expiry and CSRF token for this session</td></tr><tr><td><code>DELETE /api/v1/session</code></td><td>204</td><td>Revoke session</td></tr><tr><td><code>GET /api/v1/services</code></td><td>200</td><td>Registered service IDs, description and available capabilities</td></tr><tr><td><code>POST /api/v1/investigations</code></td><td>202</td><td>Create or replay an idempotent request; returns <code>Location</code></td></tr><tr><td><code>GET /api/v1/investigations</code></td><td>200</td><td>Paginated history; optional status filter</td></tr><tr><td><code>GET /api/v1/investigations/{id}</code></td><td>200</td><td>Status, scope, progress, budget usage and report availability</td></tr><tr><td><code>POST /api/v1/investigations/{id}/cancel</code></td><td>202 or 200</td><td>Request cancellation; 200 if already terminal</td></tr><tr><td><code>GET /api/v1/investigations/{id}/events?after_seq=0</code></td><td>200</td><td>Ordered progress records; at most 100 per response</td></tr><tr><td><code>GET /api/v1/investigations/{id}/evidence</code></td><td>200</td><td>Paginated evidence metadata</td></tr><tr><td><code>GET /api/v1/investigations/{id}/evidence/{evidence_id}</code></td><td>200</td><td>Redacted saved observation; enforce parent ownership</td></tr><tr><td><code>GET /api/v1/investigations/{id}/report</code></td><td>200</td><td>Final structured report; 409 until available</td></tr><tr><td><code>GET /api/v1/investigations/{id}/export?format=json</code></td><td>200</td><td>Bounded report plus citations; <code>json</code> or escaped <code>html</code></td></tr><tr><td><code>GET /health/live</code></td><td>200</td><td>Process responds; no dependency checks or sensitive detail</td></tr><tr><td><code>GET /health/ready</code></td><td>200 or 503</td><td>Database and schema usable; authenticated detail only</td></tr></tbody></table></div><p>Provider or telemetry outages do not make liveness fail. Service capabilities expose <code>available</code>, <code>degraded</code> or <code>unavailable</code>, separately from API readiness. A dead supervisor is exposed as a degraded execution capability and causes new submissions to receive 503 after its heartbeat is stale for 30 seconds.</p>
+<h3 id="create-request-and-response">Create request and response</h3><p><code>Idempotency-Key</code> is mandatory on creation: 16–128 printable ASCII characters. Scope is developer identity plus endpoint, not session ID. Store the canonical body hash and job ID. Same key/same body returns the existing job ID with 202 and <code>replayed: true</code>, even if the job is now terminal; same key/different body returns 409. Retain keys as long as jobs (seven days). A retry after that horizon may create a new job and is documented as such. Use a unique constraint and one transaction, including the admission limit check under a singleton row lock.</p>
+<pre><code>{
+  &quot;service_id&quot;: &quot;ledgercore-local&quot;,
+  &quot;symptom&quot;: &quot;Transfers succeed but notifications are delayed&quot;,
+  &quot;window&quot;: {
+    &quot;start&quot;: &quot;2026-11-04T12:00:00Z&quot;,
+    &quot;end&quot;: &quot;2026-11-04T12:15:00Z&quot;
+  },
+  &quot;profile&quot;: &quot;standard&quot;
+}</code></pre><pre><code>{
+  &quot;id&quot;: &quot;8b9ef884-456a-4bce-8053-6cf8ad330129&quot;,
+  &quot;status&quot;: &quot;QUEUED&quot;,
+  &quot;replayed&quot;: false,
+  &quot;status_url&quot;: &quot;/api/v1/investigations/8b9ef884-456a-4bce-8053-6cf8ad330129&quot;
+}</code></pre><p><code>symptom</code> is 1–2,000 characters. Only profile <code>standard</code> exists in v1; the client cannot raise limits or choose arbitrary models. Total request body cap is 16 KiB. Dates above are examples, not defaults.</p>
+<p>Errors have a stable machine-readable contract:</p>
+<pre><code>{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;QUEUE_FULL&quot;,
+    &quot;message&quot;: &quot;Ten investigations are already waiting&quot;,
+    &quot;retryable&quot;: true,
+    &quot;request_id&quot;: &quot;bd85ab29-ec0f-4f2c-8244-e30744bf4929&quot;
+  }
+}</code></pre><p>Map 400 to malformed JSON; 401 to missing/expired authentication; 403 to permission/CSRF failure; 404 to absent or inaccessible IDs; 409 to idempotency mismatch or report not ready; 413 to oversized input; 422 to schema/window violations; 429 to queue or rate limits (<code>Retry-After</code> supplied); 503 to unavailable control-plane dependencies. Tool-source failures are persisted investigation observations, not automatically a failed public API request.</p>
+<h3 id="browser-authentication">Browser authentication</h3><p>Generate a 32-byte random access secret during local setup and print it once to the developer terminal; do not commit it. Exchange it through the login form for a random server-side session with eight-hour absolute expiry. Store only session token hashes. Use an HttpOnly, SameSite=Strict cookie, restricted Host/Origin checks and CSRF tokens for mutations. Login requires the correct Origin and JSON content type; subsequent mutations require the session CSRF token in <code>X-CSRF-Token</code>, obtained from authenticated <code>GET /api/v1/session</code>. Bind to loopback; when deployed beyond loopback TLS and Secure cookies are mandatory and multi-user authorization is a new scope. No permissive CORS. Limit login attempts to five per minute; hide secrets in all logs.</p>
+<h2 id="8-internal-gateway-contract">8. Internal gateway contract</h2><p>These routes use the private listener and job capability, never the browser session. Tokens are scoped to <code>(investigation_id, generation)</code>, expire at the job deadline, and are revoked on terminal transition or takeover. Every state write verifies current generation and lease under a row lock. Stale work cannot publish a final report.</p>
+<div class="table-scroll"><table><thead><tr><th>Method and path</th><th>Contract</th></tr></thead><tbody><tr><td><code>GET /internal/v1/jobs/{id}/context</code></td><td>Scope, limits, saved observations, compact action history and capability list; no secrets</td></tr><tr><td><code>POST /internal/v1/jobs/{id}/actions</code></td><td>Persist and dispatch exactly one proposed <code>tool</code> or <code>model</code> action; required UUID <code>action_id</code></td></tr><tr><td><code>GET /internal/v1/jobs/{id}/actions/{action_id}</code></td><td>Pending/completed/error/unknown status and stored response</td></tr><tr><td><code>POST /internal/v1/jobs/{id}/report</code></td><td>Submit typed report; validate and finalize transactionally</td></tr></tbody></table></div><p><code>POST actions</code> returns 202 once the action reservation is durable. A small executor in the gateway runs it; do not use an untracked framework background task. On gateway restart, unfinished reservations become <code>UNKNOWN</code> for model calls and <code>INTERRUPTED</code> for reads. No action is automatically redispatched. A repeated action ID with identical input returns its saved state; a changed input returns 409.</p>
+<p>The model request is assembled by the trusted gateway from the versioned system instructions and saved job history. The runner cannot replace the system prompt or supply arbitrary provider parameters. Model responses have exactly one discriminated action: <code>call_tool</code>, <code>submit_report</code> or <code>stop_inconclusive</code>. Tool arguments and report fields have schemas. Reject multiple proposed actions; at most one schema-repair model request is allowed and consumes budget. No raw shell/filesystem/provider tools exist.</p>
+<p>Each action follows: validate → reserve budget and insert pending action → commit → external I/O with timeout → persist response/evidence and progress event → commit. Never hold a database transaction open during model or telemetry I/O. A lost response after persistence is recovered by polling the same action ID. Only read operations can be repeated after uncertain completion, with a new action ID and timestamps; model retry may incur another charge and consumes a fresh reservation.</p>
+<p>Example action submission (the URL already supplies the job ID):</p>
+<pre><code>{
+  &quot;action_id&quot;: &quot;adc58018-b04d-4395-91dc-bf20cf302487&quot;,
+  &quot;kind&quot;: &quot;tool&quot;,
+  &quot;tool&quot;: &quot;get_database_blockers&quot;,
+  &quot;arguments&quot;: {&quot;mode&quot;: &quot;historical&quot;, &quot;limit&quot;: 20}
+}</code></pre><p>For <code>kind: model</code>, allow only <code>action_id</code> and <code>kind</code>; the gateway builds all model input. The response contains <code>action_id</code>, <code>status</code> and a polling URL. Action status is <code>PENDING</code>, <code>RUNNING</code>, <code>SUCCEEDED</code>, <code>ERROR</code>, <code>UNKNOWN</code> or <code>INTERRUPTED</code>. Terminal action results are immutable. Polling never spends another action budget. The gateway executor uses a database claim and current job-generation check before dispatch; its in-memory queue is only a wake-up hint, never the source of truth.</p>
+<p>The gateway allocates and persists <code>next_action_id</code> in job context before the runner can submit it. The runner MUST use that ID, not generate a new ID after reconnecting. Under the job row lock, accept only that next ID or an exact replay of an existing ID. When an action result is committed, persist the next ID and whether the next step is initial collection, a model decision, a tool observation or finalization. Context includes the last model decision and whether its proposed tool has already executed. This prevents a restart between a model decision and tool submission from accidentally executing the same decision twice. A deliberate retry advances to a new server-issued ID and consumes a new budget.</p>
+<h3 id="explicit-runner-algorithm">Explicit runner algorithm</h3><ol>
+<li>Fetch context and check status/deadline. On resume, recover a pending known action ID before requesting a new action.</li>
+<li>Gather a small fixed initial bundle: request metrics and outbox statistics. Reuse already committed startup observations on resume.</li>
+<li>Request one model decision from the saved observations and remaining capability list.</li>
+<li>Validate the chosen action. If it is a permitted tool, submit and poll it, then return to step 3. If it repeats the same normalized arguments with no new observation opportunity, stop the loop or ask for one bounded alternative.</li>
+<li>If it is a report, submit it for validation. If it is a request to stop, submit an inconclusive report with the missing evidence.</li>
+<li>On budget/deadline/cancellation, obey the server state; the trusted supervisor/gateway supplies terminal cleanup and a fallback where appropriate.</li>
+</ol>
+<p>Progress is measured by new evidence or a narrower supported explanation, not by the number of model messages. Tool calls are selected adaptively after the initial bundle; mandatory collection of every source on every run would remove the intended efficiency comparison.</p>
+<h2 id="9-diagnostic-tool-interfaces">9. Diagnostic tool interfaces</h2><p>The registry binds <code>service_id</code> to fixed configured sources. URLs, paths, SQL, PromQL and headers are never model arguments. All tools return a shared envelope; arrays have limits and retain source ordering.</p>
+<div class="table-scroll"><table><thead><tr><th>Tool</th><th>Arguments beyond job scope</th><th>Output and implementation</th></tr></thead><tbody><tr><td><code>get_request_metrics</code></td><td><code>route_group</code>: transfers or consumer</td><td>Fixed Prometheus queries for rate, status counts, histograms and coverage</td></tr><tr><td><code>get_outbox_stats</code></td><td>none</td><td>Gauge history plus durable arrival/publication counts; pending/failed distinguished</td></tr><tr><td><code>search_delivery_logs</code></td><td><code>outcome</code>: any/success/auth_error/network_error/server_error; <code>limit</code> ≤100</td><td>Structured log rows filtered by window and fixed service; no arbitrary regex</td></tr><tr><td><code>get_pool_metrics</code></td><td>none</td><td>Active/max/pending/acquisition timeouts and scrape gaps</td></tr><tr><td><code>get_database_blockers</code></td><td><code>mode</code>: historical/current; <code>limit</code> ≤50</td><td>Sampled blocker edges, session role labels, wait duration if observed; no raw SQL text</td></tr><tr><td><code>get_delivery_timings</code></td><td>none</td><td>Correlated total/auth/handler durations, count and coverage; measured sequential components only</td></tr><tr><td><code>get_runtime_config</code></td><td>none</td><td>Allowlisted poll interval, batch size, worker count, authentication mode, revision and effective time</td></tr></tbody></table></div><p>Window, service and target instance are inherited from the job. The gateway can accept a narrower sub-window only within the job window; a current blocker snapshot is the sole explicit exception and is marked outside-window. A missing adapter returns <code>UNAVAILABLE</code>, never fabricated zeros.</p>
+<p>Source timeouts: database 2 seconds per statement, HTTP connect 2 seconds/read 5 seconds, total tool deadline 8 seconds. Results cap at 64 KiB per tool and 1 MiB total stored evidence per job. Discard oversized fields before persistence, set <code>truncated: true</code>, and preserve enough metadata to explain the limitation. Redact before either storage or model submission. No secrets, account amounts, customer names, tokens or raw payment bodies are needed.</p>
+<h3 id="evidence-envelope">Evidence envelope</h3><pre><code>{
+  &quot;evidence_id&quot;: &quot;0612caa2-4aa6-4d0a-8ec3-9200d21d7250&quot;,
+  &quot;tool&quot;: &quot;get_outbox_stats&quot;,
+  &quot;requested_window&quot;: {&quot;start&quot;: &quot;2026-11-04T12:00:00Z&quot;, &quot;end&quot;: &quot;2026-11-04T12:15:00Z&quot;},
+  &quot;collected_at&quot;: &quot;2026-11-04T12:16:04Z&quot;,
+  &quot;coverage&quot;: &quot;COMPLETE&quot;,
+  &quot;truncated&quot;: false,
+  &quot;source&quot;: {&quot;kind&quot;: &quot;postgres_aggregate&quot;, &quot;instance&quot;: &quot;ledgercore-local&quot;, &quot;adapter_version&quot;: &quot;1.0&quot;},
+  &quot;data&quot;: {&quot;committed_arrivals&quot;: 90000, &quot;recorded_publications&quot;: 6300, &quot;window_seconds&quot;: 900},
+  &quot;limitations&quot;: [],
+  &quot;errors&quot;: []
+}</code></pre><p>This example is hypothetical. Arithmetic belongs in deterministic tool code: these counts imply 100 arrivals/s and 7 recorded publications/s. They do not identify why publication is slow. Valid coverage states are <code>COMPLETE</code>, <code>PARTIAL</code>, <code>UNAVAILABLE</code>; truncation is independent. Empty complete log results mean no matching recorded events, not proof the event never occurred.</p>
+<h2 id="10-restricted-target-access">10. Restricted target access</h2><p>Create a separate target diagnostic role. Grant SELECT only on approved diagnostic views and the minimum functions needed for filtering; never grant table updates, arbitrary privileged functions or application-admin APIs. Enforce read-only transactions and statement timeouts in addition to grants.</p>
+<p>Full <code>pg_stat_activity</code> visibility can require elevated monitoring privileges. Prefer a narrowly defined, DBA-owned view/function returning only LedgerCore sessions and the required blocker metadata. Any SECURITY DEFINER function must use a fixed safe search path, qualified objects, no dynamic SQL, and PUBLIC execute revoked. This is a required review item, not a suggestion to give the agent broad <code>pg_monitor</code> access.</p>
+<p>Target views proposed: committed-event counts by time, publication counts by time, current blocker relationships, and approved config versions. Database schema migrations for these views belong to a separate integration change. Source query indexes and maximum time-window costs must be tested before enabling repeated polling.</p>
+<p>Logs and model outputs are untrusted data. Render all content escaped, retain log text as quoted observations, and reject any instruction embedded in a log to invoke a different endpoint or reveal secrets. Access controls must hold even if the model follows such text.</p>
+<h2 id="11-job-state-machine-and-persistence">11. Job state machine and persistence</h2><p>Execution status and diagnostic outcome are separate.</p>
+<div class="table-scroll"><table><thead><tr><th>Execution status</th><th>Meaning</th></tr></thead><tbody><tr><td>QUEUED</td><td>Durable request waiting for supervisor</td></tr><tr><td>RUNNING</td><td>Claimed with generation, lease and active sandbox</td></tr><tr><td>CANCEL_REQUESTED</td><td>No new actions admitted; cleanup in progress</td></tr><tr><td>COMPLETED</td><td>Final report exists, including an inconclusive report</td></tr><tr><td>CANCELLED</td><td>Developer stopped the investigation</td></tr><tr><td>FAILED</td><td>Infrastructure/configuration failure prevented completion</td></tr></tbody></table></div><p>Report outcome: <code>SUPPORTED</code>, <code>TENTATIVE</code>, <code>INCONCLUSIVE</code> or <code>NO_FAULT_OBSERVED</code>. A budget expiry normally completes with a deterministic inconclusive report assembled from saved facts. It does not mean the application is healthy. A failed job has an infrastructure reason and any collected evidence but no diagnostic conclusion.</p>
+<p>Allowed transitions: QUEUED→RUNNING/CANCELLED/FAILED; RUNNING→COMPLETED/CANCEL_REQUESTED/FAILED; CANCEL_REQUESTED→CANCELLED; expired RUNNING→QUEUED for a bounded recovery or FAILED. Terminal states are immutable. New investigations may refer to old IDs but never reopen them.</p>
+<h3 id="storage-schema">Storage schema</h3><div class="table-scroll"><table><thead><tr><th>Table</th><th>Key fields and constraints</th></tr></thead><tbody><tr><td><code>investigations</code></td><td>UUID PK, owner, service, symptom, window, status, generation, lease_until, started_at, deadline, recoveries, cancel time, next_action_id, next_phase, counters, final reason</td></tr><tr><td><code>submission_keys</code></td><td>UNIQUE(owner, endpoint, key), request_hash, investigation FK</td></tr><tr><td><code>actions</code></td><td>UUID PK, investigation FK, generation, kind, canonical input hash, status, reserved tokens, provider request ID if available, response JSON, timestamps</td></tr><tr><td><code>evidence</code></td><td>UUID PK, action FK UNIQUE, investigation FK, redacted envelope JSONB, SHA-256, byte count</td></tr><tr><td><code>progress_events</code></td><td>investigation FK, sequence, type, redacted payload, timestamp; UNIQUE(investigation, sequence)</td></tr><tr><td><code>reports</code></td><td>investigation FK UNIQUE, schema_version, outcome, typed report JSONB, model/prompt versions</td></tr><tr><td><code>telemetry_samples</code></td><td>service, kind, observed_at, collector version, payload, coverage; index(service, kind, observed_at)</td></tr><tr><td><code>sessions</code></td><td>session token hash, identity, expiry and revocation</td></tr><tr><td><code>control</code></td><td>singleton row for admission and coordination metadata</td></tr></tbody></table></div><p>Insert evidence, mark its action complete and append the progress event in one transaction. Store the report, append its event and move to COMPLETED in one transaction. Evidence hash detects accidental modification; it is not a cryptographic proof against a database administrator. Application roles cannot edit individual finalized observations. Scheduled retention deletion is a separate privileged operation.</p>
+<p>Keep jobs, evidence, reports and submission keys for seven days, telemetry for 24 hours. Do not delete active jobs or their referenced evidence. Exports are explicit downloads and are not automatically uploaded elsewhere. Backup/restore must preserve related rows and successful report references.</p>
+<h2 id="12-dependable-execution-and-recovery">12. Dependable execution and recovery</h2><p>One supervisor owns a dedicated PostgreSQL advisory-lock connection. A second supervisor exits instead of executing jobs. If that connection is lost, stop launching work and stop the active runner; generation fencing remains the final protection against stale writes.</p>
+<p>Claim the oldest queued job in a short transaction, increment its generation, establish a 30-second lease, issue a new capability and record the sandbox name. Supervisor refreshes its heartbeat and the job lease every 5 seconds while the runner is alive. It also enforces the absolute deadline and watches runner exit. A heartbeat alone is not proof of progress.</p>
+<p>Initial deadline: 180 seconds after first claim, including sandbox startup. Queue wait expires after 10 minutes. Recovery never resets deadline or budgets. Maximum two recoveries. After lease expiry, invalidate capability/generation before starting another runner, and terminate the old named sandbox where possible. A stale runner receives 409/403 and cannot finalize anything.</p>
+<div class="table-scroll"><table><thead><tr><th>Failure</th><th>Required result</th></tr></thead><tbody><tr><td>Browser closes</td><td>Job continues; reopening displays persisted status</td></tr><tr><td>Runner dies after saved evidence</td><td>Resume from context with same evidence; do not repeat completed actions</td></tr><tr><td>Tool response lost after save</td><td>Poll existing action ID; no second query</td></tr><tr><td>Gateway dies during read</td><td>Mark interrupted; a new bounded read may occur, retaining distinct timestamps</td></tr><tr><td>Gateway dies during model call</td><td>Mark unknown; retain worst-case reservation; no claim of exactly-once billing</td></tr><tr><td>Model 429 or 5xx</td><td>At most one explicit retry if deadline/budget allow; capped Retry-After; fresh action reservation</td></tr><tr><td>Model malformed output</td><td>One repair opportunity within budget; otherwise deterministic inconclusive report</td></tr><tr><td>Target source unavailable</td><td>Save unavailable observation; continue with other tools</td></tr><tr><td>IncidentLens database unavailable</td><td>Fail closed: no new source/model calls without durable reservations; recovery after DB returns</td></tr><tr><td>Cancellation races completion</td><td>Lock job row; first committed terminal decision wins; cancellation never rewrites a completed report</td></tr><tr><td>Cancellation during external call</td><td>Revoke capability, cancel local request; late results cannot complete job; remote provider may still bill</td></tr><tr><td>Deadline exceeded</td><td>Stop new actions; save bounded inconclusive report and terminate runner</td></tr></tbody></table></div><p>This is at-least-once execution of repeatable reads with deduplication of committed action results. Do not claim exactly-once external execution. Read-only target tools are important to making interruption recovery safe.</p>
+<h2 id="13-budgets-and-predictable-resource-use">13. Budgets and predictable resource use</h2><div class="table-scroll"><table><thead><tr><th>Limit</th><th>Standard profile</th></tr></thead><tbody><tr><td>Active jobs / queued jobs</td><td>1 / 10</td></tr><tr><td>Total job deadline</td><td>180 seconds from first claim</td></tr><tr><td>Model actions, including retry/repair</td><td>8</td></tr><tr><td>Diagnostic tool actions, including retries</td><td>12</td></tr><tr><td>Parallel actions per job</td><td>1</td></tr><tr><td>Input per model call</td><td>6,000 tokens maximum</td></tr><tr><td>Output per model call</td><td>1,500 tokens maximum</td></tr><tr><td>Total reserved input + output</td><td>40,000 tokens</td></tr><tr><td>Model request timeout</td><td>25 seconds</td></tr><tr><td>Stored evidence per job</td><td>1 MiB</td></tr><tr><td>Report size</td><td>32 KiB</td></tr><tr><td>Sample log rows per tool</td><td>100</td></tr></tbody></table></div><p>The gateway reserves estimated input plus the maximum output before each call using the selected model&#39;s tokenizer. Stage 0 must verify token accounting for that model. A completed call reconciles actual usage; unknown usage retains its reservation. Cumulative reserved/used counters survive restart. Never silently truncate essential source metadata to fit a prompt: select summaries with links to evidence and mark omissions.</p>
+<p>Dollar cost is an estimate from a versioned pricing file plus provider usage, displayed with its pricing date. Token/call/deadline limits are enforced; they are not a universal hard guarantee of provider billing because tokenizer discrepancies and uncertain responses exist. Configure a provider account budget separately for the local pilot.</p>
+<h2 id="14-report-schema-and-validation">14. Report schema and validation</h2><p>Each report contains <code>schema_version</code>, <code>outcome</code>, <code>summary</code>, <code>findings</code>, <code>alternatives</code>, <code>limitations</code>, <code>next_checks</code> and <code>usage</code>. A finding has <code>claim</code>, <code>support</code> (observed/inferred), <code>evidence_ids</code> and <code>reason</code>. No uncalibrated numerical confidence score.</p>
+<p>Example finding: “Recorded event publication throughput was below committed arrival throughput throughout the covered interval.” Support this with overlapping-window measurements. “Password verification caused the slowdown” additionally requires correlated timing evidence and comparison to relevant baseline data; otherwise use tentative wording and name the missing check.</p>
+<p>Deterministic validation MUST ensure parent-owned evidence references, schema correctness, valid source windows, bounded lengths and accurate tool-calculated arithmetic. Required limitations for unavailable/truncated sources are merged by code and cannot be removed by the model. Unknown evidence IDs get one report repair opportunity only if a model budget remains, then an inconclusive fallback.</p>
+<p>These checks do not prove semantic entailment. The evaluator and human reviewer judge whether cited evidence actually supports a claim. Distinguish observed facts, inferred mechanisms and causal confirmation. Controlled interventions establish ground truth in the test harness; the diagnostic agent never performs interventions on its own.</p>
+<p>The following is a minimal valid report payload. <code>usage</code> is added by the server from action records; any model-supplied usage field is rejected. Empty alternatives are permitted but must not be interpreted as all other causes having been ruled out.</p>
+<pre><code>{
+  &quot;schema_version&quot;: &quot;1.0&quot;,
+  &quot;outcome&quot;: &quot;TENTATIVE&quot;,
+  &quot;summary&quot;: &quot;Recorded publication throughput was below event arrival throughput&quot;,
+  &quot;findings&quot;: [
+    {
+      &quot;claim&quot;: &quot;The covered window contains 100 arrivals/s and 7 recorded publications/s&quot;,
+      &quot;support&quot;: &quot;observed&quot;,
+      &quot;evidence_ids&quot;: [&quot;0612caa2-4aa6-4d0a-8ec3-9200d21d7250&quot;],
+      &quot;reason&quot;: &quot;Durable counts divided by the same 900-second interval&quot;
+    }
+  ],
+  &quot;alternatives&quot;: [],
+  &quot;limitations&quot;: [&quot;No delivery timing breakdown was collected; the internal cause remains unknown&quot;],
+  &quot;next_checks&quot;: [&quot;Collect correlated consumer request timing for this incident window&quot;]
+}</code></pre><p>Limit summary to 1,000 characters, findings to eight, evidence references per finding to ten, and alternatives/limitations/next checks to ten entries each. <code>alternatives</code> entries have <code>hypothesis</code>, <code>assessment</code> (supported/weakened/unassessed), <code>evidence_ids</code> and <code>reason</code>. All explanatory strings are capped at 2,000 characters. The overall byte limit still applies. The example&#39;s citation resolves only in a job containing that example observation; real reports use their actual IDs.</p>
+<h2 id="15-interface-and-user-journey">15. Interface and user journey</h2><p>Three screens only:</p>
+<ol>
+<li><strong>Start:</strong> registered service selector, symptom, absolute/relative time picker, known telemetry availability and Investigate button. Disable duplicate submit while retaining the generated idempotency key for network retries.</li>
+<li><strong>Progress:</strong> status, elapsed time, calls used and factual action timeline. Poll status/events every 2 seconds while visible; back off to 10 seconds after errors and stop at terminal state. Cancel button; no internal chain-of-thought stream.</li>
+<li><strong>Report:</strong> finding first, clickable evidence, alternatives, limitations and next checks. Evidence panel shows source, observation time and coverage. JSON/HTML export.</li>
+</ol>
+<p>Budget exhausted, source missing and no fault observed must look different. Display “diagnosis supported in observed window,” not “system fixed.” Logs are rendered as text; HTML exports are escaped and contain no scripts or external resources. UI needs keyboard navigation, visible loading/error states and readable mobile layout.</p>
+<h2 id="16-evaluation-contract">16. Evaluation contract</h2><p>Freeze prompts, model version, adapter code and thresholds before opening held-out evaluation results. Developer-visible fault labels exist only in the test controller, never in logs, config names, prompts or paths accessible to the agent. Use neutral instance names. The controller stores injection time, cause and expected observable mechanism separately.</p>
+<p>Initial pilot: two faults (unavailable vs slow consumer) plus healthy runs. The demo consumer is currently in-process; use a test-only configurable downstream stub or isolated fault hooks to change response behaviour without taking down the whole application. The agent has no route to these controls.</p>
+<p>Full suite: 35 development cases and 35 held-out cases: five variants for each of five fault classes plus healthy and missing-evidence categories. Each case runs three times per system (105 held-out runs per system). Vary timing, load, affected operation and distracting benign messages. Hold out templates, not merely random seeds. This small suite supports scoped claims only; it does not establish generalization to unseen companies or arbitrary root causes.</p>
+<p>Baselines share service access, time windows and limits: (A) deterministic diagnostic rules over a fixed collection bundle; (B) one LLM report from that bundle; (C) adaptive agent. For live comparisons reproduce isolated scenario runs with matched workload seeds and randomize execution order. For exact observation comparisons use frozen recordings and label them replay evaluation. Do not compare a healthy later run against an earlier failing run.</p>
+<p>Metrics: correct primary cause, correct causal depth, unsupported-claim rate, citation relevance, healthy-case false alarms, appropriate abstention, elapsed time, calls and estimated cost. Mark cases invalid if fault injection or minimum telemetry coverage failed; report invalid counts and rerun them, never silently discard difficult valid cases. Labels and numeric checks are deterministic; review ambiguous explanations against a written rubric without knowing which system generated them. An LLM judge alone is insufficient.</p>
+<p>Proposed usefulness gate: at least 80% correct primary causes on valid fault runs; at least 80% appropriate abstention on insufficient-evidence runs; at most 10% false alarms on healthy runs; every factual finding has valid references; at most 5% unsupported factual findings by manual rubric. Also show a useful trade-off against the stronger baseline: at least 10 percentage points higher diagnosis accuracy, or at least 20% fewer tool calls with accuracy within 2 percentage points. Report counts, per-class outcomes and case-clustered uncertainty; these thresholds are project acceptance targets, not promises. If the gate fails, report that honestly and do not add frameworks to disguise the result.</p>
+<h2 id="17-reliability-and-security-acceptance-tests">17. Reliability and security acceptance tests</h2><p>Required tests exercise behaviours, not only implementation details:</p>
+<ul>
+<li>Concurrent repeated create requests yield one job; changed-body reuse returns 409.</li>
+<li>Queue admission never exceeds its cap under concurrent requests.</li>
+<li>Old generation cannot append evidence or complete a report after takeover.</li>
+<li>Kill runner after evidence commit and before response receipt; restart reuses the record.</li>
+<li>Kill gateway during a model action; unknown charge retains reservation and retries remain bounded.</li>
+<li>Cancel while a tool is in flight; no subsequent model action starts and no completed report is published afterward.</li>
+<li>Fail IncidentLens DB; no unrecorded source or model work starts.</li>
+<li>Fail one telemetry source; report displays its loss and does not convert it into a healthy result.</li>
+<li>Historical query never substitutes current blockers without a clear explicit mode.</li>
+<li>Read-only credential cannot mutate target tables; timeout terminates an expensive permitted query.</li>
+<li>Log text containing instructions cannot cause forbidden tool names, destinations or source writes.</li>
+<li>OpenShell blocks unapproved egress and host-secret paths; approved gateway access works.</li>
+<li>Login/CSRF/ownership checks and escaping prevent cross-job reads or executable report content.</li>
+<li>Backup and restore IncidentLens DB to a fresh instance; completed reports retain citations, pending jobs recover without budget reset.</li>
+</ul>
+<p>Use real PostgreSQL for transactions, admission, leases and recovery. Mock provider responses only for deterministic failure tests; at least one real provider end-to-end test and sandbox test is required. No performance claims from fake provider timings.</p>
+<h2 id="18-implementation-layout-and-coding-style">18. Implementation layout and coding style</h2><p>Proposed future layout:</p>
+<pre><code>incidentlens/
+  docs/TECHNICAL-DESIGN.md
+  pyproject.toml
+  uv.lock
+  versions.json
+  src/incidentlens/
+    config.py
+    schemas.py
+    api.py
+    internal_api.py
+    auth.py
+    database.py
+    jobs.py
+    supervisor.py
+    runner.py
+    model_gateway.py
+    evidence.py
+    reports.py
+    collector.py
+    tools/
+      registry.py
+      metrics.py
+      outbox.py
+      logs.py
+      blockers.py
+      config_snapshot.py
+    templates/
+    static/
+  migrations/
+  tests/unit/
+  tests/integration/
+  tests/e2e/
+  evaluation/scenarios/
+  evaluation/results/
+  deploy/compose.yaml
+  deploy/openshell/
+  scripts/</code></pre><p>Use explicit dataclasses/Pydantic models and small functions with named responsibilities. Start with direct SQL in one persistence module per responsibility. No generic workflow DSL, plugin discovery, inheritance hierarchy, metaprogramming or custom dependency-injection framework. One function validates a request, another executes a query, another persists an observation. Comments explain transaction boundaries and failure decisions, not obvious syntax.</p>
+<p>Catch expected errors at adapter boundaries and turn them into typed results. Unexpected errors are logged with request/action ID and fail the action; never use <code>except: pass</code>. Avoid blocking database/network calls on the async event loop; choose async clients consistently or isolate blocking calls in a bounded worker. Provider SDK automatic retries must be disabled so our recorded attempts match actual dispatches.</p>
+<p>No database transaction spans an <code>await</code> to an external source. No raw evidence payloads in ordinary logs. No credentials in prompts. Avoid abstractions until two concrete adapters need them.</p>
+<h2 id="19-staged-implementation-plan">19. Staged implementation plan</h2><div class="table-scroll"><table><thead><tr><th>Stage</th><th>Deliverable</th><th>Exit gate</th></tr></thead><tbody><tr><td>0 — feasibility</td><td>Pin versions; smoke test OpenShell→gateway; choose tool-calling model; measure one call; audit available LedgerCore telemetry</td><td>Allowed/denied access demonstrated, token accounting verified, tool schema obeyed, missing signals listed</td></tr><tr><td>1 — observation</td><td>Add minimal instrumentation and collectors; implement four tools for unavailable/slow/healthy pilot</td><td>Known fixture yields correct observations with accurate gaps/timestamps; existing LedgerCore tests still pass</td></tr><tr><td>2 — dependable backend</td><td>Jobs, authentication, evidence, action reservations, limits, cancellation, supervisor fencing</td><td>Real-DB concurrency and crash tests pass without an LLM</td></tr><tr><td>3 — agent pilot</td><td>Explicit loop, typed model actions, report checks and deterministic fallback</td><td>Pilot distinguishes two faults with evidence; compare rules and one-call baseline</td></tr><tr><td>4 — product</td><td>Three UI screens, exports and remaining diagnostic tools</td><td>A developer completes investigation and audits citations through UI</td></tr><tr><td>5 — evaluation</td><td>Freeze protocol; run development then held-out suite; record failures and cost</td><td>Reliability gate and usefulness gate reported separately with raw results</td></tr><tr><td>6 — release</td><td>Runbook, backup/restore demo, reproducible setup, clean secrets scan and dependency/license checks</td><td>Fresh checkout can reproduce demo and representative tests; limits documented</td></tr></tbody></table></div><p>Implementation ends after Stage 6 for v1. Budget 4–6 weeks part-time as a planning estimate, dependent on OpenShell setup and telemetry work. If Stage 0 cannot establish the sandbox/network path, resolve or document that blocker before claiming isolation. A temporary unsandboxed development mode must be labelled and cannot satisfy the release gate. If Stage 3 adds no useful diagnosis capability, stop expansion and inspect the failure cases first.</p>
+<p>No code, deployment or Git publication is authorized by this document&#39;s existence. Those are subsequent implementation actions. The document itself defines what to build and how to assess it.</p>
+<h2 id="20-operating-and-demonstration-runbook">20. Operating and demonstration runbook</h2><p>Future scripts should implement these steps in order: verify pinned dependencies → start IncidentLens PostgreSQL and Prometheus → start instrumented LedgerCore → start collector and wait for coverage → start API/gateway and supervisor → verify OpenShell connectivity → open local UI. Credentials are generated into ignored local files. Startup must fail with an actionable message if migrations, model configuration or sandbox policy are missing.</p>
+<p>Do not expose the public listener to the LAN or a tunnel under the local profile. The internal gateway is reachable only on the tested private route and requires capabilities. The target service registry is changed through local configuration and restart, not arbitrary HTTP input.</p>
+<p>Demonstration: establish 60 seconds of baseline → use separate controller to activate fault → collect sufficient incident evidence → enter symptom/window without fault label → show action timeline → open report citations → compare with controller ground truth. Export the report and versions. Clear the fault using the controller after the demonstration, not through the agent.</p>
+<p>Health checks should distinguish DB readiness, supervisor heartbeat, sandbox provisioning, model availability and telemetry coverage. Metrics include job count/duration by terminal state, tool timeouts, model reservations/actual usage, recovery count, evidence bytes and collector lag. Keep IDs out of metric labels; put them in structured logs.</p>
+<p>Structured-log collection tracks file identity and byte offset, handles rotation, and records discontinuities after truncation or missing files. Insert ingested rows and update the offset in the same transaction; deduplicate with <code>(source_file_id, byte_offset)</code>. Database sample failures create explicit gap records. Config snapshots are versioned by effective time; a restart cannot overwrite history. These are small collector responsibilities, not capabilities of the language model.</p>
+<p>Graceful shutdown rejects new claims, cancels/drains in-flight work within a bounded period, saves state and stops named sandboxes. If graceful shutdown fails, lease expiry and generation checks still apply. Restore drills must verify rather than merely create a backup file.</p>
+<h2 id="21-story-what-the-finished-system-should-do">21. Story: what the finished system should do</h2><p>Priya sees notifications delayed while transfers remain successful. She selects LedgerCore and a fifteen-minute interval. The collector already has history; the agent is not starting monitoring after the incident and pretending to know the past.</p>
+<p>The first tools show normal transfer outcomes and a growing pending-event count. The agent requests delivery logs to distinguish failed requests from slow successful ones. The logs show mostly successful requests. It then requests correlated timing samples and polling settings. The samples identify authentication as a large contributor; polling records show pauses between batches. Arrival/publication measurements explain the observed accumulation.</p>
+<p>The report cites each observation and describes which conclusions are inferred. Priya opens the evidence drawer and confirms time windows and sample counts. She hands the report to the developer responsible for the consumer. No money movement, credential change or automatic repair occurred.</p>
+<p>In a second run, authentication timing is absent. The correct report stops at slow successful consumer requests, says why deeper attribution is unavailable and recommends the missing measurement. This less specific answer is an intentional correctness behaviour.</p>
+<h2 id="22-sources-and-verification-boundaries">22. Sources and verification boundaries</h2><ul>
+<li><strong>S1:</strong> <a href="https://docs.nvidia.com/openshell/about/overview">NVIDIA OpenShell overview</a> and <a href="https://github.com/NVIDIA/OpenShell">repository</a>. Supports sandbox/policy role; exact integration must pass Stage 0 on the pinned release.</li>
+<li><strong>S2:</strong> <a href="https://github.com/langchain-ai/deepagents">Deep Agents repository</a> and <a href="https://docs.langchain.com/oss/python/langgraph/persistence">LangGraph persistence</a>. Establish available framework facilities, not our recovery correctness. The design deliberately uses a smaller explicit loop.</li>
+<li><strong>S3:</strong> <a href="https://github.com/NVIDIA/SkillSpector">NVIDIA SkillSpector</a>. Optional development scanning only.</li>
+<li><strong>S4:</strong> <a href="https://prometheus.io/docs/prometheus/latest/querying/api/">Prometheus HTTP API</a>. Source API for fixed metric queries.</li>
+<li><strong>S5:</strong> <a href="https://www.postgresql.org/docs/17/monitoring-stats.html">PostgreSQL 17 monitoring statistics</a>. Distinguishes current activity from accumulated statistics; our collector provides history.</li>
+<li><strong>Local evidence:</strong> LedgerCore README, OutboxMetrics and OutboxPoller inspected on 4 November 2026. This was a design-oriented inspection, not a fresh full code audit or test run.</li>
+</ul>
+<p>All capacities, budgets, schemas and acceptance thresholds are IncidentLens design decisions. No vendor source establishes that this project already works. A future README must state actual test results and evaluation outcomes without converting these targets into achievements.</p>
+</main></div><footer>Editable source: <a href="TECHNICAL-DESIGN.md">TECHNICAL-DESIGN.md</a> · Targets are proposed; no implementation or measured IncidentLens results are claimed.</footer></body></html>

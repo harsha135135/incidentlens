@@ -1,0 +1,31 @@
+[project]
+name = "incidentlens"
+version = "0.1.0"
+description = "Investigates a LedgerCore symptom with bounded, read-only diagnostic tools"
+requires-python = "==3.12.*"
+dependencies = [
+    "anthropic",
+    "bcrypt>=5.0.0",
+    "fastapi",
+    "httpx",
+    "jinja2",
+    "langchain-anthropic",
+    "langchain-core",
+    "psycopg[binary,pool]",
+    "pydantic",
+    "uvicorn",
+]
+
+[dependency-groups]
+dev = [
+    "playwright>=1.64.1",
+    "pytest",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+# tests/stack drives the live stack for minutes; run it explicitly: uv run pytest tests/stack
+testpaths = ["tests/unit", "tests/integration", "tests/process"]

@@ -1,0 +1,15 @@
+cr-d1-r1 attempt 1: valid (logs COMPLETE, auth_error 705 of 705 failures)
+{"case_run": "cr-d1-r1", "status": "valid", "truth": "consumer_credential_rejected", "A": "consumer_credential_rejected", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "consumer_credential_rejected", "P_status": "COMPLETED", "P_cost": 0.01897, "P_seconds": 16.1}
+lp-d1-r1 attempt 1: valid (blockers COMPLETE, other edges 2, pool timeouts 130)
+{"case_run": "lp-d1-r1", "status": "valid", "truth": "lock_contention+pool_saturation", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.02128, "P_seconds": 18.2}
+he-d1-r1 attempt 1: valid (all complete True, pending max 4.0, failures 0, server errors 0.0, pool timeouts 0, other edges 0)
+{"case_run": "he-d1-r1", "status": "valid", "truth": "none", "A": "none", "A_outcome": "NO_FAULT_OBSERVED", "P_outcome": "NO_FAULT_OBSERVED", "P_dev_aid": "none", "P_status": "COMPLETED", "P_cost": 0.01722, "P_seconds": 16.1}
+lc-d1-r1 attempt 1: valid (blockers COMPLETE, other edges 6, samples with blocking 42)
+{"case_run": "lc-d1-r1", "status": "valid", "truth": "lock_contention", "A": "lock_contention", "A_outcome": "SUPPORTED", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01813, "P_seconds": 16.1}
+cu-d1-r1 attempt 1: valid (logs COMPLETE, network_error 1535 of 1535 failures)
+{"case_run": "cu-d1-r1", "status": "valid", "truth": "consumer_unavailable", "A": "consumer_unavailable", "A_outcome": "SUPPORTED", "P_outcome": "SUPPORTED", "P_dev_aid": "consumer_unavailable", "P_status": "COMPLETED", "P_cost": 0.01819, "P_seconds": 16.1}
+me-d1-r1 attempt 1: valid (deciding source logs PARTIAL; durable backlog peak 290)
+{"case_run": "me-d1-r1", "status": "valid", "truth": "insufficient_evidence", "A": "publisher_throughput", "A_outcome": "TENTATIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "lock_contention", "P_status": "COMPLETED", "P_cost": 0.01752, "P_seconds": 16.1}
+sc-d1-r1 attempt 1: valid (logs COMPLETE, timings COMPLETE, handler max 410.093 ms, failures 0)
+{"case_run": "sc-d1-r1", "status": "valid", "truth": "slow_consumer_handler", "A": "unclassified", "A_outcome": "INCONCLUSIVE", "P_outcome": "TENTATIVE", "P_dev_aid": "slow_consumer_handler", "P_status": "COMPLETED", "P_cost": 0.01944, "P_seconds": 18.2}
+exit=0

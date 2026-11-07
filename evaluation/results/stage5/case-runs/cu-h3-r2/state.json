@@ -1,0 +1,186 @@
+{
+  "label": "FIXTURE RESULT: Stage 5 evaluation (recorded window, frozen bundle)",
+  "case_run": "cu-h3-r2",
+  "template": "cu-h3",
+  "split": "held_out",
+  "category": "consumer_unavailable",
+  "ground_truth": "consumer_unavailable",
+  "attempts": [
+    {
+      "attempt": 1,
+      "seed": 433997641,
+      "controller_run": "stage5-cu-h3-r2-a1",
+      "bundle": "b-890490119746",
+      "status": "valid",
+      "window": {
+        "start": "2026-11-06T18:43:42.000Z",
+        "end": "2026-11-06T18:47:12.000Z"
+      },
+      "validity": "logs COMPLETE, network_error 904 of 904 failures"
+    }
+  ],
+  "status": "valid",
+  "system_order": [
+    "P",
+    "A"
+  ],
+  "P": {
+    "job_id": "35f90495-bca2-4d74-bf75-9d8f6b2a1825",
+    "status": "COMPLETED",
+    "final_reason": "model report: TENTATIVE",
+    "report": {
+      "usage": {
+        "tool_actions": 7,
+        "model_actions": 1,
+        "reported_input_tokens": 4069,
+        "reported_output_tokens": 1077,
+        "tokens_counted_against_budget": 5146,
+        "model_calls_with_unknown_usage": 0
+      },
+      "checks": {
+        "numbers_checked": 10,
+        "numbers_not_found_in_cited_evidence": 1
+      },
+      "outcome": "TENTATIVE",
+      "summary": "Outbox publication stalled for ~60 s (18:46) while arrivals continued, then drained. Delivery attempts show 904 CONNECTION_FAILED; a consumer outage is likely but not confirmed.",
+      "evidence": {
+        "E1": "9e43397f-3614-4e99-85cf-116301777bf8",
+        "E2": "7d218dfc-0511-45ba-81a0-019149d62b51",
+        "E3": "900f24fb-2f81-4788-aaed-1416ba68e891",
+        "E4": "ec2a3313-64d6-4061-9bf1-8fa6851d4f69",
+        "E5": "ee2b91f7-ffa1-4b8c-a113-d06d651fbf68",
+        "E6": "9d505de6-ff59-496f-a636-60ed4db4aad9",
+        "E7": "927cf115-a3f3-4dc6-a47c-5f4a717237bc"
+      },
+      "findings": [
+        {
+          "claim": "Outbox publications dropped to 0 for about 50-60 s while commits continued at ~30/10 s, so pending rose to 82 and notifications were delayed.",
+          "reason": "Per-bucket publications 15,0,0,0,0,0 vs arrivals 30; pending 2 at 18:45:23 to 82 at 18:46:13, then catch-up at 80/bucket.",
+          "support": "observed",
+          "evidence_ids": [
+            "7d218dfc-0511-45ba-81a0-019149d62b51"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": [
+            "50"
+          ]
+        },
+        {
+          "claim": "The request path and DB are healthy: transfers return 201 with no errors, no pool waits, no lock blockers.",
+          "reason": "Zero server errors, p99 0.25 s, pool pending 0 and 0 timeouts, no blocked sessions.",
+          "support": "observed",
+          "evidence_ids": [
+            "9e43397f-3614-4e99-85cf-116301777bf8",
+            "ee2b91f7-ffa1-4b8c-a113-d06d651fbf68",
+            "9d505de6-ff59-496f-a636-60ed4db4aad9"
+          ],
+          "evidence_handles": [
+            "E1",
+            "E5",
+            "E6"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "Delivery attempts to the consumer failed with connection errors (904 of 1510), consistent with the consumer being unreachable during the stall; successful ones took ~71 ms.",
+          "reason": "All failures are CONNECTION_FAILED with no consumer record; timing of failures versus the stall was not shown.",
+          "support": "inferred",
+          "evidence_ids": [
+            "900f24fb-2f81-4788-aaed-1416ba68e891",
+            "ec2a3313-64d6-4061-9bf1-8fa6851d4f69"
+          ],
+          "evidence_handles": [
+            "E3",
+            "E4"
+          ],
+          "unverified_numbers": []
+        },
+        {
+          "claim": "A backlog of 296 FAILED events predates the window, with the oldest undelivered event over an hour old. This is a separate lingering lateness source.",
+          "reason": "failed stays 296 and oldest_undelivered_age is 3655-3860 s throughout.",
+          "support": "observed",
+          "evidence_ids": [
+            "7d218dfc-0511-45ba-81a0-019149d62b51"
+          ],
+          "evidence_handles": [
+            "E2"
+          ],
+          "unverified_numbers": []
+        }
+      ],
+      "limitations": [
+        "Failure timestamps are not aligned to the stall, so the link between connection failures and zero publications is not shown.",
+        "Only the earliest 100 of 1510 delivery records were listed, and none were from the stall period."
+      ],
+      "next_checks": [
+        "List delivery logs for 18:46:00-18:46:50 to see whether attempts there were CONNECTION_FAILED.",
+        "Check consumer process availability and the cause of the 296 FAILED outbox rows."
+      ],
+      "alternatives": [
+        {
+          "reason": "No poller logs or thread data; connection failures favor the consumer, but this is not excluded.",
+          "assessment": "unassessed",
+          "hypothesis": "Outbox poller or publisher stalled internally (not the consumer)",
+          "evidence_ids": [
+            "7d218dfc-0511-45ba-81a0-019149d62b51",
+            "927cf115-a3f3-4dc6-a47c-5f4a717237bc"
+          ],
+          "evidence_handles": [
+            "E2",
+            "E7"
+          ]
+        },
+        {
+          "reason": "No pool pending, timeouts, or blocking sessions observed.",
+          "assessment": "weakened",
+          "hypothesis": "DB pool exhaustion or lock contention delayed publication",
+          "evidence_ids": [
+            "ee2b91f7-ffa1-4b8c-a113-d06d651fbf68",
+            "9d505de6-ff59-496f-a636-60ed4db4aad9"
+          ],
+          "evidence_handles": [
+            "E5",
+            "E6"
+          ]
+        }
+      ],
+      "schema_version": "1.0"
+    },
+    "report_source": "model",
+    "model_calls": 1,
+    "tool_calls": 7,
+    "tools": [
+      "get_request_metrics",
+      "get_outbox_stats",
+      "search_delivery_logs",
+      "get_delivery_timings",
+      "get_pool_metrics",
+      "get_database_blockers",
+      "get_runtime_config"
+    ],
+    "recoveries": 0,
+    "input_tokens": 4069,
+    "output_tokens": 1077,
+    "unknown_usage_calls": 0,
+    "replay_elapsed_seconds": 16.2,
+    "classified_dev_aid": "lock_contention",
+    "cost_usd": 0.01891,
+    "checks": {
+      "numbers_checked": 10,
+      "numbers_not_found_in_cited_evidence": 1
+    },
+    "prompt_version": "2026-11-06.2"
+  },
+  "A": {
+    "outcome": "SUPPORTED",
+    "primary_cause": "consumer_unavailable",
+    "rule": "904 of 904 failed deliveries were network_error",
+    "evidence_ids": [
+      "E3"
+    ],
+    "model_calls": 0,
+    "tool_calls": 7
+  }
+}

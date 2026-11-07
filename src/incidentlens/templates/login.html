@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block page %}login{% endblock %}
+{% block nav %}{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Sign in</h1>
+  <p class="muted">Paste the access secret that setup printed (it is also in <code>deploy/local/access-secret.txt</code>).</p>
+  <form id="login-form">
+    <label for="secret">Access secret</label>
+    <input id="secret" name="secret" type="password" autocomplete="current-password" required>
+    <button type="submit" id="login-button">Sign in</button>
+  </form>
+</section>
+{% endblock %}

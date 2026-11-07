@@ -1,0 +1,7 @@
+bind_address=127.0.0.1
+openshell=openshell 0.1.7 gateway=openshell-gateway 0.1.7
+image=sha256:84f245c15d7e87161eaadbda70d20a19995c1447ce6c53383319aa492981cb6a
+policy_sha256=8766bed1846ee93ae1c048281b705b1050f64ebfd4326828f66be32f11cd8a22
+listeners:
+Python  42808 harshamac    3u  IPv4 0x242590bbeb2c04f7      0t0  TCP 127.0.0.1:8089 (LISTEN)
+Python  42809 harshamac    3u  IPv4 0x1d277a29ac8e61de      0t0  TCP 127.0.0.1:8088 (LISTEN)

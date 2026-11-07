@@ -1,0 +1,21 @@
+{
+  "pricing_version": "anthropic-2026-11-04",
+  "retrieved_on": "2026-11-04",
+  "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+  "currency": "USD",
+  "unit": "per million tokens",
+  "models": {
+    "claude-sonnet-5-5": {
+      "input": 2.00,
+      "output": 10.00,
+      "cache_write_5m": 2.50,
+      "cache_write_1h": 4.00,
+      "cache_read": 0.10
+    }
+  },
+  "notes": [
+    "Global routing (default). US-only inference_geo would multiply all categories by 1.1; IncidentLens does not set it.",
+    "Standard pricing across the full 1M context window for this model.",
+    "Estimates only: displayed with this pricing date; provider billing is authoritative (spec section 13)."
+  ]
+}

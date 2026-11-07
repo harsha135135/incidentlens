@@ -1,0 +1,106 @@
+{
+ "arguments": {
+  "route_group": "transfers"
+ },
+ "collected_at": "2026-11-07T07:06:21.045Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "bucket_counts": [
+   {
+    "count": 0,
+    "le": 0.005
+   },
+   {
+    "count": 0,
+    "le": 0.01
+   },
+   {
+    "count": 0,
+    "le": 0.025
+   },
+   {
+    "count": 0,
+    "le": 0.05
+   },
+   {
+    "count": 42,
+    "le": 0.1
+   },
+   {
+    "count": 420,
+    "le": 0.25
+   },
+   {
+    "count": 420,
+    "le": 0.5
+   },
+   {
+    "count": 420,
+    "le": 1.0
+   },
+   {
+    "count": 420,
+    "le": 2.5
+   },
+   {
+    "count": 420,
+    "le": 5.0
+   },
+   {
+    "count": 420,
+    "le": 10.0
+   },
+   {
+    "count": 420,
+    "le": "+Inf"
+   }
+  ],
+  "by_status": [
+   {
+    "count": 420,
+    "outcome": "SUCCESS",
+    "status": "201"
+   }
+  ],
+  "counter_resets": 0,
+  "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)",
+  "latency_seconds": {
+   "method": "interpolated within fixed histogram buckets summed across series",
+   "p50": 0.1667,
+   "p95": 0.2417,
+   "p99": 0.2483
+  },
+  "requests": 420,
+  "requests_per_second": 2.8,
+  "route_group": "transfers",
+  "route_template": "/v1/transfers",
+  "scrapes": {
+   "expected_scrapes": 30,
+   "failed_scrapes": 0,
+   "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)",
+   "gaps": [],
+   "successful_scrapes": 30
+  },
+  "server_error_ratio": 0.0
+ },
+ "errors": [],
+ "evidence_id": "d35d53bc-abc4-439b-a297-2b798c004d66",
+ "limitations": [],
+ "observed_window": {
+  "first": "2026-11-07T07:03:43.717Z",
+  "last": "2026-11-07T07:06:08.726Z"
+ },
+ "requested_window": {
+  "end": "2026-11-07T07:06:10.000Z",
+  "start": "2026-11-07T07:03:40.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "1a5256b1-f351-44f2-a3ba-178324fe0ca6",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_request_metrics",
+ "truncated": false
+}

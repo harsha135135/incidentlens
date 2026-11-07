@@ -1,0 +1,11 @@
+Warning: scripts/stage0/probe.py is outside a Git work tree; uploading without Git filtering (.gitignore rules are not applied).
+
+Created sandbox: il-stage0-153115
+
+  [0.0s] Requesting compute...
+[0.0s] Sandbox allocated
+[0.0s] Pulling image incidentlens-runner:stage0
+[0.0s] Image already present
+[0.1s] Starting sandbox Container created
+  • Uploading files to /sandbox/probe.py...
+  ✓ Files uploaded

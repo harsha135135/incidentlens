@@ -1,0 +1,249 @@
+{
+  "label": "FIXTURE RESULT: Stage 3 pilot (live recorded window), not the evaluation",
+  "run": 2,
+  "scenario": "slow_consumer",
+  "ground_truth_cause": "slow_consumer_handler",
+  "window": {
+    "start": "2026-11-06T09:53:55.270Z",
+    "end": "2026-11-06T09:56:25.297Z"
+  },
+  "system_order": [
+    "C",
+    "A",
+    "B"
+  ],
+  "controller_run": "pilot-02-095355",
+  "bundle": [
+    {
+      "handle": "E1",
+      "tool": "get_request_metrics",
+      "arguments": {
+        "route_group": "transfers"
+      },
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E2",
+      "tool": "get_outbox_stats",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E3",
+      "tool": "search_delivery_logs",
+      "arguments": {
+        "outcome": "any",
+        "limit": 100
+      },
+      "coverage": "COMPLETE"
+    },
+    {
+      "handle": "E4",
+      "tool": "get_delivery_timings",
+      "arguments": {},
+      "coverage": "COMPLETE"
+    }
+  ],
+  "results": {
+    "C": {
+      "job_id": "50f51ec5-6613-4323-8725-5d014da853a8",
+      "status": "COMPLETED",
+      "final_reason": "model report: SUPPORTED",
+      "elapsed_seconds": 18.1,
+      "report": {
+        "usage": {
+          "tool_actions": 4,
+          "model_actions": 3,
+          "reported_input_tokens": 9922,
+          "reported_output_tokens": 1144,
+          "tokens_counted_against_budget": 11066,
+          "model_calls_with_unknown_usage": 0
+        },
+        "outcome": "SUPPORTED",
+        "summary": "Outbox publications to the consumer lagged arrivals for ~100 s. The backlog built up and then drained. The slow consumer handler (~405 ms on some deliveries) is the likely cause. Transfers and auth were healthy.",
+        "evidence": {
+          "E1": "bd28122a-1e04-4f03-975c-a67ca2e190b8",
+          "E2": "522925cf-0176-407b-9f1e-6690c28affe0",
+          "E3": "ccc945b7-138e-4160-a990-56bbcfad1755",
+          "E4": "5ff29c46-c441-4cf5-8af9-35648592cd8a"
+        },
+        "findings": [
+          {
+            "claim": "Outbox backlog built up mid-window: publications fell to ~19/10s against 32/10s arrivals, and pending reached 123 with oldest age 38s.",
+            "reason": "Per-bucket counts and pending/age samples show delivery fell behind and then drained to 3.",
+            "support": "observed",
+            "evidence_ids": [
+              "522925cf-0176-407b-9f1e-6690c28affe0"
+            ],
+            "evidence_handles": [
+              "E2"
+            ]
+          },
+          {
+            "claim": "The transfers API was healthy, so lateness is downstream of the request path.",
+            "reason": "All 476 requests returned 201, p99 0.25s, and no errors.",
+            "support": "observed",
+            "evidence_ids": [
+              "bd28122a-1e04-4f03-975c-a67ca2e190b8"
+            ],
+            "evidence_handles": [
+              "E1"
+            ]
+          },
+          {
+            "claim": "Delivery slowness is from consumer handler time (p95 405ms vs p50 0.025ms), not auth or network errors.",
+            "reason": "All 477 attempts succeeded with zero failures; auth p95 is 78ms; handler p95 is 405ms, which would cap serial delivery throughput.",
+            "support": "inferred",
+            "evidence_ids": [
+              "ccc945b7-138e-4160-a990-56bbcfad1755",
+              "5ff29c46-c441-4cf5-8af9-35648592cd8a"
+            ],
+            "evidence_handles": [
+              "E3",
+              "E4"
+            ]
+          }
+        ],
+        "limitations": [
+          "Only the first 30 delivery logs are listed, so slow attempts are not tied to the backlog time range.",
+          "The consumer is a test fixture, and the handler slowness could be an artifact of the fixture rather than a real consumer."
+        ],
+        "next_checks": [
+          "Correlate slow handler attempts (~405ms) with the 09:54-09:56 backlog window, and check the poller's concurrency and batch size.",
+          "Check consumer-side logs for what caused the 405ms handler time and why it recovered at the end."
+        ],
+        "alternatives": [
+          {
+            "reason": "Failed gauge stayed 0, and all 477 attempts succeeded on attempt 1.",
+            "assessment": "weakened",
+            "hypothesis": "Delivery failures or retries caused the delay",
+            "evidence_ids": [
+              "522925cf-0176-407b-9f1e-6690c28affe0",
+              "ccc945b7-138e-4160-a990-56bbcfad1755"
+            ],
+            "evidence_handles": [
+              "E2",
+              "E3"
+            ]
+          },
+          {
+            "reason": "Consumer auth p95 is 77.7ms, which is stable and small relative to the 405ms handler time.",
+            "assessment": "weakened",
+            "hypothesis": "Authentication latency caused the delay",
+            "evidence_ids": [
+              "5ff29c46-c441-4cf5-8af9-35648592cd8a"
+            ],
+            "evidence_handles": [
+              "E4"
+            ]
+          }
+        ],
+        "schema_version": "1.0"
+      },
+      "report_source": "model",
+      "model_calls": 3,
+      "tool_calls": 4,
+      "tools": [
+        "get_request_metrics",
+        "get_outbox_stats",
+        "search_delivery_logs",
+        "get_delivery_timings"
+      ],
+      "recoveries": 0,
+      "input_tokens": 9922,
+      "output_tokens": 1144,
+      "unknown_usage_calls": 0,
+      "classified": "slow_consumer_handler",
+      "cost_usd": 0.03128
+    },
+    "A": {
+      "outcome": "INCONCLUSIVE",
+      "primary_cause": "unclassified",
+      "rule": "no rule matched",
+      "evidence_ids": [],
+      "model_calls": 0,
+      "tool_calls": 4,
+      "classified": "unclassified"
+    },
+    "B": {
+      "report": {
+        "outcome": "TENTATIVE",
+        "summary": "Notifications were delayed by an outbox publication backlog. Publication throughput fell to about 60% of arrivals, then drained. The consumer handler's slow phase is the likely limiter, but the evidence does not prove it.",
+        "findings": [
+          {
+            "claim": "The transfer API was healthy, while the outbox publication rate lagged arrivals for roughly 100 s, building a backlog.",
+            "support": "observed",
+            "evidence_ids": [
+              "E1",
+              "E2"
+            ],
+            "reason": "The API returned 476 201s with no errors. Arrivals ran at 32 per 10 s while publications ran at 15-20 per 10 s, and pending reached 123."
+          },
+          {
+            "claim": "Notification delay grew with the backlog: oldest undelivered age rose from 0.66 s to 38 s, then recovered once publications caught up (77-81 per 10 s).",
+            "support": "observed",
+            "evidence_ids": [
+              "E2"
+            ],
+            "reason": "The age samples climb with pending and drop back to 0.66 s at 09:56:23 after the catch-up buckets."
+          },
+          {
+            "claim": "Deliveries all succeeded, with no failures or retries. Slow attempts (~480 ms vs ~72 ms) were dominated by consumer handler time (p95 405 ms), not auth or network.",
+            "support": "observed",
+            "evidence_ids": [
+              "E3",
+              "E4"
+            ],
+            "reason": "477 of 477 attempts succeeded on attempt 1. Consumer handler p95 is 405 ms against a p50 of 0.025 ms, and auth stays near 70 ms."
+          },
+          {
+            "claim": "The consumer's slow handler phase probably reduced serial publication throughput to ~19 per 10 s, which would explain the backlog.",
+            "support": "inferred",
+            "evidence_ids": [
+              "E2",
+              "E4"
+            ],
+            "reason": "About 19 publications per 10 s is roughly 0.5 s each, which matches the ~480 ms slow attempts. No tool shows the publisher is serial."
+          }
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "The publisher itself stalled or was throttled, independent of consumer latency.",
+            "assessment": "unassessed",
+            "evidence_ids": [
+              "E2"
+            ],
+            "reason": "No publisher-side metrics are available. The catch-up burst is consistent with a publisher pause, though it also fits the consumer recovering."
+          },
+          {
+            "hypothesis": "Network or auth errors caused the delay.",
+            "assessment": "weakened",
+            "evidence_ids": [
+              "E3",
+              "E4"
+            ],
+            "reason": "There were zero auth, network and server errors. Auth latency was stable at about 70 ms."
+          }
+        ],
+        "limitations": [
+          "Only the earliest 100 of 477 delivery records are listed, so the slow period is only partly visible per record.",
+          "There is no consumer-side explanation for why the handler was slow, and the pending gauge is sampled at scrape times."
+        ],
+        "next_checks": [
+          "Correlate per-attempt handler time with publication timestamps across the full window to confirm serial dispatch is the limiter.",
+          "Inspect the consumer handler and the publisher's concurrency settings for the slow phase starting about 09:54:00."
+        ]
+      },
+      "malformed": null,
+      "unknown_citations": [],
+      "stop_reason": "tool_use",
+      "input_tokens": 3123,
+      "output_tokens": 1154,
+      "model_calls": 1,
+      "tool_calls": 4,
+      "latency_seconds": 9.41,
+      "classified": "slow_consumer_handler",
+      "cost_usd": 0.01779
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+ "arguments": {
+  "route_group": "transfers"
+ },
+ "collected_at": "2026-11-07T07:03:20.042Z",
+ "coverage": "COMPLETE",
+ "data": {
+  "bucket_counts": [
+   {
+    "count": 0,
+    "le": 0.005
+   },
+   {
+    "count": 0,
+    "le": 0.01
+   },
+   {
+    "count": 0,
+    "le": 0.025
+   },
+   {
+    "count": 0,
+    "le": 0.05
+   },
+   {
+    "count": 111,
+    "le": 0.1
+   },
+   {
+    "count": 478,
+    "le": 0.25
+   },
+   {
+    "count": 595,
+    "le": 0.5
+   },
+   {
+    "count": 595,
+    "le": 1.0
+   },
+   {
+    "count": 648,
+    "le": 2.5
+   },
+   {
+    "count": 652,
+    "le": 5.0
+   },
+   {
+    "count": 652,
+    "le": 10.0
+   },
+   {
+    "count": 652,
+    "le": "+Inf"
+   }
+  ],
+  "by_status": [
+   {
+    "count": 480,
+    "outcome": "SUCCESS",
+    "status": "201"
+   },
+   {
+    "count": 0,
+    "outcome": "CLIENT_ERROR",
+    "status": "422"
+   },
+   {
+    "count": 56,
+    "outcome": "SERVER_ERROR",
+    "status": "500"
+   },
+   {
+    "count": 116,
+    "outcome": "SERVER_ERROR",
+    "status": "503"
+   }
+  ],
+  "counter_resets": 2,
+  "counting_method": "counter increase between scrapes, from the last scrape before the window start to the last scrape inside it (not extrapolated)",
+  "latency_seconds": {
+   "method": "interpolated within fixed histogram buckets summed across series",
+   "p50": 0.1879,
+   "p95": 1.6906,
+   "p99": 2.4287
+  },
+  "requests": 652,
+  "requests_per_second": 3.105,
+  "route_group": "transfers",
+  "route_template": "/v1/transfers",
+  "scrapes": {
+   "expected_scrapes": 42,
+   "failed_scrapes": 0,
+   "gap_bounds": "scrape start times; each bound accurate to about one scrape interval (5 s)",
+   "gaps": [],
+   "successful_scrapes": 42
+  },
+  "server_error_ratio": 0.2638
+ },
+ "errors": [],
+ "evidence_id": "008c1e70-95c5-48b3-9240-f13a0acbebe5",
+ "limitations": [
+  "Counters restarted 2 time(s) in the window (application restart); counts include requests on both sides of each restart."
+ ],
+ "observed_window": {
+  "first": "2026-11-07T06:59:43.722Z",
+  "last": "2026-11-07T07:03:08.717Z"
+ },
+ "requested_window": {
+  "end": "2026-11-07T07:03:09.000Z",
+  "start": "2026-11-07T06:59:39.000Z"
+ },
+ "source": {
+  "adapter_version": "1.0",
+  "instance": "ledgercore-local",
+  "kind": "prometheus",
+  "target_instance_id": "30053cae-a574-486c-9730-3ea12db9161b",
+  "target_revision": "86e4bf1c38fb+dirty.ed5247a36278"
+ },
+ "tool": "get_request_metrics",
+ "truncated": false
+}

@@ -1,0 +1,8 @@
+$ bash -c "exec 3<>/dev/tcp/host.openshell.internal/8089"
+exit=1
+bash: connect: Permission denied
+bash: line 1: /dev/tcp/host.openshell.internal/8089: Permission denied
+--- supervisor decision
+[1793806341.881] [sandbox] [INFO ] [openshell_supervisor] Fetching sandbox policy via gRPC endpoint=https://host.docker.internal:17670 sandbox=il-bashcheck sandbox_id=1d0de81a-adab-4c4a-a6f8-24f476bd18c0
+[1793806342.006] [sandbox] [WARN ] [openshell_supervisor_network::proxy] Denied staged transparent connection destination=198.18.0.2:8089 reason=binary '/usr/bin/bash' not allowed in policy 'incidentlens_internal_gateway' (ancestors: [], cmdline: []). SYMLINK HINT: the binary path is the kernel-resolved target from /proc/<pid>/exe, not the symlink. If your policy specifies a symlink (e.g., /usr/bin/python3) but the actual binary is /usr/bin/python3.11, either: (1) use the canonical path in your policy (run 'readlink -f /usr/bin/python3' inside the sandbox), or (2) ensure symlink resolution is working (check sandbox logs for 'Cannot access container filesystem')
+[1793806342.006] [sandbox] [OCSF ] [ocsf] NET:OPEN [MED] DENIED /usr/bin/bash(0) -> host.openshell.internal:8089 [reason:transparent_tcp_policy_denied]
